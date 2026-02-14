@@ -6,6 +6,7 @@ import Link from "next/link";
 import EmptyCartState from "@/components/shop/cart/EmptyCartState";
 import CartItemRow from "@/components/shop/cart/CartItemRow";
 import CartSummary from "@/components/shop/cart/CartSummary";
+import SmartCartSuggestions from "@/components/shop/cart/SmartCartSuggestions";
 
 export default function CartPage() {
   const { cart, removeFromCart, updateQuantity, totalPrice } = useCart();
@@ -47,6 +48,9 @@ export default function CartPage() {
         {/* Order Summary */}
         <CartSummary totalPrice={totalPrice} />
       </div>
+
+      {/* Smart Suggestions */}
+      <SmartCartSuggestions />
     </div>
   );
 }

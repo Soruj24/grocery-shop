@@ -44,27 +44,31 @@ export default function Header() {
       <header
         className={`sticky top-0 z-50 transition-all duration-500 ${
           isScrolled
-            ? "bg-white/90 dark:bg-black/90 backdrop-blur-2xl shadow-[0_20px_40px_-15px_rgba(0,0,0,0.1)] py-2"
-            : "bg-white dark:bg-black py-4"
+            ? "bg-white/90 dark:bg-black/90 backdrop-blur-2xl border-b border-gray-100/50 dark:border-white/5 shadow-[0_8px_32px_rgba(0,0,0,0.08)] py-2"
+            : "bg-white dark:bg-black py-4 lg:py-5"
         }`}
       >
         {/* Main Header Row */}
-        <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between gap-4 lg:gap-8">
-          {/* Menu & Logo */}
-          <div className="flex items-center gap-4">
+        <div className="max-w-7xl mx-auto px-4 flex items-center justify-between gap-2 lg:gap-12">
+          {/* Menu & Logo & Location */}
+          <div className="flex items-center gap-2 lg:gap-8 min-w-0">
             <button
               onClick={() => setIsMobileMenuOpen(true)}
-              className="p-2.5 lg:hidden text-gray-700 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-white/5 rounded-2xl transition-all"
+              className="p-2 lg:hidden text-gray-700 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-white/5 rounded-xl transition-all shrink-0"
             >
               <Menu className="w-6 h-6" />
             </button>
 
-            <NavbarLogo />
+            <div className="shrink-0 scale-90 sm:scale-100 origin-left">
+              <NavbarLogo />
+            </div>
           </div>
 
           <SearchBar />
 
-          <UserActions />
+          <div className="shrink-0">
+            <UserActions />
+          </div>
         </div>
 
         <DesktopNav

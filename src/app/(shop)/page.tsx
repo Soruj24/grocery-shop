@@ -1,3 +1,4 @@
+import dynamic from "next/dynamic";
 import Link from "next/link";
 import dbConnect from "@/lib/mongodb";
 import Product from "@/models/Product";
@@ -5,14 +6,28 @@ import Category from "@/models/Category";
 import { Truck, ShieldCheck, Clock, Star } from "lucide-react";
 import Hero from "@/components/shop/Hero";
 import Features from "@/components/shop/Features";
-import CategorySection from "@/components/shop/CategorySection";
-import SubCategorySpotlight from "@/components/shop/SubCategorySpotlight";
-import SpecialOfferBanners from "@/components/shop/SpecialOfferBanners";
-import ProductSection from "@/components/shop/ProductSection";
-import TrustSection from "@/components/shop/TrustSection";
-import Testimonials from "@/components/shop/Testimonials";
-import Newsletter from "@/components/shop/Newsletter";
 import PageBackground from "@/components/ui/PageBackground";
+
+// Lazy Load components that are below the fold
+const CategorySection = dynamic(() => import("@/components/shop/CategorySection"));
+const SubCategorySpotlight = dynamic(() => import("@/components/shop/SubCategorySpotlight"));
+const SpecialOfferBanners = dynamic(() => import("@/components/shop/SpecialOfferBanners"));
+const ProductSection = dynamic(() => import("@/components/shop/ProductSection"));
+const Newsletter = dynamic(() => import("@/components/shop/Newsletter"));
+const Testimonials = dynamic(() => import("@/components/shop/Testimonials"));
+const FlashDeals = dynamic(() => import("@/components/shop/FlashDeals"));
+const AppDownload = dynamic(() => import("@/components/shop/AppDownload"));
+const ComboOffers = dynamic(() => import("@/components/shop/ComboOffers"));
+const FeaturedProducts = dynamic(() => import("@/components/shop/FeaturedProducts"));
+const RecentlyViewedSection = dynamic(() => import("@/components/shop/RecentlyViewedSection"));
+const AIRecommendationsSection = dynamic(() => import("@/components/shop/AIRecommendationsSection"));
+
+// Marketing components
+const DailyDealsBanner = dynamic(() => import("@/components/shop/marketing/DailyDealsBanner"));
+const RamadanOffers = dynamic(() => import("@/components/shop/marketing/RamadanOffers"));
+const EidSpecialDeals = dynamic(() => import("@/components/shop/marketing/EidSpecialDeals"));
+const ComboPacks = dynamic(() => import("@/components/shop/marketing/ComboPacks"));
+const BuyMoreSaveMore = dynamic(() => import("@/components/shop/marketing/BuyMoreSaveMore"));
 
 async function getHomeData(searchParams: {
   [key: string]: string | string[] | undefined;
@@ -73,21 +88,58 @@ export default async function HomePage({
       <PageBackground />
 
       <Hero />
+
+      {/* Modern Marketing: Daily Deals */}
+      <div className="max-w-7xl mx-auto px-4">
+        <DailyDealsBanner />
+      </div>
+
       <Features />
+
+      {/* Ramadan Special UI */}
+      <div className="max-w-7xl mx-auto px-4">
+        <RamadanOffers />
+      </div>
+
       <CategorySection categories={categories} />
+      <FlashDeals products={products} />
+
+      {/* Combo Packs Section */}
+      <div className="max-w-7xl mx-auto px-4">
+        <ComboPacks />
+      </div>
+
+      <ComboOffers />
+
+      {/* Eid Special Deals */}
+      <div className="max-w-7xl mx-auto px-4">
+        <EidSpecialDeals />
+      </div>
+
+      <FeaturedProducts products={products} />
+
+      {/* Buy More Save More Slider */}
+      <div className="max-w-7xl mx-auto px-4">
+        <BuyMoreSaveMore />
+      </div>
+
       <SubCategorySpotlight categories={categories} />
       <SpecialOfferBanners />
-
+      <AppDownload />
       <ProductSection
-        products={products}
-        totalPages={totalPages}
-        currentPage={currentPage}
-        totalCount={totalCount}
-      />
+              products={products}
+              totalPages={totalPages}
+              currentPage={currentPage}
+              totalCount={totalCount}
+            />
+            <Testimonials />
+            <Newsletter />
 
-      <TrustSection />
-      <Testimonials />
-      <Newsletter />
+            {/* AI Recommendations Section */}
+            <AIRecommendationsSection />
+
+            {/* Recently Viewed Section */}
+            <RecentlyViewedSection />
     </div>
   );
 }

@@ -21,12 +21,12 @@ export default function AdminSidebar({ session }: AdminSidebarProps) {
   const pathname = usePathname();
 
   const menuItems = [
-    { name: "ড্যাশবোর্ড", icon: LayoutDashboard, href: "/admin" },
+    { name: "ড্যাশবোর্ড", icon: LayoutDashboard, href: "/admin/dashboard" },
     { name: "প্রোডাক্ট", icon: Package, href: "/admin/products" },
     { name: "ক্যাটাগরি", icon: ListTree, href: "/admin/categories" },
     { name: "অর্ডার", icon: ShoppingCart, href: "/admin/orders" },
     { name: "কাস্টমার", icon: Users, href: "/admin/customers" },
-    { name: "সেটিংস", icon: Settings, href: "/admin/settings" },
+    { name: "সেটিিংস", icon: Settings, href: "/admin/settings" },
   ];
 
   return (

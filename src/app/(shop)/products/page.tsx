@@ -1,6 +1,7 @@
 import dbConnect from "@/lib/mongodb";
 import Product from "@/models/Product";
 import Category from "@/models/Category";
+import mongoose from "mongoose";
 import ProductFilters from "@/components/ProductFilters";
 import EmptyProductState from "@/components/shop/products/EmptyProductState";
 import ProductSidebarFilters from "@/components/shop/products/ProductSidebarFilters";
@@ -43,12 +44,27 @@ async function getProducts(searchParams: {
 
   const categories = await Category.find({ isActive: true }).lean();
 
-  if (categoryId) {
+  let actualCategoryId = categoryId;
+  if (categoryId && categoryId !== "all") {
+    const foundCategory = categories.find(
+      (c: any) =>
+        c._id.toString() === categoryId ||
+        c.name.toLowerCase() === categoryId.toLowerCase()
+    );
+    if (foundCategory) {
+      actualCategoryId = foundCategory._id.toString();
+    }
+  }
+
+  if (actualCategoryId && actualCategoryId !== "all" && mongoose.Types.ObjectId.isValid(actualCategoryId)) {
     const subCategoryIds = categories
-      .filter((c: any) => c.parentId && c.parentId.toString() === categoryId)
+      .filter(
+        (c: any) =>
+          c.parentId && c.parentId.toString() === actualCategoryId
+      )
       .map((c: any) => c._id);
 
-    query.category = { $in: [categoryId, ...subCategoryIds] };
+    query.category = { $in: [actualCategoryId, ...subCategoryIds] };
   }
 
   let sortQuery: any = { createdAt: -1 };

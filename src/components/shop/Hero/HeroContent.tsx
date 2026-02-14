@@ -15,19 +15,18 @@ export default function HeroContent() {
       <h1 className="text-7xl sm:text-9xl font-black mb-10 leading-[0.9] tracking-tighter">
         তাজা বাজার <br />
         <span className="text-transparent bg-clip-text bg-gradient-to-r from-green-400 via-emerald-400 to-teal-300">
-          আপনার দরজায়
+          ৬০ মিনিটে ডেলিভারি
         </span>
       </h1>
 
       <p className="text-white/70 mb-14 text-xl sm:text-2xl max-w-2xl leading-relaxed font-medium">
-        মোহাম্মদ ইমরান হোসাইন মুদির দোকানে আপনাকে স্বাগতম। আমরা দিচ্ছি সরাসরি
-        ফার্ম থেকে সংগৃহীত সেরা মানের পণ্য।
+        মোহাম্মদ ইমরান হোসাইন মুদির দোকানে আপনাকে স্বাগতম। সরাসরি ফার্ম থেকে সংগৃহীত সেরা মানের পণ্য এখন আপনার দোরগোড়ায়।
       </p>
 
       <div className="flex flex-wrap items-center gap-8">
         <Link
           href="/products"
-          className="group relative bg-white text-black px-12 py-6 rounded-[28px] font-black text-xl transition-all duration-500 flex items-center overflow-hidden hover:pr-16 active:scale-95 shadow-[0_20px_40px_-10px_rgba(255,255,255,0.2)]"
+          className="group relative bg-[#00D26A] text-black px-12 py-6 rounded-[28px] font-black text-xl transition-all duration-500 flex items-center overflow-hidden hover:pr-16 active:scale-95 shadow-[0_20px_40px_-10px_rgba(0,210,106,0.3)]"
         >
           <span className="relative z-10">বাজার শুরু করুন</span>
           <div className="absolute right-6 opacity-0 group-hover:opacity-100 group-hover:translate-x-2 transition-all duration-500">
@@ -35,7 +34,12 @@ export default function HeroContent() {
           </div>
         </Link>
 
-        <HeroCountdown />
+        <Link
+          href="/products?filter=deals"
+          className="group relative bg-white/10 backdrop-blur-md text-white border border-white/20 px-12 py-6 rounded-[28px] font-black text-xl transition-all duration-500 flex items-center hover:bg-white hover:text-black active:scale-95"
+        >
+          আজকের অফার
+        </Link>
       </div>
     </div>
   );

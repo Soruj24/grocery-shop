@@ -1,10 +1,7 @@
 "use client";
 
 import { useState, useEffect, useMemo, useCallback } from "react";
-import {
-  Edit2,
-  Trash2,
-} from "lucide-react";
+
 import { toast, confirmAlert, errorAlert } from "@/lib/swal";
 import AdminHeader from "@/components/admin/AdminHeader";
 import Pagination from "@/components/admin/Pagination";
@@ -15,9 +12,13 @@ import { AdminCategory, AdminCategoryFormData } from "@/types/admin";
 
 export default function CategoriesPage() {
   const [categories, setCategories] = useState<AdminCategory[]>([]);
-  const [allCategoriesForSelect, setAllCategoriesForSelect] = useState<AdminCategory[]>([]);
+  const [allCategoriesForSelect, setAllCategoriesForSelect] = useState<
+    AdminCategory[]
+  >([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [editingCategory, setEditingCategory] = useState<AdminCategory | null>(null);
+  const [editingCategory, setEditingCategory] = useState<AdminCategory | null>(
+    null,
+  );
   const [formData, setFormData] = useState<AdminCategoryFormData>({
     name: "",
     isActive: true,

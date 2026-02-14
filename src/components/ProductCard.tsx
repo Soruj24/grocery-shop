@@ -1,20 +1,50 @@
 "use client";
 
-import { ShoppingCart, Eye, Heart, Star, Share2 } from "lucide-react";
+import { ShoppingCart, Heart, Star, Share2, Plus, Minus } from "lucide-react";
 import { useCart } from "@/components/CartContext";
 import { useWishlist } from "@/components/WishlistContext";
 import Link from "next/link";
+import Image from "next/image";
 import { Toast } from "@/lib/toast";
 import { Product } from "@/types/product";
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
 interface ProductCardProps {
   product: Product;
 }
 
 export default function ProductCard({ product }: ProductCardProps) {
-  const { addToCart } = useCart();
+  const { addToCart, updateQuantity, cart } = useCart();
   const { toggleWishlist, isInWishlist } = useWishlist();
+  const [quantity, setQuantity] = useState(1);
   const active = isInWishlist(product._id);
+
+  const handleDragEnd = (event: any, info: any) => {
+    const swipeThreshold = 50;
+    if (info.offset.x > swipeThreshold) {
+      // Swipe Right - Add to Wishlist
+      toggleWishlist(product);
+      Toast.fire({
+        icon: 'success',
+        title: active ? 'উইশলিস্ট থেকে সরানো হয়েছে' : 'উইশলিস্টে যোগ করা হয়েছে',
+        background: '#020617',
+        color: '#fff',
+      });
+    } else if (info.offset.x < -swipeThreshold) {
+      // Swipe Left - Add to Cart
+      addToCart(product, quantity);
+      Toast.fire({
+        icon: 'success',
+        title: 'কার্টে যোগ করা হয়েছে',
+        background: '#020617',
+        color: '#fff',
+      });
+    }
+  };
+
+  // Check if product is already in cart
+  const cartItem = cart?.find((item) => item._id === product._id);
 
   const handleShare = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -35,120 +65,184 @@ export default function ProductCard({ product }: ProductCardProps) {
     }
   };
 
-  return (
-    <div className="group bg-white dark:bg-[#0F172A]/40 rounded-[48px] shadow-sm border border-gray-100 dark:border-white/5 overflow-hidden hover:shadow-[0_40px_80px_-15px_rgba(0,0,0,0.1)] dark:hover:shadow-[0_40px_80px_-15px_rgba(0,0,0,0.5)] transition-all duration-700 flex flex-col h-full relative group/card backdrop-blur-xl">
-      {/* Discount Badge - Modern Glassmorphism */}
-      <div className="absolute top-6 left-6 z-30 bg-orange-500/90 backdrop-blur-md text-white text-[10px] font-black px-4 py-2 rounded-2xl shadow-xl shadow-orange-500/20 transform -rotate-6 group-hover/card:rotate-0 transition-all duration-500 border border-white/20">
-        ২০% ছাড়
-      </div>
+  const increment = () => {
+    if (cartItem) {
+      updateQuantity(product._id, cartItem.quantity + 1);
+    } else {
+      setQuantity(prev => prev + 1);
+    }
+  };
 
-      <div className="aspect-[4/5] bg-gray-50 dark:bg-gray-950/50 flex items-center justify-center relative overflow-hidden m-3 rounded-[40px]">
+  const decrement = () => {
+    if (cartItem) {
+      if (cartItem.quantity > 1) {
+        updateQuantity(product._id, cartItem.quantity - 1);
+      }
+    } else {
+      if (quantity > 1) {
+        setQuantity(prev => prev - 1);
+      }
+    }
+  };
+
+  return (
+    <motion.div 
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      whileHover={{ y: -10 }}
+      drag="x"
+      dragConstraints={{ left: 0, right: 0 }}
+      onDragEnd={handleDragEnd}
+      className="group bg-white dark:bg-[#0F172A]/40 rounded-[32px] shadow-sm border border-gray-100 dark:border-white/5 overflow-hidden hover:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.1)] dark:hover:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.5)] transition-all duration-500 flex flex-col h-full relative backdrop-blur-xl touch-pan-y"
+    >
+      {/* Swipe Indicators (Mobile Only) */}
+      <div className="md:hidden absolute inset-0 pointer-events-none flex items-center justify-between px-4 z-10 opacity-0 group-active:opacity-100 transition-opacity">
+        <div className="bg-green-500/20 p-2 rounded-full backdrop-blur-md">
+          <ShoppingCart className="w-6 h-6 text-green-500" />
+        </div>
+        <div className="bg-rose-500/20 p-2 rounded-full backdrop-blur-md">
+          <Heart className="w-6 h-6 text-rose-500" />
+        </div>
+      </div>
+      {/* Discount Badge */}
+      {product.discountPrice && (
+        <div className="absolute top-4 left-4 z-30 bg-orange-500 text-white text-[10px] font-black px-3 py-1.5 rounded-full shadow-lg shadow-orange-500/20">
+          {Math.round(((product.price - product.discountPrice) / product.price) * 100)}% ছাড়
+        </div>
+      )}
+
+      {/* Product Image Area */}
+      <div className="aspect-square bg-gray-50 dark:bg-gray-950/50 flex items-center justify-center relative overflow-hidden m-2 rounded-[24px]">
         {product.image ? (
-          <img 
+          <Image 
             src={product.image} 
-            alt={product.name} 
-            className="object-cover w-full h-full transform group-hover/card:scale-110 transition-transform duration-1000" 
+            alt={product.name}
+            fill
+            sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 25vw"
+            className="object-contain p-4 transform group-hover:scale-110 transition-transform duration-700"
+            loading="lazy"
           />
         ) : (
           <ShoppingCart className="w-12 h-12 text-gray-200 dark:text-gray-800" />
         )}
         
-        {/* Wishlist & Share Buttons */}
-        <div className="absolute top-5 right-5 z-20 flex flex-col gap-2">
-          <button
-            onClick={(e) => {
-              e.preventDefault();
-              toggleWishlist(product);
-              const isAdding = !active;
-              Toast.fire({
-                icon: 'success',
-                title: isAdding ? 'উইশলিস্টে যোগ করা হয়েছে' : 'উইশলিস্ট থেকে সরানো হয়েছে',
-                background: '#020617',
-                color: '#fff',
-              });
-            }}
-            className={`p-3.5 rounded-2xl shadow-xl transition-all duration-500 active:scale-90 ${
-              active 
-                ? 'bg-rose-500 text-white shadow-rose-500/30 scale-100' 
-                : 'bg-white/80 dark:bg-gray-900/80 backdrop-blur-xl text-gray-400 hover:text-rose-500 opacity-0 group-hover/card:opacity-100 translate-y-[-10px] group-hover/card:translate-y-0'
-            }`}
-          >
-            <Heart className={`w-5 h-5 ${active ? 'fill-current' : ''}`} />
-          </button>
+        {/* Wishlist Button */}
+        <button
+          onClick={(e) => {
+            e.preventDefault();
+            toggleWishlist(product);
+            const isAdding = !active;
+            Toast.fire({
+              icon: 'success',
+              title: isAdding ? 'উইশলিস্টে যোগ করা হয়েছে' : 'উইশলিস্ট থেকে সরানো হয়েছে',
+              background: '#020617',
+              color: '#fff',
+            });
+          }}
+          className={`absolute top-3 right-3 z-20 p-2.5 rounded-full shadow-lg transition-all duration-300 active:scale-90 ${
+            active 
+              ? 'bg-rose-500 text-white shadow-rose-500/30' 
+              : 'bg-white/90 dark:bg-gray-900/90 text-gray-400 hover:text-rose-500'
+          }`}
+        >
+          <Heart className={`w-4 h-4 ${active ? 'fill-current' : ''}`} />
+        </button>
 
-          <button
-            onClick={handleShare}
-            className="p-3.5 bg-white/80 dark:bg-gray-900/80 backdrop-blur-xl text-gray-400 hover:text-blue-500 rounded-2xl shadow-xl opacity-0 group-hover/card:opacity-100 translate-y-[-10px] group-hover/card:translate-y-0 transition-all duration-500 delay-75"
-          >
-            <Share2 className="w-5 h-5" />
-          </button>
-        </div>
-
-        {/* Action Overlay */}
-        <div className="absolute inset-x-4 bottom-4 z-20 opacity-0 group-hover/card:opacity-100 transition-all duration-500 translate-y-4 group-hover/card:translate-y-0 flex gap-3">
-          <Link
-            href={`/products/${product._id}`}
-            className="flex-1 bg-white dark:bg-gray-900 text-gray-900 dark:text-white py-4 rounded-2xl font-black text-xs text-center hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-all duration-300 shadow-2xl backdrop-blur-xl border border-white/10"
-          >
-            বিস্তারিত দেখুন
-          </Link>
-          <button 
-            onClick={() => {
-              addToCart(product);
-              Toast.fire({
-                icon: 'success',
-                title: 'কার্টে যোগ করা হয়েছে',
-                background: '#020617',
-                color: '#fff',
-              });
-            }}
-            disabled={product.stock <= 0}
-            className="w-14 bg-green-600 text-white flex items-center justify-center rounded-2xl hover:bg-green-500 shadow-2xl transition-all duration-300 disabled:bg-gray-500 disabled:opacity-50"
-          >
-            <ShoppingCart className="w-6 h-6" />
-          </button>
-        </div>
-        
-        {/* Subtle Gradient Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover/card:opacity-100 transition-opacity duration-500 pointer-events-none" />
+        {/* Share Button */}
+        <button
+          onClick={handleShare}
+          className="absolute top-14 right-3 z-20 p-2.5 bg-white/90 dark:bg-gray-900/90 text-gray-400 hover:text-blue-500 rounded-full shadow-lg transition-all duration-300 opacity-0 group-hover:opacity-100"
+        >
+          <Share2 className="w-4 h-4" />
+        </button>
       </div>
 
-      <div className="p-8 flex flex-col flex-1">
-        <div className="flex justify-between items-center mb-4">
-          <span className="text-[10px] font-black text-green-600 dark:text-green-400 uppercase tracking-[0.2em] bg-green-500/10 dark:bg-green-400/10 px-4 py-2 rounded-2xl">
+      {/* Content */}
+      <div className="p-5 flex flex-col flex-1">
+        <div className="flex justify-between items-center mb-2">
+          <span className="text-[10px] font-bold text-green-600 dark:text-green-400 uppercase tracking-wider bg-green-50 dark:bg-green-900/20 px-2 py-1 rounded-md">
             {product.category?.name || "গ্রোসারি"}
           </span>
           <div className="flex items-center gap-1">
             <Star className="w-3 h-3 fill-yellow-400 text-yellow-400" />
-            <span className="text-[10px] font-black text-gray-400">৪.৮</span>
+            <span className="text-xs font-bold text-gray-500">৪.৮</span>
           </div>
         </div>
         
-        <Link href={`/products/${product._id}`} className="block flex-1 group/title">
-          <h3 className="text-gray-900 dark:text-white text-xl font-black mb-4 line-clamp-2 leading-tight group-hover/title:text-green-600 dark:group-hover/title:text-green-400 transition-colors">
+        <Link href={`/products/${product._id}`} className="block mb-2">
+          <h3 className="text-gray-900 dark:text-white text-base font-bold line-clamp-2 hover:text-green-600 transition-colors">
             {product.name}
           </h3>
         </Link>
 
-        <div className="flex items-end justify-between mt-auto pt-6 border-t border-gray-100 dark:border-gray-800/50">
-          <div className="space-y-1">
-            <span className="text-xs text-gray-400 dark:text-gray-500 font-bold line-through">৳ {Math.round(product.price * 1.2)}</span>
-            <div className="flex items-baseline gap-1">
-              <span className="text-3xl font-black text-gray-900 dark:text-white">৳{product.price}</span>
-              <span className="text-[10px] font-bold text-gray-400">/কেজি</span>
-            </div>
+        {/* Stock Status */}
+        <div className="flex items-center gap-1.5 mb-4">
+          <div className={`w-1.5 h-1.5 rounded-full ${product.stock > 0 ? 'bg-emerald-500 animate-pulse' : 'bg-rose-500'}`} />
+          <span className={`text-[10px] font-bold uppercase tracking-tight ${product.stock > 0 ? 'text-emerald-600' : 'text-rose-600'}`}>
+            {product.stock > 0 ? `${product.stock} পিস স্টকে আছে` : 'আউট অফ স্টক'}
+          </span>
+        </div>
+
+        {/* Price and Quantity */}
+        <div className="mt-auto space-y-4">
+          <div className="flex items-baseline gap-2">
+            <span className="text-2xl font-black text-gray-900 dark:text-white">৳{product.discountPrice || product.price}</span>
+            {product.discountPrice && (
+              <span className="text-sm text-gray-400 font-medium line-through">৳{product.price}</span>
+            )}
+            <span className="text-[10px] font-bold text-gray-400">/{product.unit || 'কেজি'}</span>
           </div>
-          
-          <div className={`flex items-center gap-2 px-4 py-2 rounded-2xl border text-[10px] font-black uppercase tracking-widest ${
-            product.stock > 0 
-              ? 'bg-emerald-500/10 border-emerald-500/20 text-emerald-600 dark:text-emerald-400' 
-              : 'bg-rose-500/10 border-rose-500/20 text-rose-600 dark:text-rose-400'
-          }`}>
-            <div className={`w-1.5 h-1.5 rounded-full ${product.stock > 0 ? 'bg-emerald-500 animate-pulse' : 'bg-rose-500'}`} />
-            {product.stock > 0 ? 'স্টকে আছে' : 'আউট অফ স্টক'}
+
+          <div className="flex items-center gap-3">
+            {/* Quantity Selector */}
+            <div className="flex items-center bg-gray-100 dark:bg-gray-800 rounded-2xl p-1 shrink-0">
+              <button 
+                onClick={decrement}
+                className="w-8 h-8 flex items-center justify-center rounded-xl hover:bg-white dark:hover:bg-gray-700 text-gray-500 transition-all active:scale-90"
+              >
+                <Minus className="w-4 h-4" />
+              </button>
+              <span className="w-8 text-center text-sm font-bold text-gray-900 dark:text-white">
+                {cartItem ? cartItem.quantity : quantity}
+              </span>
+              <button 
+                onClick={increment}
+                className="w-8 h-8 flex items-center justify-center rounded-xl hover:bg-white dark:hover:bg-gray-700 text-gray-500 transition-all active:scale-90"
+              >
+                <Plus className="w-4 h-4" />
+              </button>
+            </div>
+
+            {/* Add to Cart Button */}
+            <button 
+              onClick={() => {
+                if (cartItem) {
+                  Toast.fire({
+                    icon: 'info',
+                    title: 'কার্টে অলরেডি যোগ করা আছে',
+                    background: '#020617',
+                    color: '#fff',
+                  });
+                } else {
+                  addToCart(product, quantity);
+                  Toast.fire({
+                    icon: 'success',
+                    title: 'কার্টে যোগ করা হয়েছে',
+                    background: '#020617',
+                    color: '#fff',
+                  });
+                }
+              }}
+              disabled={product.stock <= 0}
+              className="flex-1 bg-green-600 hover:bg-green-700 text-white py-3 rounded-2xl font-bold text-sm transition-all flex items-center justify-center gap-2 shadow-lg shadow-green-600/20 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              <ShoppingCart className="w-4 h-4" />
+              {cartItem ? 'কার্টে আছে' : 'কিনুন'}
+            </button>
           </div>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 }

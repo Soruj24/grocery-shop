@@ -1,7 +1,8 @@
 import Link from "next/link";
-import { ArrowRight, ChevronRight } from "lucide-react";
+import { ArrowRight, ChevronRight, LayoutGrid } from "lucide-react";
 import { Category } from "@/types/category";
 import Image from "next/image";
+import { motion } from "framer-motion";
 
 interface CategoryCardProps {
   category: Category;
@@ -9,85 +10,84 @@ interface CategoryCardProps {
 
 export default function CategoryCard({ category }: CategoryCardProps) {
   // Limited sub-categories for display
-  const displaySubCategories = category.subCategories?.slice(0, 5) || [];
+  const displaySubCategories = category.subCategories?.slice(0, 4) || [];
   const remainingCount =
     (category.subCategories?.length || 0) - displaySubCategories.length;
 
   return (
-    <div className="group h-full">
-      <div className="relative flex flex-col bg-[#0B1120] rounded-[48px] border border-white/5 p-8 h-full transition-all duration-500 hover:border-white/10 hover:shadow-[0_20px_50px_-12px_rgba(0,0,0,0.5)]">
-        {/* Top Header Section */}
-        <div className="flex justify-between items-start mb-8">
-          {/* Category Image - Circular with glow */}
-          <div className="relative w-20 h-20 rounded-full overflow-hidden border-2 border-white/10 shadow-[0_0_20px_rgba(255,255,255,0.05)]">
-            {category.image ? (
-              <Image
-                src={category.image}
-                alt={category.name}
-                width={80}
-                height={80}
-                className="w-full h-full object-cover transform transition-transform duration-700 group-hover:scale-110"
-              />
-            ) : (
-              <div className="w-full h-full flex items-center justify-center bg-white/5 text-2xl font-bold text-white/20">
-                {category.name.charAt(0)}
-              </div>
-            )}
+    <motion.div 
+      whileHover={{ y: -8 }}
+      transition={{ duration: 0.3 }}
+      className="group relative h-full"
+    >
+      {/* Decorative background glow on hover */}
+      <div className="absolute -inset-2 bg-gradient-to-r from-[#00D26A]/20 to-emerald-500/20 rounded-[40px] blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+      
+      <div className="relative flex flex-col bg-white dark:bg-[#0F172A] rounded-[32px] border border-gray-100 dark:border-white/5 p-6 h-full transition-all duration-500 hover:border-[#00D26A]/30 overflow-hidden shadow-sm hover:shadow-2xl hover:shadow-green-500/10">
+        {/* Category Image & Action */}
+        <div className="flex justify-between items-start mb-6">
+          <div className="relative w-24 h-24">
+            <div className="absolute inset-0 bg-[#00D26A]/10 rounded-3xl blur-md group-hover:blur-lg transition-all" />
+            <div className="relative w-full h-full rounded-2xl overflow-hidden border border-gray-100 dark:border-white/10 bg-gray-50 dark:bg-[#1E293B] flex items-center justify-center">
+              {category.image ? (
+                <Image
+                  src={category.image}
+                  alt={category.name}
+                  width={96}
+                  height={96}
+                  className="w-full h-full object-cover transform transition-transform duration-700 group-hover:scale-110"
+                />
+              ) : (
+                <LayoutGrid className="w-10 h-10 text-gray-200 dark:text-white/10" />
+              )}
+            </div>
           </div>
 
-          {/* Action Button - Bright Green */}
           <Link
             href={`/category/${category._id}`}
-            className="w-12 h-12 rounded-full bg-[#00D26A] flex items-center justify-center text-black shadow-[0_0_20px_rgba(0,210,106,0.3)] hover:scale-110 transition-transform duration-300"
+            className="w-10 h-10 rounded-xl bg-gray-50 dark:bg-white/5 border border-gray-100 dark:border-white/10 flex items-center justify-center text-gray-400 dark:text-white/40 hover:bg-[#00D26A] hover:text-black hover:border-transparent transition-all duration-300"
           >
-            <ArrowRight size={20} strokeWidth={3} />
+            <ArrowRight size={18} strokeWidth={2.5} />
           </Link>
         </div>
 
-        {/* Title Section */}
+        {/* Info Section */}
         <div className="mb-6">
-          <h3 className="text-2xl font-bold text-white mb-1">
-            {category.name}{" "}
-            <span className="text-white/70">
-              ({category.nameEn || "Collection"})
-            </span>
+          <h3 className="text-xl font-black text-gray-900 dark:text-white group-hover:text-[#00D26A] transition-colors line-clamp-1 mb-1">
+            {category.name}
           </h3>
-          <p className="text-sm text-white/40 font-medium">
-            {category.subCategories?.length || 0}টি সাব-ক্যাটাগরি
+          <p className="text-xs font-bold text-gray-400 dark:text-white/40 uppercase tracking-wider">
+            {category.subCategories?.length || 0}টি আইটেম
           </p>
         </div>
 
-        {/* Sub-categories Pills */}
-        <div className="flex flex-col gap-2.5 mb-8 flex-1">
+        {/* Sub-categories - Quick Links */}
+        <div className="grid grid-cols-2 gap-2 mb-8 flex-1">
           {displaySubCategories.map((sub: any, idx: number) => (
-            <div
-              key={idx}
-              className="px-5 py-2.5 rounded-full bg-white/5 border border-white/5 text-sm text-white/60 font-medium hover:bg-white/10 hover:text-white transition-all cursor-default"
+            <Link
+              key={sub._id || idx}
+              href={`/category/${sub._id}`}
+              className="px-3 py-2 rounded-xl bg-gray-50 dark:bg-white/5 border border-gray-100 dark:border-white/5 text-[11px] font-bold text-gray-500 dark:text-white/50 hover:bg-[#00D26A]/10 hover:text-[#00D26A] hover:border-[#00D26A]/20 transition-all text-center truncate"
             >
-              {sub.name} {category.nameEn && `(${category.nameEn})`} {idx + 1}
-            </div>
+              {sub.name}
+            </Link>
           ))}
-
           {remainingCount > 0 && (
-            <div className="inline-flex items-center px-4 py-1.5 rounded-full bg-[#00D26A]/10 text-[#00D26A] text-xs font-bold border border-[#00D26A]/20">
+            <div className="px-3 py-2 rounded-xl bg-gray-50/50 dark:bg-white/[0.02] border border-dashed border-gray-200 dark:border-white/10 text-[11px] font-bold text-gray-400 dark:text-white/30 text-center">
               +{remainingCount} আরো
             </div>
           )}
         </div>
 
-        {/* Footer Link */}
+        {/* View All Button */}
         <Link
           href={`/category/${category._id}`}
-          className="flex justify-between items-center pt-6 border-t border-white/5 group/footer"
+          className="flex items-center justify-center gap-2 w-full py-4 rounded-2xl bg-gray-900 dark:bg-white/5 border border-transparent dark:border-white/10 text-sm font-black text-white dark:text-white hover:bg-[#00D26A] hover:text-black dark:hover:bg-white dark:hover:text-black transition-all group/btn shadow-lg dark:shadow-none"
         >
-          <span className="text-lg font-bold text-white group-hover/footer:text-[#00D26A] transition-colors">
-            সব পণ্য দেখুন
-          </span>
-          <div className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-white/40 group-hover/footer:bg-white/10 group-hover/footer:text-white transition-all">
-            <ChevronRight size={20} />
-          </div>
+          সবগুলো দেখুন
+          <ChevronRight size={16} className="group-hover/btn:translate-x-1 transition-transform" />
         </Link>
       </div>
-    </div>
+    </motion.div>
   );
 }
