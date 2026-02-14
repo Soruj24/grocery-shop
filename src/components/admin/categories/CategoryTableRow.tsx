@@ -3,8 +3,8 @@ import StatusBadge from "@/components/admin/StatusBadge";
 import { AdminCategory } from "@/types/admin";
 
 interface CategoryTableRowProps {
-  category: AdminCategory & { isActive: boolean; image?: string };
-  onEdit: (category: any) => void;
+  category: AdminCategory;
+  onEdit: (category: AdminCategory) => void;
   onDelete: (id: string) => void;
 }
 
@@ -48,7 +48,7 @@ export default function CategoryTableRow({
       </td>
       <td className="px-8 py-6">
         <StatusBadge
-          status={category.isActive}
+          status={category.isActive ?? false}
           label={category.isActive ? "অ্যাক্টিভ" : "ইনঅ্যাক্টিভ"}
         />
       </td>

@@ -1,8 +1,9 @@
 import Link from "next/link";
 import { ListFilter, ChevronRight } from "lucide-react";
+import { Category as ICategory } from "@/types/category";
 
 interface CategorySidebarProps {
-  allCategories: any[];
+  allCategories: ICategory[];
   currentId: string;
 }
 
@@ -19,10 +20,10 @@ export default function CategorySidebar({ allCategories, currentId }: CategorySi
         
         <div className="space-y-3">
           {allCategories
-            .filter((c: any) => !c.parentId)
-            .map((cat: any) => {
+            .filter((c: ICategory) => !c.parentId)
+            .map((cat: ICategory) => {
               const isActive = cat._id.toString() === currentId || 
-                             allCategories.find((c: any) => c._id.toString() === currentId)?.parentId?.toString() === cat._id.toString();
+                             allCategories.find((c: ICategory) => c._id.toString() === currentId)?.parentId?.toString() === cat._id.toString();
               
               return (
                 <div key={cat._id} className="space-y-2">
@@ -44,8 +45,8 @@ export default function CategorySidebar({ allCategories, currentId }: CategorySi
                   {isActive && (
                     <div className="ml-6 pl-4 border-l-2 border-green-100 dark:border-green-900/30 space-y-1">
                       {allCategories
-                        .filter((sub: any) => sub.parentId && sub.parentId.toString() === cat._id.toString())
-                        .map((sub: any) => (
+                        .filter((sub: ICategory) => sub.parentId && sub.parentId.toString() === cat._id.toString())
+                        .map((sub: ICategory) => (
                           <Link
                             key={sub._id}
                             href={`/category/${sub._id}`}

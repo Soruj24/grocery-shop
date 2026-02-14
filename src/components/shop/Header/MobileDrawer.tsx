@@ -2,13 +2,15 @@ import Link from "next/link";
 import { ShoppingBasket, X, PhoneCall, Heart, LayoutGrid, ShoppingBag, User, LogOut, ChevronRight } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { signOut } from "next-auth/react";
+import { Category } from "@/types/category";
+import { Session } from "next-auth";
 
 interface MobileDrawerProps {
   isOpen: boolean;
   onClose: () => void;
-  categories: any[];
+  categories: Category[];
   totalWishlistItems: number;
-  session: any;
+  session: Session | null;
 }
 
 export default function MobileDrawer({
@@ -125,12 +127,12 @@ export default function MobileDrawer({
               <div className="space-y-4">
                 <p className="text-[10px] font-black text-gray-400 dark:text-gray-500 uppercase tracking-[0.2em]">টপ ক্যাটাগরি</p>
                 <div className="grid grid-cols-2 gap-3">
-                  {displayCategories.slice(0, 10).map((cat: any) => (
+                  {displayCategories.slice(0, 10).map((cat: Category) => (
                     <Link
                       key={cat._id}
-                      href={`/category/${cat._id}`}
+                      href={`/products?category=${cat._id}`}
                       onClick={onClose}
-                      className="flex flex-col items-center gap-3 p-4 bg-gray-50 dark:bg-white/5 rounded-3xl border border-transparent hover:border-green-500/20 transition-all text-center group"
+                      className="flex flex-col items-center gap-3 p-4 rounded-3xl bg-gray-50 dark:bg-white/[0.02] border border-gray-100 dark:border-white/5 hover:border-green-500/30 transition-all group"
                     >
                       <div className="w-12 h-12 rounded-2xl bg-white dark:bg-white/5 flex items-center justify-center shadow-sm group-hover:scale-110 transition-transform">
                         {cat.image ? (

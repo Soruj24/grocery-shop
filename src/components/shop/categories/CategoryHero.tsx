@@ -1,10 +1,11 @@
 import { LayoutGrid } from "lucide-react";
+import Image from "next/image";
 
 export default function CategoryHero() {
   return (
     <section className="relative h-[400px] rounded-[60px] overflow-hidden flex items-center justify-center text-center">
       <div className="absolute inset-0">
-        <img
+        <Image
           src="https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&q=80&w=2000"
           alt="Grocery Categories"
           className="w-full h-full object-cover scale-110 blur-sm brightness-75"

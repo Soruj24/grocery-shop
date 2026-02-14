@@ -43,11 +43,12 @@ export default function CheckoutPage() {
 
   useEffect(() => {
     if (session?.user) {
-      setFormData({
-        name: session.user.name || "",
+      setFormData(prev => ({
+        ...prev,
+        name: session.user?.name || "",
         phone: (session.user as { phone?: string }).phone || "",
         address: (session.user as { address?: string }).address || "",
-      });
+      }));
     }
   }, [session]);
 

@@ -3,17 +3,18 @@
 import { useState } from "react";
 import { User, Mail, Phone, MapPin, Save, Camera } from "lucide-react";
 import { motion } from "framer-motion";
+import { Session } from "next-auth";
 
 interface ProfileEditFormProps {
-  session: any;
+  session: Session | null;
 }
 
 export default function ProfileEditForm({ session }: ProfileEditFormProps) {
   const [formData, setFormData] = useState({
-    name: session.user?.name || "",
-    email: session.user?.email || "",
-    phone: session.user?.phone || "",
-    address: session.user?.address || "",
+    name: session?.user?.name || "",
+    email: session?.user?.email || "",
+    phone: (session?.user as { phone?: string })?.phone || "",
+    address: (session?.user as { address?: string })?.address || "",
   });
   const [loading, setLoading] = useState(false);
 
@@ -30,15 +31,21 @@ export default function ProfileEditForm({ session }: ProfileEditFormProps) {
     <div className="space-y-8">
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-3xl font-black text-gray-900 dark:text-white">প্রোফাইল এডিট</h2>
-          <p className="text-gray-500 dark:text-gray-400 mt-1">আপনার ব্যক্তিগত তথ্য আপডেট করুন</p>
+          <h2 className="text-3xl font-black text-gray-900 dark:text-white">
+            প্রোফাইল এডিট
+          </h2>
+          <p className="text-gray-500 dark:text-gray-400 mt-1">
+            আপনার ব্যক্তিগত তথ্য আপডেট করুন
+          </p>
         </div>
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-6">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="space-y-2">
-            <label className="text-sm font-bold text-gray-700 dark:text-gray-300 ml-1">পূর্ণ নাম</label>
+            <label className="text-sm font-bold text-gray-700 dark:text-gray-300 ml-1">
+              পূর্ণ নাম
+            </label>
             <div className="relative group">
               <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gray-400 group-focus-within:text-green-600 transition-colors">
                 <User size={18} />
@@ -46,7 +53,9 @@ export default function ProfileEditForm({ session }: ProfileEditFormProps) {
               <input
                 type="text"
                 value={formData.name}
-                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                onChange={(e) =>
+                  setFormData({ ...formData, name: e.target.value })
+                }
                 className="w-full pl-11 pr-4 py-4 bg-gray-50 dark:bg-white/5 border border-transparent focus:border-green-500/50 focus:bg-white dark:focus:bg-black/20 rounded-2xl outline-none transition-all font-medium"
                 placeholder="আপনার নাম লিখুন"
               />
@@ -54,7 +63,9 @@ export default function ProfileEditForm({ session }: ProfileEditFormProps) {
           </div>
 
           <div className="space-y-2">
-            <label className="text-sm font-bold text-gray-700 dark:text-gray-300 ml-1">ইমেইল এড্রেস</label>
+            <label className="text-sm font-bold text-gray-700 dark:text-gray-300 ml-1">
+              ইমেইল এড্রেস
+            </label>
             <div className="relative group">
               <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gray-400 group-focus-within:text-green-600 transition-colors">
                 <Mail size={18} />
@@ -70,7 +81,9 @@ export default function ProfileEditForm({ session }: ProfileEditFormProps) {
           </div>
 
           <div className="space-y-2">
-            <label className="text-sm font-bold text-gray-700 dark:text-gray-300 ml-1">ফোন নম্বর</label>
+            <label className="text-sm font-bold text-gray-700 dark:text-gray-300 ml-1">
+              ফোন নম্বর
+            </label>
             <div className="relative group">
               <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gray-400 group-focus-within:text-green-600 transition-colors">
                 <Phone size={18} />
@@ -78,7 +91,9 @@ export default function ProfileEditForm({ session }: ProfileEditFormProps) {
               <input
                 type="tel"
                 value={formData.phone}
-                onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                onChange={(e) =>
+                  setFormData({ ...formData, phone: e.target.value })
+                }
                 className="w-full pl-11 pr-4 py-4 bg-gray-50 dark:bg-white/5 border border-transparent focus:border-green-500/50 focus:bg-white dark:focus:bg-black/20 rounded-2xl outline-none transition-all font-medium"
                 placeholder="আপনার ফোন নম্বর লিখুন"
               />
@@ -86,14 +101,18 @@ export default function ProfileEditForm({ session }: ProfileEditFormProps) {
           </div>
 
           <div className="space-y-2 md:col-span-2">
-            <label className="text-sm font-bold text-gray-700 dark:text-gray-300 ml-1">ডেলিভারি ঠিকানা</label>
+            <label className="text-sm font-bold text-gray-700 dark:text-gray-300 ml-1">
+              ডেলিভারি ঠিকানা
+            </label>
             <div className="relative group">
               <div className="absolute top-4 left-0 pl-4 flex items-start pointer-events-none text-gray-400 group-focus-within:text-green-600 transition-colors">
                 <MapPin size={18} />
               </div>
               <textarea
                 value={formData.address}
-                onChange={(e) => setFormData({ ...formData, address: e.target.value })}
+                onChange={(e) =>
+                  setFormData({ ...formData, address: e.target.value })
+                }
                 rows={3}
                 className="w-full pl-11 pr-4 py-4 bg-gray-50 dark:bg-white/5 border border-transparent focus:border-green-500/50 focus:bg-white dark:focus:bg-black/20 rounded-2xl outline-none transition-all font-medium resize-none"
                 placeholder="আপনার পূর্ণ ঠিকানা লিখুন"

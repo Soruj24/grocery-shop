@@ -1,12 +1,13 @@
 import dbConnect from "@/lib/mongodb";
 import Product from "@/models/Product";
-import Category from "@/models/Category";
-import { ShoppingBag, ArrowLeft } from "lucide-react";
-import Link from "next/link";
+import CategoryModel from "@/models/Category";
+
 import CategoryHeader from "@/components/shop/category-details/CategoryHeader";
 import SubCategoryNav from "@/components/shop/category-details/SubCategoryNav";
 import CategorySidebar from "@/components/shop/category-details/CategorySidebar";
 import CategoryProductGrid from "@/components/shop/category-details/CategoryProductGrid";
+import { Category as ICategory } from "@/types/category";
+import CategoryNotFound from "@/components/shop/category-details/CategoryNotFound";
 
 async function getCategoryData(
   id: string,
@@ -18,7 +19,7 @@ async function getCategoryData(
   const limit = 12;
   const skip = (page - 1) * limit;
 
-  const category = await Category.findById(id).lean();
+  const category = await CategoryModel.findById(id).lean();
   if (!category)
     return {
       category: null,
@@ -29,12 +30,12 @@ async function getCategoryData(
     };
 
   // Fetch all active categories for the sidebar
-  const allCategories = await Category.find({ isActive: true }).lean();
+  const allCategories = await CategoryModel.find({ isActive: true }).lean();
 
   // Find all sub-categories if this is a parent category
-  const subCategoryIds = allCategories
-    .filter((c: any) => c.parentId && c.parentId.toString() === id)
-    .map((c: any) => c._id);
+  const subCategoryIds = (allCategories as unknown as ICategory[])
+    .filter((c: ICategory) => c.parentId && c.parentId.toString() === id)
+    .map((c: ICategory) => c._id);
 
   const query = {
     category: { $in: [id, ...subCategoryIds] },
@@ -68,15 +69,23 @@ export default async function CategoryPage({
 }) {
   const { id } = await params;
   const resolvedSearchParams = await searchParams;
-  const { category, products, totalPages, currentPage, allCategories, totalCount } =
-    await getCategoryData(id, resolvedSearchParams);
+  const {
+    category,
+    products,
+    totalPages,
+    currentPage,
+    allCategories,
+    totalCount,
+  } = await getCategoryData(id, resolvedSearchParams);
 
   if (!category) {
     return <CategoryNotFound />;
   }
 
-  const subCategories = allCategories.filter(
-    (c: any) => c.parentId && c.parentId.toString() === (category.parentId || category._id).toString()
+  const subCategories = (allCategories as unknown as ICategory[]).filter(
+    (c: ICategory) =>
+      c.parentId &&
+      c.parentId.toString() === (category.parentId || category._id).toString(),
   );
 
   return (
@@ -84,7 +93,7 @@ export default async function CategoryPage({
       {/* Decorative Blobs */}
       <div className="absolute top-0 left-0 -translate-y-1/2 -translate-x-1/2 w-96 h-96 bg-green-100/30 dark:bg-green-900/10 rounded-full blur-[100px] pointer-events-none" />
 
-      <CategoryHeader category={category} totalCount={totalCount} />
+      <CategoryHeader category={category} totalCount={totalCount as number} />
 
       <SubCategoryNav subCategories={subCategories} currentId={id} />
 

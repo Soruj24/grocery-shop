@@ -63,7 +63,7 @@ export default function CategoryCard({ category }: CategoryCardProps) {
 
         {/* Sub-categories - Quick Links */}
         <div className="grid grid-cols-2 gap-2 mb-8 flex-1">
-          {displaySubCategories.map((sub: any, idx: number) => (
+          {displaySubCategories.map((sub: Category, idx: number) => (
             <Link
               key={sub._id || idx}
               href={`/category/${sub._id}`}

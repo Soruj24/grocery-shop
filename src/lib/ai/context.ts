@@ -15,7 +15,7 @@ Address: ${settings?.shopStatus ? settings.address : "দোকান বর্�
 Delivery Charge: ৳${settings?.deliveryCharge || 20}
 
 Products Available:
-${products.map(p => `- ${p.name}: ৳${p.price} (Category: ${(p.category as any)?.name}, Stock: ${p.stock})`).join("\n")}
+${products.map(p => `- ${p.name}: ৳${p.price} (Category: ${(p.category as { name: string })?.name}, Stock: ${p.stock})`).join("\n")}
 `;
 
   if (role === "admin") {

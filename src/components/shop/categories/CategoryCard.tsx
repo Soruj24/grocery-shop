@@ -1,8 +1,10 @@
 import Link from "next/link";
 import { ArrowRight, ChevronRight } from "lucide-react";
+import { Category as ICategory } from "@/types/category";
+import Image from "next/image";
 
 interface CategoryCardProps {
-  cat: any;
+  cat: ICategory;
   index: number;
 }
 
@@ -16,7 +18,7 @@ export default function CategoryCard({ cat, index }: CategoryCardProps) {
       {/* Category Image & Action */}
       <div className="relative mb-10">
         <div className="w-32 h-32 rounded-[40px] overflow-hidden ring-8 ring-gray-50 dark:ring-gray-800 group-hover:ring-green-100 dark:group-hover:ring-green-900/30 transition-all duration-700 shadow-xl">
-          <img
+          <Image
             src={cat.image || `https://picsum.photos/seed/${cat._id}/400/400`}
             alt={cat.name}
             className="w-full h-full object-cover transform group-hover:scale-125 transition-transform duration-1000"
@@ -44,7 +46,7 @@ export default function CategoryCard({ cat, index }: CategoryCardProps) {
         {/* Subcategories Bento Style */}
         <div className="space-y-4">
           <div className="flex flex-wrap gap-2">
-            {cat.subCategories?.slice(0, 5).map((sub: any) => (
+            {cat.subCategories?.slice(0, 5).map((sub: ICategory) => (
               <Link
                 key={sub._id}
                 href={`/category/${sub._id}`}
@@ -53,7 +55,7 @@ export default function CategoryCard({ cat, index }: CategoryCardProps) {
                 {sub.name}
               </Link>
             ))}
-            {cat.subCategories?.length > 5 && (
+            {cat.subCategories?.length && cat.subCategories.length > 5 && (
               <Link
                 href={`/category/${cat._id}`}
                 className="px-4 py-2.5 rounded-2xl text-sm font-black bg-green-50 dark:bg-green-900/30 text-green-600 dark:text-green-500 hover:bg-green-600 hover:text-white transition-all"

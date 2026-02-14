@@ -1,8 +1,9 @@
 import Link from "next/link";
 import { Layers } from "lucide-react";
+import { Category as ICategory } from "@/types/category";
 
 interface CategoryMapProps {
-  categories: any[];
+  categories: ICategory[];
 }
 
 export default function CategoryMap({ categories }: CategoryMapProps) {
@@ -23,7 +24,7 @@ export default function CategoryMap({ categories }: CategoryMapProps) {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
-          {categories.map((cat: any) => (
+          {categories.map((cat: ICategory) => (
             <div key={cat._id} className="space-y-6 group/item">
               <div className="flex items-center gap-4">
                 <div className="w-12 h-12 rounded-2xl bg-green-600 text-white flex items-center justify-center shadow-lg shadow-green-600/20 group-hover/item:scale-110 transition-transform">
@@ -38,7 +39,7 @@ export default function CategoryMap({ categories }: CategoryMapProps) {
               </div>
 
               <div className="space-y-3 pl-16 border-l-2 border-gray-50 dark:border-gray-800">
-                {cat.subCategories?.map((sub: any) => (
+                {cat.subCategories?.map((sub: ICategory) => (
                   <Link
                     key={sub._id}
                     href={`/category/${sub._id}`}

@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { TrendingUp, Star, Sparkles, ShoppingBag, ArrowRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { Product } from "@/types/product";
 
 const TABS = [
   { id: "trending", label: "ট্রেন্ডিং", icon: TrendingUp, color: "from-blue-500 to-cyan-500" },
@@ -12,7 +13,7 @@ const TABS = [
   { id: "new", label: "নতুন পণ্য", icon: Sparkles, color: "from-purple-500 to-pink-600" }
 ];
 
-export default function FeaturedProducts({ products }: { products: any[] }) {
+export default function FeaturedProducts({ products }: { products: Product[] }) {
   const [activeTab, setActiveTab] = useState("trending");
 
   // Mock filtering for UI demonstration

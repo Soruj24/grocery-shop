@@ -43,12 +43,6 @@ export default function CategoriesPage() {
     setTotalCategories(data.total);
   }, [currentPage, searchTerm, itemsPerPage]);
 
-  const fetchAllCategoriesForSelect = useCallback(async () => {
-    const res = await fetch("/api/admin/categories");
-    const data = await res.json();
-    setAllCategoriesForSelect(data);
-  }, []);
-
   useEffect(() => {
     let isMounted = true;
 
@@ -184,11 +178,13 @@ export default function CategoriesPage() {
               setEditingCategory(cat);
               setFormData({
                 name: cat.name,
-                isActive: cat.isActive,
+                isActive: cat.isActive ?? true,
                 parentId:
                   typeof cat.parentId === "string"
                     ? cat.parentId
-                    : cat.parentId?._id || "",
+                    : typeof cat.parentId === "object"
+                      ? cat.parentId?._id || ""
+                      : "",
                 image: cat.image || "",
               });
               setIsModalOpen(true);

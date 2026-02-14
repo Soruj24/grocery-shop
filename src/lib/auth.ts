@@ -24,7 +24,10 @@ export const authOptions: NextAuthOptions = {
           throw new Error("No user found with this email");
         }
 
-        const isValid = await bcrypt.compare(credentials.password, user.password);
+        const isValid = await bcrypt.compare(
+          credentials.password,
+          user.password,
+        );
 
         if (!isValid) {
           throw new Error("Invalid password");
@@ -33,6 +36,7 @@ export const authOptions: NextAuthOptions = {
         return {
           id: user._id.toString(),
           name: user.name,
+          email: user.email,
           phone: user.phone,
           role: user.role,
         };
@@ -43,16 +47,14 @@ export const authOptions: NextAuthOptions = {
     async jwt({ token, user }) {
       if (user) {
         token.id = user.id;
-        token.role = (user as any).role;
-        token.email = (user as any).email;
+        token.role = user.role;
       }
       return token;
     },
     async session({ session, token }) {
-      if (token) {
-        (session.user as any).id = token.id;
-        (session.user as any).role = token.role;
-        (session.user as any).email = token.email;
+      if (token && session.user) {
+        session.user.id = token.id;
+        session.user.role = token.role;
       }
       return session;
     },

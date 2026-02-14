@@ -7,6 +7,7 @@ import EmptyProductState from "@/components/shop/products/EmptyProductState";
 import ProductSidebarFilters from "@/components/shop/products/ProductSidebarFilters";
 import ProductGridContent from "@/components/shop/products/ProductGridContent";
 import ProductStatusBar from "@/components/shop/products/ProductStatusBar";
+import { Category as ICategory } from "@/types/category";
 
 async function getProducts(searchParams: {
   [key: string]: string | string[] | undefined;
@@ -30,7 +31,7 @@ async function getProducts(searchParams: {
   const limit = 12;
   const skip = (page - 1) * limit;
 
-  const query: any = {
+  const query: Record<string, unknown> = {
     isActive: true,
     price: { $gte: minPrice, $lte: maxPrice },
   };
@@ -46,28 +47,32 @@ async function getProducts(searchParams: {
 
   let actualCategoryId = categoryId;
   if (categoryId && categoryId !== "all") {
-    const foundCategory = categories.find(
-      (c: any) =>
+    const foundCategory = (categories as ICategory[]).find(
+      (c: ICategory) =>
         c._id.toString() === categoryId ||
-        c.name.toLowerCase() === categoryId.toLowerCase()
+        c.name.toLowerCase() === categoryId.toLowerCase(),
     );
     if (foundCategory) {
       actualCategoryId = foundCategory._id.toString();
     }
   }
 
-  if (actualCategoryId && actualCategoryId !== "all" && mongoose.Types.ObjectId.isValid(actualCategoryId)) {
-    const subCategoryIds = categories
+  if (
+    actualCategoryId &&
+    actualCategoryId !== "all" &&
+    mongoose.Types.ObjectId.isValid(actualCategoryId)
+  ) {
+    const subCategoryIds = (categories as ICategory[])
       .filter(
-        (c: any) =>
-          c.parentId && c.parentId.toString() === actualCategoryId
+        (c: ICategory) =>
+          c.parentId && c.parentId.toString() === actualCategoryId,
       )
-      .map((c: any) => c._id);
+      .map((c: ICategory) => c._id);
 
     query.category = { $in: [actualCategoryId, ...subCategoryIds] };
   }
 
-  let sortQuery: any = { createdAt: -1 };
+  let sortQuery: Record<string, 1 | -1> = { createdAt: -1 };
   if (sort === "price_low") sortQuery = { price: 1 };
   if (sort === "price_high") sortQuery = { price: -1 };
   if (sort === "oldest") sortQuery = { createdAt: 1 };
@@ -112,21 +117,29 @@ export default async function ProductsPage({
       ? resolvedSearchParams.maxPrice
       : "10000";
 
-  const mainCategories = categories.filter((cat: any) => !cat.parentId);
-  const selectedCategory = categories.find(
-    (cat: any) => cat._id === categoryId,
+  const mainCategories = (categories as unknown as ICategory[]).filter(
+    (cat) => !cat.parentId,
+  );
+  const selectedCategory = (categories as unknown as ICategory[]).find(
+    (cat) => cat._id.toString() === categoryId,
   );
   const subCategories = categoryId
-    ? categories.filter((cat: any) => cat.parentId === categoryId)
+    ? (categories as unknown as ICategory[]).filter(
+        (cat) => cat.parentId?.toString() === categoryId,
+      )
     : [];
 
   // If the selected category is a subcategory, find its parent's siblings and its own siblings
   const parentCategory = selectedCategory?.parentId
-    ? categories.find((cat: any) => cat._id === selectedCategory.parentId)
+    ? (categories as unknown as ICategory[]).find(
+        (cat) => cat._id.toString() === selectedCategory.parentId?.toString(),
+      )
     : null;
 
   const displaySubCategories = parentCategory
-    ? categories.filter((cat: any) => cat.parentId === parentCategory._id)
+    ? (categories as unknown as ICategory[]).filter(
+        (cat) => cat.parentId?.toString() === parentCategory._id.toString(),
+      )
     : subCategories;
 
   return (

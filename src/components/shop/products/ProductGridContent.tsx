@@ -1,8 +1,9 @@
 import ProductCard from "@/components/ProductCard";
 import Pagination from "@/components/Pagination";
+import { Product } from "@/types/product";
 
 interface ProductGridContentProps {
-  products: any[];
+  products: Product[];
   totalPages: number;
   currentPage: number;
   totalCount: number;

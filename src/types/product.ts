@@ -13,4 +13,5 @@ export interface Product {
   discount?: number;
   rating?: number;
   reviews?: number;
+  discountPrice?: number;
 }

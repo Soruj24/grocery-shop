@@ -2,7 +2,7 @@ export interface AdminCategory {
   _id: string;
   name: string;
   slug: string;
-  parentId?: string;
+  parentId?: string | { _id: string; name: string };
   isActive?: boolean;
   image?: string;
 }

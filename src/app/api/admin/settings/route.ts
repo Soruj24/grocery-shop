@@ -6,7 +6,7 @@ import Settings from "@/models/Settings";
 
 async function checkAdmin() {
   const session = await getServerSession(authOptions);
-  if (session?.user?.role !== "admin") {
+  if ((session?.user as { role?: string })?.role !== "admin") {
     throw new Error("Unauthorized");
   }
 }
@@ -19,8 +19,11 @@ export async function GET() {
       settings = await Settings.create({});
     }
     return NextResponse.json(settings);
-  } catch (error: any) {
-    return NextResponse.json({ message: error.message }, { status: 500 });
+  } catch (error: unknown) {
+    return NextResponse.json(
+      { message: error instanceof Error ? error.message : "Unknown error" },
+      { status: 500 },
+    );
   }
 }
 
@@ -31,7 +34,10 @@ export async function PUT(req: Request) {
     await dbConnect();
     const settings = await Settings.findOneAndUpdate({}, data, { new: true, upsert: true });
     return NextResponse.json(settings);
-  } catch (error: any) {
-    return NextResponse.json({ message: error.message }, { status: error.message === "Unauthorized" ? 401 : 500 });
+  } catch (error: unknown) {
+    return NextResponse.json(
+      { message: error instanceof Error ? error.message : "Unknown error" },
+      { status: error instanceof Error && error.message === "Unauthorized" ? 401 : 500 },
+    );
   }
 }

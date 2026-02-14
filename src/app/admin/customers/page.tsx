@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { User, Mail, Phone, Calendar } from "lucide-react";
 import AdminHeader from "@/components/admin/AdminHeader";
 import Pagination from "@/components/admin/Pagination";
 import AdminTable from "@/components/admin/AdminTable";
@@ -30,9 +29,10 @@ export default function AdminCustomersPage() {
     fetchCustomers();
   }, []);
 
-  const filteredCustomers = customers.filter((customer: AdminCustomer) => 
-    customer.name.toLowerCase().includes(search.toLowerCase()) || 
-    customer.phone?.includes(search)
+  const filteredCustomers = customers.filter(
+    (customer: AdminCustomer) =>
+      customer.name.toLowerCase().includes(search.toLowerCase()) ||
+      customer.phone?.includes(search),
   );
 
   const totalPages = Math.ceil(filteredCustomers.length / itemsPerPage);
@@ -69,14 +69,14 @@ export default function AdminCustomersPage() {
           <CustomerTableRow key={customer._id} customer={customer} />
         ))}
       </AdminTable>
-        <Pagination
-          currentPage={currentPage}
-          totalPages={totalPages}
-          onPageChange={setCurrentPage}
-          totalItems={filteredCustomers.length}
-          itemsPerPage={itemsPerPage}
-          label="Customers"
-        />
+      <Pagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        onPageChange={setCurrentPage}
+        totalItems={filteredCustomers.length}
+        itemsPerPage={itemsPerPage}
+        label="Customers"
+      />
     </div>
   );
 }

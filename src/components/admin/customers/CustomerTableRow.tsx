@@ -1,16 +1,8 @@
 import { User, Phone, Mail, Calendar } from "lucide-react";
-
-interface Customer {
-  _id: string;
-  name: string;
-  phone: string;
-  email?: string;
-  address?: string;
-  createdAt: string;
-}
+import { AdminCustomer } from "@/types/admin";
 
 interface CustomerTableRowProps {
-  customer: Customer;
+  customer: AdminCustomer;
 }
 
 export default function CustomerTableRow({ customer }: CustomerTableRowProps) {
@@ -30,7 +22,7 @@ export default function CustomerTableRow({ customer }: CustomerTableRowProps) {
         <div className="space-y-1.5">
           <p className="text-sm text-gray-800 dark:text-gray-200 flex items-center font-bold">
             <Phone className="w-3.5 h-3.5 mr-2.5 text-emerald-500 dark:text-emerald-400" />
-            {customer.phone}
+            {customer.phone || "নম্বর নেই"}
           </p>
           {customer.email && (
             <p className="text-xs text-gray-500 dark:text-gray-400 flex items-center font-medium">

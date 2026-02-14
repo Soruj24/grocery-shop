@@ -1,8 +1,9 @@
 import { Package } from "lucide-react";
 import ProfileOrderCard from "./ProfileOrderCard";
+import { Order } from "@/types/order";
 
 interface ProfileOrderListProps {
-  orders: any[];
+  orders: Order[];
   loading: boolean;
 }
 
@@ -25,7 +26,7 @@ export default function ProfileOrderList({ orders, loading }: ProfileOrderListPr
             <p className="text-gray-500 dark:text-gray-400">আপনার কোন অর্ডার নেই</p>
           </div>
         ) : (
-          orders.map((order: any) => (
+          orders.map((order: Order) => (
             <ProfileOrderCard key={order._id} order={order} />
           ))
         )}

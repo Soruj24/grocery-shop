@@ -87,7 +87,7 @@ export default async function ProductDetailsPage({
       "@type": "Offer",
       "url": `https://emranshop.com/products/${product._id}`,
       "priceCurrency": "BDT",
-      "price": product.discountPrice || product.price,
+      "price": product.discount ? product.price - (product.price * product.discount / 100) : product.price,
       "availability": product.stock > 0 ? "https://schema.org/InStock" : "https://schema.org/OutOfStock"
     }
   };

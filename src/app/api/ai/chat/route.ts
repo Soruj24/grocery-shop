@@ -7,10 +7,10 @@ import ollama from "ollama";
 export async function POST(req: Request) {
   try {
     const session = await getServerSession(authOptions);
-    const role = (session?.user as any)?.role || "customer";
+    const role = (session?.user as { role?: string })?.role || "customer";
     const { message } = await req.json();
 
-    const context = await getAIContext(role);
+    const context = await getAIContext(role as "customer" | "admin");
 
     const systemPrompt = `
       You are an AI Assistant for "Mohammad Emran Hossain Grocery Shop" located in Janer Mor, Nagurpur, Tangail.
@@ -39,7 +39,7 @@ export async function POST(req: Request) {
       });
 
       return NextResponse.json({ response: response.message.content });
-    } catch (ollamaError: any) {
+    } catch (ollamaError: unknown) {
       console.error("Ollama error, falling back to simple logic:", ollamaError);
       
       // Fallback logic if Ollama is not running or model not found
@@ -56,7 +56,10 @@ export async function POST(req: Request) {
       
       return NextResponse.json({ response: aiResponse });
     }
-  } catch (error: any) {
-    return NextResponse.json({ message: error.message }, { status: 500 });
+  } catch (error: unknown) {
+    return NextResponse.json(
+      { message: error instanceof Error ? error.message : "Unknown error" },
+      { status: 500 },
+    );
   }
 }

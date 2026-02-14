@@ -77,8 +77,8 @@ export default function CategoryModal({
                   কোনোটিই নয় (মেইন ক্যাটাগরি)
                 </option>
                 {mainCategories
-                  .filter((cat) => cat._id !== editingCategory?._id)
-                  .map((cat) => (
+                  .filter((cat: AdminCategory) => cat._id !== editingCategory?._id)
+                  .map((cat: AdminCategory) => (
                     <option
                       key={cat._id}
                       value={cat._id}

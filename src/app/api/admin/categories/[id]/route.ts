@@ -6,12 +6,15 @@ import Category from "@/models/Category";
 
 async function checkAdmin() {
   const session = await getServerSession(authOptions);
-  if (session?.user?.role !== "admin") {
+  if ((session?.user as { role?: string })?.role !== "admin") {
     throw new Error("Unauthorized");
   }
 }
 
-export async function PUT(req: Request, { params }: { params: Promise<{ id: string }> }) {
+export async function PUT(
+  req: Request,
+  { params }: { params: Promise<{ id: string }> },
+) {
   try {
     await checkAdmin();
     const { id } = await params;
@@ -19,19 +22,28 @@ export async function PUT(req: Request, { params }: { params: Promise<{ id: stri
     await dbConnect();
     const category = await Category.findByIdAndUpdate(id, data, { new: true });
     return NextResponse.json(category);
-  } catch (error: any) {
-    return NextResponse.json({ message: error.message }, { status: error.message === "Unauthorized" ? 401 : 500 });
+  } catch (error: unknown) {
+    return NextResponse.json(
+      { message: (error as Error).message },
+      { status: (error as Error).message === "Unauthorized" ? 401 : 500 },
+    );
   }
 }
 
-export async function DELETE(req: Request, { params }: { params: Promise<{ id: string }> }) {
+export async function DELETE(
+  req: Request,
+  { params }: { params: Promise<{ id: string }> },
+) {
   try {
     await checkAdmin();
     const { id } = await params;
     await dbConnect();
     await Category.findByIdAndDelete(id);
     return NextResponse.json({ message: "Category deleted" });
-  } catch (error: any) {
-    return NextResponse.json({ message: error.message }, { status: error.message === "Unauthorized" ? 401 : 500 });
+  } catch (error: unknown) {
+    return NextResponse.json(
+      { message: (error as Error).message },
+      { status: (error as Error).message === "Unauthorized" ? 401 : 500 },
+    );
   }
 }

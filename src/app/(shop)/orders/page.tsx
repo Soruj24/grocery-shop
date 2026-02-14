@@ -50,13 +50,17 @@ export default function OrdersPage() {
   return (
     <div className="max-w-4xl mx-auto py-8 space-y-10">
       <div className="flex flex-col gap-2">
-        <h1 className="text-3xl font-black text-gray-800 dark:text-gray-100 tracking-tight">আমার অর্ডারসমূহ</h1>
-        <p className="text-gray-500 dark:text-gray-400 font-bold">আপনার সব অর্ডারের স্ট্যাটাস এবং ডিটেইলস এখানে দেখুন</p>
+        <h1 className="text-3xl font-black text-gray-800 dark:text-gray-100 tracking-tight">
+          আমার অর্ডারসমূহ
+        </h1>
+        <p className="text-gray-500 dark:text-gray-400 font-bold">
+          আপনার সব অর্ডারের স্ট্যাটাস এবং ডিটেইলস এখানে দেখুন
+        </p>
       </div>
 
       <div className="grid gap-6">
         {orders.map((order) => (
-          <OrderCard key={order._id} order={order as any} />
+          <OrderCard key={order._id} order={order as Order} />
         ))}
       </div>
     </div>

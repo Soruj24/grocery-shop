@@ -7,27 +7,52 @@ import { Truck, ShieldCheck, Clock, Star } from "lucide-react";
 import Hero from "@/components/shop/Hero";
 import Features from "@/components/shop/Features";
 import PageBackground from "@/components/ui/PageBackground";
+import { Category as ICategory } from "@/types/category";
 
 // Lazy Load components that are below the fold
-const CategorySection = dynamic(() => import("@/components/shop/CategorySection"));
-const SubCategorySpotlight = dynamic(() => import("@/components/shop/SubCategorySpotlight"));
-const SpecialOfferBanners = dynamic(() => import("@/components/shop/SpecialOfferBanners"));
-const ProductSection = dynamic(() => import("@/components/shop/ProductSection"));
+const CategorySection = dynamic(
+  () => import("@/components/shop/CategorySection"),
+);
+const SubCategorySpotlight = dynamic(
+  () => import("@/components/shop/SubCategorySpotlight"),
+);
+const SpecialOfferBanners = dynamic(
+  () => import("@/components/shop/SpecialOfferBanners"),
+);
+const ProductSection = dynamic(
+  () => import("@/components/shop/ProductSection"),
+);
 const Newsletter = dynamic(() => import("@/components/shop/Newsletter"));
 const Testimonials = dynamic(() => import("@/components/shop/Testimonials"));
 const FlashDeals = dynamic(() => import("@/components/shop/FlashDeals"));
 const AppDownload = dynamic(() => import("@/components/shop/AppDownload"));
 const ComboOffers = dynamic(() => import("@/components/shop/ComboOffers"));
-const FeaturedProducts = dynamic(() => import("@/components/shop/FeaturedProducts"));
-const RecentlyViewedSection = dynamic(() => import("@/components/shop/RecentlyViewedSection"));
-const AIRecommendationsSection = dynamic(() => import("@/components/shop/AIRecommendationsSection"));
+const FeaturedProducts = dynamic(
+  () => import("@/components/shop/FeaturedProducts"),
+);
+const RecentlyViewedSection = dynamic(
+  () => import("@/components/shop/RecentlyViewedSection"),
+);
+const AIRecommendationsSection = dynamic(
+  () => import("@/components/shop/AIRecommendationsSection"),
+);
 
 // Marketing components
-const DailyDealsBanner = dynamic(() => import("@/components/shop/marketing/DailyDealsBanner"));
-const RamadanOffers = dynamic(() => import("@/components/shop/marketing/RamadanOffers"));
-const EidSpecialDeals = dynamic(() => import("@/components/shop/marketing/EidSpecialDeals"));
-const ComboPacks = dynamic(() => import("@/components/shop/marketing/ComboPacks"));
-const BuyMoreSaveMore = dynamic(() => import("@/components/shop/marketing/BuyMoreSaveMore"));
+const DailyDealsBanner = dynamic(
+  () => import("@/components/shop/marketing/DailyDealsBanner"),
+);
+const RamadanOffers = dynamic(
+  () => import("@/components/shop/marketing/RamadanOffers"),
+);
+const EidSpecialDeals = dynamic(
+  () => import("@/components/shop/marketing/EidSpecialDeals"),
+);
+const ComboPacks = dynamic(
+  () => import("@/components/shop/marketing/ComboPacks"),
+);
+const BuyMoreSaveMore = dynamic(
+  () => import("@/components/shop/marketing/BuyMoreSaveMore"),
+);
 
 async function getHomeData(searchParams: {
   [key: string]: string | string[] | undefined;
@@ -40,12 +65,12 @@ async function getHomeData(searchParams: {
 
   // Get only main categories and include subcategory count
   const allCategories = await Category.find({ isActive: true }).lean();
-  const mainCategories = allCategories
-    .filter((cat: { parentId?: string | null }) => !cat.parentId)
-    .map((cat) => ({
+  const mainCategories = (allCategories as unknown as ICategory[])
+    .filter((cat: ICategory) => !cat.parentId)
+    .map((cat: ICategory) => ({
       ...cat,
-      subCategories: allCategories.filter(
-        (sub: any) => sub.parentId?.toString() === cat._id.toString(),
+      subCategories: (allCategories as unknown as ICategory[]).filter(
+        (sub: ICategory) => sub.parentId?.toString() === cat._id.toString(),
       ),
     }));
 
@@ -127,19 +152,19 @@ export default async function HomePage({
       <SpecialOfferBanners />
       <AppDownload />
       <ProductSection
-              products={products}
-              totalPages={totalPages}
-              currentPage={currentPage}
-              totalCount={totalCount}
-            />
-            <Testimonials />
-            <Newsletter />
+        products={products}
+        totalPages={totalPages}
+        currentPage={currentPage}
+        totalCount={totalCount}
+      />
+      <Testimonials />
+      <Newsletter />
 
-            {/* AI Recommendations Section */}
-            <AIRecommendationsSection />
+      {/* AI Recommendations Section */}
+      <AIRecommendationsSection />
 
-            {/* Recently Viewed Section */}
-            <RecentlyViewedSection />
+      {/* Recently Viewed Section */}
+      <RecentlyViewedSection />
     </div>
   );
 }

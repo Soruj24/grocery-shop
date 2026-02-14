@@ -1,12 +1,7 @@
 import { Filter, ChevronDown, X } from "lucide-react";
 import Link from "next/link";
 import PriceFilter from "@/components/PriceFilter";
-
-interface Category {
-  _id: string;
-  name: string;
-  parentId?: string;
-}
+import { Category } from "@/types/category";
 
 interface ProductSidebarFiltersProps {
   categories: Category[];
@@ -14,7 +9,7 @@ interface ProductSidebarFiltersProps {
   minPrice: string;
   maxPrice: string;
   mainCategories: Category[];
-  parentCategory: Category | null;
+  parentCategory: Category | null | undefined;
 }
 
 export default function ProductSidebarFilters({
@@ -104,7 +99,7 @@ export default function ProductSidebarFilters({
             <h4 className="text-sm font-black text-gray-400 dark:text-gray-500 uppercase tracking-wider mb-4">
               মূল্য পরিসীমা
             </h4>
-            <PriceFilter initialMin={parseInt(minPrice)} initialMax={parseInt(maxPrice)} />
+            <PriceFilter initialMin={minPrice} initialMax={maxPrice} />
           </div>
 
           {/* Reset Button */}

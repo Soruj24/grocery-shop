@@ -8,7 +8,7 @@ import Image from "next/image";
 import { Toast } from "@/lib/toast";
 import { Product } from "@/types/product";
 import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, PanInfo } from "framer-motion";
 
 interface ProductCardProps {
   product: Product;
@@ -20,7 +20,7 @@ export default function ProductCard({ product }: ProductCardProps) {
   const [quantity, setQuantity] = useState(1);
   const active = isInWishlist(product._id);
 
-  const handleDragEnd = (event: any, info: any) => {
+  const handleDragEnd = (event: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
     const swipeThreshold = 50;
     if (info.offset.x > swipeThreshold) {
       // Swipe Right - Add to Wishlist

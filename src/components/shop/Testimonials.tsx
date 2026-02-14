@@ -108,7 +108,7 @@ export default function Testimonials() {
                   <Quote size={40} className="text-gray-100 dark:text-white/5 absolute top-8 right-8" />
                 </div>
                 <p className={`text-gray-600 dark:text-gray-300 font-medium leading-relaxed ${testimonial.size === "large" ? "text-xl" : "text-base"}`}>
-                  "{testimonial.content}"
+                  &ldquo;{testimonial.content}&rdquo;
                 </p>
               </div>
 

@@ -6,7 +6,7 @@ import Category from "@/models/Category";
 
 async function checkAdmin() {
   const session = await getServerSession(authOptions);
-  if (session?.user?.role !== "admin") {
+  if ((session?.user as { role?: string })?.role !== "admin") {
     throw new Error("Unauthorized");
   }
 }
@@ -26,7 +26,7 @@ export async function GET(req: Request) {
         .sort({ name: 1 })
         .skip(skip)
         .limit(limit);
-      
+
       const total = await Category.countDocuments({});
 
       return NextResponse.json({
@@ -36,10 +36,15 @@ export async function GET(req: Request) {
       });
     }
 
-    const categories = await Category.find({}).populate("parentId", "name").sort({ name: 1 });
+    const categories = await Category.find({})
+      .populate("parentId", "name")
+      .sort({ name: 1 });
     return NextResponse.json(categories);
-  } catch (error: any) {
-    return NextResponse.json({ message: error.message }, { status: 500 });
+  } catch (error: unknown) {
+    return NextResponse.json(
+      { message: (error as Error).message },
+      { status: 500 },
+    );
   }
 }
 
@@ -50,7 +55,10 @@ export async function POST(req: Request) {
     await dbConnect();
     const category = await Category.create(data);
     return NextResponse.json(category, { status: 201 });
-  } catch (error: any) {
-    return NextResponse.json({ message: error.message }, { status: error.message === "Unauthorized" ? 401 : 500 });
+  } catch (error: unknown) {
+    return NextResponse.json(
+      { message: (error as Error).message },
+      { status: (error as Error).message === "Unauthorized" ? 401 : 500 },
+    );
   }
 }

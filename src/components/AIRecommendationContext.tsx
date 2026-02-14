@@ -1,42 +1,38 @@
 "use client";
 
-import React, { createContext, useContext, useEffect, useState } from 'react';
+import React, { createContext, useContext, useMemo } from 'react';
 import { Product } from '@/types/product';
 import { useRecentlyViewed } from './RecentlyViewedContext';
 
 interface AIRecommendationContextType {
   recommendations: Product[];
   isLoading: boolean;
-  getSmartSuggestions: (cartItems: any[]) => Product[];
+  getSmartSuggestions: (cartItems: Product[]) => Product[];
 }
 
 const AIRecommendationContext = createContext<AIRecommendationContextType | undefined>(undefined);
 
 export const AIRecommendationProvider: React.FC<{ children: React.ReactNode, allProducts: Product[] }> = ({ children, allProducts }) => {
-  const [recommendations, setRecommendations] = useState<Product[]>([]);
   const { recentlyViewed } = useRecentlyViewed();
-  const [isLoading, setIsLoading] = useState(false);
 
-  // Simple Content-Based Filtering Simulation
-  useEffect(() => {
-    if (recentlyViewed.length > 0 && allProducts.length > 0) {
-      setIsLoading(true);
-      
-      // Get categories from recently viewed
-      const viewedCategories = Array.from(new Set(recentlyViewed.map(p => p.category?._id)));
-      
-      // Find products in same categories but not already viewed
-      const suggested = allProducts.filter(p => 
-        viewedCategories.includes(p.category?._id) && 
-        !recentlyViewed.find(rv => rv._id === p._id)
-      ).slice(0, 5);
+  // Simple Content-Based Filtering
+  // Calculated during render to avoid cascading renders (ESLint: react-hooks/set-state-in-effect)
+  const recommendations = React.useMemo(() => {
+    if (recentlyViewed.length === 0 || allProducts.length === 0) return [];
 
-      setRecommendations(suggested);
-      setIsLoading(false);
-    }
+    // Get categories from recently viewed
+    const viewedCategories = Array.from(new Set(recentlyViewed.map(p => p.category?._id)));
+    
+    // Find products in same categories but not already viewed
+    return allProducts.filter(p => 
+      viewedCategories.includes(p.category?._id) && 
+      !recentlyViewed.find(rv => rv._id === p._id)
+    ).slice(0, 5);
   }, [recentlyViewed, allProducts]);
 
-  const getSmartSuggestions = (cartItems: any[]) => {
+  const isLoading = false; // Synchronous calculation, no loading state needed
+
+  const getSmartSuggestions = (cartItems: Product[]) => {
     if (cartItems.length === 0) return [];
     
     const cartCategoryIds = cartItems.map(item => item.category?._id);

@@ -4,9 +4,10 @@ import Link from "next/link";
 import { LayoutGrid, ChevronDown, Flame, Percent, Star, Clock } from "lucide-react";
 import CategoryMegaMenu from "./CategoryMegaMenu";
 import { motion, AnimatePresence } from "framer-motion";
+import { Category } from "@/types/category";
 
 interface DesktopNavProps {
-  categories: any[];
+  categories: Category[];
   isCategoryMenuOpen: boolean;
   setIsCategoryMenuOpen: (open: boolean) => void;
 }

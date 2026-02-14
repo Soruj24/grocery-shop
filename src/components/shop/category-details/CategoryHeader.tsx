@@ -1,8 +1,10 @@
 import Link from "next/link";
 import { ShoppingBag, ArrowLeft } from "lucide-react";
+import { Category as ICategory } from "@/types/category";
+import Image from "next/image";
 
 interface CategoryHeaderProps {
-  category: any;
+  category: ICategory;
   totalCount: number;
 }
 
@@ -10,7 +12,7 @@ export default function CategoryHeader({ category, totalCount }: CategoryHeaderP
   return (
     <section className="relative h-[350px] rounded-[60px] overflow-hidden flex items-center">
       <div className="absolute inset-0">
-        <img
+        <Image
           src={category.image || "https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&q=80&w=1000"}
           alt={category.name}
           className="w-full h-full object-cover brightness-50"

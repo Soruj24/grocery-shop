@@ -3,12 +3,7 @@
 import { useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Search, Filter, SlidersHorizontal, X, ChevronDown } from "lucide-react";
-
-interface Category {
-  _id: string;
-  name: string;
-  parentId?: string;
-}
+import { Category } from "@/types/category";
 
 interface ProductFiltersProps {
   categories: Category[];
@@ -142,7 +137,7 @@ export default function ProductFilters({ categories }: ProductFiltersProps) {
           )}
           {search && (
             <div className="flex items-center gap-2 bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-400 px-3 py-1.5 rounded-lg text-xs font-bold border border-blue-100 dark:border-blue-900/30">
-              "{search}"
+              &ldquo;{search}&rdquo;
               <button onClick={() => { setSearch(""); applyFilters(); }}>
                 <X className="w-3 h-3 hover:text-red-500 dark:hover:text-red-400" />
               </button>

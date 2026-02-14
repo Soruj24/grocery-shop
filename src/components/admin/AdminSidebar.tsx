@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { signOut } from "next-auth/react";
+import { Session } from "next-auth";
 import { 
   LayoutDashboard, 
   Package, 
@@ -14,7 +15,7 @@ import {
 } from "lucide-react";
 
 interface AdminSidebarProps {
-  session: any;
+  session: Session | null;
 }
 
 export default function AdminSidebar({ session }: AdminSidebarProps) {

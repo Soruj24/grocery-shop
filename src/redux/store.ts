@@ -1,4 +1,5 @@
 import { configureStore, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { apiSlice } from './apiSlice';
 
 interface UIState {
   location: string;
@@ -28,7 +29,10 @@ export const { setLocation, toggleLocationModal } = uiSlice.actions;
 export const store = configureStore({
   reducer: {
     ui: uiSlice.reducer,
+    [apiSlice.reducerPath]: apiSlice.reducer,
   },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware().concat(apiSlice.middleware),
 });
 
 export type RootState = ReturnType<typeof store.getState>;

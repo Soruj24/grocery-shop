@@ -1,18 +1,9 @@
 import { Clock, Truck, CheckCircle, XCircle, Package } from "lucide-react";
 import StatusBadge from "@/components/admin/StatusBadge";
-
-interface Order {
-  _id: string;
-  phone: string;
-  address: string;
-  total: number;
-  paymentMethod: string;
-  transactionId?: string;
-  status: string;
-}
+import { AdminOrder } from "@/types/admin";
 
 interface OrderTableRowProps {
-  order: Order;
+  order: AdminOrder;
   onStatusUpdate: (id: string, status: string) => void;
 }
 
@@ -40,14 +31,14 @@ export default function OrderTableRow({
         <div className="flex flex-col gap-1.5">
           <span
             className={`text-[10px] font-black uppercase tracking-wider px-3 py-1 rounded-full w-fit border ${
-              order.paymentMethod === "cod"
+              order.paymentMethod === "cod" || !order.paymentMethod
                 ? "bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 border-gray-200 dark:border-gray-700"
                 : order.paymentMethod === "bkash"
                   ? "bg-[#D12053]/5 dark:bg-[#D12053]/10 text-[#D12053] dark:text-[#E2136E] border-[#D12053]/20 dark:border-[#E2136E]/30"
                   : "bg-[#F7941D]/5 dark:bg-[#F7941D]/10 text-[#F7941D] dark:text-[#FF9F29] border-[#F7941D]/20 dark:border-[#FF9F29]/30"
             }`}
           >
-            {order.paymentMethod === "cod"
+            {order.paymentMethod === "cod" || !order.paymentMethod
               ? "Cash on Delivery"
               : order.paymentMethod === "bkash"
                 ? "bKash"

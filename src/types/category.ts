@@ -3,6 +3,8 @@ export interface Category {
   name: string;
   nameEn?: string;
   image?: string;
+  parentId?: string | null;
+  isActive?: boolean;
   products?: any[];
-  subCategories?: any[];
+  subCategories?: Category[];
 }

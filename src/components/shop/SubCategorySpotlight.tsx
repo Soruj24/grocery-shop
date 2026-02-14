@@ -1,16 +1,17 @@
 "use client";
 
 import SubCategoryCard from "./SubCategorySpotlight/SubCategoryCard";
+import { Category } from "@/types/category";
 
 interface SubCategorySpotlightProps {
-  categories: any[];
+  categories: Category[];
 }
 
 export default function SubCategorySpotlight({
   categories,
 }: SubCategorySpotlightProps) {
   const subCategories = categories
-    .flatMap((c: any) => c.subCategories || [])
+    .flatMap((c: Category) => c.subCategories || [])
     .slice(0, 8);
 
   return (
@@ -29,7 +30,7 @@ export default function SubCategorySpotlight({
         </div>
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
-          {subCategories.map((sub: any, idx: number) => (
+          {subCategories.map((sub: Category, idx: number) => (
             <SubCategoryCard 
               key={sub._id}
               id={sub._id}

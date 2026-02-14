@@ -4,9 +4,11 @@ import OrderTrackingTimeline from "./OrderTrackingTimeline";
 import { motion, AnimatePresence } from "framer-motion";
 import { useCart } from "@/components/CartContext";
 import { Toast } from "@/lib/toast";
+import { Order, OrderItem } from "@/types/order";
+import Image from "next/image";
 
 interface ProfileOrderCardProps {
-  order: any;
+  order: Order;
 }
 
 export default function ProfileOrderCard({ order }: ProfileOrderCardProps) {
@@ -14,7 +16,7 @@ export default function ProfileOrderCard({ order }: ProfileOrderCardProps) {
   const { addToCart } = useCart();
 
   const handleReorder = () => {
-    order.items.forEach((item: any) => {
+    order.items.forEach((item: OrderItem) => {
       // Mapping order item back to CartItem format
       const cartItem = {
         _id: item.product, // Using product ID as _id
@@ -133,12 +135,12 @@ export default function ProfileOrderCard({ order }: ProfileOrderCardProps) {
               className="overflow-hidden"
             >
               <div className="pt-6 border-t border-gray-100 dark:border-white/5 space-y-4">
-                {order.items.map((item: any, index: number) => (
+                {order.items.map((item: OrderItem, index: number) => (
                   <div key={index} className="flex items-center justify-between gap-4 p-4 bg-gray-50 dark:bg-white/5 rounded-2xl">
                     <div className="flex items-center gap-4">
                       <div className="w-12 h-12 bg-white dark:bg-gray-800 rounded-xl flex items-center justify-center border border-gray-100 dark:border-white/5 overflow-hidden">
                         {item.image ? (
-                          <img src={item.image} alt={item.name} className="w-full h-full object-cover" />
+                          <Image src={item.image} alt={item.name} className="w-full h-full object-cover" />
                         ) : (
                           <Package className="text-gray-300" size={20} />
                         )}

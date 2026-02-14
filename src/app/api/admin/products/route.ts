@@ -6,7 +6,7 @@ import Product from "@/models/Product";
 
 async function checkAdmin() {
   const session = await getServerSession(authOptions);
-  if (session?.user?.role !== "admin") {
+  if ((session?.user as { role?: string })?.role !== "admin") {
     throw new Error("Unauthorized");
   }
 }
@@ -16,8 +16,11 @@ export async function GET() {
     await dbConnect();
     const products = await Product.find({}).populate("category").sort({ createdAt: -1 });
     return NextResponse.json(products);
-  } catch (error: any) {
-    return NextResponse.json({ message: error.message }, { status: 500 });
+  } catch (error: unknown) {
+    return NextResponse.json(
+      { message: error instanceof Error ? error.message : "Unknown error" },
+      { status: 500 },
+    );
   }
 }
 
@@ -28,7 +31,10 @@ export async function POST(req: Request) {
     await dbConnect();
     const product = await Product.create(data);
     return NextResponse.json(product, { status: 201 });
-  } catch (error: any) {
-    return NextResponse.json({ message: error.message }, { status: error.message === "Unauthorized" ? 401 : 500 });
+  } catch (error: unknown) {
+    return NextResponse.json(
+      { message: error instanceof Error ? error.message : "Unknown error" },
+      { status: error instanceof Error && error.message === "Unauthorized" ? 401 : 500 },
+    );
   }
 }

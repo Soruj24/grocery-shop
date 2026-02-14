@@ -15,7 +15,7 @@ export async function GET(request: Request) {
 
     await dbConnect();
 
-    let filter: any = { isActive: true };
+    const filter: Record<string, unknown> = { isActive: true };
 
     if (query) {
       filter.$or = [
@@ -48,6 +48,9 @@ export async function GET(request: Request) {
     return NextResponse.json(products);
   } catch (error) {
     console.error("Search API Error:", error);
-    return NextResponse.json({ error: "Failed to fetch search results" }, { status: 500 });
+    return NextResponse.json(
+      { error: "Failed to fetch search results" },
+      { status: 500 },
+    );
   }
 }

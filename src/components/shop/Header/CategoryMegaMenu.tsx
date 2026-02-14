@@ -5,15 +5,16 @@ import NextLink from "next/link";
 import { motion } from "framer-motion";
 import { ArrowRight, ChevronRight } from "lucide-react";
 import Image from "next/image";
+import { Category as ICategory } from "@/types/category";
 
 interface CategoryMegaMenuProps {
-  categories: any[];
+  categories: ICategory[];
   onClose: () => void;
 }
 
 export default function CategoryMegaMenu({ categories, onClose }: CategoryMegaMenuProps) {
   // Static categories as requested by user if not provided via props
-  const staticCategories = [
+  const staticCategories: ICategory[] = [
     { _id: 'fruits', name: 'Fruits', nameEn: 'Fresh Fruits', subCategories: [] },
     { _id: 'vegetables', name: 'Vegetables', nameEn: 'Organic Veggies', subCategories: [] },
     { _id: 'fish', name: 'Fish', nameEn: 'Fresh Water Fish', subCategories: [] },
@@ -33,7 +34,7 @@ export default function CategoryMegaMenu({ categories, onClose }: CategoryMegaMe
       onMouseLeave={onClose}
       className="absolute top-0 left-0 w-[1100px] bg-white/95 dark:bg-[#0B1120]/95 backdrop-blur-3xl shadow-[0_32px_64px_-16px_rgba(0,0,0,0.3)] dark:shadow-black/90 border border-gray-100 dark:border-white/5 rounded-b-[40px] rounded-tr-[40px] p-12 z-50 grid grid-cols-4 gap-x-8 gap-y-12 max-h-[85vh] overflow-y-auto custom-scrollbar"
     >
-      {displayCategories.map((cat: any, idx: number) => (
+      {displayCategories.map((cat: ICategory, idx: number) => (
         <motion.div 
           key={cat._id}
           initial={{ opacity: 0, y: 10 }}
@@ -76,7 +77,7 @@ export default function CategoryMegaMenu({ categories, onClose }: CategoryMegaMe
           {/* Sub Categories List */}
           {cat.subCategories && cat.subCategories.length > 0 && (
             <div className="flex flex-col space-y-2.5 pl-1">
-              {cat.subCategories.slice(0, 6).map((sub: any) => (
+              {cat.subCategories.slice(0, 6).map((sub: ICategory) => (
                 <NextLink
                   key={sub._id}
                   href={`/products?category=${sub._id}`}

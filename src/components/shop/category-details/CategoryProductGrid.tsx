@@ -4,9 +4,10 @@ import ProductCard from "@/components/ProductCard";
 import Pagination from "@/components/Pagination";
 import { LayoutGrid, ShoppingBag } from "lucide-react";
 import { useParams } from "next/navigation";
+import { Product } from "@/types/product";
 
 interface CategoryProductGridProps {
-  products: any[];
+  products: Product[];
   totalPages: number;
   currentPage: number;
 }
@@ -51,7 +52,7 @@ export default function CategoryProductGrid({
       {/* Product Grid */}
       {products.length > 0 ? (
         <div className="grid grid-cols-2 md:grid-cols-3 gap-8">
-          {products.map((product: any) => (
+          {products.map((product: Product) => (
             <ProductCard key={product._id} product={product} />
           ))}
         </div>

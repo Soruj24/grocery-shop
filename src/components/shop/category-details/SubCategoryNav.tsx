@@ -1,7 +1,8 @@
 import Link from "next/link";
+import { Category as ICategory } from "@/types/category";
 
 interface SubCategoryNavProps {
-  subCategories: any[];
+  subCategories: ICategory[];
   currentId: string;
 }
 
@@ -14,7 +15,7 @@ export default function SubCategoryNav({ subCategories, currentId }: SubCategory
         <span className="text-xs font-black text-gray-400 dark:text-gray-500 uppercase tracking-widest mr-2">
           সাব-ক্যাটাগরি:
         </span>
-        {subCategories.map((sub: any) => (
+        {subCategories.map((sub: ICategory) => (
           <Link
             key={sub._id}
             href={`/category/${sub._id}`}

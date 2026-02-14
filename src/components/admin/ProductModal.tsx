@@ -1,7 +1,12 @@
 "use client";
 
 import { X, Package, Image as ImageIcon } from "lucide-react";
-import { AdminProduct, GroupedCategory, AdminProductFormData } from "@/types/admin";
+import {
+  AdminProduct,
+  AdminCategory,
+  GroupedCategory,
+  AdminProductFormData,
+} from "@/types/admin";
 
 interface ProductModalProps {
   isOpen: boolean;
@@ -93,7 +98,7 @@ export default function ProductModal({
                     <option value={parent._id} className="dark:bg-gray-900">
                       {parent.name} (Main)
                     </option>
-                    {parent.subCategories?.map((sub: Category) => (
+                    {parent.subCategories?.map((sub: AdminCategory) => (
                       <option
                         key={sub._id}
                         value={sub._id}

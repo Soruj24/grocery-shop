@@ -1,5 +1,25 @@
-import { MapPin, User, Phone, CreditCard, ShoppingBag, Smartphone, ArrowRight, ArrowLeft, Clock, ClipboardList, CheckCircle2 } from "lucide-react";
+import {
+  MapPin,
+  User,
+  Phone,
+  CreditCard,
+  ShoppingBag,
+  Smartphone,
+  ArrowRight,
+  ArrowLeft,
+  Clock,
+  ClipboardList,
+  CheckCircle2,
+} from "lucide-react";
 import { motion } from "framer-motion";
+
+interface CartItem {
+  _id: string;
+  name: string;
+  price: number;
+  quantity: number;
+  image?: string;
+}
 
 interface CheckoutFormProps {
   currentStep: number;
@@ -11,25 +31,34 @@ interface CheckoutFormProps {
     address: string;
     area: string;
   };
-  setFormData: (data: any) => void;
+  setFormData: (data: Partial<CheckoutFormProps["formData"]>) => void;
   deliverySlot: string;
   setDeliverySlot: (slot: string) => void;
-  paymentMethod: 'cod' | 'bkash' | 'nagad' | 'card';
-  setPaymentMethod: (method: 'cod' | 'bkash' | 'nagad' | 'card') => void;
+  paymentMethod: "cod" | "bkash" | "nagad" | "card";
+  setPaymentMethod: (method: "cod" | "bkash" | "nagad" | "card") => void;
   transactionId: string;
   setTransactionId: (id: string) => void;
   handleSubmit: (e: React.FormEvent) => void;
   loading: boolean;
   totalPrice: number;
-  cart: any[];
+  cart: CartItem[];
 }
 
-const areas = ["Dhanmondi", "Gulshan", "Banani", "Uttara", "Mirpur", "Mohammadpur", "Badda", "Bashundhara"];
+const areas = [
+  "Dhanmondi",
+  "Gulshan",
+  "Banani",
+  "Uttara",
+  "Mirpur",
+  "Mohammadpur",
+  "Badda",
+  "Bashundhara",
+];
 const timeSlots = [
   "Morning (9 AM - 12 PM)",
   "Afternoon (12 PM - 3 PM)",
   "Evening (3 PM - 6 PM)",
-  "Night (6 PM - 9 PM)"
+  "Night (6 PM - 9 PM)",
 ];
 
 export default function CheckoutForm({
@@ -49,10 +78,14 @@ export default function CheckoutForm({
   totalPrice,
   cart,
 }: CheckoutFormProps) {
-  
-  const isStep1Valid = formData.name && formData.phone && formData.address && formData.area;
-  const isStep2Valid = deliverySlot;
-  const isStep3Valid = paymentMethod === 'cod' || (paymentMethod !== 'cod' && transactionId);
+  const isStep1Valid =
+    formData.name.trim() !== "" && 
+    formData.phone.trim().length >= 11 && 
+    formData.address.trim() !== "" && 
+    formData.area !== "";
+  const isStep2Valid = !!deliverySlot;
+  const isStep3Valid =
+    paymentMethod === "cod" || transactionId.trim().length >= 8;
 
   return (
     <div className="space-y-8">
@@ -63,12 +96,16 @@ export default function CheckoutForm({
             <div className="w-12 h-12 bg-green-50 dark:bg-green-900/30 rounded-2xl flex items-center justify-center text-green-600">
               <MapPin className="w-6 h-6" />
             </div>
-            <h2 className="text-2xl font-black text-gray-900 dark:text-white">ডেলিভারি তথ্য</h2>
+            <h2 className="text-2xl font-black text-gray-900 dark:text-white">
+              ডেলিভারি তথ্য
+            </h2>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <div className="space-y-2">
-              <label className="text-xs font-black text-gray-400 uppercase tracking-widest ml-1">পুরো নাম</label>
+              <label className="text-xs font-black text-gray-400 uppercase tracking-widest ml-1">
+                পুরো নাম
+              </label>
               <div className="relative group">
                 <User className="absolute left-6 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-300 group-focus-within:text-green-600 transition-colors" />
                 <input
@@ -77,13 +114,17 @@ export default function CheckoutForm({
                   placeholder="আপনার নাম লিখুন"
                   className="w-full pl-16 pr-6 py-5 bg-gray-50 dark:bg-gray-800/50 border border-gray-100 dark:border-gray-800 rounded-[24px] focus:ring-4 focus:ring-green-500/10 focus:border-green-600 outline-none transition-all font-bold"
                   value={formData.name}
-                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                  onChange={(e) =>
+                    setFormData({ ...formData, name: e.target.value })
+                  }
                 />
               </div>
             </div>
 
             <div className="space-y-2">
-              <label className="text-xs font-black text-gray-400 uppercase tracking-widest ml-1">ফোন নম্বর</label>
+              <label className="text-xs font-black text-gray-400 uppercase tracking-widest ml-1">
+                ফোন নম্বর
+              </label>
               <div className="relative group">
                 <Phone className="absolute left-6 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-300 group-focus-within:text-green-600 transition-colors" />
                 <input
@@ -92,26 +133,36 @@ export default function CheckoutForm({
                   placeholder="০১XXXXXXXXX"
                   className="w-full pl-16 pr-6 py-5 bg-gray-50 dark:bg-gray-800/50 border border-gray-100 dark:border-gray-800 rounded-[24px] focus:ring-4 focus:ring-green-500/10 focus:border-green-600 outline-none transition-all font-bold"
                   value={formData.phone}
-                  onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                  onChange={(e) =>
+                    setFormData({ ...formData, phone: e.target.value })
+                  }
                 />
               </div>
             </div>
 
             <div className="space-y-2 md:col-span-2">
-              <label className="text-xs font-black text-gray-400 uppercase tracking-widest ml-1">এলাকা নির্বাচন করুন</label>
-              <select 
+              <label className="text-xs font-black text-gray-400 uppercase tracking-widest ml-1">
+                এলাকা নির্বাচন করুন
+              </label>
+              <select
                 className="w-full px-6 py-5 bg-gray-50 dark:bg-gray-800/50 border border-gray-100 dark:border-gray-800 rounded-[24px] focus:ring-4 focus:ring-green-500/10 focus:border-green-600 outline-none transition-all font-bold appearance-none cursor-pointer"
                 value={formData.area}
-                onChange={(e) => setFormData({ ...formData, area: e.target.value })}
+                onChange={(e) =>
+                  setFormData({ ...formData, area: e.target.value })
+                }
               >
-                {areas.map(area => (
-                  <option key={area} value={area}>{area}</option>
+                {areas.map((area) => (
+                  <option key={area} value={area}>
+                    {area}
+                  </option>
                 ))}
               </select>
             </div>
 
             <div className="space-y-2 md:col-span-2">
-              <label className="text-xs font-black text-gray-400 uppercase tracking-widest ml-1">বিস্তারিত ঠিকানা</label>
+              <label className="text-xs font-black text-gray-400 uppercase tracking-widest ml-1">
+                বিস্তারিত ঠিকানা
+              </label>
               <div className="relative group">
                 <MapPin className="absolute left-6 top-6 w-5 h-5 text-gray-300 group-focus-within:text-green-600 transition-colors" />
                 <textarea
@@ -119,7 +170,9 @@ export default function CheckoutForm({
                   placeholder="বাসা নম্বর, রোড নম্বর, ল্যান্ডমার্ক ইত্যাদি"
                   className="w-full pl-16 pr-6 py-6 bg-gray-50 dark:bg-gray-800/50 border border-gray-100 dark:border-gray-800 rounded-[24px] focus:ring-4 focus:ring-green-500/10 focus:border-green-600 outline-none transition-all h-32 font-bold"
                   value={formData.address}
-                  onChange={(e) => setFormData({ ...formData, address: e.target.value })}
+                  onChange={(e) =>
+                    setFormData({ ...formData, address: e.target.value })
+                  }
                 />
               </div>
             </div>
@@ -143,7 +196,9 @@ export default function CheckoutForm({
             <div className="w-12 h-12 bg-blue-50 dark:bg-blue-900/30 rounded-2xl flex items-center justify-center text-blue-600">
               <Clock className="w-6 h-6" />
             </div>
-            <h2 className="text-2xl font-black text-gray-900 dark:text-white">ডেলিভারি সময়</h2>
+            <h2 className="text-2xl font-black text-gray-900 dark:text-white">
+              ডেলিভারি সময়
+            </h2>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
@@ -158,9 +213,13 @@ export default function CheckoutForm({
                     : "border-gray-50 dark:border-gray-800 bg-gray-50/50 dark:bg-gray-800/50 hover:border-gray-200"
                 }`}
               >
-                <div className={`w-12 h-12 rounded-2xl flex items-center justify-center ${
-                  deliverySlot === slot ? "bg-green-600 text-white" : "bg-white dark:bg-gray-900 text-gray-300"
-                }`}>
+                <div
+                  className={`w-12 h-12 rounded-2xl flex items-center justify-center ${
+                    deliverySlot === slot
+                      ? "bg-green-600 text-white"
+                      : "bg-white dark:bg-gray-900 text-gray-300"
+                  }`}
+                >
                   <Clock className="w-6 h-6" />
                 </div>
                 <span className="font-black text-sm">{slot}</span>
@@ -169,7 +228,10 @@ export default function CheckoutForm({
           </div>
 
           <div className="flex gap-4">
-            <button onClick={prevStep} className="flex-1 bg-gray-100 dark:bg-gray-800 text-gray-600 py-6 rounded-[32px] font-black transition-all flex items-center justify-center gap-2">
+            <button
+              onClick={prevStep}
+              className="flex-1 bg-gray-100 dark:bg-gray-800 text-gray-600 py-6 rounded-[32px] font-black transition-all flex items-center justify-center gap-2"
+            >
               <ArrowLeft className="w-6 h-6" />
               ফিরে যান
             </button>
@@ -191,7 +253,9 @@ export default function CheckoutForm({
             <div className="w-12 h-12 bg-purple-50 dark:bg-purple-900/30 rounded-2xl flex items-center justify-center text-purple-600">
               <CreditCard className="w-6 h-6" />
             </div>
-            <h2 className="text-2xl font-black text-gray-900 dark:text-white">পেমেন্ট পদ্ধতি</h2>
+            <h2 className="text-2xl font-black text-gray-900 dark:text-white">
+              পেমেন্ট পদ্ধতি
+            </h2>
           </div>
 
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
@@ -204,26 +268,34 @@ export default function CheckoutForm({
               <button
                 key={method.id}
                 type="button"
-                onClick={() => setPaymentMethod(method.id as any)}
+                onClick={() => setPaymentMethod(method.id as "cod" | "bkash" | "nagad" | "card")}
                 className={`p-4 rounded-[32px] border-2 transition-all flex flex-col items-center gap-3 text-center ${
                   paymentMethod === method.id
                     ? "border-green-600 bg-green-50 dark:bg-green-900/20"
                     : "border-gray-50 dark:border-gray-800 bg-gray-50/50 dark:bg-gray-800/50 hover:border-gray-200"
                 }`}
               >
-                <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${
-                  paymentMethod === method.id ? "bg-green-600 text-white" : "bg-white dark:bg-gray-900 text-gray-300"
-                }`}>
+                <div
+                  className={`w-10 h-10 rounded-xl flex items-center justify-center ${
+                    paymentMethod === method.id
+                      ? "bg-green-600 text-white"
+                      : "bg-white dark:bg-gray-900 text-gray-300"
+                  }`}
+                >
                   <method.icon className="w-5 h-5" />
                 </div>
-                <span className="font-black text-[10px] uppercase tracking-wider">{method.name}</span>
+                <span className="font-black text-[10px] uppercase tracking-wider">
+                  {method.name}
+                </span>
               </button>
             ))}
           </div>
 
-          {paymentMethod !== 'cod' && (
+          {paymentMethod !== "cod" && (
             <div className="p-6 bg-gray-900 text-white rounded-[32px] space-y-4">
-              <p className="text-xs font-bold opacity-70 italic text-center">অনুগ্রহ করে পেমেন্ট করার পর ট্রানজেকশন আইডি দিন</p>
+              <p className="text-xs font-bold opacity-70 italic text-center">
+                অনুগ্রহ করে পেমেন্ট করার পর ট্রানজেকশন আইডি দিন
+              </p>
               <input
                 type="text"
                 placeholder="Transaction ID (e.g. 8N7A6D5C)"
@@ -235,7 +307,10 @@ export default function CheckoutForm({
           )}
 
           <div className="flex gap-4">
-            <button onClick={prevStep} className="flex-1 bg-gray-100 dark:bg-gray-800 text-gray-600 py-6 rounded-[32px] font-black transition-all flex items-center justify-center gap-2">
+            <button
+              onClick={prevStep}
+              className="flex-1 bg-gray-100 dark:bg-gray-800 text-gray-600 py-6 rounded-[32px] font-black transition-all flex items-center justify-center gap-2"
+            >
               <ArrowLeft className="w-6 h-6" />
               ফিরে যান
             </button>
@@ -258,32 +333,49 @@ export default function CheckoutForm({
             <div className="w-12 h-12 bg-orange-50 dark:bg-orange-900/30 rounded-2xl flex items-center justify-center text-orange-600">
               <ClipboardList className="w-6 h-6" />
             </div>
-            <h2 className="text-2xl font-black text-gray-900 dark:text-white">অর্ডার রিভিউ</h2>
+            <h2 className="text-2xl font-black text-gray-900 dark:text-white">
+              অর্ডার রিভিউ
+            </h2>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="bg-gray-50 dark:bg-gray-800/50 p-6 rounded-[32px] border border-gray-100 dark:border-gray-800">
-              <h4 className="text-xs font-black text-gray-400 uppercase tracking-widest mb-4">ডেলিভারি ঠিকানা</h4>
-              <p className="font-bold text-gray-800 dark:text-gray-200">{formData.name}</p>
-              <p className="text-sm text-gray-500 font-medium">{formData.phone}</p>
-              <p className="text-sm text-gray-500 font-medium mt-2">{formData.address}, {formData.area}</p>
+              <h4 className="text-xs font-black text-gray-400 uppercase tracking-widest mb-4">
+                ডেলিভারি ঠিকানা
+              </h4>
+              <p className="font-bold text-gray-800 dark:text-gray-200">
+                {formData.name}
+              </p>
+              <p className="text-sm text-gray-500 font-medium">
+                {formData.phone}
+              </p>
+              <p className="text-sm text-gray-500 font-medium mt-2">
+                {formData.address}, {formData.area}
+              </p>
             </div>
 
             <div className="bg-gray-50 dark:bg-gray-800/50 p-6 rounded-[32px] border border-gray-100 dark:border-gray-800">
-              <h4 className="text-xs font-black text-gray-400 uppercase tracking-widest mb-4">সময় ও পেমেন্ট</h4>
+              <h4 className="text-xs font-black text-gray-400 uppercase tracking-widest mb-4">
+                সময় ও পেমেন্ট
+              </h4>
               <div className="flex items-center gap-3 mb-2">
                 <Clock className="w-4 h-4 text-green-500" />
                 <span className="text-sm font-bold">{deliverySlot}</span>
               </div>
               <div className="flex items-center gap-3">
                 <CreditCard className="w-4 h-4 text-green-500" />
-                <span className="text-sm font-bold uppercase">{paymentMethod}</span>
+                <span className="text-sm font-bold uppercase">
+                  {paymentMethod}
+                </span>
               </div>
             </div>
           </div>
 
           <div className="flex gap-4">
-            <button onClick={prevStep} className="flex-1 bg-gray-100 dark:bg-gray-800 text-gray-600 py-6 rounded-[32px] font-black transition-all flex items-center justify-center gap-2">
+            <button
+              onClick={prevStep}
+              className="flex-1 bg-gray-100 dark:bg-gray-800 text-gray-600 py-6 rounded-[32px] font-black transition-all flex items-center justify-center gap-2"
+            >
               <ArrowLeft className="w-6 h-6" />
               ফিরে যান
             </button>

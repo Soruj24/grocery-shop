@@ -17,7 +17,7 @@ export default function ProductStatusBar({ totalCount, search }: ProductStatusBa
       {search && (
         <div className="hidden md:flex items-center gap-2">
           <span className="text-sm text-gray-400 dark:text-gray-500 italic">
-            "{search}" এর ফলাফল
+            &ldquo;{search}&rdquo; এর ফলাফল
           </span>
         </div>
       )}

@@ -31,8 +31,12 @@ export default function StickyCheckoutBar({ product }: StickyCheckoutBarProps) {
         className="bg-white/80 dark:bg-gray-950/80 backdrop-blur-2xl border border-gray-100 dark:border-white/5 rounded-[32px] p-4 flex items-center gap-4 shadow-[0_-10px_40px_-15px_rgba(0,0,0,0.1)]"
       >
         <div className="flex-1 flex flex-col pl-2">
-          <span className="text-[10px] font-black uppercase tracking-widest text-gray-400">মূল্য</span>
-          <span className="text-xl font-black text-gray-800 dark:text-white">৳{product.discountPrice || product.price}</span>
+          <span className="text-[10px] font-black uppercase tracking-widest text-gray-400">
+            মূল্য
+          </span>
+          <span className="text-xl font-black text-gray-800 dark:text-white">
+            ৳{product.discountPrice || product.price}
+          </span>
         </div>
 
         <div className="flex gap-3">
