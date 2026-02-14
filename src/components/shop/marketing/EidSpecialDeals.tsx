@@ -2,14 +2,28 @@
 
 import { motion } from "framer-motion";
 import { Gift, Sparkles, ShoppingBag } from "lucide-react";
+import { useCart } from "@/components/CartContext";
+import { toast } from "react-hot-toast";
 
 export default function EidSpecialDeals() {
+  const { addToCart } = useCart();
+
   const deals = [
-    { name: "লাচ্ছা সেমাই বক্স", price: "৳১২০", oldPrice: "৳১৫০", img: "🍜" },
-    { name: "পোলাও চাল ৫কেজি", price: "৳৫৮০", oldPrice: "৳৬৫০", img: "🍚" },
-    { name: "গুড়ো দুধ ১কেজি", price: "৳৮৫০", oldPrice: "৳৯২০", img: "🥛" },
-    { name: "মসলা গিফট বক্স", price: "৳৪৫০", oldPrice: "৳৫০০", img: "🌶️" },
+    { id: "eid-1", name: "লাচ্ছা সেমাই বক্স", price: 120, oldPrice: 150, img: "🍜" },
+    { id: "eid-2", name: "পোলাও চাল ৫কেজি", price: 580, oldPrice: 650, img: "🍚" },
+    { id: "eid-3", name: "গুড়ো দুধ ১কেজি", price: 850, oldPrice: 920, img: "🥛" },
+    { id: "eid-4", name: "মসলা গিফট বক্স", price: 450, oldPrice: 500, img: "🌶️" },
   ];
+
+  const handleAddToCart = (deal: typeof deals[0]) => {
+    addToCart({
+      _id: deal.id,
+      name: deal.name,
+      price: deal.price,
+      image: "", // Static deals don't have proper images in the current array
+    });
+    toast.success(`${deal.name} ব্যাগে যোগ করা হয়েছে!`);
+  };
 
   return (
     <section className="py-16">
@@ -54,11 +68,14 @@ export default function EidSpecialDeals() {
               <div className="space-y-4">
                 <h3 className="font-black text-lg text-gray-800 dark:text-white line-clamp-1">{deal.name}</h3>
                 <div className="flex items-baseline gap-2">
-                  <span className="text-2xl font-black text-rose-500">{deal.price}</span>
-                  <span className="text-sm text-gray-400 line-through font-bold">{deal.oldPrice}</span>
+                  <span className="text-2xl font-black text-rose-500">৳{deal.price}</span>
+                  <span className="text-sm text-gray-400 line-through font-bold">৳{deal.oldPrice}</span>
                 </div>
                 
-                <button className="w-full bg-gray-900 dark:bg-white text-white dark:text-gray-900 py-4 rounded-2xl font-black text-sm flex items-center justify-center gap-2 hover:bg-rose-500 hover:text-white dark:hover:bg-rose-500 dark:hover:text-white transition-all">
+                <button 
+                  onClick={() => handleAddToCart(deal)}
+                  className="w-full bg-gray-900 dark:bg-white text-white dark:text-gray-900 py-4 rounded-2xl font-black text-sm flex items-center justify-center gap-2 hover:bg-rose-500 hover:text-white dark:hover:bg-rose-500 dark:hover:text-white transition-all active:scale-95"
+                >
                   <ShoppingBag className="w-4 h-4" />
                   ব্যাগে যোগ করুন
                 </button>

@@ -6,6 +6,8 @@ import { TrendingUp, Star, Sparkles, ShoppingBag, ArrowRight } from "lucide-reac
 import Image from "next/image";
 import Link from "next/link";
 import { Product } from "@/types/product";
+import { useCart } from "@/components/CartContext";
+import { toast } from "react-hot-toast";
 
 const TABS = [
   { id: "trending", label: "ট্রেন্ডিং", icon: TrendingUp, color: "from-blue-500 to-cyan-500" },
@@ -15,6 +17,12 @@ const TABS = [
 
 export default function FeaturedProducts({ products }: { products: Product[] }) {
   const [activeTab, setActiveTab] = useState("trending");
+  const { addToCart } = useCart();
+
+  const handleAddToCart = (product: Product) => {
+    addToCart(product, 1);
+    toast.success(`${product.name} কার্টে যোগ করা হয়েছে!`);
+  };
 
   // Mock filtering for UI demonstration
   const filteredProducts = products.slice(0, 4);
@@ -98,7 +106,10 @@ export default function FeaturedProducts({ products }: { products: Product[] }) 
 
                   <div className="flex items-center justify-between">
                     <div className="text-2xl font-black text-gray-900 dark:text-white">৳{product.price}</div>
-                    <button className="w-14 h-14 bg-gray-900 dark:bg-white text-white dark:text-black rounded-2xl flex items-center justify-center hover:bg-green-600 hover:text-white transition-all active:scale-95 shadow-lg">
+                    <button 
+                      onClick={() => handleAddToCart(product)}
+                      className="w-14 h-14 bg-gray-900 dark:bg-white text-white dark:text-black rounded-2xl flex items-center justify-center hover:bg-green-600 hover:text-white transition-all active:scale-95 shadow-lg"
+                    >
                       <ShoppingBag size={24} />
                     </button>
                   </div>

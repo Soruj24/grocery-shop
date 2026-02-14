@@ -4,11 +4,15 @@ import { motion } from "framer-motion";
 import { ShoppingBag, Star, ArrowRight, Gift } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { useCart } from "@/components/CartContext";
+import { toast } from "react-hot-toast";
 
 export default function ComboOffers() {
+  const { addToCart } = useCart();
+
   const combos = [
     {
-      id: 1,
+      id: "combo-1",
       name: "ফ্যামিলি বাজার প্যাক",
       items: ["৫ কেজি চাল", "২ লিটার তেল", "১ কেজি ডাল", "১ কেজি চিনি"],
       price: 1250,
@@ -17,7 +21,7 @@ export default function ComboOffers() {
       tag: "বেস্ট ভ্যালু"
     },
     {
-      id: 2,
+      id: "combo-2",
       name: "ব্রেকফাস্ট কম্বো",
       items: ["১ প্যাকেট পাউরুটি", "১ ডজন ডিম", "৫০০ গ্রাম জেলি", "১ কেজি কলা"],
       price: 450,
@@ -26,7 +30,7 @@ export default function ComboOffers() {
       tag: "জনপ্রিয়"
     },
     {
-      id: 3,
+      id: "combo-3",
       name: "রান্নাঘর কিট",
       items: ["১ কেজি পেঁয়াজ", "৫০০ গ্রাম রসুন", "২৫০ গ্রাম আদা", "১ কেজি আলু"],
       price: 320,
@@ -35,6 +39,16 @@ export default function ComboOffers() {
       tag: "সুপার সেভার"
     }
   ];
+
+  const handleAddToCart = (combo: any) => {
+    addToCart({
+      _id: combo.id,
+      name: combo.name,
+      price: combo.price,
+      image: combo.image,
+    });
+    toast.success(`${combo.name} কার্টে যোগ করা হয়েছে!`);
+  };
 
   return (
     <section className="relative py-32 px-4 overflow-hidden bg-gray-50/50 dark:bg-black/20">
@@ -135,13 +149,16 @@ export default function ComboOffers() {
                     <div className="text-sm text-gray-400 line-through font-bold mb-1">৳{combo.oldPrice}</div>
                     <div className="text-4xl font-black text-gray-900 dark:text-white flex items-center gap-1">
                       <span className="text-lg">৳</span>{combo.price}
-                    </div>
                   </div>
-                  <button className="flex items-center gap-3 bg-gray-900 dark:bg-white text-white dark:text-black hover:bg-blue-600 hover:text-white dark:hover:bg-blue-600 dark:hover:text-white px-8 py-5 rounded-[24px] font-black transition-all duration-500 shadow-xl hover:shadow-blue-500/30 active:scale-95 group/btn">
-                    <ShoppingBag size={22} className="group-hover/btn:scale-110 transition-transform" />
-                    কার্টে যোগ করুন
-                  </button>
                 </div>
+                <button 
+                  onClick={() => handleAddToCart(combo)}
+                  className="flex items-center gap-3 bg-gray-900 dark:bg-white text-white dark:text-black hover:bg-blue-600 hover:text-white dark:hover:bg-blue-600 dark:hover:text-white px-8 py-5 rounded-[24px] font-black transition-all duration-500 shadow-xl hover:shadow-blue-500/30 active:scale-95 group/btn"
+                >
+                  <ShoppingBag size={22} className="group-hover/btn:scale-110 transition-transform" />
+                  কার্টে যোগ করুন
+                </button>
+              </div>
               </div>
             </motion.div>
           ))}

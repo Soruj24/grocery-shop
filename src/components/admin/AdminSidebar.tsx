@@ -11,7 +11,8 @@ import {
   ShoppingCart, 
   Users, 
   Settings, 
-  LogOut
+  LogOut,
+  Layers
 } from "lucide-react";
 
 interface AdminSidebarProps {
@@ -25,6 +26,7 @@ export default function AdminSidebar({ session }: AdminSidebarProps) {
     { name: "ড্যাশবোর্ড", icon: LayoutDashboard, href: "/admin/dashboard" },
     { name: "প্রোডাক্ট", icon: Package, href: "/admin/products" },
     { name: "ক্যাটাগরি", icon: ListTree, href: "/admin/categories" },
+    { name: "কম্বো প্যাক", icon: Layers, href: "/admin/combos" },
     { name: "অর্ডার", icon: ShoppingCart, href: "/admin/orders" },
     { name: "কাস্টমার", icon: Users, href: "/admin/customers" },
     { name: "সেটিিংস", icon: Settings, href: "/admin/settings" },

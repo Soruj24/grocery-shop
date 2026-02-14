@@ -15,7 +15,9 @@ export default function CategoryHeader({ category, totalCount }: CategoryHeaderP
         <Image
           src={category.image || "https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&q=80&w=1000"}
           alt={category.name}
-          className="w-full h-full object-cover brightness-50"
+          fill
+          className="object-cover brightness-50"
+          priority
         />
         <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/40 to-transparent" />
       </div>

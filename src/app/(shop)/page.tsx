@@ -33,9 +33,6 @@ const FeaturedProducts = dynamic(
 const RecentlyViewedSection = dynamic(
   () => import("@/components/shop/RecentlyViewedSection"),
 );
-const AIRecommendationsSection = dynamic(
-  () => import("@/components/shop/AIRecommendationsSection"),
-);
 
 // Marketing components
 const DailyDealsBanner = dynamic(
@@ -159,9 +156,6 @@ export default async function HomePage({
       />
       <Testimonials />
       <Newsletter />
-
-      {/* AI Recommendations Section */}
-      <AIRecommendationsSection />
 
       {/* Recently Viewed Section */}
       <RecentlyViewedSection />

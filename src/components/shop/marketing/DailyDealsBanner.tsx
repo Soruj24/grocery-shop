@@ -5,6 +5,8 @@ import { motion } from "framer-motion";
 import { Timer, Zap, ArrowRight } from "lucide-react";
 import Image from "next/image";
 
+import Link from "next/link";
+
 export default function DailyDealsBanner() {
   const [timeLeft, setTimeLeft] = useState({
     hours: 12,
@@ -65,10 +67,10 @@ export default function DailyDealsBanner() {
             ))}
           </div>
 
-          <button className="group bg-white text-rose-600 px-8 py-4 rounded-2xl font-black text-lg flex items-center gap-3 hover:bg-yellow-300 hover:text-gray-900 transition-all shadow-2xl active:scale-95">
+          <Link href="/products" className="group bg-white text-rose-600 px-8 py-4 rounded-2xl font-black text-lg inline-flex items-center gap-3 hover:bg-yellow-300 hover:text-gray-900 transition-all shadow-2xl active:scale-95">
             অফার দেখুন
             <ArrowRight className="w-5 h-5 group-hover:translate-x-2 transition-transform" />
-          </button>
+          </Link>
         </div>
 
         <div className="relative w-full max-w-md aspect-square">

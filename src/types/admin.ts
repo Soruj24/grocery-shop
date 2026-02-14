@@ -78,6 +78,25 @@ export interface AdminCustomer {
   totalSpent?: number;
 }
 
+export interface AdminCombo {
+  _id: string;
+  name: string;
+  items: string[];
+  price: number;
+  saveAmount: number;
+  tag: string;
+  isActive: boolean;
+}
+
+export interface AdminComboFormData {
+  name: string;
+  items: string;
+  price: number;
+  saveAmount: number;
+  tag: string;
+  isActive: boolean;
+}
+
 export interface GroupedCategory {
   _id: string;
   name: string;

@@ -6,12 +6,16 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import { Product } from "@/types/product";
+import { useCart } from "@/components/CartContext";
+import { toast } from "react-hot-toast";
+import { ShoppingBag } from "lucide-react";
 
 interface FlashDealsProps {
   products: Product[];
 }
 
 export default function FlashDeals({ products }: FlashDealsProps) {
+  const { addToCart } = useCart();
   const [timeLeft, setTimeLeft] = useState({
     hours: 12,
     minutes: 45,
@@ -111,17 +115,28 @@ export default function FlashDeals({ products }: FlashDealsProps) {
                 </div>
 
                 <div className="flex items-end justify-between">
-                  <div>
-                    <div className="text-xs text-gray-400 line-through font-bold">৳{Math.round(product.price * 1.25)}</div>
-                    <div className="text-2xl font-black text-gray-900 dark:text-white">৳{product.price}</div>
+                    <div>
+                      <div className="text-xs text-gray-400 line-through font-bold">৳{Math.round(product.price * 1.25)}</div>
+                      <div className="text-2xl font-black text-gray-900 dark:text-white">৳{product.price}</div>
+                    </div>
+                    <div className="flex gap-2">
+                      <button
+                        onClick={() => {
+                          addToCart(product, 1);
+                          toast.success(`${product.name} কার্টে যোগ করা হয়েছে!`);
+                        }}
+                        className="w-12 h-12 rounded-2xl bg-orange-500 text-white flex items-center justify-center hover:bg-orange-600 transition-all shadow-xl shadow-orange-500/20 active:scale-95"
+                      >
+                        <ShoppingBag className="w-6 h-6" />
+                      </button>
+                      <Link
+                        href={`/products/${product._id}`}
+                        className="w-12 h-12 rounded-2xl bg-gray-900 dark:bg-white text-white dark:text-black flex items-center justify-center hover:bg-gray-800 dark:hover:bg-gray-100 transition-all shadow-xl group/btn"
+                      >
+                        <ArrowRight className="w-6 h-6 group-hover/btn:translate-x-1 transition-transform" />
+                      </Link>
+                    </div>
                   </div>
-                  <Link
-                    href={`/products/${product._id}`}
-                    className="w-12 h-12 rounded-2xl bg-gray-900 dark:bg-white text-white dark:text-black flex items-center justify-center hover:bg-orange-500 hover:text-white transition-all shadow-xl group/btn"
-                  >
-                    <ArrowRight className="w-6 h-6 group-hover/btn:translate-x-1 transition-transform" />
-                  </Link>
-                </div>
               </div>
             </motion.div>
           ))}
