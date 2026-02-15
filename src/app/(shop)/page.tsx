@@ -56,39 +56,51 @@ export const dynamic = "force-dynamic";
 async function getHomeData(searchParams: {
   [key: string]: string | string[] | undefined;
 }) {
-  await dbConnect();
-  const page =
-    typeof searchParams.page === "string" ? parseInt(searchParams.page) : 1;
-  const limit = 12;
-  const skip = (page - 1) * limit;
+  try {
+    await dbConnect();
+    const page =
+      typeof searchParams.page === "string" ? parseInt(searchParams.page) : 1;
+    const limit = 12;
+    const skip = (page - 1) * limit;
 
-  // Get only main categories and include subcategory count
-  const allCategories = await Category.find({ isActive: true }).lean();
-  const mainCategories = (allCategories as unknown as ICategory[])
-    .filter((cat: ICategory) => !cat.parentId)
-    .map((cat: ICategory) => ({
-      ...cat,
-      subCategories: (allCategories as unknown as ICategory[]).filter(
-        (sub: ICategory) => sub.parentId?.toString() === cat._id.toString(),
-      ),
-    }));
+    // Get only main categories and include subcategory count
+    const allCategories = await Category.find({ isActive: true }).lean();
+    const mainCategories = (allCategories as unknown as ICategory[])
+      .filter((cat: ICategory) => !cat.parentId)
+      .map((cat: ICategory) => ({
+        ...cat,
+        subCategories: (allCategories as unknown as ICategory[]).filter(
+          (sub: ICategory) => sub.parentId?.toString() === cat._id.toString(),
+        ),
+      }));
 
-  const query = { isActive: true };
-  const totalProducts = await Product.countDocuments(query);
-  const products = await Product.find(query)
-    .populate("category")
-    .sort({ createdAt: -1 })
-    .skip(skip)
-    .limit(limit)
-    .lean();
+    const query = { isActive: true };
+    const totalProducts = await Product.countDocuments(query);
+    const products = await Product.find(query)
+      .populate("category")
+      .sort({ createdAt: -1 })
+      .skip(skip)
+      .limit(limit)
+      .lean();
 
-  return {
-    categories: JSON.parse(JSON.stringify(mainCategories)),
-    products: JSON.parse(JSON.stringify(products)),
-    totalPages: Math.ceil(totalProducts / limit),
-    currentPage: page,
-    totalCount: totalProducts,
-  };
+    return {
+      categories: JSON.parse(JSON.stringify(mainCategories)) || [],
+      products: JSON.parse(JSON.stringify(products)) || [],
+      totalPages: Math.ceil(totalProducts / limit) || 0,
+      currentPage: page,
+      totalCount: totalProducts || 0,
+    };
+  } catch (error) {
+    console.error("Home Data Fetch Error:", error);
+    return {
+      categories: [],
+      products: [],
+      totalPages: 0,
+      currentPage: 1,
+      totalCount: 0,
+      error: true
+    };
+  }
 }
 
 export default async function HomePage({
@@ -97,11 +109,31 @@ export default async function HomePage({
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }) {
   const resolvedSearchParams = await searchParams;
-  const { categories, products, totalPages, currentPage, totalCount } =
+  const { categories, products, totalPages, currentPage, totalCount, error } =
     await getHomeData(resolvedSearchParams);
 
-  if (!categories || !products) {
-    return <div>ডাটা লোড করতে সমস্যা হয়েছে। দয়া করে আবার চেষ্টা করুন।</div>;
+  if (error) {
+    return (
+      <div className="flex flex-col items-center justify-center min-h-[50vh] space-y-4">
+        <h2 className="text-2xl font-bold text-red-600">সার্ভারে সমস্যা হয়েছে</h2>
+        <p className="text-gray-600">ডাটাবেজ কানেকশন বা অন্য কোনো টেকনিক্যাল সমস্যার কারণে ডাটা লোড করা যায়নি।</p>
+        <button 
+          onClick={() => window.location.reload()} 
+          className="px-6 py-2 bg-green-600 text-white rounded-full font-bold hover:bg-green-700 transition-colors"
+        >
+          আবার চেষ্টা করুন
+        </button>
+      </div>
+    );
+  }
+
+  if (!categories || categories.length === 0) {
+    return (
+      <div className="flex flex-col items-center justify-center min-h-[50vh] space-y-4">
+        <h2 className="text-2xl font-bold">কোনো ডাটা পাওয়া যায়নি</h2>
+        <p className="text-gray-600">এই মুহূর্তে দেখানোর মতো কোনো পণ্য বা ক্যাটাগরি নেই।</p>
+      </div>
+    );
   }
 
   const features = [
