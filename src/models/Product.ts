@@ -7,6 +7,19 @@ const ProductSchema = new mongoose.Schema({
   category: { type: mongoose.Schema.Types.ObjectId, ref: 'Category', required: true },
   image: { type: String },
   description: { type: String },
+  rating: { type: Number, default: 0 },
+  reviews: { type: Number, default: 0 },
+  reviewItems: {
+    type: [
+      {
+        name: { type: String, required: true },
+        rating: { type: Number, min: 1, max: 5, required: true },
+        comment: { type: String, required: true },
+        createdAt: { type: Date, default: Date.now }
+      }
+    ],
+    default: []
+  },
   isActive: { type: Boolean, default: true },
 }, { timestamps: true });
 

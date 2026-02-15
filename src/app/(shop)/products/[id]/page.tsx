@@ -123,7 +123,7 @@ export default async function ProductDetailsPage({
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 lg:gap-16">
           <div className="lg:col-span-2 space-y-16">
             <ProductDetailsTabs productName={product.name} />
-            <CustomerReviews />
+            <CustomerReviews productId={product._id} />
           </div>
           
           <div className="space-y-12 pb-24 md:pb-0">

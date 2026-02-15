@@ -87,7 +87,7 @@ export const translations = {
     total_with_delivery: "সর্বমোট (ডেলিভারি সহ)",
     items_added_to_cart: "সব আইটেম কার্টে যোগ করা হয়েছে",
     total_amount: "মোট পরিমাণ",
-    my_orders: "আমার অর্ডারসমূহ",
+    // duplicate key removed – my_orders already defined above
     loading_orders: "অর্ডার লোড হচ্ছে...",
     no_orders: "আপনার কোন অর্ডার নেই",
     reorder: "রি-অর্ডার",
@@ -833,6 +833,10 @@ export const translations = {
     verified_buyer: "যাচাইকৃত ক্রেতা",
     review_date_prefix: "",
     review_date_suffix: " আগে",
+    your_name: "আপনার নাম",
+    your_rating: "রেটিং",
+    your_review: "আপনার রিভিউ",
+    submit_review: "রিভিউ সাবমিট করুন",
   },
   en: {
     filter: "Filter",
@@ -1388,6 +1392,10 @@ export const translations = {
     review_date_prefix: "",
     review_date_suffix: " ago",
     thumbnail: "Thumbnail",
+    your_name: "Your Name",
+    your_rating: "Your Rating",
+    your_review: "Your Review",
+    submit_review: "Submit Review",
 
     // Categories
     collection: "Collection",
