@@ -66,8 +66,6 @@ export default function ComboOffers() {
       name: combo.name,
       price: combo.price,
       image: combo.image,
-      stock: combo.stock,
-      unit: t('combo_unit'),
     });
     toast.success(`${combo.name} ${t('add_to_cart_success')}`);
   };

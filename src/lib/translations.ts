@@ -40,9 +40,7 @@ export const translations = {
     footer_desc: "আমরা আপনার নিত্যপ্রয়োজনীয় সব পণ্য সরাসরি খামার থেকে আপনার দোরগোড়ায় পৌঁছে দিতে প্রতিশ্রুতিবদ্ধ।",
     all_rights_reserved: "সর্বস্বত্ব সংরক্ষিত।",
     cookies: "কুকিজ",
-    nav_products: "পণ্যসমূহ",
-    nav_cart: "কার্ট",
-    nav_wishlist: "উইশলিস্ট",
+
     terms_conditions: "শর্তাবলী",
     privacy_policy: "গোপনীয়তা নীতি",
 
@@ -400,7 +398,6 @@ export const translations = {
     cookies: "কুকিজ",
     nav_products: "পণ্যসমূহ",
     nav_cart: "কার্ট",
-    nav_wishlist: "উইশলিস্ট",
     nav_home: "হোম",
     nav_search: "সার্চ",
     nav_categories: "ক্যাটাগরি",
@@ -688,16 +685,10 @@ export const translations = {
     cat_baby_care_desc: "বেবি প্রোডাক্ট",
     cat_cleaning: "পরিষ্কারক",
     cat_cleaning_desc: "হোম ক্লিনিং",
-    sub_categories_suffix: " টি সাব-ক্যাটাগরি",
-    more_plus: " আরও",
-    view_all_products_card: "সব পণ্য দেখুন",
     live_chat: "লাইভ চ্যাট",
     shipping_policy: "শিপিং পলিসি",
     return_policy: "রিটার্ন পলিসি",
-    all_rights_reserved: "সর্বস্বত্ব সংরক্ষিত",
-    terms_conditions: "শর্তাবলী",
-    privacy_policy: "গোপনীয়তা নীতি",
-    cookies: "কুকিজ",
+
     
     // Search Bar
     search_placeholder: "পছন্দের পণ্য খুঁজুন...",

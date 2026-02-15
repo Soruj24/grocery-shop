@@ -50,9 +50,7 @@ export default function EidSpecialDeals() {
       _id: deal.id,
       name: deal.name,
       price: deal.price,
-      image: "", // Static deals don't have proper images in the current array
-      stock: deal.stock,
-      unit: t('eid_unit_piece'),
+      image: "",
     });
     toast.success(`${deal.name} ${t('add_to_cart_success')}`);
   };

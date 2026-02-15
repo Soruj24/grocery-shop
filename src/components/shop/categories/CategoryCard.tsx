@@ -42,10 +42,11 @@ export default function CategoryCard({ cat, index }: CategoryCardProps) {
       <div className="flex-1 space-y-8">
         <div>
           <h2 className="text-3xl font-black text-gray-800 dark:text-white group-hover:text-green-600 dark:group-hover:text-green-500 transition-colors mb-2">
-            {language === 'en' ? (cat.nameEn || cat.name) : cat.name}
+            {t("lang") === "en" ? cat.nameEn || cat.name : cat.name}
           </h2>
           <p className="text-gray-400 dark:text-gray-500 font-bold text-sm">
-            {cat.subCategories?.length || 0}{t('sub_categories_suffix')}
+            {cat.subCategories?.length || 0}
+            {t("sub_categories_suffix")}
           </p>
         </div>
 
@@ -58,7 +59,7 @@ export default function CategoryCard({ cat, index }: CategoryCardProps) {
                 href={`/category/${sub._id}`}
                 className="px-4 py-2.5 rounded-2xl text-sm font-black bg-gray-50 dark:bg-gray-800 text-gray-500 dark:text-gray-400 hover:bg-green-600 hover:text-white transition-all border border-transparent hover:shadow-lg hover:shadow-green-600/20"
               >
-                {language === 'en' ? (sub.nameEn || sub.name) : sub.name}
+                {t("lang") === "en" ? sub.nameEn || sub.name : sub.name}
               </Link>
             ))}
             {cat.subCategories?.length && cat.subCategories.length > 5 && (
@@ -66,7 +67,8 @@ export default function CategoryCard({ cat, index }: CategoryCardProps) {
                 href={`/category/${cat._id}`}
                 className="px-4 py-2.5 rounded-2xl text-sm font-black bg-green-50 dark:bg-green-900/30 text-green-600 dark:text-green-500 hover:bg-green-600 hover:text-white transition-all"
               >
-                +{cat.subCategories.length - 5}{t('more_plus')}
+                +{cat.subCategories.length - 5}
+                {t("more_plus")}
               </Link>
             )}
           </div>
@@ -80,7 +82,7 @@ export default function CategoryCard({ cat, index }: CategoryCardProps) {
           className="flex items-center justify-between group/btn"
         >
           <span className="text-lg font-black text-gray-800 dark:text-gray-100 group-hover/btn:text-green-600 dark:group-hover/btn:text-green-400 transition-colors">
-            {t('view_all_products_card')}
+            {t("view_all_products_card")}
           </span>
           <div className="w-12 h-12 rounded-2xl bg-gray-50 dark:bg-gray-800 flex items-center justify-center group-hover/btn:bg-green-600 group-hover/btn:text-white transition-all">
             <ChevronRight className="w-5 h-5" />
