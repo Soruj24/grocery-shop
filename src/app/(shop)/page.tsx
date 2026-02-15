@@ -1,4 +1,4 @@
-import dynamic from "next/dynamic";
+import nextDynamic from "next/dynamic";
 import Link from "next/link";
 import dbConnect from "@/lib/mongodb";
 import Product from "@/models/Product";
@@ -10,46 +10,48 @@ import PageBackground from "@/components/ui/PageBackground";
 import { Category as ICategory } from "@/types/category";
 
 // Lazy Load components that are below the fold
-const CategorySection = dynamic(
+const CategorySection = nextDynamic(
   () => import("@/components/shop/CategorySection"),
 );
-const SubCategorySpotlight = dynamic(
+const SubCategorySpotlight = nextDynamic(
   () => import("@/components/shop/SubCategorySpotlight"),
 );
-const SpecialOfferBanners = dynamic(
+const SpecialOfferBanners = nextDynamic(
   () => import("@/components/shop/SpecialOfferBanners"),
 );
-const ProductSection = dynamic(
+const ProductSection = nextDynamic(
   () => import("@/components/shop/ProductSection"),
 );
-const Newsletter = dynamic(() => import("@/components/shop/Newsletter"));
-const Testimonials = dynamic(() => import("@/components/shop/Testimonials"));
-const FlashDeals = dynamic(() => import("@/components/shop/FlashDeals"));
-const AppDownload = dynamic(() => import("@/components/shop/AppDownload"));
-const ComboOffers = dynamic(() => import("@/components/shop/ComboOffers"));
-const FeaturedProducts = dynamic(
+const Newsletter = nextDynamic(() => import("@/components/shop/Newsletter"));
+const Testimonials = nextDynamic(() => import("@/components/shop/Testimonials"));
+const FlashDeals = nextDynamic(() => import("@/components/shop/FlashDeals"));
+const AppDownload = nextDynamic(() => import("@/components/shop/AppDownload"));
+const ComboOffers = nextDynamic(() => import("@/components/shop/ComboOffers"));
+const FeaturedProducts = nextDynamic(
   () => import("@/components/shop/FeaturedProducts"),
 );
-const RecentlyViewedSection = dynamic(
+const RecentlyViewedSection = nextDynamic(
   () => import("@/components/shop/RecentlyViewedSection"),
 );
 
 // Marketing components
-const DailyDealsBanner = dynamic(
+const DailyDealsBanner = nextDynamic(
   () => import("@/components/shop/marketing/DailyDealsBanner"),
 );
-const RamadanOffers = dynamic(
+const RamadanOffers = nextDynamic(
   () => import("@/components/shop/marketing/RamadanOffers"),
 );
-const EidSpecialDeals = dynamic(
+const EidSpecialDeals = nextDynamic(
   () => import("@/components/shop/marketing/EidSpecialDeals"),
 );
-const ComboPacks = dynamic(
+const ComboPacks = nextDynamic(
   () => import("@/components/shop/marketing/ComboPacks"),
 );
-const BuyMoreSaveMore = dynamic(
+const BuyMoreSaveMore = nextDynamic(
   () => import("@/components/shop/marketing/BuyMoreSaveMore"),
 );
+
+export const dynamic = "force-dynamic";
 
 async function getHomeData(searchParams: {
   [key: string]: string | string[] | undefined;

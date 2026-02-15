@@ -5,6 +5,8 @@ import CategoryCard from "@/components/shop/categories/CategoryCard";
 import CategoryMap from "@/components/shop/categories/CategoryMap";
 import { Category as ICategory } from "@/types/category";
 
+export const dynamic = "force-dynamic";
+
 async function getCategories() {
   await dbConnect();
   const allCategories = await Category.find({ isActive: true }).lean();

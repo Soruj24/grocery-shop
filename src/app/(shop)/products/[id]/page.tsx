@@ -14,6 +14,8 @@ import { Product as ProductType } from "@/types/product";
 import StickyCheckoutBar from "@/components/shop/product-details/StickyCheckoutBar";
 import RecentlyViewedTracker from "@/components/shop/product-details/RecentlyViewedTracker";
 
+export const dynamic = "force-dynamic";
+
 export async function generateMetadata({
   params,
 }: {

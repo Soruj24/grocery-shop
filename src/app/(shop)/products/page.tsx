@@ -9,6 +9,8 @@ import ProductGridContent from "@/components/shop/products/ProductGridContent";
 import ProductStatusBar from "@/components/shop/products/ProductStatusBar";
 import { Category as ICategory } from "@/types/category";
 
+export const dynamic = "force-dynamic";
+
 async function getProducts(searchParams: {
   [key: string]: string | string[] | undefined;
 }) {

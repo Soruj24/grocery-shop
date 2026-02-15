@@ -9,6 +9,8 @@ import CategoryProductGrid from "@/components/shop/category-details/CategoryProd
 import { Category as ICategory } from "@/types/category";
 import CategoryNotFound from "@/components/shop/category-details/CategoryNotFound";
 
+export const dynamic = "force-dynamic";
+
 async function getCategoryData(
   id: string,
   searchParams: { [key: string]: string | string[] | undefined },
