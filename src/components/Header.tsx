@@ -4,20 +4,17 @@ import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import { Menu, Search } from "lucide-react";
 import { useWishlist } from "@/components/WishlistContext";
-import TopBar from "./shop/Header/TopBar";
 import SearchBar from "./shop/Header/SearchBar";
 import UserActions from "./shop/Header/UserActions";
 import NavbarLogo from "./shop/Header/NavbarLogo";
 import DesktopNav from "./shop/Header/DesktopNav";
 import MobileDrawer from "./shop/Header/MobileDrawer";
-import MobileSearch from "./shop/Header/MobileSearch";
 
 export default function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [categories, setCategories] = useState<any[]>([]);
   const [isCategoryMenuOpen, setIsCategoryMenuOpen] = useState(false);
-  const [searchTerm, setSearchTerm] = useState("");
 
   const { data: session } = useSession();
   const { totalWishlistItems } = useWishlist();
@@ -30,7 +27,14 @@ export default function Header() {
 
     // Fetch categories for the navbar
     fetch("/api/categories")
-      .then((res) => res.json())
+      .then((res) => {
+        if (!res.ok) throw new Error("Network response was not ok");
+        const contentType = res.headers.get("content-type");
+        if (!contentType || !contentType.includes("application/json")) {
+          throw new TypeError("Oops, we haven't got JSON!");
+        }
+        return res.json();
+      })
       .then((data) => setCategories(data))
       .catch((err) => console.error("Failed to fetch categories:", err));
 
@@ -62,7 +66,7 @@ export default function Header() {
             <div className="hidden lg:block">
               <UserActions />
             </div>
-            
+
             {/* Mobile Search Trigger */}
             <button
               onClick={() => setIsMobileMenuOpen(true)}
@@ -70,7 +74,7 @@ export default function Header() {
             >
               <Search className="w-6 h-6" />
             </button>
-            
+
             <button
               onClick={() => setIsMobileMenuOpen(true)}
               className="lg:hidden p-2 text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-full transition-colors"
