@@ -1,7 +1,6 @@
 import { withAuth } from "next-auth/middleware";
 import { NextResponse } from "next/server";
-import type { NextRequest } from "next/server";
-
+ 
 // Simple in-memory rate limit for middleware
 const rateLimitMap = new Map<string, { count: number; lastReset: number }>();
 const LIMIT = 100; // 100 requests per minute
@@ -9,7 +8,7 @@ const WINDOW = 60 * 1000;
 
 export default withAuth(
   function middleware(req) {
-    const ip = req.ip ?? "127.0.0.1";
+    const ip = req.headers.get("x-forwarded-for")?.split(",")[0].trim() ?? req.headers.get("x-real-ip") ?? "127.0.0.1";
     const now = Date.now();
     
     // Rate Limiting for API routes
