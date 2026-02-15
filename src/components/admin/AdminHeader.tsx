@@ -7,6 +7,7 @@ interface AdminHeaderProps {
   count?: number;
   countLabel?: string;
   onAddClick?: () => void;
+  addLabel?: string;
   addButtonLabel?: string;
   searchTerm?: string;
   onSearchChange?: (value: string) => void;
@@ -18,11 +19,13 @@ export default function AdminHeader({
   count,
   countLabel,
   onAddClick,
+  addLabel,
   addButtonLabel,
   searchTerm,
   onSearchChange,
   searchPlaceholder = "সার্চ করুন...",
 }: AdminHeaderProps) {
+  const finalAddLabel = addLabel || addButtonLabel || "নতুন যোগ করুন";
   return (
     <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-12">
       <div className="space-y-2">
@@ -63,7 +66,7 @@ export default function AdminHeader({
             className="flex items-center justify-center gap-2 px-6 py-3 bg-green-500 hover:bg-green-600 text-white rounded-2xl text-sm font-black uppercase tracking-wider shadow-lg shadow-green-500/20 transition-all active:scale-95"
           >
             <Plus className="h-4 w-4" />
-            {addButtonLabel}
+            {finalAddLabel}
           </button>
         )}
       </div>
