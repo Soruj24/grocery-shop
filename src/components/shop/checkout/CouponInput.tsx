@@ -5,9 +5,16 @@ import { Ticket, Loader2, CheckCircle2, XCircle } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useLanguage } from "@/components/LanguageContext";
 
+interface Coupon {
+  code: string;
+  discount: number;
+  discountType?: "percentage" | "fixed";
+  discountValue?: number;
+}
+
 interface CouponInputProps {
   total: number;
-  onApply: (coupon: any) => void;
+  onApply: (coupon: Coupon) => void;
   onRemove: () => void;
 }
 
@@ -16,7 +23,7 @@ export default function CouponInput({ total, onApply, onRemove }: CouponInputPro
   const [code, setCode] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
-  const [appliedCoupon, setAppliedCoupon] = useState<any>(null);
+  const [appliedCoupon, setAppliedCoupon] = useState<Coupon | null>(null);
 
   const handleApply = async () => {
     if (!code) return;
@@ -30,7 +37,7 @@ export default function CouponInput({ total, onApply, onRemove }: CouponInputPro
         body: JSON.stringify({ code, total }),
       });
 
-      const data = await res.json();
+      const data: Coupon = await res.json();
 
       if (res.ok) {
         setAppliedCoupon(data);

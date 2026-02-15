@@ -39,38 +39,38 @@ export async function POST(req: Request) {
 
     await dbConnect();
 
-    // Verify stock and existence before creating order
     for (const item of items) {
-      // Check if product ID is a valid MongoDB ObjectId
-      if (!mongoose.Types.ObjectId.isValid(item.product)) {
-        // If it's one of our hardcoded "Eid Special Deals" IDs, we skip the DB check
-        const hardcodedIds = [
-           "65cd123456789012345678a1",
-           "65cd123456789012345678a2",
-           "65cd123456789012345678a3",
-           "65cd123456789012345678a4",
-           "65cd123456789012345678b1",
-           "65cd123456789012345678b2",
-           "65cd123456789012345678b3"
-         ];
-        
-        if (hardcodedIds.includes(item.product)) {
-          continue; // Allow hardcoded products for now
+      if (mongoose.Types.ObjectId.isValid(item.product)) {
+        const product = await Product.findById(item.product);
+        if (!product) {
+          return NextResponse.json({ message: `Product ${item.name} not found` }, { status: 404 });
         }
-
-        return NextResponse.json({ 
-          message: `Invalid product ID: ${item.product}. This product might be from a mock/dummy source.` 
-        }, { status: 400 });
-      }
-
-      const product = await Product.findById(item.product);
-      if (!product) {
-        return NextResponse.json({ message: `Product ${item.name} not found` }, { status: 404 });
-      }
-      if (product.stock < item.quantity) {
-        return NextResponse.json({ 
-          message: `Insufficient stock for ${item.name}. Available: ${product.stock}` 
-        }, { status: 400 });
+        if (product.stock < item.quantity) {
+          return NextResponse.json({ 
+            message: `Insufficient stock for ${item.name}. Available: ${product.stock}` 
+          }, { status: 400 });
+        }
+      } else {
+        const hardcodedIds = [
+          "65cd123456789012345678a1",
+          "65cd123456789012345678a2",
+          "65cd123456789012345678a3",
+          "65cd123456789012345678a4",
+          "65cd123456789012345678b1",
+          "65cd123456789012345678b2",
+          "65cd123456789012345678b3"
+        ];
+        if (hardcodedIds.includes(item.product)) {
+          continue;
+        }
+        const validName = typeof item.name === "string" && item.name.trim().length > 0;
+        const validPrice = typeof item.price === "number" && item.price >= 0;
+        const validQty = Number.isInteger(item.quantity) && item.quantity > 0;
+        if (!validName || !validPrice || !validQty) {
+          return NextResponse.json({ 
+            message: "Invalid non-database item. Provide valid name, price, and quantity." 
+          }, { status: 400 });
+        }
       }
     }
 
