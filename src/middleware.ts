@@ -47,9 +47,17 @@ export default withAuth(
   {
     callbacks: {
       authorized: ({ token, req }) => {
+        const { pathname } = req.nextUrl;
         // Public routes that don't need auth
-        const publicPaths = ["/", "/login", "/signup", "/api/products", "/api/categories"];
-        if (publicPaths.some(path => req.nextUrl.pathname === path)) return true;
+        if (
+          pathname === "/" ||
+          pathname === "/login" ||
+          pathname === "/signup" ||
+          pathname.startsWith("/api/products") ||
+          pathname.startsWith("/api/categories")
+        ) {
+          return true;
+        }
         return !!token;
       },
     },
@@ -57,5 +65,9 @@ export default withAuth(
 );
 
 export const config = {
-  matcher: ["/admin/:path*", "/profile/:path*", "/api/:path*"],
+  matcher: [
+    "/admin/:path*",
+    "/profile/:path*",
+    "/api/((?!auth).*)", // Intercept all API routes EXCEPT /api/auth
+  ],
 };
