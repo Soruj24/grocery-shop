@@ -23,7 +23,7 @@ export default function TopBar() {
           </div>
         </div>
         <div className="flex items-center gap-8">
-          <Link href="/track-order" className="hover:text-green-300 transition-colors flex items-center gap-2">
+          <Link href="/support" className="hover:text-green-300 transition-colors flex items-center gap-2">
             অর্ডার ট্র্যাক করুন
           </Link>
           <Link href="/offers" className="flex items-center gap-2 bg-yellow-400 text-black px-4 py-1 rounded-full hover:bg-yellow-500 transition-all group shadow-lg shadow-yellow-400/20">

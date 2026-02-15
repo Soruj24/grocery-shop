@@ -37,16 +37,16 @@ export default function RamadanOffers() {
         </div>
       </div>
 
-      <div className="flex flex-col md:flex-row items-center gap-8 bg-[#1a2e35] rounded-[40px] p-8 md:p-12 text-white relative border border-emerald-500/20 shadow-2xl shadow-emerald-950/20">
+      <div className="flex flex-col md:flex-row items-center gap-8 bg-[#1a2e35] rounded-32px p-8 md:p-12 text-white relative border border-emerald-500/20 shadow-2xl shadow-emerald-950/20">
         <div className="flex-1 space-y-6">
-          <div className="inline-flex items-center gap-2 bg-emerald-500/20 text-emerald-400 px-4 py-2 rounded-full border border-emerald-500/30">
+          <div className="inline-flex items-center gap-2 bg-emerald-500/10 text-emerald-400 px-4 py-2 rounded-full border border-emerald-500/20">
             <Moon className="w-4 h-4 fill-current" />
             <span className="text-xs font-black uppercase tracking-widest">
               রমজানুল মোবারক স্পেশাল
             </span>
           </div>
 
-          <h2 className="text-4xl md:text-6xl font-black tracking-tight">
+          <h2 className="text-4xl md:text-5xl font-black tracking-tight leading-tight">
             বরকতময় রমজানে <br />
             <span className="text-emerald-400">সাশ্রয়ী বাজার</span>
           </h2>
@@ -67,12 +67,11 @@ export default function RamadanOffers() {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full max-w-lg">
           {offers.map((offer, i) => (
-            <motion.div
+            <div
               key={i}
-              whileHover={{ y: -5 }}
-              className={`${offer.color} bg-opacity-10 border border-white/10 rounded-3xl p-6 flex items-center gap-4 group transition-all cursor-pointer`}
+              className={`${offer.color} bg-opacity-5 border border-white/5 rounded-2xl p-6 flex items-center gap-4 group transition-all cursor-pointer hover:bg-opacity-10`}
             >
-              <div className="text-4xl bg-white/10 p-3 rounded-2xl group-hover:scale-110 transition-transform">
+              <div className="text-4xl bg-white/10 p-3 rounded-2xl group-hover:scale-105 transition-transform">
                 {offer.icon}
               </div>
               <div>
@@ -81,11 +80,11 @@ export default function RamadanOffers() {
                   {offer.discount}
                 </p>
               </div>
-            </motion.div>
+            </div>
           ))}
           <Link
             href="/products"
-            className="bg-white/5 border border-dashed border-white/20 rounded-3xl p-6 flex flex-col items-center justify-center gap-2 text-center group cursor-pointer hover:bg-white/10 transition-all"
+            className="bg-white/5 border border-dashed border-white/10 rounded-2xl p-6 flex flex-col items-center justify-center gap-2 text-center group cursor-pointer hover:bg-white/10 transition-all"
           >
             <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center">
               <PlusIcon />

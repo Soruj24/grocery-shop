@@ -53,10 +53,44 @@ export interface AdminOrder {
   createdAt: string;
   paymentMethod?: string;
   transactionId?: string;
+  deliveryStatus?: string;
+  trackingId?: string;
+  deliveryBoy?: {
+    name: string;
+    phone: string;
+  };
+  coupon?: {
+    code: string;
+    discount: number;
+  };
   customer?: {
     name: string;
     email: string;
   } | string;
+}
+
+export interface AdminCoupon {
+  _id: string;
+  code: string;
+  discountType: 'percentage' | 'fixed';
+  discountValue: number;
+  minOrderAmount: number;
+  maxDiscountAmount?: number;
+  expiryDate: string;
+  usageLimit?: number;
+  usedCount: number;
+  isActive: boolean;
+}
+
+export interface AdminCouponFormData {
+  code: string;
+  discountType: 'percentage' | 'fixed';
+  discountValue: number;
+  minOrderAmount: number;
+  maxDiscountAmount?: number;
+  expiryDate: string;
+  usageLimit?: number;
+  isActive: boolean;
 }
 
 export interface AdminStats {

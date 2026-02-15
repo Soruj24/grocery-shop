@@ -19,13 +19,12 @@ export default function ProductSection({
   totalCount,
 }: ProductSectionProps) {
   return (
-    <section id="products" className="relative py-20">
-      <ProductSectionHeader />
-      
-      <ProductGrid products={products} />
+    <section id="products" className="py-12 px-4 bg-white dark:bg-gray-900 rounded-[32px] my-8">
+      <div className="max-w-7xl mx-auto">
+        <ProductSectionHeader />
+        <ProductGrid products={products} />
 
-      <div className="mt-24 flex justify-center">
-        <div className="bg-white dark:bg-gray-900 p-4 rounded-[40px] shadow-2xl shadow-black/5 border border-gray-100 dark:border-gray-800">
+        <div className="mt-12 flex justify-center">
           <Pagination
             totalPages={totalPages}
             currentPage={currentPage}

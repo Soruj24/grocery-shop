@@ -11,6 +11,7 @@ import OrderSuccess from "@/components/shop/checkout/OrderSuccess";
 import CheckoutForm from "@/components/shop/checkout/CheckoutForm";
 import OrderSummary from "@/components/shop/checkout/OrderSummary";
 import { motion, AnimatePresence } from "framer-motion";
+import { useSearchParams } from "next/navigation";
 
 const steps = [
   { id: 1, name: "ডেলিভারি তথ্য", icon: MapPin },
@@ -21,8 +22,10 @@ const steps = [
 
 export default function CheckoutPage() {
   const { cart, totalPrice, clearCart } = useCart();
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const couponCode = searchParams.get("coupon");
   
   const [currentStep, setCurrentStep] = useState(1);
   const [formData, setFormData] = useState({
@@ -30,6 +33,8 @@ export default function CheckoutPage() {
     phone: "",
     address: "",
     area: "Dhanmondi",
+    division: "",
+    district: "",
   });
   const [deliverySlot, setDeliverySlot] = useState("Morning (9 AM - 12 PM)");
   const [paymentMethod, setPaymentMethod] = useState<'cod' | 'bkash' | 'nagad' | 'card'>('cod');
@@ -37,9 +42,16 @@ export default function CheckoutPage() {
   const [loading, setLoading] = useState(false);
   const [orderSuccess, setOrderSuccess] = useState(false);
   const [error, setError] = useState("");
+  const [couponDiscount, setCouponDiscount] = useState(0);
 
   const nextStep = () => setCurrentStep(prev => Math.min(prev + 1, 4));
   const prevStep = () => setCurrentStep(prev => Math.max(prev - 1, 1));
+
+  useEffect(() => {
+    if (status === "unauthenticated") {
+      router.push(`/login?callbackUrl=/checkout`);
+    }
+  }, [status, router]);
 
   useEffect(() => {
     if (session?.user) {
@@ -51,6 +63,27 @@ export default function CheckoutPage() {
       }));
     }
   }, [session]);
+
+  useEffect(() => {
+    const validateCoupon = async () => {
+      if (couponCode && totalPrice > 0) {
+        try {
+          const res = await fetch("/api/coupons/validate", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ code: couponCode, total: totalPrice }),
+          });
+          const data = await res.json();
+          if (res.ok) {
+            setCouponDiscount(data.discount);
+          }
+        } catch (error) {
+          console.error("Coupon validation failed", error);
+        }
+      }
+    };
+    validateCoupon();
+  }, [couponCode, totalPrice]);
 
   useEffect(() => {
     if (cart.length === 0 && !orderSuccess && !loading) {
@@ -80,6 +113,10 @@ export default function CheckoutPage() {
     setLoading(true);
     setError("");
 
+    const deliveryFee = totalPrice > 500 ? 0 : 50;
+    const vat = Math.round(totalPrice * 0.05);
+    const finalTotal = totalPrice + deliveryFee + vat - couponDiscount;
+
     try {
       const res = await fetch("/api/orders", {
         method: "POST",
@@ -91,12 +128,14 @@ export default function CheckoutPage() {
             price: item.price,
             quantity: item.quantity,
           })),
-          total: totalPrice + 20,
-          address: formData.address,
+          total: finalTotal,
+          address: `${formData.address}, ${formData.area}, ${formData.district}, ${formData.division}`,
           phone: formData.phone,
           paymentMethod,
           transactionId: paymentMethod !== 'cod' ? transactionId : undefined,
           paymentStatus: paymentMethod !== 'cod' ? 'paid' : 'unpaid',
+          coupon: couponCode || undefined,
+          deliverySlot,
         }),
       });
 
@@ -113,6 +152,14 @@ export default function CheckoutPage() {
       setLoading(false);
     }
   };
+
+  if (status === "loading") {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="w-12 h-12 border-4 border-green-500/20 border-t-green-500 rounded-full animate-spin" />
+      </div>
+    );
+  }
 
   if (orderSuccess) {
     return <OrderSuccess />;
@@ -207,7 +254,7 @@ export default function CheckoutPage() {
 
           {/* Order Summary Sidebar */}
           <div className="lg:col-span-1 sticky top-12">
-            <OrderSummary cart={cart} totalPrice={totalPrice} />
+            <OrderSummary cart={cart} totalPrice={totalPrice} couponDiscount={couponDiscount} />
           </div>
         </div>
       </div>

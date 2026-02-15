@@ -11,8 +11,19 @@ const OrderSchema = new mongoose.Schema({
   total: { type: Number, required: true },
   status: { 
     type: String, 
-    enum: ['pending', 'confirmed', 'delivered', 'cancelled'], 
+    enum: ['pending', 'confirmed', 'processing', 'shipped', 'delivered', 'cancelled'], 
     default: 'pending' 
+  },
+  deliveryMethod: { type: String, default: 'standard' },
+  deliveryStatus: { type: String, default: 'pending' },
+  trackingId: { type: String },
+  deliveryBoy: {
+    name: String,
+    phone: String
+  },
+  coupon: {
+    code: String,
+    discount: Number
   },
   address: { type: String, required: true },
   phone: { type: String, required: true },

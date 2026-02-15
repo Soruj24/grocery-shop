@@ -18,7 +18,6 @@ export const metadata: Metadata = {
   description: "EMRAN SHOP থেকে কিনুন তাজা ফল, শাকসবজি এবং নিত্যপ্রয়োজনীয় সকল গ্রোসারি পণ্য। দ্রুত ডেলিভারি এবং সেরা মানের নিশ্চয়তা।",
   keywords: ["grocery shop", "online grocery bangladesh", "fresh vegetables", "organic fruits", "emran shop"],
   authors: [{ name: "Emran" }],
-  viewport: "width=device-width, initial-scale=1",
   openGraph: {
     title: "EMRAN SHOP | সেরা গ্রোসারি অনলাইন শপ",
     description: "তাজা এবং মানসম্মত গ্রোসারি পণ্য কিনুন সবচেয়ে কম দামে।",

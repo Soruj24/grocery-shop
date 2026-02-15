@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
-import { Menu } from "lucide-react";
+import { Menu, Search } from "lucide-react";
 import { useWishlist } from "@/components/WishlistContext";
 import TopBar from "./shop/Header/TopBar";
 import SearchBar from "./shop/Header/SearchBar";
@@ -39,46 +39,59 @@ export default function Header() {
 
   return (
     <>
-      <TopBar />
-
       <header
-        className={`sticky top-0 z-50 transition-all duration-500 ${
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
           isScrolled
-            ? "bg-white/90 dark:bg-black/90 backdrop-blur-2xl border-b border-gray-100/50 dark:border-white/5 shadow-[0_8px_32px_rgba(0,0,0,0.08)] py-2"
-            : "bg-white dark:bg-black py-4 lg:py-5"
+            ? "bg-white/95 dark:bg-gray-900/95 backdrop-blur-md shadow-md py-2"
+            : "bg-white dark:bg-gray-900 py-4"
         }`}
       >
-        {/* Main Header Row */}
-        <div className="max-w-7xl mx-auto px-4 flex items-center justify-between gap-2 lg:gap-12">
-          {/* Menu & Logo & Location */}
-          <div className="flex items-center gap-2 lg:gap-8 min-w-0">
+        <div className="max-w-7xl mx-auto px-4 flex items-center gap-4 lg:gap-8">
+          {/* Logo */}
+          <div className="shrink-0">
+            <NavbarLogo />
+          </div>
+
+          {/* Desktop Search */}
+          <div className="hidden md:flex flex-1 max-w-2xl">
+            <SearchBar />
+          </div>
+
+          {/* User Actions */}
+          <div className="flex items-center gap-2 ml-auto">
+            <div className="hidden lg:block">
+              <UserActions />
+            </div>
+            
+            {/* Mobile Search Trigger */}
             <button
               onClick={() => setIsMobileMenuOpen(true)}
-              className="p-2 lg:hidden text-gray-700 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-white/5 rounded-xl transition-all shrink-0"
+              className="md:hidden p-2 text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-full transition-colors"
+            >
+              <Search className="w-6 h-6" />
+            </button>
+            
+            <button
+              onClick={() => setIsMobileMenuOpen(true)}
+              className="lg:hidden p-2 text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-full transition-colors"
             >
               <Menu className="w-6 h-6" />
             </button>
-
-            <div className="shrink-0 scale-90 sm:scale-100 origin-left">
-              <NavbarLogo />
-            </div>
-          </div>
-
-          <SearchBar />
-
-          <div className="shrink-0">
-            <UserActions />
           </div>
         </div>
 
-        <DesktopNav
-          categories={categories}
-          isCategoryMenuOpen={isCategoryMenuOpen}
-          setIsCategoryMenuOpen={setIsCategoryMenuOpen}
-        />
-
-        <MobileSearch searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+        {/* Categories Bar (Desktop Only) */}
+        <div className="hidden md:block border-t border-gray-100 dark:border-gray-800 mt-2">
+          <DesktopNav
+            categories={categories}
+            isCategoryMenuOpen={isCategoryMenuOpen}
+            setIsCategoryMenuOpen={setIsCategoryMenuOpen}
+          />
+        </div>
       </header>
+
+      {/* Spacer for fixed header */}
+      <div className="h-20 md:h-32" />
 
       <MobileDrawer
         isOpen={isMobileMenuOpen}

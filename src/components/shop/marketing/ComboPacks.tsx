@@ -60,14 +60,10 @@ export default function ComboPacks() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {combos.map((combo) => (
-            <motion.div
+            <div
               key={combo._id}
-              whileHover={{ scale: 1.02 }}
-              className="relative bg-white dark:bg-white/5 rounded-[48px] p-8 md:p-12 border border-gray-100 dark:border-white/5 shadow-2xl shadow-gray-200/50 dark:shadow-none overflow-hidden group"
+              className="relative bg-white dark:bg-white/5 rounded-32px p-8 md:p-12 border border-gray-100 dark:border-white/5 shadow-xl shadow-gray-200/50 dark:shadow-none overflow-hidden group hover:shadow-2xl transition-all duration-300"
             >
-              {/* Background Icon */}
-              <Layers className="absolute -bottom-12 -right-12 w-64 h-64 text-gray-50 dark:text-white/[0.02] -rotate-12 pointer-events-none" />
-
               <div className="relative z-10 flex flex-col h-full">
                 <div className="flex justify-between items-start mb-8">
                   <div className="space-y-2">
@@ -102,13 +98,13 @@ export default function ComboPacks() {
 
                 <Link
                   href="/products"
-                  className="w-full bg-green-600 hover:bg-green-700 text-white py-5 rounded-[24px] font-black flex items-center justify-center gap-3 transition-all shadow-lg shadow-green-600/20 active:scale-95"
+                  className="w-full bg-green-600 hover:bg-green-700 text-white py-5 rounded-2xl font-black flex items-center justify-center gap-3 transition-all shadow-lg shadow-green-600/20 active:scale-95"
                 >
                   <ShoppingCart className="w-5 h-5" />
                   কম্বোটি কিনুন
                 </Link>
               </div>
-            </motion.div>
+            </div>
           ))}
         </div>
       </div>

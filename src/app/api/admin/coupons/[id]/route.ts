@@ -1,0 +1,36 @@
+import { NextResponse } from "next/server";
+import dbConnect from "@/lib/mongodb";
+import Coupon from "@/models/Coupon";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/auth";
+
+export async function PUT(req: Request, { params }: { params: { id: string } }) {
+  try {
+    const session = await getServerSession(authOptions);
+    if (!session || (session.user as any)?.role !== "admin") {
+      return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+    }
+
+    const body = await req.json();
+    await dbConnect();
+    const coupon = await Coupon.findByIdAndUpdate(params.id, body, { new: true });
+    return NextResponse.json(coupon);
+  } catch (error) {
+    return NextResponse.json({ message: "Server error" }, { status: 500 });
+  }
+}
+
+export async function DELETE(req: Request, { params }: { params: { id: string } }) {
+  try {
+    const session = await getServerSession(authOptions);
+    if (!session || (session.user as any)?.role !== "admin") {
+      return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+    }
+
+    await dbConnect();
+    await Coupon.findByIdAndDelete(params.id);
+    return NextResponse.json({ message: "Coupon deleted" });
+  } catch (error) {
+    return NextResponse.json({ message: "Server error" }, { status: 500 });
+  }
+}

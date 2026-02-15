@@ -12,7 +12,18 @@ export async function POST(req: Request) {
       return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
     }
 
-    const { items, total, address, phone, paymentMethod, transactionId, paymentStatus } = await req.json();
+    const { 
+      items, 
+      total, 
+      address, 
+      phone, 
+      paymentMethod, 
+      transactionId, 
+      paymentStatus,
+      coupon,
+      deliveryMethod,
+      deliverySlot
+    } = await req.json();
 
     await dbConnect();
 
@@ -26,6 +37,9 @@ export async function POST(req: Request) {
       paymentMethod,
       transactionId,
       paymentStatus,
+      coupon,
+      deliveryMethod,
+      deliverySlot
     });
 
     // Reduce stock

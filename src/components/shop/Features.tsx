@@ -56,50 +56,25 @@ const FEATURES = [
 
 export default function Features() {
   return (
-    <section className="py-24 px-4 bg-white dark:bg-black/20 overflow-hidden relative">
-      {/* Decorative Circles */}
-      <div className="absolute top-1/2 left-0 -translate-y-1/2 w-96 h-96 bg-green-500/5 blur-[120px] rounded-full -ml-48 pointer-events-none" />
-      <div className="absolute top-1/2 right-0 -translate-y-1/2 w-96 h-96 bg-blue-500/5 blur-[120px] rounded-full -mr-48 pointer-events-none" />
-
+    <section className="py-12 px-4 bg-white dark:bg-gray-900 rounded-[32px] my-8">
       <div className="max-w-7xl mx-auto">
-        <div className="text-center space-y-4 mb-20">
-          <motion.h2 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-4xl md:text-6xl font-black text-gray-900 dark:text-white tracking-tight"
-          >
-            কেন আমাদের <span className="text-transparent bg-clip-text bg-gradient-to-r from-green-500 to-emerald-600">পছন্দ করবেন?</span>
-          </motion.h2>
-          <motion.p 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.1 }}
-            className="text-gray-500 dark:text-gray-400 font-medium max-w-2xl mx-auto text-lg"
-          >
-            সেরা মান, সাশ্রয়ী দাম এবং দ্রুত ডেলিভারির মাধ্যমে আমরা নিশ্চিত করি আপনার সেরা শপিং অভিজ্ঞতা।
-          </motion.p>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
           {FEATURES.map((feature, idx) => (
             <motion.div
               key={idx}
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: idx * 0.1 }}
-              whileHover={{ y: -10 }}
-              className="group p-10 bg-gray-50 dark:bg-white/5 rounded-[48px] border border-gray-100 dark:border-white/5 hover:bg-white dark:hover:bg-[#0F172A] hover:shadow-2xl hover:shadow-gray-200/50 dark:hover:shadow-black/50 transition-all duration-500"
+              transition={{ delay: idx * 0.05 }}
+              className="flex flex-col items-center text-center p-4 rounded-2xl hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors group"
             >
-              <div className={`w-20 h-20 ${feature.lightColor} rounded-3xl flex items-center justify-center mb-8 group-hover:scale-110 transition-transform duration-500`}>
-                <feature.icon className={`w-10 h-10 ${feature.textColor}`} />
+              <div className={`w-14 h-14 ${feature.lightColor} rounded-full flex items-center justify-center mb-3 group-hover:scale-110 transition-transform`}>
+                <feature.icon className={`w-7 h-7 ${feature.textColor}`} />
               </div>
-              <h3 className="text-2xl font-black text-gray-900 dark:text-white mb-4 group-hover:text-green-600 transition-colors">
+              <h3 className="text-xs font-bold text-gray-800 dark:text-gray-100 mb-1">
                 {feature.title}
               </h3>
-              <p className="text-gray-500 dark:text-gray-400 font-medium leading-relaxed">
+              <p className="text-[10px] text-gray-400 leading-tight">
                 {feature.description}
               </p>
             </motion.div>

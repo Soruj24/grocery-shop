@@ -1,15 +1,17 @@
-import { Clock, Truck, CheckCircle, XCircle, Package } from "lucide-react";
+import { Clock, Truck, CheckCircle, XCircle, Package, Edit2 } from "lucide-react";
 import StatusBadge from "@/components/admin/StatusBadge";
 import { AdminOrder } from "@/types/admin";
 
 interface OrderTableRowProps {
   order: AdminOrder;
   onStatusUpdate: (id: string, status: string) => void;
+  onEditClick: (order: AdminOrder) => void;
 }
 
 export default function OrderTableRow({
   order,
   onStatusUpdate,
+  onEditClick,
 }: OrderTableRowProps) {
   return (
     <tr className="group hover:bg-emerald-50/30 dark:hover:bg-emerald-900/10 transition-all duration-300">
@@ -52,52 +54,67 @@ export default function OrderTableRow({
         </div>
       </td>
       <td className="px-8 py-6">
-        <StatusBadge
-          status={order.status}
-          label={
-            order.status === "pending"
-              ? "পেন্ডিং"
-              : order.status === "processing"
-                ? "প্রসেসিং"
-                : order.status === "shipped"
-                  ? "শিপড"
+        <div className="flex flex-col gap-2">
+          <StatusBadge
+            status={order.status}
+            label={
+              order.status === "pending"
+                ? "পেন্ডিং"
+                : order.status === "processing"
+                  ? "প্রসেসিং"
+                  : order.status === "shipped"
+                    ? "শিপড"
+                    : order.status === "delivered"
+                      ? "ডেলিভারড"
+                      : "ক্যানসেল"
+            }
+            icon={
+              order.status === "pending"
+                ? Clock
+                : order.status === "processing" || order.status === "shipped"
+                  ? Truck
                   : order.status === "delivered"
-                    ? "ডেলিভারড"
-                    : "ক্যানসেল"
-          }
-          icon={
-            order.status === "pending"
-              ? Clock
-              : order.status === "processing" || order.status === "shipped"
-                ? Truck
-                : order.status === "delivered"
-                  ? CheckCircle
-                  : XCircle
-          }
-        />
+                    ? CheckCircle
+                    : XCircle
+            }
+          />
+          {order.deliveryStatus && (
+            <span className="text-[9px] font-bold text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-900/20 px-2 py-0.5 rounded-full border border-emerald-100 dark:border-emerald-800/50 w-fit">
+              ডেলিভারি: {order.deliveryStatus}
+            </span>
+          )}
+        </div>
       </td>
       <td className="px-8 py-6 text-right">
-        <select
-          className="text-[11px] font-black uppercase tracking-wider bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 rounded-2xl px-4 py-2.5 outline-none focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500 dark:focus:border-emerald-500/50 transition-all cursor-pointer appearance-none min-w-[140px] text-center"
-          value={order.status}
-          onChange={(e) => onStatusUpdate(order._id, e.target.value)}
-        >
-          <option value="pending" className="dark:bg-gray-900">
-            Pending
-          </option>
-          <option value="processing" className="dark:bg-gray-900">
-            Processing
-          </option>
-          <option value="shipped" className="dark:bg-gray-900">
-            Shipped
-          </option>
-          <option value="delivered" className="dark:bg-gray-900">
-            Delivered
-          </option>
-          <option value="cancelled" className="dark:bg-gray-900">
-            Cancelled
-          </option>
-        </select>
+        <div className="flex items-center justify-end gap-3">
+          <select
+            className="text-[11px] font-black uppercase tracking-wider bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 rounded-2xl px-4 py-2.5 outline-none focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500 dark:focus:border-emerald-500/50 transition-all cursor-pointer appearance-none min-w-[140px] text-center"
+            value={order.status}
+            onChange={(e) => onStatusUpdate(order._id, e.target.value)}
+          >
+            <option value="pending" className="dark:bg-gray-900">
+              Pending
+            </option>
+            <option value="processing" className="dark:bg-gray-900">
+              Processing
+            </option>
+            <option value="shipped" className="dark:bg-gray-900">
+              Shipped
+            </option>
+            <option value="delivered" className="dark:bg-gray-900">
+              Delivered
+            </option>
+            <option value="cancelled" className="dark:bg-gray-900">
+              Cancelled
+            </option>
+          </select>
+          <button
+            onClick={() => onEditClick(order)}
+            className="p-2.5 hover:bg-emerald-50 dark:hover:bg-emerald-900/20 text-emerald-600 rounded-xl transition-all border border-transparent hover:border-emerald-100 dark:hover:border-emerald-800/50"
+          >
+            <Edit2 size={18} />
+          </button>
+        </div>
       </td>
     </tr>
   );

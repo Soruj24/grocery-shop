@@ -33,20 +33,18 @@ export default function OfferBanner({
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      whileHover={{ y: -10 }}
-      className={`group relative ${gradient} rounded-[60px] p-12 overflow-hidden flex flex-col justify-center min-h-[450px] shadow-2xl ${shadow} transition-all duration-500`}
+      className={`group relative ${gradient} rounded-32px p-8 md:p-12 overflow-hidden flex flex-col justify-center min-h-[350px] md:min-h-[450px] shadow-2xl ${shadow} transition-all duration-500`}
     >
       {/* Decorative Overlays */}
-      <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10 pointer-events-none" />
-      <div className="absolute top-0 right-0 w-full h-full bg-gradient-to-l from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
+      <div className="absolute inset-0 bg-white/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
       
       {/* Content */}
-      <div className="relative z-10 text-white max-w-lg space-y-6">
+      <div className="relative z-10 text-white max-w-lg space-y-4 md:space-y-6">
         <motion.span 
           initial={{ x: -20, opacity: 0 }}
           whileInView={{ x: 0, opacity: 1 }}
           transition={{ delay: 0.2 }}
-          className="bg-white/20 backdrop-blur-xl border border-white/20 px-6 py-2 rounded-full text-xs font-black uppercase tracking-[0.2em] mb-4 inline-block"
+          className="bg-white/10 backdrop-blur-xl border border-white/10 px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-[0.2em] mb-2 inline-block"
         >
           {badge}
         </motion.span>
@@ -55,7 +53,7 @@ export default function OfferBanner({
           initial={{ x: -20, opacity: 0 }}
           whileInView={{ x: 0, opacity: 1 }}
           transition={{ delay: 0.3 }}
-          className="text-5xl md:text-6xl font-black mb-4 leading-[1.1] tracking-tight"
+          className="text-4xl md:text-5xl font-black mb-2 leading-[1.1] tracking-tight"
         >
           {title}
         </motion.h3>
@@ -64,7 +62,7 @@ export default function OfferBanner({
           initial={{ x: -20, opacity: 0 }}
           whileInView={{ x: 0, opacity: 1 }}
           transition={{ delay: 0.4 }}
-          className="text-white/80 text-xl mb-8 font-medium leading-relaxed"
+          className="text-white/80 text-base md:text-lg mb-6 font-medium leading-relaxed max-w-[250px] md:max-w-md"
         >
           {desc}
         </motion.p>
@@ -73,20 +71,20 @@ export default function OfferBanner({
           initial={{ y: 20, opacity: 0 }}
           whileInView={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.5 }}
-          className={`bg-white ${buttonTextColor} hover:pr-12 px-10 py-5 rounded-3xl font-black text-lg transition-all shadow-2xl active:scale-95 flex items-center gap-3 relative overflow-hidden group/btn`}
+          className={`bg-white ${buttonTextColor} min-h-[56px] min-w-[160px] hover:pr-12 px-8 py-4 rounded-2xl font-black text-sm transition-all shadow-2xl active:scale-95 flex items-center justify-center gap-3 relative overflow-hidden group/btn`}
         >
           <span>{buttonText}</span>
-          <ArrowRight className="w-5 h-5 absolute right-4 opacity-0 group-hover/btn:opacity-100 transition-all" />
+          <ArrowRight className="w-4 h-4 absolute right-4 opacity-0 group-hover/btn:opacity-100 transition-all" />
         </motion.button>
       </div>
 
       {/* Product Image */}
       <motion.img
-        initial={{ scale: 0.8, opacity: 0, rotate: 10 }}
+        initial={{ scale: 0.8, opacity: 0, rotate: 5 }}
         whileInView={{ scale: 1, opacity: 1, rotate: 0 }}
         transition={{ delay: 0.3, duration: 0.8, type: "spring" }}
         src={image}
-        className={`absolute right-[-10%] md:right-[-5%] top-1/2 -translate-y-1/2 h-[120%] w-1/2 object-contain group-hover:scale-110 group-hover:${rotate} transition-transform duration-700 pointer-events-none drop-shadow-[0_35px_35px_rgba(0,0,0,0.5)]`}
+        className={`absolute right-[-5%] bottom-[-10%] md:bottom-auto md:top-1/2 md:-translate-y-1/2 h-[60%] md:h-[90%] w-1/2 object-contain group-hover:scale-105 transition-transform duration-700 pointer-events-none drop-shadow-2xl`}
         alt={title}
       />
     </motion.div>

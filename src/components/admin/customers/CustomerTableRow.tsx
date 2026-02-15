@@ -1,11 +1,12 @@
-import { User, Phone, Mail, Calendar } from "lucide-react";
+import { User, Phone, Mail, Calendar, Trash2 } from "lucide-react";
 import { AdminCustomer } from "@/types/admin";
 
 interface CustomerTableRowProps {
   customer: AdminCustomer;
+  onDelete: (id: string) => void;
 }
 
-export default function CustomerTableRow({ customer }: CustomerTableRowProps) {
+export default function CustomerTableRow({ customer, onDelete }: CustomerTableRowProps) {
   return (
     <tr className="group hover:bg-emerald-50/30 dark:hover:bg-emerald-900/10 transition-all duration-300">
       <td className="px-8 py-6">
@@ -42,6 +43,14 @@ export default function CustomerTableRow({ customer }: CustomerTableRowProps) {
           <Calendar className="w-3.5 h-3.5" />
           {new Date(customer.createdAt).toLocaleDateString("bn-BD")}
         </div>
+      </td>
+      <td className="px-8 py-6 text-right">
+        <button
+          onClick={() => onDelete(customer._id)}
+          className="p-2.5 hover:bg-rose-50 dark:hover:bg-rose-900/20 text-rose-600 rounded-xl transition-all border border-transparent hover:border-rose-100 dark:hover:border-rose-800/50"
+        >
+          <Trash2 size={18} />
+        </button>
       </td>
     </tr>
   );

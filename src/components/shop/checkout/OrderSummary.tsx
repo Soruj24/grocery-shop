@@ -11,9 +11,14 @@ interface CartItem {
 interface OrderSummaryProps {
   cart: CartItem[];
   totalPrice: number;
+  couponDiscount?: number;
 }
 
-export default function OrderSummary({ cart, totalPrice }: OrderSummaryProps) {
+export default function OrderSummary({ cart, totalPrice, couponDiscount = 0 }: OrderSummaryProps) {
+  const deliveryFee = totalPrice > 500 ? 0 : 50;
+  const vat = Math.round(totalPrice * 0.05);
+  const finalTotal = totalPrice + deliveryFee + vat - couponDiscount;
+
   return (
     <div className="lg:col-span-1">
       <div className="bg-white dark:bg-gray-900 p-10 rounded-[48px] shadow-sm border border-gray-100 dark:border-gray-800 sticky top-24 space-y-10 overflow-hidden">
@@ -59,15 +64,25 @@ export default function OrderSummary({ cart, totalPrice }: OrderSummaryProps) {
           </div>
           <div className="flex justify-between items-center text-lg font-bold text-gray-500 dark:text-gray-400">
             <span>ডেলিভারি চার্জ</span>
-            <span>৳২০</span>
+            <span>৳{deliveryFee}</span>
           </div>
+          <div className="flex justify-between items-center text-lg font-bold text-gray-500 dark:text-gray-400">
+            <span>ভ্যাট (৫%)</span>
+            <span>৳{vat}</span>
+          </div>
+          {couponDiscount > 0 && (
+            <div className="flex justify-between items-center text-lg font-bold text-green-600">
+              <span>ডিসকাউন্ট</span>
+              <span>-৳{couponDiscount}</span>
+            </div>
+          )}
           <div className="flex justify-between items-end pt-4">
             <div className="space-y-1">
               <span className="text-xs font-black uppercase tracking-widest text-gray-400">
                 সর্বমোট
               </span>
               <div className="text-5xl font-black text-gray-900 dark:text-white">
-                ৳{totalPrice + 20}
+                ৳{finalTotal}
               </div>
             </div>
           </div>

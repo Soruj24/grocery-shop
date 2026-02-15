@@ -30,6 +30,8 @@ interface CheckoutFormProps {
     phone: string;
     address: string;
     area: string;
+    division: string;
+    district: string;
   };
   setFormData: (data: Partial<CheckoutFormProps["formData"]>) => void;
   deliverySlot: string;
@@ -44,16 +46,21 @@ interface CheckoutFormProps {
   cart: CartItem[];
 }
 
-const areas = [
-  "Dhanmondi",
-  "Gulshan",
-  "Banani",
-  "Uttara",
-  "Mirpur",
-  "Mohammadpur",
-  "Badda",
-  "Bashundhara",
-];
+const locations = {
+  Dhaka: {
+    districts: ["Dhaka", "Gazipur", "Narayanganj"],
+    areas: ["Dhanmondi", "Gulshan", "Banani", "Uttara", "Mirpur", "Mohammadpur", "Badda", "Bashundhara"]
+  },
+  Chittagong: {
+    districts: ["Chittagong", "Cox's Bazar", "Comilla"],
+    areas: ["Agrabad", "Nasirabad", "Panchlaish", "Halishahar"]
+  },
+  Sylhet: {
+    districts: ["Sylhet", "Moulvibazar", "Habiganj"],
+    areas: ["Zindabazar", "Ambarkhana", "Uposhahar"]
+  }
+};
+
 const timeSlots = [
   "Morning (9 AM - 12 PM)",
   "Afternoon (12 PM - 3 PM)",
@@ -82,10 +89,17 @@ export default function CheckoutForm({
     formData.name.trim() !== "" && 
     formData.phone.trim().length >= 11 && 
     formData.address.trim() !== "" && 
+    formData.division !== "" &&
+    formData.district !== "" &&
     formData.area !== "";
   const isStep2Valid = !!deliverySlot;
   const isStep3Valid =
     paymentMethod === "cod" || transactionId.trim().length >= 8;
+
+  const divisions = Object.keys(locations);
+  const selectedDivision = formData.division as keyof typeof locations;
+  const districts = selectedDivision ? locations[selectedDivision].districts : [];
+  const areas = selectedDivision ? locations[selectedDivision].areas : [];
 
   return (
     <div className="space-y-8">
@@ -140,17 +154,60 @@ export default function CheckoutForm({
               </div>
             </div>
 
-            <div className="space-y-2 md:col-span-2">
+            <div className="space-y-2">
               <label className="text-xs font-black text-gray-400 uppercase tracking-widest ml-1">
-                এলাকা নির্বাচন করুন
+                বিভাগ
               </label>
               <select
                 className="w-full px-6 py-5 bg-gray-50 dark:bg-gray-800/50 border border-gray-100 dark:border-gray-800 rounded-[24px] focus:ring-4 focus:ring-green-500/10 focus:border-green-600 outline-none transition-all font-bold appearance-none cursor-pointer"
+                value={formData.division}
+                onChange={(e) =>
+                  setFormData({ ...formData, division: e.target.value, district: "", area: "" })
+                }
+              >
+                <option value="">বিভাগ নির্বাচন করুন</option>
+                {divisions.map((division) => (
+                  <option key={division} value={division}>
+                    {division}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <div className="space-y-2">
+              <label className="text-xs font-black text-gray-400 uppercase tracking-widest ml-1">
+                জেলা
+              </label>
+              <select
+                className="w-full px-6 py-5 bg-gray-50 dark:bg-gray-800/50 border border-gray-100 dark:border-gray-800 rounded-[24px] focus:ring-4 focus:ring-green-500/10 focus:border-green-600 outline-none transition-all font-bold appearance-none cursor-pointer disabled:opacity-50"
+                value={formData.district}
+                disabled={!formData.division}
+                onChange={(e) =>
+                  setFormData({ ...formData, district: e.target.value })
+                }
+              >
+                <option value="">জেলা নির্বাচন করুন</option>
+                {districts.map((district) => (
+                  <option key={district} value={district}>
+                    {district}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <div className="space-y-2 md:col-span-2">
+              <label className="text-xs font-black text-gray-400 uppercase tracking-widest ml-1">
+                এলাকা
+              </label>
+              <select
+                className="w-full px-6 py-5 bg-gray-50 dark:bg-gray-800/50 border border-gray-100 dark:border-gray-800 rounded-[24px] focus:ring-4 focus:ring-green-500/10 focus:border-green-600 outline-none transition-all font-bold appearance-none cursor-pointer disabled:opacity-50"
                 value={formData.area}
+                disabled={!formData.district}
                 onChange={(e) =>
                   setFormData({ ...formData, area: e.target.value })
                 }
               >
+                <option value="">এলাকা নির্বাচন করুন</option>
                 {areas.map((area) => (
                   <option key={area} value={area}>
                     {area}

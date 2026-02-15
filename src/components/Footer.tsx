@@ -15,9 +15,9 @@ export default function Footer() {
 
   const customerServiceLinks = [
     { name: "আমাদের সম্পর্কে", href: "/about" },
-    { name: "যোগাযোগ করুন", href: "/contact" },
-    { name: "সচরাচর জিজ্ঞাসিত প্রশ্ন", href: "/faq" },
-    { name: "প্রাইভেসি পলিসি", href: "/privacy" }
+    { name: "সহযোগিতা কেন্দ্র", href: "/support" },
+    { name: "প্রাইভেসি পলিসি", href: "/privacy" },
+    { name: "টার্মস ও কন্ডিশন", href: "/terms" }
   ];
 
   return (

@@ -1,6 +1,7 @@
-import { ArrowRight, ShieldCheck, Truck, Tag } from "lucide-react";
+import { ArrowRight, ShieldCheck, Truck, Tag, X } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
+import { toast } from "@/lib/swal";
 
 interface CartSummaryProps {
   totalPrice: number;
@@ -8,15 +9,47 @@ interface CartSummaryProps {
 
 export default function CartSummary({ totalPrice }: CartSummaryProps) {
   const [promoCode, setPromoCode] = useState("");
-  const [isApplied, setIsApplied] = useState(false);
-  const deliveryFee = totalPrice > 500 ? 0 : 50;
-  const discount = isApplied ? Math.round(totalPrice * 0.1) : 0;
-  const finalTotal = totalPrice + deliveryFee - discount;
+  const [appliedCoupon, setAppliedCoupon] = useState<{
+    code: string;
+    discount: number;
+  } | null>(null);
+  const [loading, setLoading] = useState(false);
 
-  const handleApplyPromo = () => {
-    if (promoCode.toUpperCase() === "SAVE10") {
-      setIsApplied(true);
+  const deliveryFee = totalPrice > 500 ? 0 : 50;
+  const vat = Math.round(totalPrice * 0.05); // 5% VAT
+  const discount = appliedCoupon ? appliedCoupon.discount : 0;
+  const finalTotal = totalPrice + deliveryFee + vat - discount;
+
+  const handleApplyPromo = async () => {
+    if (!promoCode) return;
+    setLoading(true);
+    try {
+      const res = await fetch("/api/coupons/validate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ code: promoCode, total: totalPrice }),
+      });
+
+      const data = await res.json();
+      if (res.ok) {
+        setAppliedCoupon({
+          code: data.code,
+          discount: data.discount,
+        });
+        toast.success("প্রোমো কোড সফলভাবে যুক্ত হয়েছে!");
+      } else {
+        toast.error(data.message || "ভুল প্রোমো কোড");
+      }
+    } catch (error) {
+      toast.error("সার্ভারে সমস্যা হয়েছে");
+    } finally {
+      setLoading(false);
     }
+  };
+
+  const removeCoupon = () => {
+    setAppliedCoupon(null);
+    setPromoCode("");
   };
 
   return (
@@ -27,27 +60,36 @@ export default function CartSummary({ totalPrice }: CartSummaryProps) {
         {/* Promo Code Input */}
         <div className="space-y-3">
           <label className="text-xs font-black text-gray-400 uppercase tracking-widest px-1">ডিসকাউন্ট কোড</label>
-          <div className="flex gap-2">
-            <div className="relative flex-1">
-              <Tag className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
-              <input 
-                type="text" 
-                value={promoCode}
-                onChange={(e) => setPromoCode(e.target.value)}
-                placeholder="SAVE10"
-                className="w-full bg-gray-50 dark:bg-gray-800 border-none rounded-2xl py-4 pl-12 pr-4 text-sm font-bold focus:ring-2 focus:ring-green-500 transition-all uppercase"
-              />
+          {!appliedCoupon ? (
+            <div className="flex gap-2">
+              <div className="relative flex-1">
+                <Tag className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+                <input 
+                  type="text" 
+                  value={promoCode}
+                  onChange={(e) => setPromoCode(e.target.value)}
+                  placeholder="কুপন কোড দিন"
+                  className="w-full bg-gray-50 dark:bg-gray-800 border-none rounded-2xl py-4 pl-12 pr-4 text-sm font-bold focus:ring-2 focus:ring-green-500 transition-all uppercase"
+                />
+              </div>
+              <button 
+                onClick={handleApplyPromo}
+                disabled={!promoCode || loading}
+                className="bg-gray-900 dark:bg-gray-100 text-white dark:text-black px-6 rounded-2xl font-black text-sm hover:opacity-90 transition-all disabled:opacity-50"
+              >
+                {loading ? '...' : 'Apply'}
+              </button>
             </div>
-            <button 
-              onClick={handleApplyPromo}
-              disabled={!promoCode || isApplied}
-              className="bg-gray-900 dark:bg-gray-100 text-white dark:text-black px-6 rounded-2xl font-black text-sm hover:opacity-90 transition-all disabled:opacity-50"
-            >
-              {isApplied ? 'Applied' : 'Apply'}
-            </button>
-          </div>
-          {isApplied && (
-            <p className="text-[10px] font-bold text-green-600 px-1">প্রোমো কোড সফলভাবে যুক্ত হয়েছে! (১০% ছাড়)</p>
+          ) : (
+            <div className="flex items-center justify-between bg-green-50 dark:bg-green-900/20 px-4 py-3 rounded-2xl border border-green-100 dark:border-green-800/50">
+              <div className="flex items-center gap-2">
+                <Tag className="w-4 h-4 text-green-600" />
+                <span className="text-sm font-black text-green-600 uppercase">{appliedCoupon.code}</span>
+              </div>
+              <button onClick={removeCoupon} className="p-1 hover:bg-green-100 dark:hover:bg-green-800 rounded-full transition-colors">
+                <X className="w-4 h-4 text-green-600" />
+              </button>
+            </div>
           )}
         </div>
 
@@ -69,9 +111,14 @@ export default function CartSummary({ totalPrice }: CartSummaryProps) {
             </span>
           </div>
 
-          {isApplied && (
+          <div className="flex justify-between items-center text-sm font-bold text-gray-500">
+            <span>ভ্যাট (৫%)</span>
+            <span className="text-gray-900 dark:text-white">৳{vat}</span>
+          </div>
+
+          {appliedCoupon && (
             <div className="flex justify-between items-center text-sm font-bold text-green-600">
-              <span>ডিসকাউন্ট (১০%)</span>
+              <span>ডিসকাউন্ট</span>
               <span>-৳{discount}</span>
             </div>
           )}
@@ -90,7 +137,10 @@ export default function CartSummary({ totalPrice }: CartSummaryProps) {
 
         <div className="space-y-4 pt-4">
           <Link
-            href="/checkout"
+            href={{
+              pathname: "/checkout",
+              query: appliedCoupon ? { coupon: appliedCoupon.code } : {},
+            }}
             className="w-full bg-green-600 hover:bg-green-700 text-white py-5 rounded-2xl font-black text-lg transition-all flex items-center justify-center gap-3 shadow-lg shadow-green-600/20 active:scale-95 group"
           >
             চেকআউট করুন
@@ -98,10 +148,8 @@ export default function CartSummary({ totalPrice }: CartSummaryProps) {
           </Link>
 
           <div className="flex items-center justify-center gap-2 pt-2">
-            <ShieldCheck className="w-4 h-4 text-green-500" />
-            <span className="text-[10px] font-black uppercase tracking-widest text-gray-400">
-              ১০০% নিরাপদ চেকআউট
-            </span>
+            <ShieldCheck className="w-4 h-4 text-gray-400" />
+            <span className="text-[10px] font-black uppercase tracking-widest text-gray-400">নিরাপদ পেমেন্ট গ্যারান্টি</span>
           </div>
         </div>
       </div>

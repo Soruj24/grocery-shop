@@ -26,9 +26,16 @@ export async function PATCH(req: Request) {
       return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
     }
 
-    const { id, status } = await req.json();
+    const { id, status, deliveryStatus, trackingId, deliveryBoy } = await req.json();
     await dbConnect();
-    const order = await Order.findByIdAndUpdate(id, { status }, { new: true });
+    
+    const updateData: any = {};
+    if (status) updateData.status = status;
+    if (deliveryStatus) updateData.deliveryStatus = deliveryStatus;
+    if (trackingId) updateData.trackingId = trackingId;
+    if (deliveryBoy) updateData.deliveryBoy = deliveryBoy;
+
+    const order = await Order.findByIdAndUpdate(id, updateData, { new: true });
     return NextResponse.json(order);
   } catch (error) {
     return NextResponse.json({ message: "Server error" }, { status: 500 });

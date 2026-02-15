@@ -50,7 +50,7 @@ export default function Hero() {
   const prevSlide = () => setCurrent((prev) => (prev - 1 + slides.length) % slides.length);
 
   return (
-    <section className="relative h-[600px] lg:h-[750px] rounded-[48px] lg:rounded-[60px] overflow-hidden group">
+    <section className="relative h-[450px] lg:h-[600px] rounded-[32px] lg:rounded-[48px] overflow-hidden group mb-8">
       <AnimatePresence mode="wait">
         <motion.div
           key={slides[current].id}
@@ -69,19 +69,17 @@ export default function Hero() {
             priority
           />
           {/* Overlays */}
-          <div className="absolute inset-0 bg-gradient-to-tr from-[#020617] via-[#020617]/40 to-transparent z-10" />
-          <div className="absolute bottom-0 left-0 right-0 h-64 bg-gradient-to-t from-[#020617] to-transparent z-10" />
+          <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/40 to-transparent z-10" />
           
           {/* Content */}
-          <div className="relative z-20 h-full flex flex-col justify-center px-8 sm:px-24 max-w-5xl text-white">
+          <div className="relative z-20 h-full flex flex-col justify-center px-6 lg:px-20 max-w-4xl text-white">
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.2 }}
-              className="inline-flex items-center gap-3 bg-white/10 backdrop-blur-xl border border-white/20 px-6 py-3 rounded-[24px] mb-8 lg:mb-10 w-fit"
+              className="inline-flex items-center gap-2 bg-green-600 px-4 py-2 rounded-full mb-6 w-fit shadow-lg shadow-green-600/30"
             >
-              <span className="w-2.5 h-2.5 bg-green-500 rounded-full animate-pulse shadow-[0_0_10px_rgba(34,197,94,0.5)]" />
-              <span className="text-[10px] lg:text-xs font-black tracking-[0.3em] uppercase text-white/90">
+              <span className="text-[10px] font-black uppercase tracking-widest">
                 {slides[current].badge}
               </span>
             </motion.div>
@@ -90,7 +88,7 @@ export default function Hero() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3 }}
-              className="text-5xl sm:text-7xl lg:text-9xl font-black mb-8 lg:mb-10 leading-[1] lg:leading-[0.9] tracking-tighter"
+              className="text-4xl lg:text-7xl font-black mb-4 leading-tight tracking-tight"
             >
               {slides[current].title} <br />
               <span className={`text-transparent bg-clip-text bg-gradient-to-r ${slides[current].color}`}>
@@ -102,7 +100,7 @@ export default function Hero() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4 }}
-              className="text-white/70 mb-10 lg:mb-14 text-lg lg:text-2xl max-w-2xl leading-relaxed font-medium"
+              className="text-base lg:text-xl text-white/80 max-w-xl mb-8 font-medium leading-relaxed"
             >
               {slides[current].desc}
             </motion.p>
@@ -111,55 +109,46 @@ export default function Hero() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.5 }}
-              className="flex flex-wrap items-center gap-6 lg:gap-8"
+              className="flex items-center gap-4"
             >
               <Link
                 href="/products"
-                className="group relative bg-[#00D26A] text-black px-10 lg:px-12 py-5 lg:py-6 rounded-[24px] lg:rounded-[28px] font-black text-lg lg:text-xl transition-all duration-500 flex items-center overflow-hidden hover:pr-16 active:scale-95 shadow-[0_20px_40px_-10px_rgba(0,210,106,0.3)]"
+                className="bg-white text-black min-w-[160px] min-h-[56px] px-8 py-4 rounded-2xl font-black text-sm hover:bg-green-600 hover:text-white transition-all shadow-xl active:scale-95 flex items-center justify-center gap-2"
               >
-                <span className="relative z-10">বাজার শুরু করুন</span>
-                <div className="absolute right-6 opacity-0 group-hover:opacity-100 group-hover:translate-x-2 transition-all duration-500">
-                  <ArrowRight className="w-6 h-6" />
-                </div>
-              </Link>
-
-              <Link
-                href="/products?filter=deals"
-                className="group relative bg-white/10 backdrop-blur-md text-white border border-white/20 px-10 lg:px-12 py-5 lg:py-6 rounded-[24px] lg:rounded-[28px] font-black text-lg lg:text-xl transition-all duration-500 flex items-center hover:bg-white hover:text-black active:scale-95"
-              >
-                আজকের অফার
+                এখনই কিনুন
+                <ArrowRight className="w-4 h-4" />
               </Link>
             </motion.div>
           </div>
         </motion.div>
       </AnimatePresence>
 
-      {/* Navigation Arrows */}
-      <div className="absolute inset-x-8 lg:inset-x-12 top-1/2 -translate-y-1/2 z-30 flex justify-between pointer-events-none">
+      {/* Navigation Arrows (Desktop Only) */}
+      <div className="hidden lg:flex absolute inset-x-8 top-1/2 -translate-y-1/2 justify-between items-center z-30 opacity-0 group-hover:opacity-100 transition-opacity">
         <button
           onClick={prevSlide}
-          className="p-4 lg:p-6 bg-black/20 hover:bg-black/40 backdrop-blur-md text-white rounded-full border border-white/10 transition-all pointer-events-auto hover:scale-110 active:scale-95 group"
+          className="w-14 h-14 bg-white/10 backdrop-blur-md border border-white/20 rounded-full flex items-center justify-center text-white hover:bg-white hover:text-black transition-all"
         >
-          <ChevronLeft className="w-6 h-6 lg:w-8 lg:h-8 group-hover:-translate-x-1 transition-transform" />
+          <ChevronLeft className="w-6 h-6" />
         </button>
         <button
           onClick={nextSlide}
-          className="p-4 lg:p-6 bg-black/20 hover:bg-black/40 backdrop-blur-md text-white rounded-full border border-white/10 transition-all pointer-events-auto hover:scale-110 active:scale-95 group"
+          className="w-14 h-14 bg-white/10 backdrop-blur-md border border-white/20 rounded-full flex items-center justify-center text-white hover:bg-white hover:text-black transition-all"
         >
-          <ChevronRight className="w-6 h-6 lg:w-8 lg:h-8 group-hover:translate-x-1 transition-transform" />
+          <ChevronRight className="w-6 h-6" />
         </button>
       </div>
 
-      {/* Indicators */}
-      <div className="absolute bottom-12 left-1/2 -translate-x-1/2 z-30 flex gap-3">
-        {slides.map((_, index) => (
+      {/* Progress Dots */}
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-30 flex gap-3">
+        {slides.map((_, i) => (
           <button
-            key={index}
-            onClick={() => setCurrent(index)}
+            key={i}
+            onClick={() => setCurrent(i)}
             className={`transition-all duration-500 rounded-full ${
-              current === index 
-                ? "w-12 h-3 bg-[#00D26A]" 
-                : "w-3 h-3 bg-white/30 hover:bg-white/50"
+              current === i 
+                ? "w-10 h-2 bg-green-500" 
+                : "w-2 h-2 bg-white/30 hover:bg-white/50"
             }`}
           />
         ))}
