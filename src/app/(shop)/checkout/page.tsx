@@ -44,6 +44,10 @@ export default function CheckoutPage() {
   const [error, setError] = useState("");
   const [couponDiscount, setCouponDiscount] = useState(0);
 
+  const updateFormData = (data: Partial<typeof formData>) => {
+    setFormData(prev => ({ ...prev, ...data }));
+  };
+
   const nextStep = () => setCurrentStep(prev => Math.min(prev + 1, 4));
   const prevStep = () => setCurrentStep(prev => Math.max(prev - 1, 1));
 
@@ -236,7 +240,7 @@ export default function CheckoutPage() {
                   nextStep={nextStep}
                   prevStep={prevStep}
                   formData={formData}
-                  setFormData={setFormData}
+                  setFormData={updateFormData}
                   deliverySlot={deliverySlot}
                   setDeliverySlot={setDeliverySlot}
                   paymentMethod={paymentMethod}
