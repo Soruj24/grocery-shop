@@ -100,6 +100,10 @@ export default async function HomePage({
   const { categories, products, totalPages, currentPage, totalCount } =
     await getHomeData(resolvedSearchParams);
 
+  if (!categories || !products) {
+    return <div>ডাটা লোড করতে সমস্যা হয়েছে। দয়া করে আবার চেষ্টা করুন।</div>;
+  }
+
   const features = [
     { icon: Truck, title: "দ্রুত ডেলিভারি", desc: "২৪ ঘন্টার মধ্যে ডেলিভারি" },
     { icon: ShieldCheck, title: "নিরাপদ পেমেন্ট", desc: "১০০% নিরাপদ লেনদেন" },
