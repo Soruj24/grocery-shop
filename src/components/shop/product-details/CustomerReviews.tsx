@@ -2,46 +2,49 @@
 
 import { Star, ThumbsUp, MessageSquare } from "lucide-react";
 import { motion } from "framer-motion";
-
-const reviews = [
-  {
-    id: 1,
-    user: "রাকিব হাসান",
-    rating: 5,
-    date: "২ দিন আগে",
-    comment: "পণ্যটি খুবই তাজা ছিল এবং ডেলিভারিও খুব দ্রুত হয়েছে। ধন্যবাদ এমরান শপ!",
-    likes: 12,
-  },
-  {
-    id: 2,
-    user: "সুমাইয়া আক্তার",
-    rating: 4,
-    date: "৫ দিন আগে",
-    comment: "মান ভালো ছিল, তবে প্যাকেজিং আরও একটু ভালো হতে পারত।",
-    likes: 8,
-  },
-  {
-    id: 3,
-    user: "তারেক আজিজ",
-    rating: 5,
-    date: "১ সপ্তাহ আগে",
-    comment: "একদম বাজারের মত তাজা সবজি। অনলাইনে এত ভালো মানের আশা করিনি।",
-    likes: 24,
-  },
-];
+import { useLanguage } from "@/components/LanguageContext";
 
 export default function CustomerReviews() {
+  const { t, language } = useLanguage();
+
+  const reviews = [
+    {
+      id: 1,
+      user: t('review_1_user'),
+      rating: 5,
+      date: t('review_1_date'),
+      comment: t('review_1_comment'),
+      likes: 12,
+    },
+    {
+      id: 2,
+      user: t('review_2_user'),
+      rating: 4,
+      date: t('review_2_date'),
+      comment: t('review_2_comment'),
+      likes: 8,
+    },
+    {
+      id: 3,
+      user: t('review_3_user'),
+      rating: 5,
+      date: t('review_3_date'),
+      comment: t('review_3_comment'),
+      likes: 24,
+    },
+  ];
+
   return (
     <div className="space-y-10">
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
         <div>
-          <h2 className="text-3xl font-black text-gray-800 dark:text-white mb-2">ক্রেতাদের মতামত</h2>
-          <p className="text-gray-500 font-bold">১২০ জন ক্রেতা তাদের অভিজ্ঞতা শেয়ার করেছেন</p>
+          <h2 className="text-3xl font-black text-gray-800 dark:text-white mb-2">{t('customer_reviews_title')}</h2>
+          <p className="text-gray-500 font-bold">120{t('customer_experience_shared_suffix')}</p>
         </div>
         
         <div className="flex items-center gap-6 bg-green-50 dark:bg-green-900/20 p-6 rounded-[32px] border border-green-100 dark:border-green-800">
           <div className="text-center">
-            <p className="text-4xl font-black text-green-600 dark:text-green-500">৪.৯</p>
+            <p className="text-4xl font-black text-green-600 dark:text-green-500">{t('rating_avg')}</p>
             <div className="flex items-center gap-0.5 text-amber-500 mt-1">
               {[...Array(5)].map((_, i) => (
                 <Star key={i} className="w-3 h-3 fill-current" />
@@ -50,7 +53,7 @@ export default function CustomerReviews() {
           </div>
           <div className="h-10 w-px bg-green-200 dark:bg-green-800" />
           <button className="bg-green-600 text-white px-6 py-3 rounded-2xl font-bold text-sm hover:bg-green-700 transition-all active:scale-95">
-            রিভিউ দিন
+            {t('write_review')}
           </button>
         </div>
       </div>
@@ -89,11 +92,11 @@ export default function CustomerReviews() {
             <div className="flex items-center gap-6 pt-6 border-t border-gray-50 dark:border-gray-800">
               <button className="flex items-center gap-2 text-xs font-black text-gray-400 hover:text-green-600 transition-colors">
                 <ThumbsUp className="w-4 h-4" />
-                <span>সাহায্যকারী ({review.likes})</span>
+                <span>{t('helpful')} ({review.likes})</span>
               </button>
               <button className="flex items-center gap-2 text-xs font-black text-gray-400 hover:text-blue-500 transition-colors">
                 <MessageSquare className="w-4 h-4" />
-                <span>রিপ্লাই</span>
+                <span>{t('reply')}</span>
               </button>
             </div>
           </motion.div>

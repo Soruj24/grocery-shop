@@ -1,7 +1,10 @@
+"use client";
+
 import { Filter, ChevronDown, X } from "lucide-react";
 import Link from "next/link";
 import PriceFilter from "@/components/PriceFilter";
 import { Category } from "@/types/category";
+import { useLanguage } from "@/components/LanguageContext";
 
 interface ProductSidebarFiltersProps {
   categories: Category[];
@@ -20,19 +23,21 @@ export default function ProductSidebarFilters({
   mainCategories,
   parentCategory,
 }: ProductSidebarFiltersProps) {
+  const { t, language } = useLanguage();
+
   return (
     <aside className="hidden lg:block w-1/4 space-y-8">
       <div className="bg-white dark:bg-gray-900 p-8 rounded-[32px] border border-gray-100 dark:border-gray-800 shadow-sm sticky top-24">
         <h3 className="text-xl font-black text-gray-800 dark:text-gray-100 mb-6 flex items-center gap-2">
           <Filter className="w-5 h-5 text-green-600 dark:text-green-400" />
-          ফিল্টার করুন
+          {t('filter')}
         </h3>
 
         <div className="space-y-8">
           {/* Categories */}
           <div>
             <h4 className="text-sm font-black text-gray-400 dark:text-gray-500 uppercase tracking-wider mb-4">
-              ক্যাটাগরি
+              {t('categories')}
             </h4>
             <div className="space-y-2">
               <Link
@@ -43,7 +48,7 @@ export default function ProductSidebarFilters({
                     : "text-gray-600 dark:text-gray-400 hover:bg-green-50 dark:hover:bg-green-900/10"
                 }`}
               >
-                <span>সব প্রোডাক্ট</span>
+                <span>{t('all_products')}</span>
                 {!categoryId && <span className="w-1.5 h-1.5 bg-white rounded-full" />}
               </Link>
 
@@ -57,7 +62,7 @@ export default function ProductSidebarFilters({
                         : "text-gray-600 dark:text-gray-400 hover:bg-green-50 dark:hover:bg-green-900/10"
                     }`}
                   >
-                    <span>{cat.name}</span>
+                    <span>{language === 'en' ? (cat.nameEn || cat.name) : cat.name}</span>
                     {(categoryId === cat._id || parentCategory?._id === cat._id) && (
                       <ChevronDown
                         className={`w-4 h-4 transition-transform ${
@@ -84,7 +89,7 @@ export default function ProductSidebarFilters({
                                 : "text-gray-500 dark:text-gray-400 hover:text-green-600 dark:hover:text-green-400"
                             }`}
                           >
-                            {sub.name}
+                            {language === 'en' ? (sub.nameEn || sub.name) : sub.name}
                           </Link>
                         ))}
                     </div>
@@ -97,7 +102,7 @@ export default function ProductSidebarFilters({
           {/* Price Range */}
           <div>
             <h4 className="text-sm font-black text-gray-400 dark:text-gray-500 uppercase tracking-wider mb-4">
-              মূল্য পরিসীমা
+              {t('price_range')}
             </h4>
             <PriceFilter initialMin={minPrice} initialMax={maxPrice} />
           </div>
@@ -109,7 +114,7 @@ export default function ProductSidebarFilters({
               className="flex items-center justify-center gap-2 w-full py-3 rounded-2xl font-bold text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors"
             >
               <X className="w-4 h-4" />
-              সব ফিল্টার মুছুন
+              {t('clear_all_filters')}
             </Link>
           )}
         </div>

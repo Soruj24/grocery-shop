@@ -17,6 +17,7 @@ interface ProfileHeaderProps {
 }
 
 export default function ProfileHeader({ session }: ProfileHeaderProps) {
+  const { t } = useLanguage();
   return (
     <div className="relative group">
       {/* Background Decorative Blur */}
@@ -40,14 +41,14 @@ export default function ProfileHeader({ session }: ProfileHeaderProps) {
           <div className="space-y-2">
             <div className="flex items-center justify-center md:justify-start gap-3">
               <h1 className="text-4xl md:text-5xl font-black text-gray-900 dark:text-white tracking-tight">
-                {session?.user?.name || "নাম নেই"}
+                {session?.user?.name || t('name_missing')}
               </h1>
               <div className="px-3 py-1 bg-green-500/10 border border-green-500/20 text-green-600 rounded-full text-[10px] font-black uppercase tracking-widest">
-                Verified
+                {t('verified')}
               </div>
             </div>
             <p className="text-gray-500 dark:text-gray-400 font-medium text-lg">
-              {session?.user?.email || "ইমেইল নেই"}
+              {session?.user?.email || t('email_missing')}
             </p>
           </div>
 
@@ -58,10 +59,10 @@ export default function ProfileHeader({ session }: ProfileHeaderProps) {
               </div>
               <div className="text-left">
                 <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest">
-                  ফোন নম্বর
+                  {t('phone_number')}
                 </p>
                 <p className="text-sm font-bold text-gray-700 dark:text-gray-300">
-                  {(session?.user as { phone?: string })?.phone || "দেওয়া হয়নি"}
+                  {(session?.user as { phone?: string })?.phone || t('not_provided')}
                 </p>
               </div>
             </div>
@@ -72,10 +73,10 @@ export default function ProfileHeader({ session }: ProfileHeaderProps) {
               </div>
               <div className="text-left">
                 <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest">
-                  ডেলিভারি ঠিকানা
+                  {t('delivery_address')}
                 </p>
                 <p className="text-sm font-bold text-gray-700 dark:text-gray-300 line-clamp-1">
-                  {(session?.user as { address?: string })?.address || "ঠিকানা দেওয়া হয়নি"}
+                  {(session?.user as { address?: string })?.address || t('address_missing')}
                 </p>
               </div>
             </div>

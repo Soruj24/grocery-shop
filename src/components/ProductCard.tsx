@@ -9,6 +9,7 @@ import { Toast } from "@/lib/toast";
 import { Product } from "@/types/product";
 import { useState } from "react";
 import { motion, AnimatePresence, PanInfo } from "framer-motion";
+import { useLanguage } from "@/components/LanguageContext";
 
 interface ProductCardProps {
   product: Product;
@@ -17,6 +18,7 @@ interface ProductCardProps {
 export default function ProductCard({ product }: ProductCardProps) {
   const { addToCart, updateQuantity, cart } = useCart();
   const { toggleWishlist, isInWishlist } = useWishlist();
+  const { t } = useLanguage();
   const [quantity, setQuantity] = useState(1);
   const active = isInWishlist(product._id);
 
@@ -27,7 +29,7 @@ export default function ProductCard({ product }: ProductCardProps) {
       toggleWishlist(product);
       Toast.fire({
         icon: 'success',
-        title: active ? 'উইশলিস্ট থেকে সরানো হয়েছে' : 'উইশলিস্টে যোগ করা হয়েছে',
+        title: active ? t('wishlist_remove_success') : t('wishlist_add_success'),
         background: '#020617',
         color: '#fff',
       });
@@ -36,7 +38,7 @@ export default function ProductCard({ product }: ProductCardProps) {
       addToCart(product, quantity);
       Toast.fire({
         icon: 'success',
-        title: 'কার্টে যোগ করা হয়েছে',
+        title: t('added_to_cart'),
         background: '#020617',
         color: '#fff',
       });
@@ -51,14 +53,14 @@ export default function ProductCard({ product }: ProductCardProps) {
     if (navigator.share) {
       navigator.share({
         title: product.name,
-        text: `Check out ${product.name} at EMRAN SHOP!`,
+        text: t('share_text'),
         url: `${window.location.origin}/products/${product._id}`,
       });
     } else {
       navigator.clipboard.writeText(`${window.location.origin}/products/${product._id}`);
       Toast.fire({
         icon: 'success',
-        title: 'লিঙ্ক কপি করা হয়েছে',
+        title: t('link_copied'),
         background: '#020617',
         color: '#fff',
       });
@@ -105,19 +107,19 @@ export default function ProductCard({ product }: ProductCardProps) {
         {/* Discount Badge */}
         {product.discountPrice && (
           <div className="absolute top-4 left-4 bg-rose-500 text-white text-[10px] font-black px-3 py-1.5 rounded-full shadow-lg z-10">
-            {Math.round(((product.price - product.discountPrice) / product.price) * 100)}% ছাড়
+            {Math.round(((product.price - product.discountPrice) / product.price) * 100)}% {t('off')}
           </div>
         )}
 
         {/* Stock Status Badge */}
         {product.stock <= 5 && product.stock > 0 && (
           <div className="absolute bottom-4 left-4 bg-amber-500/90 backdrop-blur-md text-white text-[9px] font-black px-3 py-1 rounded-full z-10">
-            অল্প স্টক আছে
+            {t('low_stock')}
           </div>
         )}
         {product.stock === 0 && (
           <div className="absolute inset-0 bg-black/40 backdrop-blur-[2px] flex items-center justify-center z-10">
-            <span className="bg-white text-black text-xs font-black px-4 py-2 rounded-full shadow-xl">আউট অফ স্টক</span>
+            <span className="bg-white text-black text-xs font-black px-4 py-2 rounded-full shadow-xl">{t('out_of_stock_label')}</span>
           </div>
         )}
 
@@ -145,7 +147,9 @@ export default function ProductCard({ product }: ProductCardProps) {
               {product.name}
             </h3>
           </Link>
-          <p className="text-[10px] text-gray-400 mt-1 font-medium">{product.unit || '১ কেজি'}</p>
+          <p className="text-[10px] text-gray-400 mt-1 font-medium">
+            {product.unit === 'kg' ? t('unit_kg') : product.unit === 'g' ? t('unit_g') : (product.unit || t('default_unit'))}
+          </p>
         </div>
 
         {/* Price & Add to Cart */}
@@ -154,11 +158,11 @@ export default function ProductCard({ product }: ProductCardProps) {
             <div className="flex flex-col">
               {product.discountPrice ? (
                 <>
-                  <span className="text-lg font-black text-green-600">৳{product.discountPrice}</span>
-                  <span className="text-xs text-gray-400 line-through">৳{product.price}</span>
+                  <span className="text-lg font-black text-green-600">{t('currency_symbol')}{product.discountPrice}</span>
+                  <span className="text-xs text-gray-400 line-through">{t('currency_symbol')}{product.price}</span>
                 </>
               ) : (
-                <span className="text-lg font-black text-gray-800 dark:text-gray-100">৳{product.price}</span>
+                <span className="text-lg font-black text-gray-800 dark:text-gray-100">{t('currency_symbol')}{product.price}</span>
               )}
             </div>
 

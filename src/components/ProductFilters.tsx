@@ -1,9 +1,10 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Search, Filter, SlidersHorizontal, X, ChevronDown } from "lucide-react";
 import { Category } from "@/types/category";
+import { useLanguage } from "@/components/LanguageContext";
 
 interface ProductFiltersProps {
   categories: Category[];
@@ -12,6 +13,7 @@ interface ProductFiltersProps {
 export default function ProductFilters({ categories }: ProductFiltersProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const { t } = useLanguage();
   
   const [isMobileFiltersOpen, setIsMobileFiltersOpen] = useState(false);
   const [search, setSearch] = useState(searchParams.get("q") || "");
@@ -66,7 +68,7 @@ export default function ProductFilters({ categories }: ProductFiltersProps) {
         <div className="relative flex items-center">
           <input
             type="text"
-            placeholder="পছন্দের পণ্য খুঁজুন..."
+            placeholder={t('search_product_placeholder')}
             className="w-full pl-12 pr-28 py-4 bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 rounded-[24px] shadow-sm outline-none focus:ring-4 focus:ring-green-500/10 focus:border-green-500 dark:focus:border-green-400 transition-all text-gray-700 dark:text-gray-100 font-medium placeholder:text-gray-400 dark:placeholder:text-gray-600"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
@@ -87,7 +89,7 @@ export default function ProductFilters({ categories }: ProductFiltersProps) {
               onClick={applyFilters}
               className="bg-green-600 dark:bg-green-500 text-white px-6 py-2 rounded-xl font-bold hover:bg-green-700 dark:hover:bg-green-600 transition-all shadow-lg shadow-green-900/10 active:scale-95"
             >
-              খুঁজুন
+              {t('search_button')}
             </button>
           </div>
         </div>
@@ -107,10 +109,10 @@ export default function ProductFilters({ categories }: ProductFiltersProps) {
                 router.push(`/products?${params.toString()}`);
               }}
             >
-              <option value="newest" className="dark:bg-gray-900">🆕 নতুন পণ্য</option>
-              <option value="oldest" className="dark:bg-gray-900">📅 পুরাতন পণ্য</option>
-              <option value="price_low" className="dark:bg-gray-900">📉 দাম (কম থেকে বেশি)</option>
-              <option value="price_high" className="dark:bg-gray-900">📈 দাম (বেশি থেকে কম)</option>
+              <option value="newest" className="dark:bg-gray-900">🆕 {t('sort_newest')}</option>
+              <option value="oldest" className="dark:bg-gray-900">📅 {t('sort_oldest')}</option>
+              <option value="price_low" className="dark:bg-gray-900">📉 {t('sort_price_low')}</option>
+              <option value="price_high" className="dark:bg-gray-900">📈 {t('sort_price_high')}</option>
             </select>
             <SlidersHorizontal className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4 pointer-events-none group-focus-within:text-green-600 dark:group-focus-within:text-green-400 transition-colors" />
             <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4 pointer-events-none" />
@@ -121,7 +123,7 @@ export default function ProductFilters({ categories }: ProductFiltersProps) {
             className="lg:hidden flex items-center gap-2 bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 px-4 py-3 rounded-2xl shadow-sm font-bold text-gray-700 dark:text-gray-100 hover:bg-gray-50 dark:hover:bg-gray-800 active:scale-95 transition-all"
           >
             <Filter className="w-5 h-5 text-green-600 dark:text-green-400" />
-            ফিল্টার
+            {t('filter')}
           </button>
         </div>
 
@@ -129,7 +131,7 @@ export default function ProductFilters({ categories }: ProductFiltersProps) {
         <div className="hidden lg:flex flex-wrap items-center gap-2 flex-1 px-4">
           {selectedCategory && (
             <div className="flex items-center gap-2 bg-green-50 dark:bg-green-900/20 text-green-700 dark:text-green-400 px-3 py-1.5 rounded-lg text-xs font-bold border border-green-100 dark:border-green-900/30">
-              {selectedCategoryData?.name}
+              {language === 'en' ? (selectedCategoryData?.nameEn || selectedCategoryData?.name) : selectedCategoryData?.name}
               <button onClick={() => { setSelectedCategory(""); applyFilters(); }}>
                 <X className="w-3 h-3 hover:text-red-500 dark:hover:text-red-400" />
               </button>
@@ -152,7 +154,7 @@ export default function ProductFilters({ categories }: ProductFiltersProps) {
             className="hidden lg:flex items-center gap-2 text-red-500 dark:text-red-400 font-bold hover:bg-red-50 dark:hover:bg-red-900/20 px-4 py-2 rounded-xl transition-all"
           >
             <X className="w-4 h-4" />
-            সব ফিল্টার মুছুন
+            {t('clear_all_filters')}
           </button>
         )}
       </div>
@@ -164,7 +166,7 @@ export default function ProductFilters({ categories }: ProductFiltersProps) {
             <div className="flex justify-between items-center mb-10">
               <h2 className="text-2xl font-black text-gray-800 dark:text-gray-100 flex items-center gap-2">
                 <Filter className="w-6 h-6 text-green-600 dark:text-green-400" />
-                ফিল্টার
+                {t('filter')}
               </h2>
               <button 
                 onClick={() => setIsMobileFiltersOpen(false)}
@@ -177,7 +179,7 @@ export default function ProductFilters({ categories }: ProductFiltersProps) {
             <div className="space-y-10 overflow-y-auto max-h-[calc(100vh-180px)] pr-2 no-scrollbar">
               {/* Categories */}
               <div>
-                <h3 className="text-xs font-black text-gray-400 dark:text-gray-500 uppercase tracking-[0.2em] mb-4">ক্যাটাগরি</h3>
+                <h3 className="text-xs font-black text-gray-400 dark:text-gray-500 uppercase tracking-[0.2em] mb-4">{t('categories')}</h3>
                 <div className="space-y-2">
                   <button
                     onClick={() => setSelectedCategory("")}
@@ -185,7 +187,7 @@ export default function ProductFilters({ categories }: ProductFiltersProps) {
                       selectedCategory === "" ? "bg-green-600 dark:bg-green-500 text-white shadow-lg shadow-green-900/20" : "text-gray-600 dark:text-gray-400 hover:bg-green-50 dark:hover:bg-green-900/20"
                     }`}
                   >
-                    সব ক্যাটাগরি
+                    {t('all_categories')}
                   </button>
                   {mainCategories.map((cat) => (
                     <div key={cat._id} className="space-y-1">
@@ -225,10 +227,10 @@ export default function ProductFilters({ categories }: ProductFiltersProps) {
 
               {/* Price Range */}
               <div>
-                <h3 className="text-xs font-black text-gray-400 dark:text-gray-500 uppercase tracking-[0.2em] mb-4">মূল্য পরিসীমা</h3>
+                <h3 className="text-xs font-black text-gray-400 dark:text-gray-500 uppercase tracking-[0.2em] mb-4">{t('price_range')}</h3>
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-2">
-                    <label className="text-[10px] font-black text-gray-400 dark:text-gray-500 uppercase ml-1">সর্বনিম্ন</label>
+                    <label className="text-[10px] font-black text-gray-400 dark:text-gray-500 uppercase ml-1">{t('min_price')}</label>
                     <input
                       type="number"
                       className="w-full px-4 py-3 bg-gray-50 dark:bg-gray-800 border-none rounded-2xl text-sm font-black text-gray-700 dark:text-gray-100 outline-none focus:ring-2 focus:ring-green-500 dark:focus:ring-green-400"
@@ -237,7 +239,7 @@ export default function ProductFilters({ categories }: ProductFiltersProps) {
                     />
                   </div>
                   <div className="space-y-2">
-                    <label className="text-[10px] font-black text-gray-400 dark:text-gray-500 uppercase ml-1">সর্বোচ্চ</label>
+                    <label className="text-[10px] font-black text-gray-400 dark:text-gray-500 uppercase ml-1">{t('max_price')}</label>
                     <input
                       type="number"
                       className="w-full px-4 py-3 bg-gray-50 dark:bg-gray-800 border-none rounded-2xl text-sm font-black text-gray-700 dark:text-gray-100 outline-none focus:ring-2 focus:ring-green-500 dark:focus:ring-green-400"
@@ -254,13 +256,13 @@ export default function ProductFilters({ categories }: ProductFiltersProps) {
                 onClick={applyFilters}
                 className="w-full bg-green-600 dark:bg-green-500 text-white py-4 rounded-[24px] font-black shadow-xl shadow-green-900/20 hover:bg-green-700 dark:hover:bg-green-600 transition-all active:scale-95"
               >
-                ফিল্টার প্রয়োগ করুন
+                {t('apply_filter')}
               </button>
               <button
                 onClick={clearFilters}
                 className="w-full text-red-500 dark:text-red-400 font-bold py-2 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-xl transition-all"
               >
-                সব মুছুন
+                {t('clear_all')}
               </button>
             </div>
           </div>

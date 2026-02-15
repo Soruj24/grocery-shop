@@ -3,11 +3,13 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { X, ShoppingBag, Plus, Minus, ArrowRight, Trash2 } from "lucide-react";
 import { useCart } from "@/components/CartContext";
+import { useLanguage } from "@/components/LanguageContext";
 import Image from "next/image";
 import Link from "next/link";
 
 export default function CartDrawer({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
   const { cart, removeFromCart, updateQuantity, totalPrice } = useCart();
+  const { t, language } = useLanguage();
 
   return (
     <AnimatePresence>
@@ -37,8 +39,8 @@ export default function CartDrawer({ isOpen, onClose }: { isOpen: boolean; onClo
                   <ShoppingBag size={24} />
                 </div>
                 <div>
-                  <h2 className="text-xl font-black text-gray-900 dark:text-white">আপনার ব্যাগ</h2>
-                  <p className="text-sm text-gray-400 font-bold uppercase tracking-widest">{cart.length} টি পণ্য</p>
+                  <h2 className="text-xl font-black text-gray-900 dark:text-white">{t('your_bag')}</h2>
+                  <p className="text-sm text-gray-400 font-bold uppercase tracking-widest">{cart.length.toLocaleString(language === 'bn' ? 'bn-BD' : 'en-US')}{t('items_suffix')}</p>
                 </div>
               </div>
               <button
@@ -84,7 +86,7 @@ export default function CartDrawer({ isOpen, onClose }: { isOpen: boolean; onClo
                         </div>
 
                         <div className="flex items-center justify-between">
-                          <div className="text-lg font-black text-green-600">৳{item.price}</div>
+                          <div className="text-lg font-black text-green-600">{t('currency_symbol')}{item.price.toLocaleString(language === 'bn' ? 'bn-BD' : 'en-US')}</div>
                           
                           <div className="flex items-center gap-3 bg-white dark:bg-white/5 rounded-xl p-1 border border-gray-100 dark:border-white/10">
                             <button
@@ -93,7 +95,7 @@ export default function CartDrawer({ isOpen, onClose }: { isOpen: boolean; onClo
                             >
                               <Minus size={14} />
                             </button>
-                            <span className="text-sm font-black w-4 text-center">{item.quantity}</span>
+                            <span className="text-sm font-black w-4 text-center">{item.quantity.toLocaleString(language === 'bn' ? 'bn-BD' : 'en-US')}</span>
                             <button
                               onClick={() => updateQuantity(item._id, item.quantity + 1)}
                               className="w-8 h-8 rounded-lg hover:bg-gray-100 dark:hover:bg-white/10 flex items-center justify-center text-gray-500 transition-all"
@@ -112,14 +114,14 @@ export default function CartDrawer({ isOpen, onClose }: { isOpen: boolean; onClo
                     <ShoppingBag size={48} />
                   </div>
                   <div className="space-y-2">
-                    <h3 className="text-xl font-black text-gray-900 dark:text-white">ব্যাগটি খালি</h3>
-                    <p className="text-gray-400 font-medium">এখনই বাজার শুরু করুন!</p>
+                    <h3 className="text-xl font-black text-gray-900 dark:text-white">{t('cart_empty_title')}</h3>
+                    <p className="text-gray-400 font-medium">{t('cart_empty_desc')}</p>
                   </div>
                   <button
                     onClick={onClose}
                     className="bg-green-600 text-white px-8 py-4 rounded-2xl font-black shadow-lg shadow-green-600/20 active:scale-95 transition-all"
                   >
-                    বাজার শুরু করুন
+                    {t('cart_start_shopping')}
                   </button>
                 </div>
               )}
@@ -132,26 +134,26 @@ export default function CartDrawer({ isOpen, onClose }: { isOpen: boolean; onClo
                 <div className="relative group">
                   <input 
                     type="text" 
-                    placeholder="কুপন কোড দিন"
+                    placeholder={t('coupon_placeholder')}
                     className="w-full px-6 py-4 bg-white dark:bg-white/5 border border-gray-100 dark:border-white/10 rounded-2xl text-sm font-bold focus:ring-2 focus:ring-green-500/20 focus:border-green-500 outline-none transition-all pr-24"
                   />
                   <button className="absolute right-2 top-2 bottom-2 px-4 bg-gray-900 dark:bg-white text-white dark:text-black rounded-xl text-xs font-black uppercase tracking-widest hover:bg-green-600 hover:text-white transition-all">
-                    Apply
+                    {t('apply_coupon')}
                   </button>
                 </div>
 
                 <div className="space-y-3">
                   <div className="flex justify-between text-gray-500 font-bold">
-                    <span>সাবটোটাল</span>
-                    <span>৳{totalPrice}</span>
+                    <span>{t('subtotal')}</span>
+                    <span>{t('currency_symbol')}{totalPrice.toLocaleString(language === 'bn' ? 'bn-BD' : 'en-US')}</span>
                   </div>
                   <div className="flex justify-between text-gray-500 font-bold">
-                    <span>ডেলিভারি চার্জ</span>
-                    <span className="text-green-600">ফ্রি</span>
+                    <span>{t('delivery_charge')}</span>
+                    <span className="text-green-600">{t('free')}</span>
                   </div>
                   <div className="flex justify-between text-2xl font-black text-gray-900 dark:text-white pt-3 border-t border-gray-100 dark:border-white/10">
-                    <span>মোট</span>
-                    <span>৳{totalPrice}</span>
+                    <span>{t('total_label')}</span>
+                    <span>{t('currency_symbol')}{totalPrice.toLocaleString(language === 'bn' ? 'bn-BD' : 'en-US')}</span>
                   </div>
                 </div>
 
@@ -161,14 +163,14 @@ export default function CartDrawer({ isOpen, onClose }: { isOpen: boolean; onClo
                     onClick={onClose}
                     className="flex items-center justify-center px-6 py-5 bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-3xl font-black text-gray-900 dark:text-white hover:bg-gray-50 transition-all"
                   >
-                    কার্ট দেখুন
+                    {t('view_cart')}
                   </Link>
                   <Link
                     href="/checkout"
                     onClick={onClose}
                     className="flex items-center justify-center gap-3 px-6 py-5 bg-green-600 text-white rounded-3xl font-black shadow-xl shadow-green-600/20 hover:bg-green-700 transition-all group"
                   >
-                    চেকআউট
+                    {t('checkout')}
                     <ArrowRight className="group-hover:translate-x-1 transition-transform" />
                   </Link>
                 </div>

@@ -1,3 +1,5 @@
+"use client";
+
 import { Clock, Package, ChevronDown, ChevronUp, RotateCcw } from "lucide-react";
 import { useState } from "react";
 import OrderTrackingTimeline from "./OrderTrackingTimeline";
@@ -6,6 +8,7 @@ import { useCart } from "@/components/CartContext";
 import { Toast } from "@/lib/toast";
 import { Order, OrderItem } from "@/types/order";
 import Image from "next/image";
+import { useLanguage } from "@/components/LanguageContext";
 
 interface ProfileOrderCardProps {
   order: Order;
@@ -14,6 +17,7 @@ interface ProfileOrderCardProps {
 export default function ProfileOrderCard({ order }: ProfileOrderCardProps) {
   const [isExpanded, setIsExpanded] = useState(false);
   const { addToCart } = useCart();
+  const { t, language } = useLanguage();
 
   const handleReorder = () => {
     order.items.forEach((item: OrderItem) => {
@@ -28,7 +32,7 @@ export default function ProfileOrderCard({ order }: ProfileOrderCardProps) {
     });
     Toast.fire({
       icon: 'success',
-      title: 'সব আইটেম কার্টে যোগ করা হয়েছে',
+      title: t('items_added_to_cart'),
       background: '#020617',
       color: '#fff',
     });
@@ -36,11 +40,11 @@ export default function ProfileOrderCard({ order }: ProfileOrderCardProps) {
 
   const getStatusLabel = (status: string) => {
     switch (status) {
-      case "pending": return "অপেক্ষমান";
-      case "processing": return "প্রসেসিং";
-      case "shipped": return "পাঠানো হয়েছে";
-      case "delivered": return "ডেলিভারি হয়েছে";
-      case "cancelled": return "বাতিল";
+      case "pending": return t('status_pending');
+      case "processing": return t('status_processing');
+      case "shipped": return t('status_shipped');
+      case "delivered": return t('status_delivered');
+      case "cancelled": return t('status_cancelled');
       default: return status;
     }
   };
@@ -78,7 +82,7 @@ export default function ProfileOrderCard({ order }: ProfileOrderCardProps) {
             <div className="flex items-center gap-2 text-gray-500 dark:text-gray-400">
               <Clock size={14} />
               <span className="text-sm font-medium">
-                {new Date(order.createdAt).toLocaleDateString("bn-BD", {
+                {new Date(order.createdAt).toLocaleDateString(language === 'bn' ? "bn-BD" : "en-US", {
                   year: 'numeric',
                   month: 'long',
                   day: 'numeric'
@@ -88,8 +92,8 @@ export default function ProfileOrderCard({ order }: ProfileOrderCardProps) {
           </div>
           
           <div className="text-right">
-            <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest">মোট পরিমাণ</p>
-            <p className="text-2xl font-black text-green-600">৳ {order.total}</p>
+            <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest">{t('total_amount')}</p>
+            <p className="text-2xl font-black text-green-600">{t('currency_symbol')} {order.total.toLocaleString(language === 'bn' ? 'bn-BD' : 'en-US')}</p>
           </div>
         </div>
 
@@ -103,7 +107,7 @@ export default function ProfileOrderCard({ order }: ProfileOrderCardProps) {
         <div className="flex justify-between items-center pt-2">
           <div className="flex items-center gap-2 text-gray-500 dark:text-gray-400">
             <Package size={16} />
-            <span className="text-sm font-bold">{order.items.length} টি প্রোডাক্ট</span>
+            <span className="text-sm font-bold">{order.items.length.toLocaleString(language === 'bn' ? 'bn-BD' : 'en-US')} {t('products_count_suffix')}</span>
           </div>
           <div className="flex items-center gap-4">
             <button 
@@ -111,16 +115,16 @@ export default function ProfileOrderCard({ order }: ProfileOrderCardProps) {
               className="flex items-center gap-2 text-xs font-black uppercase tracking-widest bg-green-500/10 text-green-600 px-4 py-2 rounded-xl hover:bg-green-500 hover:text-white transition-all"
             >
               <RotateCcw size={14} />
-              রি-অর্ডার
+              {t('reorder')}
             </button>
             <button 
               onClick={() => setIsExpanded(!isExpanded)}
               className="flex items-center gap-2 text-sm font-bold text-green-600 hover:text-green-700 transition-colors"
             >
               {isExpanded ? (
-                <>বিস্তারিত লুকান <ChevronUp size={16} /></>
+                <>{t('hide_details')} <ChevronUp size={16} /></>
               ) : (
-                <>বিস্তারিত দেখুন <ChevronDown size={16} /></>
+                <>{t('view_details')} <ChevronDown size={16} /></>
               )}
             </button>
           </div>
@@ -147,16 +151,16 @@ export default function ProfileOrderCard({ order }: ProfileOrderCardProps) {
                       </div>
                       <div>
                         <p className="font-bold text-gray-900 dark:text-white text-sm">{item.name}</p>
-                        <p className="text-xs text-gray-500">{item.quantity} x ৳{item.price}</p>
+                        <p className="text-xs text-gray-500">{item.quantity.toLocaleString(language === 'bn' ? 'bn-BD' : 'en-US')} x {t('currency_symbol')}{item.price.toLocaleString(language === 'bn' ? 'bn-BD' : 'en-US')}</p>
                       </div>
                     </div>
-                    <p className="font-bold text-gray-900 dark:text-white">৳ {item.quantity * item.price}</p>
+                    <p className="font-bold text-gray-900 dark:text-white">{t('currency_symbol')} {(item.quantity * item.price).toLocaleString(language === 'bn' ? 'bn-BD' : 'en-US')}</p>
                   </div>
                 ))}
                 
                 <div className="p-4 bg-green-500/5 rounded-2xl border border-green-500/10">
                   <div className="flex justify-between items-center text-sm">
-                    <span className="text-gray-500 font-medium">ডেলিভারি ঠিকানা:</span>
+                    <span className="text-gray-500 font-medium">{t('delivery_address_label')}:</span>
                     <span className="text-gray-900 dark:text-white font-bold">{order.address}</span>
                   </div>
                 </div>

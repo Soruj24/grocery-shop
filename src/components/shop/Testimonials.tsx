@@ -2,56 +2,59 @@
 
 import { motion } from "framer-motion";
 import { Star, Quote, User } from "lucide-react";
-
-const TESTIMONIALS = [
-  {
-    id: 1,
-    content: "আমি গত ৩ মাস ধরে এই দোকান থেকে বাজার করছি। পণ্যের মান সবসময়ই সেরা থাকে। বিশেষ করে তাদের দ্রুত ডেলিভারি সার্ভিস আমাকে মুগ্ধ করেছে। ঢাকার মধ্যে এতো দ্রুত ডেলিভারি আর কোথাও পাইনি।",
-    author: "সাকিব আহমেদ",
-    role: "রেগুলার কাস্টমার",
-    rating: 5,
-    size: "large",
-    color: "bg-green-500"
-  },
-  {
-    id: 2,
-    content: "অর্গানিক ফলের খোঁজে অনেক ঘুরেছি, শেষ পর্যন্ত এখানেই ভরসা পেলাম। ফ্রেশ এবং সুস্বাদু!",
-    author: "মারুফ হাসান",
-    role: "ফল প্রেমী",
-    rating: 5,
-    size: "small",
-    color: "bg-orange-500"
-  },
-  {
-    id: 3,
-    content: "প্যাকিং কোয়ালিটি খুবই উন্নত। কোনো পণ্যই নষ্ট হওয়ার ভয় থাকে না।",
-    author: "রাহুল দাশ",
-    role: "চাকুরীজীবী",
-    rating: 4,
-    size: "small",
-    color: "bg-blue-500"
-  },
-  {
-    id: 4,
-    content: "কাস্টমার সাপোর্ট অনেক হেল্পফুল। যেকোনো সমস্যার দ্রুত সমাধান দেন তারা। তাদের ব্যবহারের জন্য আমি বার বার ফিরে আসি।",
-    author: "আনিসা রহমান",
-    role: "গৃহিণী",
-    rating: 5,
-    size: "medium",
-    color: "bg-purple-500"
-  },
-  {
-    id: 5,
-    content: "দাম অনুযায়ী পণ্যের মান অনেক ভালো। বাজারের থেকে সাশ্রয়ী মনে হয়েছে।",
-    author: "তানভীর হোসেন",
-    role: "স্টুডেন্ট",
-    rating: 5,
-    size: "small",
-    color: "bg-emerald-500"
-  }
-];
+import { useLanguage } from "@/components/LanguageContext";
 
 export default function Testimonials() {
+  const { t } = useLanguage();
+
+  const TESTIMONIALS = [
+    {
+      id: 1,
+      content: t('testimonial_1_content'),
+      author: t('testimonial_1_author'),
+      role: t('testimonial_1_role'),
+      rating: 5,
+      size: "large",
+      color: "bg-green-500"
+    },
+    {
+      id: 2,
+      content: t('testimonial_2_content'),
+      author: t('testimonial_2_author'),
+      role: t('testimonial_2_role'),
+      rating: 5,
+      size: "small",
+      color: "bg-orange-500"
+    },
+    {
+      id: 3,
+      content: t('testimonial_3_content'),
+      author: t('testimonial_3_author'),
+      role: t('testimonial_3_role'),
+      rating: 4,
+      size: "small",
+      color: "bg-blue-500"
+    },
+    {
+      id: 4,
+      content: t('testimonial_4_content'),
+      author: t('testimonial_4_author'),
+      role: t('testimonial_4_role'),
+      rating: 5,
+      size: "medium",
+      color: "bg-purple-500"
+    },
+    {
+      id: 5,
+      content: t('testimonial_5_content'),
+      author: t('testimonial_5_author'),
+      role: t('testimonial_5_role'),
+      rating: 5,
+      size: "small",
+      color: "bg-emerald-500"
+    }
+  ];
+
   return (
     <section className="py-24 px-4 relative overflow-hidden">
       {/* Background Decorative Elements */}
@@ -67,7 +70,7 @@ export default function Testimonials() {
             className="inline-flex items-center gap-2 px-4 py-2 bg-rose-500/10 border border-rose-500/20 text-rose-600 dark:text-rose-400 rounded-full text-xs font-black uppercase tracking-[0.2em]"
           >
             <Quote size={14} className="animate-pulse" />
-            কাস্টমার ফিডব্যাক
+            {t('testimonials_badge')}
           </motion.div>
           <motion.h2 
             initial={{ opacity: 0, y: 20 }}
@@ -76,7 +79,7 @@ export default function Testimonials() {
             transition={{ delay: 0.1 }}
             className="text-4xl md:text-6xl font-black text-gray-900 dark:text-white tracking-tight"
           >
-            আমাদের প্রিয় <span className="text-transparent bg-clip-text bg-gradient-to-r from-rose-500 to-orange-500">কাস্টমাররা যা বলেন</span>
+            {t('testimonials_title_1')} <span className="text-transparent bg-clip-text bg-gradient-to-r from-rose-500 to-orange-500">{t('testimonials_title_2')}</span>
           </motion.h2>
         </div>
 

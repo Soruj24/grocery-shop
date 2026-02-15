@@ -2,6 +2,7 @@
 
 import SubCategoryCard from "./SubCategorySpotlight/SubCategoryCard";
 import { Category } from "@/types/category";
+import { useLanguage } from "@/components/LanguageContext";
 
 interface SubCategorySpotlightProps {
   categories: Category[];
@@ -10,6 +11,7 @@ interface SubCategorySpotlightProps {
 export default function SubCategorySpotlight({
   categories,
 }: SubCategorySpotlightProps) {
+  const { t } = useLanguage();
   const subCategories = categories
     .flatMap((c: Category) => c.subCategories || [])
     .slice(0, 8);
@@ -22,10 +24,10 @@ export default function SubCategorySpotlight({
         <div className="text-center space-y-6">
           <div className="inline-flex items-center gap-3 bg-white/5 backdrop-blur-xl border border-white/10 px-6 py-3 rounded-full">
             <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
-            <span className="text-[10px] font-black uppercase tracking-[0.3em] text-white/70">পপুলার চয়েস</span>
+            <span className="text-[10px] font-black uppercase tracking-[0.3em] text-white/70">{t('subcategory_spotlight_badge')}</span>
           </div>
           <h2 className="text-4xl md:text-6xl font-black text-white tracking-tight leading-tight">
-            জনপ্রিয় <span className="text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-emerald-600">সাব-ক্যাটাগরি</span>
+            {t('subcategory_spotlight_title_1')} <span className="text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-emerald-600">{t('subcategory_spotlight_title_2')}</span>
           </h2>
         </div>
 

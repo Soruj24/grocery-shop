@@ -5,23 +5,28 @@ import { useCart } from "@/components/CartContext";
 import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import { useLanguage } from "@/components/LanguageContext";
 import { ArrowLeft, CheckCircle2, MapPin, Clock, CreditCard, ClipboardList } from "lucide-react";
 import Swal from "sweetalert2";
 import OrderSuccess from "@/components/shop/checkout/OrderSuccess";
 import CheckoutForm from "@/components/shop/checkout/CheckoutForm";
 import OrderSummary from "@/components/shop/checkout/OrderSummary";
+import CouponInput from "@/components/shop/checkout/CouponInput";
+import { useNotifications } from "@/components/NotificationContext";
 import { motion, AnimatePresence } from "framer-motion";
 import { useSearchParams } from "next/navigation";
 
-const steps = [
-  { id: 1, name: "ডেলিভারি তথ্য", icon: MapPin },
-  { id: 2, name: "সময় নির্বাচন", icon: Clock },
-  { id: 3, name: "পেমেন্ট পদ্ধতি", icon: CreditCard },
-  { id: 4, name: "অর্ডার রিভিউ", icon: ClipboardList },
-];
-
 export default function CheckoutPage() {
+  const { t } = useLanguage();
+  
+  const steps = [
+    { id: 1, name: t('checkout_step_1'), icon: MapPin },
+    { id: 2, name: t('checkout_step_2'), icon: Clock },
+    { id: 3, name: t('checkout_step_3'), icon: CreditCard },
+    { id: 4, name: t('checkout_step_4'), icon: ClipboardList },
+  ];
   const { cart, totalPrice, clearCart } = useCart();
+  const { addNotification } = useNotifications();
   const { data: session, status } = useSession();
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -36,7 +41,7 @@ export default function CheckoutPage() {
     division: "",
     district: "",
   });
-  const [deliverySlot, setDeliverySlot] = useState("Morning (9 AM - 12 PM)");
+  const [deliverySlot, setDeliverySlot] = useState(t('delivery_slot_morning'));
   const [paymentMethod, setPaymentMethod] = useState<'cod' | 'bkash' | 'nagad' | 'card'>('cod');
   const [transactionId, setTransactionId] = useState("");
   const [loading, setLoading] = useState(false);
@@ -100,14 +105,14 @@ export default function CheckoutPage() {
     if (cart.length === 0) return;
 
     const result = await Swal.fire({
-      title: 'অর্ডার নিশ্চিত করুন',
-      text: "আপনি কি আপনার অর্ডারটি কনফার্ম করতে চান?",
+      title: t('confirm_order_title'),
+      text: t('confirm_order_text'),
       icon: 'question',
       showCancelButton: true,
       confirmButtonColor: '#16a34a',
       cancelButtonColor: '#ef4444',
-      confirmButtonText: 'হ্যাঁ, অর্ডার করুন',
-      cancelButtonText: 'না, ফিরে যান',
+      confirmButtonText: t('yes_order'),
+      cancelButtonText: t('no_go_back'),
       background: '#fff',
       color: '#000',
     });
@@ -143,15 +148,21 @@ export default function CheckoutPage() {
         }),
       });
 
+      const data = await res.json();
+
       if (res.ok) {
+        addNotification({
+          title: t('order_success_title'),
+          message: `${t('order_success_desc')} ${t('order_id')}: #${data._id.slice(-8).toUpperCase()}`,
+          type: "success"
+        });
         setOrderSuccess(true);
         clearCart();
       } else {
-        const data = await res.json();
-        setError(data.message || "অর্ডার সাবমিট করতে সমস্যা হয়েছে");
+        setError(data.message || t('submit_error'));
       }
     } catch (err) {
-      setError("সার্ভারে সমস্যা হয়েছে, দয়া করে আবার চেষ্টা করুন");
+      setError(t('server_issue'));
     } finally {
       setLoading(false);
     }
@@ -186,8 +197,8 @@ export default function CheckoutPage() {
               <ArrowLeft className="w-6 h-6" />
             </button>
             <div className="space-y-1">
-              <h1 className="text-4xl font-black text-gray-900 dark:text-white tracking-tight">চেকআউট</h1>
-              <p className="text-gray-500 dark:text-gray-400 font-bold">ধাপ {currentStep}: {steps[currentStep-1].name}</p>
+              <h1 className="text-4xl font-black text-gray-900 dark:text-white tracking-tight">{t('checkout_title')}</h1>
+              <p className="text-gray-500 dark:text-gray-400 font-bold">{t('step_text')} {currentStep}: {steps[currentStep-1].name}</p>
             </div>
           </div>
 
@@ -257,7 +268,18 @@ export default function CheckoutPage() {
           </div>
 
           {/* Order Summary Sidebar */}
-          <div className="lg:col-span-1 sticky top-12">
+          <div className="lg:col-span-1 sticky top-12 space-y-6">
+            <CouponInput 
+              total={totalPrice} 
+              onApply={(coupon) => {
+                setCouponDiscount(coupon.discount);
+                router.replace(`/checkout?coupon=${coupon.code}`);
+              }}
+              onRemove={() => {
+                setCouponDiscount(0);
+                router.replace(`/checkout`);
+              }}
+            />
             <OrderSummary cart={cart} totalPrice={totalPrice} couponDiscount={couponDiscount} />
           </div>
         </div>

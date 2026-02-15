@@ -17,16 +17,18 @@ import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-
-const POPULAR_SEARCHES = [
-  "তাজা সবজি",
-  "ইলিশ মাছ",
-  "দেশি মুরগি",
-  "চিনি",
-  "সয়াবিন তেল",
-];
+import { useLanguage } from "@/components/LanguageContext";
 
 export default function SearchBar() {
+  const { t, language } = useLanguage();
+  
+  const POPULAR_SEARCHES = [
+    t('popular_search_1'),
+    t('popular_search_2'),
+    t('popular_search_3'),
+    t('popular_search_4'),
+    t('popular_search_5'),
+  ];
   const [searchTerm, setSearchTerm] = useState("");
   const [isOpen, setIsOpen] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(-1);
@@ -40,19 +42,64 @@ export default function SearchBar() {
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [isCategoryOpen, setIsCategoryOpen] = useState(false);
   const [isListening, setIsListening] = useState(false);
+  const [debouncedTerm, setDebouncedTerm] = useState("");
 
   const router = useRouter();
   const searchRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
+  // Debounce logic
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedTerm(searchTerm);
+    }, 300);
+    return () => clearTimeout(timer);
+  }, [searchTerm]);
+
+  // Voice Search implementation
+  const startVoiceSearch = () => {
+    if (!('webkitSpeechRecognition' in window) && !('speechRecognition' in window)) {
+      alert(t('voice_search_not_supported'));
+      return;
+    }
+
+    const win = window as any;
+    const SpeechRecognition = win.webkitSpeechRecognition || win.SpeechRecognition;
+    const recognition = new SpeechRecognition();
+    recognition.lang = language === 'bn' ? "bn-BD" : "en-US";
+    recognition.continuous = false;
+    recognition.interimResults = false;
+
+    recognition.onstart = () => {
+      setIsListening(true);
+    };
+
+    recognition.onresult = (event: any) => {
+      const transcript = event.results[0][0].transcript;
+      setSearchTerm(transcript);
+      setIsListening(false);
+      setIsOpen(true);
+    };
+
+    recognition.onerror = () => {
+      setIsListening(false);
+    };
+
+    recognition.onend = () => {
+      setIsListening(false);
+    };
+
+    recognition.start();
+  };
+
   // Categories for filter
   const categories = [
-    { id: "all", name: "সবগুলো" },
-    { id: "fruits", name: "ফলমূল" },
-    { id: "vegetables", name: "সবজি" },
-    { id: "meat", name: "মাংস" },
-    { id: "fish", name: "মাছ" },
-    { id: "dairy", name: "ডেইরি" },
+    { id: "all", name: t('categories_title'), icon: "📦" },
+    { id: "fruits", name: t('cat_fruits'), icon: "🍎" },
+    { id: "vegetables", name: t('cat_vegetables'), icon: "🥦" },
+    { id: "meat", name: t('cat_meat'), icon: "🥩" },
+    { id: "fish", name: t('cat_fish'), icon: "🐟" },
+    { id: "dairy", name: t('cat_dairy'), icon: "🥛" },
   ];
 
   const addToHistory = (term: string) => {
@@ -71,16 +118,23 @@ export default function SearchBar() {
   };
 
   const { data: results, isLoading } = useQuery({
-    queryKey: ["search", searchTerm, selectedCategory],
+    queryKey: ["search", debouncedTerm, selectedCategory],
     queryFn: async () => {
-      if (searchTerm.length < 2 && selectedCategory === "all") return [];
+      if (debouncedTerm.length < 2 && selectedCategory === "all") return [];
       const res = await fetch(
-        `/api/products/search?q=${encodeURIComponent(searchTerm)}&category=${selectedCategory}`,
+        `/api/products/search?q=${encodeURIComponent(debouncedTerm)}&category=${selectedCategory}`,
       );
       return res.json();
     },
-    enabled: searchTerm.length >= 2 || selectedCategory !== "all",
+    enabled: debouncedTerm.length >= 2 || selectedCategory !== "all",
   });
+
+  // Smart suggestions for categories
+  const categorySuggestions = debouncedTerm.length >= 2 
+    ? categories.filter(cat => 
+        cat.name.includes(debouncedTerm) && cat.id !== "all"
+      )
+    : [];
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -124,25 +178,6 @@ export default function SearchBar() {
       );
       setIsOpen(false);
     }
-  };
-
-  const startVoiceSearch = () => {
-    const win = window as any;
-    if (!(win.webkitSpeechRecognition || win.SpeechRecognition)) {
-      alert("Voice search is not supported in this browser.");
-      return;
-    }
-    const SpeechRecognition = win.webkitSpeechRecognition || win.SpeechRecognition;
-    const recognition = new SpeechRecognition();
-    recognition.lang = "bn-BD";
-    recognition.onstart = () => setIsListening(true);
-    recognition.onend = () => setIsListening(false);
-    recognition.onresult = (event: any) => {
-      const transcript = event.results[0][0].transcript;
-      setSearchTerm(transcript);
-      setIsOpen(true);
-    };
-    recognition.start();
   };
 
   return (
@@ -212,7 +247,7 @@ export default function SearchBar() {
               }}
               onFocus={() => setIsOpen(true)}
               onKeyDown={handleKeyDown}
-              placeholder="আপনার প্রয়োজনীয় পণ্যটি খুঁজুন..."
+              placeholder={t('search_placeholder')}
               className="w-full bg-transparent py-4 pl-12 pr-10 outline-none text-base font-bold text-gray-900 dark:text-white placeholder:text-gray-400"
             />
           </div>
@@ -243,7 +278,7 @@ export default function SearchBar() {
               type="submit"
               className="bg-gray-900 dark:bg-white text-white dark:text-black px-6 py-2.5 rounded-xl text-xs font-black uppercase tracking-widest hover:bg-green-600 hover:text-white transition-all shadow-lg active:scale-95 ml-2"
             >
-              সার্চ
+              {t('search_action')}
             </button>
           </div>
         </div>
@@ -261,7 +296,7 @@ export default function SearchBar() {
                 {!searchTerm && history.length > 0 && (
                   <div className="mb-6">
                     <p className="text-[10px] font-black uppercase tracking-[0.2em] text-gray-400 px-4 mb-3">
-                      সাম্প্রতিক সার্চ
+                      {t('recent_searches')}
                     </p>
                     <div className="space-y-1">
                       {history.map((item, idx) => (
@@ -297,7 +332,7 @@ export default function SearchBar() {
                 {!searchTerm && (
                   <div className="mb-4">
                     <p className="text-[10px] font-black uppercase tracking-[0.2em] text-gray-400 px-4 mb-3">
-                      জনপ্রিয় সার্চ
+                      {t('popular_searches_title')}
                     </p>
                     <div className="flex flex-wrap gap-2 px-4">
                       {POPULAR_SEARCHES.map((item, idx) => (
@@ -320,84 +355,113 @@ export default function SearchBar() {
 
                 {/* Search Results */}
                 {searchTerm.length >= 2 && (
-                  <div className="space-y-2">
-                    <p className="text-[10px] font-black uppercase tracking-[0.2em] text-gray-400 px-4 mb-4">
-                      সার্চ রেজাল্ট
-                    </p>
-                    {results && results.length > 0 ? (
-                      <>
-                        {results.map((product: any, idx: number) => (
+                  <div className="space-y-6">
+                    {/* Category Suggestions */}
+                    {categorySuggestions.length > 0 && (
+                      <div className="space-y-2">
+                        <p className="text-[10px] font-black uppercase tracking-[0.2em] text-gray-400 px-4">
+                          {t('suggested_categories')}
+                        </p>
+                        <div className="grid grid-cols-2 gap-2 px-4">
+                          {categorySuggestions.map((cat) => (
+                            <Link
+                              key={cat.id}
+                              href={`/products?category=${cat.id}`}
+                              onClick={() => setIsOpen(false)}
+                              className="flex items-center gap-3 p-3 bg-gray-50 dark:bg-white/5 hover:bg-green-50 dark:hover:bg-green-500/10 rounded-2xl transition-all border border-transparent hover:border-green-100 dark:hover:border-green-500/20 group"
+                            >
+                              <span className="text-xl group-hover:scale-110 transition-transform">
+                                {cat.icon}
+                              </span>
+                              <span className="text-sm font-bold text-gray-700 dark:text-gray-300">
+                                {cat.name}
+                              </span>
+                            </Link>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Product Results */}
+                    <div className="space-y-2">
+                      <p className="text-[10px] font-black uppercase tracking-[0.2em] text-gray-400 px-4">
+                        {t('products_title_search')}
+                      </p>
+                      {results && results.length > 0 ? (
+                        <>
+                          {results.map((product: any, idx: number) => (
+                            <Link
+                              key={product._id}
+                              href={`/products/${product._id}`}
+                              onClick={() => {
+                                addToHistory(searchTerm);
+                                setIsOpen(false);
+                              }}
+                              className={`flex items-center gap-4 p-3 rounded-2xl transition-all group ${
+                                selectedIndex === idx
+                                  ? "bg-green-50 dark:bg-green-500/10"
+                                  : "hover:bg-gray-50 dark:hover:bg-white/5"
+                              }`}
+                            >
+                              <div className="w-14 h-14 rounded-xl overflow-hidden bg-gray-100 dark:bg-white/5 flex-shrink-0">
+                                {product.image && (
+                                  <Image
+                                    src={product.image}
+                                    alt={product.name}
+                                    width={56}
+                                    height={56}
+                                    className="w-full h-full object-cover group-hover:scale-110 transition-transform"
+                                  />
+                                )}
+                              </div>
+                              <div className="flex-1">
+                                <h4
+                                  className={`text-sm font-bold transition-colors ${
+                                    selectedIndex === idx
+                                      ? "text-green-600"
+                                      : "text-gray-900 dark:text-white group-hover:text-green-600"
+                                  }`}
+                                >
+                                  {product.name}
+                                </h4>
+                                <p className="text-xs text-gray-500 dark:text-gray-400">
+                                  {t('currency_symbol')}{product.price} / {product.unit}
+                                </p>
+                              </div>
+                              <ArrowRight
+                                className={`w-4 h-4 text-gray-300 transition-all ${
+                                  selectedIndex === idx
+                                    ? "opacity-100 translate-x-1 text-green-500"
+                                    : "opacity-0 group-hover:opacity-100 group-hover:translate-x-1"
+                                }`}
+                              />
+                            </Link>
+                          ))}
                           <Link
-                            key={product._id}
-                            href={`/products/${product._id}`}
+                            href={`/products?q=${encodeURIComponent(searchTerm)}${selectedCategory !== "all" ? `&category=${selectedCategory}` : ""}`}
                             onClick={() => {
                               addToHistory(searchTerm);
                               setIsOpen(false);
                             }}
-                            className={`flex items-center gap-4 p-3 rounded-2xl transition-all group ${
-                              selectedIndex === idx
-                                ? "bg-green-50 dark:bg-green-500/10"
-                                : "hover:bg-gray-50 dark:hover:bg-white/5"
-                            }`}
+                            className="flex items-center justify-center gap-2 p-4 mt-4 bg-gray-50 dark:bg-white/5 hover:bg-green-500 hover:text-white rounded-2xl text-sm font-black transition-all"
                           >
-                            <div className="w-14 h-14 rounded-xl overflow-hidden bg-gray-100 dark:bg-white/5 flex-shrink-0">
-                              {product.image && (
-                                <Image
-                                  src={product.image}
-                                  alt={product.name}
-                                  width={56}
-                                  height={56}
-                                  className="w-full h-full object-cover group-hover:scale-110 transition-transform"
-                                />
-                              )}
-                            </div>
-                            <div className="flex-1">
-                              <h4
-                                className={`text-sm font-bold transition-colors ${
-                                  selectedIndex === idx
-                                    ? "text-green-600"
-                                    : "text-gray-900 dark:text-white group-hover:text-green-600"
-                                }`}
-                              >
-                                {product.name}
-                              </h4>
-                              <p className="text-xs text-gray-500 dark:text-gray-400">
-                                ৳{product.price} / {product.unit}
-                              </p>
-                            </div>
-                            <ArrowRight
-                              className={`w-4 h-4 text-gray-300 transition-all ${
-                                selectedIndex === idx
-                                  ? "opacity-100 translate-x-1 text-green-500"
-                                  : "opacity-0 group-hover:opacity-100 group-hover:translate-x-1"
-                              }`}
-                            />
+                            {t('see_all')}
+                            <ArrowRight className="w-4 h-4" />
                           </Link>
-                        ))}
-                        <Link
-                          href={`/products?q=${encodeURIComponent(searchTerm)}${selectedCategory !== "all" ? `&category=${selectedCategory}` : ""}`}
-                          onClick={() => {
-                            addToHistory(searchTerm);
-                            setIsOpen(false);
-                          }}
-                          className="flex items-center justify-center gap-2 p-4 mt-4 bg-gray-50 dark:bg-white/5 hover:bg-green-500 hover:text-white rounded-2xl text-sm font-black transition-all"
-                        >
-                          সবগুলো দেখুন
-                          <ArrowRight className="w-4 h-4" />
-                        </Link>
-                      </>
-                    ) : (
-                      !isLoading && (
-                        <div className="p-8 text-center space-y-4">
-                          <div className="w-16 h-16 bg-gray-50 dark:bg-white/5 rounded-full flex items-center justify-center mx-auto">
-                            <Search className="w-8 h-8 text-gray-300" />
+                        </>
+                      ) : (
+                        !isLoading && (
+                          <div className="p-8 text-center space-y-4">
+                            <div className="w-16 h-16 bg-gray-50 dark:bg-white/5 rounded-full flex items-center justify-center mx-auto">
+                              <Search className="w-8 h-8 text-gray-300" />
+                            </div>
+                            <p className="text-gray-500 dark:text-gray-400 font-bold">
+                              {t('no_products_found')}
+                            </p>
                           </div>
-                          <p className="text-gray-500 dark:text-gray-400 font-bold">
-                            দুঃখিত, কোনো পণ্য পাওয়া যায়নি!
-                          </p>
-                        </div>
-                      )
-                    )}
+                        )
+                      )}
+                    </div>
                   </div>
                 )}
               </div>

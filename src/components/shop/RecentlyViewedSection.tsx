@@ -3,16 +3,18 @@
 import { useRecentlyViewed } from "@/components/RecentlyViewedContext";
 import ProductCard from "@/components/ProductCard";
 import { motion } from "framer-motion";
+import { useLanguage } from "@/components/LanguageContext";
 
 export default function RecentlyViewedSection() {
   const { recentlyViewed } = useRecentlyViewed();
+  const { t } = useLanguage();
 
   if (recentlyViewed.length === 0) return null;
 
   return (
     <section className="py-12">
       <div className="flex items-center justify-between mb-8">
-        <h2 className="text-2xl font-black text-gray-800 dark:text-white">আপনার সম্প্রতি দেখা পণ্য</h2>
+        <h2 className="text-2xl font-black text-gray-800 dark:text-white">{t('recently_viewed')}</h2>
         <div className="h-px flex-1 bg-gray-100 dark:bg-white/5 mx-8 hidden md:block" />
       </div>
       

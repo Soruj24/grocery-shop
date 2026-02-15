@@ -2,14 +2,17 @@
 
 import { motion } from "framer-motion";
 import { Apple, PlayCircle, Smartphone, CheckCircle2 } from "lucide-react";
+ 
+import { useLanguage } from "@/components/LanguageContext";
 import Image from "next/image";
 
 export default function AppDownload() {
+  const { t } = useLanguage();
   const benefits = [
-    "সহজ ও দ্রুত অর্ডার করার সুবিধা",
-    "শুধুমাত্র অ্যাপ ব্যবহারকারীদের জন্য বিশেষ অফার",
-    "রিয়েল-টাইম অর্ডার ট্র্যাকিং",
-    "নিরাপদ পেমেন্ট গেটওয়ে"
+    t('app_download_benefit_1'),
+    t('app_download_benefit_2'),
+    t('app_download_benefit_3'),
+    t('app_download_benefit_4')
   ];
 
   return (
@@ -30,7 +33,7 @@ export default function AppDownload() {
                   className="inline-flex items-center gap-2 px-5 py-2.5 bg-green-500/10 border border-green-500/20 text-green-500 rounded-full text-xs font-black uppercase tracking-[0.2em]"
                 >
                   <Smartphone size={14} className="animate-bounce" />
-                  মোবাইল অ্যাপ
+                  {t('app_download_badge')}
                 </motion.div>
                 
                 <motion.h2 
@@ -40,8 +43,8 @@ export default function AppDownload() {
                   transition={{ delay: 0.1 }}
                   className="text-5xl md:text-7xl font-black text-white tracking-tight leading-[1.1]"
                 >
-                  আপনার হাতের মুঠোয় <br />
-                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-emerald-500">সেরা বাজার</span>
+                  {t('app_download_title_1')} <br />
+                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-emerald-500">{t('app_download_title_2')}</span>
                 </motion.h2>
 
                 <motion.p 
@@ -51,7 +54,7 @@ export default function AppDownload() {
                   transition={{ delay: 0.2 }}
                   className="text-lg text-gray-400 font-medium leading-relaxed max-w-xl"
                 >
-                  আমাদের মোবাইল অ্যাপ ডাউনলোড করুন এবং যেকোনো সময় যেকোনো জায়গা থেকে অর্ডার করুন। পাচ্ছেন আকর্ষণীয় সব ডিসকাউন্ট অফার!
+                  {t('app_download_desc')}
                 </motion.p>
               </div>
 
@@ -81,8 +84,8 @@ export default function AppDownload() {
                 >
                   <PlayCircle className="w-8 h-8 group-hover:scale-110 transition-transform" />
                   <div className="text-left">
-                    <p className="text-[10px] uppercase font-black opacity-60">Get it on</p>
-                    <p className="text-lg">Google Play</p>
+                    <p className="text-[10px] uppercase font-black opacity-60">{t('get_it_on')}</p>
+                    <p className="text-lg">{t('google_play')}</p>
                   </div>
                 </motion.button>
 
@@ -93,8 +96,8 @@ export default function AppDownload() {
                 >
                   <Apple className="w-8 h-8 group-hover:scale-110 transition-transform" />
                   <div className="text-left">
-                    <p className="text-[10px] uppercase font-black opacity-60">Download on the</p>
-                    <p className="text-lg">App Store</p>
+                    <p className="text-[10px] uppercase font-black opacity-60">{t('download_on')}</p>
+                    <p className="text-lg">{t('app_store')}</p>
                   </div>
                 </motion.button>
               </div>
@@ -109,10 +112,12 @@ export default function AppDownload() {
             >
               <div className="relative w-[500px] h-[600px] mx-auto">
                 <div className="absolute inset-0 bg-gradient-to-t from-green-500/20 to-transparent rounded-[100px] blur-3xl animate-pulse" />
-                <img 
+                <Image
                   src="https://chaldn.com/_mpapi/static/1.0.0/web/images/home/phone-app-mockup.png" 
                   alt="App Mockup"
-                  className="relative w-full h-full object-contain drop-shadow-[0_50px_50px_rgba(0,0,0,0.5)]"
+                  fill
+                  sizes="500px"
+                  className="object-contain drop-shadow-[0_50px_50px_rgba(0,0,0,0.5)]"
                 />
               </div>
             </motion.div>

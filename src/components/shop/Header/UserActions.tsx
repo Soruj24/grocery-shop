@@ -22,7 +22,10 @@ import { useWishlist } from "@/components/WishlistContext";
 import { useSession, signOut } from "next-auth/react";
 import { motion, AnimatePresence } from "framer-motion";
 import ThemeToggle from "@/components/ThemeToggle";
+import LanguageSwitcher from "@/components/LanguageSwitcher";
+import NotificationBell from "@/components/NotificationBell";
 import CartDrawer from "../cart/CartDrawer";
+import { useLanguage } from "@/components/LanguageContext";
 
 export default function UserActions() {
   const { totalItems } = useCart();
@@ -31,9 +34,12 @@ export default function UserActions() {
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [isHelpOpen, setIsHelpOpen] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
+  const { t } = useLanguage();
 
   return (
     <div className="flex items-center gap-3">
+      <LanguageSwitcher />
+      <NotificationBell />
       <ThemeToggle />
       <CartDrawer isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />
 
@@ -47,7 +53,7 @@ export default function UserActions() {
           className="flex items-center gap-2 h-12 px-5 bg-gray-50 dark:bg-white/5 hover:bg-white dark:hover:bg-black text-gray-700 dark:text-gray-400 hover:text-green-600 dark:hover:text-green-500 rounded-2xl transition-all border border-transparent hover:border-gray-100 dark:hover:border-white/10 group font-bold text-sm shadow-sm hover:shadow-md"
         >
           <HelpCircle className="w-5 h-5 group-hover:scale-110 transition-transform" />
-          সহায়তা
+          {t('help')}
           <ChevronDown className={`w-4 h-4 transition-transform duration-300 ${isHelpOpen ? 'rotate-180' : ''}`} />
         </button>
 
@@ -68,7 +74,7 @@ export default function UserActions() {
                   <div className="w-10 h-10 rounded-xl bg-gray-50 dark:bg-white/5 flex items-center justify-center group-hover:bg-green-100 dark:group-hover:bg-green-500/20 transition-colors">
                     <MessageCircle className="w-5 h-5" />
                   </div>
-                  সরাসরি চ্যাট
+                  {t('live_chat')}
                 </Link>
 
                 <Link 
@@ -78,7 +84,7 @@ export default function UserActions() {
                   <div className="w-10 h-10 rounded-xl bg-gray-50 dark:bg-white/5 flex items-center justify-center group-hover:bg-green-100 dark:group-hover:bg-green-500/20 transition-colors">
                     <Truck className="w-5 h-5" />
                   </div>
-                  শিপিং পলিসি
+                  {t('shipping_policy')}
                 </Link>
 
                 <Link 
@@ -88,7 +94,7 @@ export default function UserActions() {
                   <div className="w-10 h-10 rounded-xl bg-gray-50 dark:bg-white/5 flex items-center justify-center group-hover:bg-green-100 dark:group-hover:bg-green-500/20 transition-colors">
                     <RefreshCcw className="w-5 h-5" />
                   </div>
-                  রিটার্ন পলিসি
+                  {t('return_policy')}
                 </Link>
 
                 <Link 
@@ -98,7 +104,7 @@ export default function UserActions() {
                   <div className="w-10 h-10 rounded-xl bg-gray-50 dark:bg-white/5 flex items-center justify-center group-hover:bg-green-100 dark:group-hover:bg-green-500/20 transition-colors">
                     <ShieldCheck className="w-5 h-5" />
                   </div>
-                  প্রাইভেসি পলিসি
+                  {t('privacy_policy')}
                 </Link>
               </div>
             </motion.div>
@@ -154,7 +160,7 @@ export default function UserActions() {
               {session.user?.name?.charAt(0)}
             </div>
             <div className="hidden lg:flex flex-col items-start text-left leading-tight">
-              <span className="text-[9px] font-black text-gray-400 dark:text-gray-500 uppercase tracking-widest">আমার অ্যাকাউন্ট</span>
+              <span className="text-[9px] font-black text-gray-400 dark:text-gray-500 uppercase tracking-widest">{t('register')}</span>
               <span className="text-sm font-black text-gray-900 dark:text-white line-clamp-1">{session.user?.name?.split(' ')[0]}</span>
             </div>
             <ChevronDown className={`w-4 h-4 text-gray-400 transition-transform duration-500 ${isProfileOpen ? 'rotate-180' : ''}`} />
@@ -165,7 +171,7 @@ export default function UserActions() {
             className="group flex items-center gap-3 h-12 px-6 bg-gray-900 dark:bg-white text-white dark:text-black rounded-2xl font-black text-sm transition-all hover:bg-green-600 hover:text-white shadow-xl active:scale-95"
           >
             <User className="w-5 h-5 group-hover:scale-110 transition-transform" />
-            <span className="hidden sm:inline uppercase tracking-widest">লগইন</span>
+            <span className="hidden sm:inline uppercase tracking-widest">{t('login')}</span>
           </Link>
         )}
 
@@ -180,7 +186,7 @@ export default function UserActions() {
               className="absolute right-0 mt-4 w-72 bg-white/80 dark:bg-[#020617]/80 rounded-3xl shadow-[0_30px_60px_-15px_rgba(0,0,0,0.3)] border border-gray-100 dark:border-white/5 py-3 z-[100] backdrop-blur-3xl overflow-hidden"
             >
               <div className="px-6 py-4 border-b border-gray-50 dark:border-white/5 mb-2">
-                <p className="text-[10px] font-black text-gray-400 dark:text-gray-500 uppercase tracking-[0.2em] mb-1">লগইন করা আছে</p>
+                <p className="text-[10px] font-black text-gray-400 dark:text-gray-500 uppercase tracking-[0.2em] mb-1">{t('logged_in_as')}</p>
                 <p className="text-base font-black text-gray-900 dark:text-white truncate">{session.user?.email}</p>
               </div>
               
@@ -193,7 +199,7 @@ export default function UserActions() {
                   <div className="w-10 h-10 rounded-xl bg-gray-50 dark:bg-white/5 flex items-center justify-center group-hover:bg-green-100 dark:group-hover:bg-green-500/20 transition-colors">
                     <LayoutGrid className="w-5 h-5" />
                   </div>
-                  ড্যাশবোর্ড
+                  {t('dashboard')}
                 </Link>
                 
                 <Link 
@@ -204,7 +210,7 @@ export default function UserActions() {
                   <div className="w-10 h-10 rounded-xl bg-gray-50 dark:bg-white/5 flex items-center justify-center group-hover:bg-green-100 dark:group-hover:bg-green-500/20 transition-colors">
                     <ShoppingBasket className="w-5 h-5" />
                   </div>
-                  আমার অর্ডার
+                  {t('my_orders')}
                 </Link>
 
                 <Link 
@@ -215,7 +221,7 @@ export default function UserActions() {
                   <div className="w-10 h-10 rounded-xl bg-gray-50 dark:bg-white/5 flex items-center justify-center group-hover:bg-green-100 dark:group-hover:bg-green-500/20 transition-colors">
                     <Settings className="w-5 h-5" />
                   </div>
-                  সেটিংস
+                  {t('settings')}
                 </Link>
               </div>
 
@@ -227,7 +233,7 @@ export default function UserActions() {
                   <div className="w-10 h-10 rounded-xl bg-rose-50 dark:bg-rose-500/10 flex items-center justify-center group-hover:bg-rose-100 dark:group-hover:bg-rose-500/20 transition-colors">
                     <LogOut className="w-5 h-5" />
                   </div>
-                  লগ আউট
+                  {t('logout')}
                 </button>
               </div>
             </motion.div>

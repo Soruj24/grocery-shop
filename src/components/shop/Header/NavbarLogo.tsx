@@ -1,7 +1,9 @@
 import Link from "next/link";
 import { ShoppingBasket } from "lucide-react";
+import { useLanguage } from "@/components/LanguageContext";
 
 export default function NavbarLogo() {
+  const { t } = useLanguage();
   return (
     <Link href="/" className="group flex items-center gap-4 shrink-0">
       <div className="relative w-14 h-14 bg-gradient-to-br from-green-500 to-emerald-700 rounded-[22px] flex items-center justify-center transform transition-all duration-700 group-hover:rotate-[360deg] shadow-[0_15px_30px_-5px_rgba(34,197,94,0.3)]">
@@ -10,11 +12,11 @@ export default function NavbarLogo() {
       </div>
       <div className="flex flex-col">
         <span className="text-3xl font-black tracking-tighter text-gray-900 dark:text-white leading-[0.8]">
-          EMRAN
-          <span className="text-green-600 dark:text-green-500"> SHOP</span>
+          {t('brand_name_first')}
+          <span className="text-green-600 dark:text-green-500">{t('brand_name_second')}</span>
         </span>
         <span className="text-[10px] font-black text-gray-400 dark:text-gray-500 uppercase tracking-[0.3em] mt-2">
-          Premium Grocery
+          {t('brand_tagline')}
         </span>
       </div>
     </Link>

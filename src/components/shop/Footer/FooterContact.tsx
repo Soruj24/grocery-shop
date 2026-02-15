@@ -1,24 +1,26 @@
 "use client";
 
 import { MapPin, Phone, Mail } from "lucide-react";
+import { useLanguage } from "@/components/LanguageContext";
 
 export default function FooterContact() {
+  const { t } = useLanguage();
   const contactInfo = [
     {
       icon: MapPin,
-      label: "ঠিকানা",
-      value: "জানের মোড়, Goyhata, Nagurpur, টাঙ্গাইল",
+      label: t('address'),
+      value: t('address_value'),
       color: "green"
     },
     {
       icon: Phone,
-      label: "হেল্পলাইন",
-      value: "+৮৮০ ১২৩৪-৫৬৭৮৯০",
+      label: t('helpline'),
+      value: t('helpline_number'),
       color: "blue"
     },
     {
       icon: Mail,
-      label: "ইমেইল",
+      label: t('email'),
       value: "support@emranshop.com",
       color: "orange"
     }
@@ -39,7 +41,7 @@ export default function FooterContact() {
 
   return (
     <div className="space-y-8">
-      <h4 className="text-xs font-black text-gray-400 dark:text-gray-500 uppercase tracking-[0.3em]">যোগাযোগ করুন</h4>
+      <h4 className="text-xs font-black text-gray-400 dark:text-gray-500 uppercase tracking-[0.3em]">{t('contact_us')}</h4>
       <ul className="space-y-6">
         {contactInfo.map((info, idx) => (
           <li key={idx} className="flex items-start gap-5 group">

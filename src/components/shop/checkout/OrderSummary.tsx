@@ -1,4 +1,5 @@
 import { ShoppingBag, ShieldCheck } from "lucide-react";
+import { useLanguage } from "@/components/LanguageContext";
 
 interface CartItem {
   _id: string;
@@ -15,6 +16,7 @@ interface OrderSummaryProps {
 }
 
 export default function OrderSummary({ cart, totalPrice, couponDiscount = 0 }: OrderSummaryProps) {
+  const { t } = useLanguage();
   const deliveryFee = totalPrice > 500 ? 0 : 50;
   const vat = Math.round(totalPrice * 0.05);
   const finalTotal = totalPrice + deliveryFee + vat - couponDiscount;
@@ -25,7 +27,7 @@ export default function OrderSummary({ cart, totalPrice, couponDiscount = 0 }: O
         <div className="absolute top-0 right-0 w-32 h-32 bg-green-500/5 blur-3xl rounded-full -mr-16 -mt-16" />
 
         <h3 className="text-3xl font-black text-gray-900 dark:text-white tracking-tight relative">
-          অর্ডার সামারি
+          {t('order_summary')}
         </h3>
 
         <div className="space-y-6 relative max-h-[400px] overflow-y-auto pr-2 custom-scrollbar">
@@ -47,11 +49,11 @@ export default function OrderSummary({ cart, totalPrice, couponDiscount = 0 }: O
                   {item.name}
                 </h4>
                 <p className="text-sm font-bold text-gray-400">
-                  ৳{item.price} x {item.quantity}
+                  {t('currency_symbol')}{item.price} x {item.quantity}
                 </p>
               </div>
               <span className="font-black text-gray-900 dark:text-white">
-                ৳{item.price * item.quantity}
+                {t('currency_symbol')}{item.price * item.quantity}
               </span>
             </div>
           ))}
@@ -59,30 +61,30 @@ export default function OrderSummary({ cart, totalPrice, couponDiscount = 0 }: O
 
         <div className="space-y-6 relative pt-10 border-t border-gray-100 dark:border-gray-800">
           <div className="flex justify-between items-center text-lg font-bold text-gray-500 dark:text-gray-400">
-            <span>সাব-টোটাল</span>
-            <span>৳{totalPrice}</span>
+            <span>{t('subtotal')}</span>
+            <span>{t('currency_symbol')}{totalPrice}</span>
           </div>
           <div className="flex justify-between items-center text-lg font-bold text-gray-500 dark:text-gray-400">
-            <span>ডেলিভারি চার্জ</span>
-            <span>৳{deliveryFee}</span>
+            <span>{t('delivery_charge')}</span>
+            <span>{deliveryFee === 0 ? t('free') : `${t('currency_symbol')}${deliveryFee}`}</span>
           </div>
           <div className="flex justify-between items-center text-lg font-bold text-gray-500 dark:text-gray-400">
-            <span>ভ্যাট (৫%)</span>
-            <span>৳{vat}</span>
+            <span>{t('vat')}{t('vat_percentage')}</span>
+            <span>{t('currency_symbol')}{vat}</span>
           </div>
           {couponDiscount > 0 && (
             <div className="flex justify-between items-center text-lg font-bold text-green-600">
-              <span>ডিসকাউন্ট</span>
-              <span>-৳{couponDiscount}</span>
+              <span>{t('discount')}</span>
+              <span>-{t('currency_symbol')}{couponDiscount}</span>
             </div>
           )}
           <div className="flex justify-between items-end pt-4">
             <div className="space-y-1">
               <span className="text-xs font-black uppercase tracking-widest text-gray-400">
-                সর্বমোট
+                {t('grand_total')}
               </span>
               <div className="text-5xl font-black text-gray-900 dark:text-white">
-                ৳{finalTotal}
+                {t('currency_symbol')}{finalTotal}
               </div>
             </div>
           </div>
@@ -93,7 +95,7 @@ export default function OrderSummary({ cart, totalPrice, couponDiscount = 0 }: O
             <ShieldCheck className="w-6 h-6" />
           </div>
           <p className="text-xs font-black text-gray-500 dark:text-gray-400 leading-relaxed">
-            আপনার সকল তথ্য নিরাপদ রাখা হবে। ক্যাশ অন ডেলিভারিতে কোনো অগ্রিম টাকা প্রদান করতে হয় না।
+            {t('secure_info_text')}
           </p>
         </div>
       </div>

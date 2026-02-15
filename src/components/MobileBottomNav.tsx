@@ -2,24 +2,26 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Home, Search, ShoppingBag, Heart, User, LayoutGrid } from "lucide-react";
+import { Home,  ShoppingBag, Heart, User, LayoutGrid } from "lucide-react";
 import { useCart } from "@/components/CartContext";
 import { useWishlist } from "@/components/WishlistContext";
 import { motion, AnimatePresence } from "framer-motion";
+import { useLanguage } from "@/components/LanguageContext";
 
 export default function MobileBottomNav() {
   const pathname = usePathname();
   const { totalItems, cart } = useCart();
   const { totalWishlistItems } = useWishlist();
+  const { t } = useLanguage();
 
   const totalPrice = cart?.reduce((acc, item) => acc + (item.price * item.quantity), 0) || 0;
 
   const navItems = [
-    { label: "হোম", icon: Home, href: "/" },
-    { label: "ক্যাটাগরি", icon: LayoutGrid, href: "/products" },
-    { label: "কার্ট", icon: ShoppingBag, href: "/cart", badge: totalItems },
-    { label: "উইশলিস্ট", icon: Heart, href: "/wishlist", badge: totalWishlistItems },
-    { label: "প্রোফাইল", icon: User, href: "/login" },
+    { label: t('nav_home'), icon: Home, href: "/" },
+    { label: t('nav_categories'), icon: LayoutGrid, href: "/products" },
+    { label: t('nav_cart'), icon: ShoppingBag, href: "/cart", badge: totalItems },
+    { label: t('nav_wishlist'), icon: Heart, href: "/wishlist", badge: totalWishlistItems },
+    { label: t('nav_profile'), icon: User, href: "/login" },
   ];
 
   return (
@@ -46,8 +48,8 @@ export default function MobileBottomNav() {
                   </span>
                 </div>
                 <div className="flex flex-col">
-                  <span className="text-[10px] font-black uppercase tracking-widest opacity-70 leading-none">মোট</span>
-                  <span className="font-black leading-none">৳{totalPrice}</span>
+                  <span className="text-[10px] font-black uppercase tracking-widest opacity-70 leading-none">{t('total')}</span>
+                  <span className="font-black leading-none">{t('currency_symbol')}{totalPrice}</span>
                 </div>
               </motion.div>
             </Link>

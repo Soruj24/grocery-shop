@@ -9,19 +9,22 @@ import { Product } from "@/types/product";
 import { useCart } from "@/components/CartContext";
 import { toast } from "react-hot-toast";
 
-const TABS = [
-  { id: "trending", label: "ট্রেন্ডিং", icon: TrendingUp, color: "from-blue-500 to-cyan-500" },
-  { id: "bestsellers", label: "বেস্ট সেলার", icon: Star, color: "from-amber-400 to-orange-600" },
-  { id: "new", label: "নতুন পণ্য", icon: Sparkles, color: "from-purple-500 to-pink-600" }
-];
+import { useLanguage } from "@/components/LanguageContext";
 
 export default function FeaturedProducts({ products }: { products: Product[] }) {
   const [activeTab, setActiveTab] = useState("trending");
   const { addToCart } = useCart();
+  const { t } = useLanguage();
+
+  const TABS = [
+    { id: "trending", label: t('featured_products_tab_trending'), icon: TrendingUp, color: "from-blue-500 to-cyan-500" },
+    { id: "bestsellers", label: t('featured_products_tab_bestsellers'), icon: Star, color: "from-amber-400 to-orange-600" },
+    { id: "new", label: t('featured_products_tab_new'), icon: Sparkles, color: "from-purple-500 to-pink-600" }
+  ];
 
   const handleAddToCart = (product: Product) => {
     addToCart(product, 1);
-    toast.success(`${product.name} কার্টে যোগ করা হয়েছে!`);
+    toast.success(`${product.name} ${t('add_to_cart_success')}`);
   };
 
   // Mock filtering for UI demonstration
@@ -33,10 +36,10 @@ export default function FeaturedProducts({ products }: { products: Product[] }) 
         <div className="flex flex-col items-center space-y-10">
           <div className="text-center space-y-4">
             <h2 className="text-4xl md:text-6xl font-black text-gray-900 dark:text-white tracking-tight">
-              বাছাইকৃত <span className="text-transparent bg-clip-text bg-gradient-to-r from-green-500 to-emerald-600">সেরা পণ্য</span>
+              {t('featured_products_title_1')} <span className="text-transparent bg-clip-text bg-gradient-to-r from-green-500 to-emerald-600">{t('featured_products_title_2')}</span>
             </h2>
             <p className="text-gray-500 dark:text-gray-400 font-medium max-w-xl mx-auto">
-              সবচেয়ে জনপ্রিয় এবং নতুন আসা পণ্যের সমাহার থেকে আপনার পছন্দের পণ্যটি বেছে নিন।
+              {t('featured_products_desc')}
             </p>
           </div>
 
@@ -92,7 +95,7 @@ export default function FeaturedProducts({ products }: { products: Product[] }) 
                     />
                   )}
                   <div className="absolute top-4 left-4 bg-white/90 dark:bg-black/90 backdrop-blur-md px-4 py-2 rounded-2xl text-[10px] font-black text-green-600 uppercase tracking-widest shadow-xl">
-                    {activeTab === "trending" ? "Trending" : activeTab === "bestsellers" ? "Best Seller" : "New"}
+                    {activeTab === "trending" ? t('featured_products_tab_trending') : activeTab === "bestsellers" ? t('featured_products_tab_bestsellers') : t('featured_products_tab_new')}
                   </div>
                 </div>
 
@@ -101,11 +104,13 @@ export default function FeaturedProducts({ products }: { products: Product[] }) 
                     <h3 className="text-xl font-black text-gray-900 dark:text-white group-hover:text-green-600 transition-colors truncate">
                       {product.name}
                     </h3>
-                    <p className="text-sm text-gray-400 font-bold uppercase tracking-wider">{product.unit}</p>
+                    <p className="text-sm text-gray-400 font-bold uppercase tracking-wider">
+                      {product.unit === 'kg' ? t('unit_kg') : product.unit === 'g' ? t('unit_g') : product.unit}
+                    </p>
                   </div>
 
                   <div className="flex items-center justify-between">
-                    <div className="text-2xl font-black text-gray-900 dark:text-white">৳{product.price}</div>
+                    <div className="text-2xl font-black text-gray-900 dark:text-white">{t('currency_symbol')}{product.price}</div>
                     <button 
                       onClick={() => handleAddToCart(product)}
                       className="w-14 h-14 bg-gray-900 dark:bg-white text-white dark:text-black rounded-2xl flex items-center justify-center hover:bg-green-600 hover:text-white transition-all active:scale-95 shadow-lg"
@@ -124,7 +129,7 @@ export default function FeaturedProducts({ products }: { products: Product[] }) 
             href="/products"
             className="group flex items-center gap-4 bg-white dark:bg-white/5 border border-gray-100 dark:border-white/10 px-12 py-5 rounded-[28px] font-black text-gray-900 dark:text-white hover:bg-gray-50 dark:hover:bg-white/10 transition-all"
           >
-            সবগুলো পণ্য দেখুন
+            {t('see_all')}
             <ArrowRight className="group-hover:translate-x-2 transition-transform" />
           </Link>
         </div>

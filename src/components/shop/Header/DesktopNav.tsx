@@ -5,6 +5,7 @@ import { LayoutGrid, ChevronDown, Flame, Percent, Star, Clock } from "lucide-rea
 import CategoryMegaMenu from "./CategoryMegaMenu";
 import { motion, AnimatePresence } from "framer-motion";
 import { Category } from "@/types/category";
+import { useLanguage } from "@/components/LanguageContext";
 
 interface DesktopNavProps {
   categories: Category[];
@@ -17,6 +18,8 @@ export default function DesktopNav({
   isCategoryMenuOpen,
   setIsCategoryMenuOpen,
 }: DesktopNavProps) {
+  const { t } = useLanguage();
+
   return (
     <div className="hidden lg:block border-t border-gray-100 dark:border-white/5 bg-white/80 dark:bg-black/80 backdrop-blur-md">
       <div className="max-w-7xl mx-auto px-4 flex items-center justify-between gap-8">
@@ -32,7 +35,7 @@ export default function DesktopNav({
               className="flex items-center gap-3 py-4 px-6 bg-green-600 hover:bg-green-700 text-white font-black text-sm transition-all rounded-b-2xl shadow-lg shadow-green-600/20 group"
             >
               <LayoutGrid className="w-5 h-5 group-hover:rotate-90 transition-transform duration-500" />
-              সব ক্যাটাগরি
+              {t('all_categories')}
               <ChevronDown
                 className={`w-4 h-4 transition-transform duration-500 ${
                   isCategoryMenuOpen ? "rotate-180" : ""
@@ -60,10 +63,10 @@ export default function DesktopNav({
 
           <nav className="flex items-center gap-2">
             {[
-              { label: 'অফার জোন', href: '/products?filter=offers', icon: Percent, color: 'text-orange-500 bg-orange-500/10' },
-              { label: 'সেরা ডিল', href: '/products?filter=deals', icon: Flame, color: 'text-rose-500 bg-rose-500/10' },
-              { label: 'নতুন পণ্য', href: '/products?sort=newest', icon: Star, color: 'text-blue-500 bg-blue-500/10' },
-              { label: 'জনপ্রিয়', href: '/products?sort=popular', icon: Clock, color: 'text-emerald-500 bg-emerald-500/10' },
+              { label: t('nav_offers'), href: '/products?filter=offers', icon: Percent, color: 'text-orange-500 bg-orange-500/10' },
+              { label: t('nav_deals'), href: '/products?filter=deals', icon: Flame, color: 'text-rose-500 bg-rose-500/10' },
+              { label: t('nav_new'), href: '/products?sort=newest', icon: Star, color: 'text-blue-500 bg-blue-500/10' },
+              { label: t('nav_popular'), href: '/products?sort=popular', icon: Clock, color: 'text-emerald-500 bg-emerald-500/10' },
             ].map((item, i) => (
               <Link
                 key={i}
@@ -84,7 +87,7 @@ export default function DesktopNav({
         <div className="flex items-center gap-6">
           <div className="flex items-center gap-2 text-xs font-black text-gray-400 uppercase tracking-widest">
             <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
-            ফ্রি ডেলিভারি ৳৫০০+ অর্ডারে
+            {t('free_delivery_msg')}
           </div>
         </div>
       </div>

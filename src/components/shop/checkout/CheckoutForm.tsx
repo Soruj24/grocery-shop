@@ -12,6 +12,7 @@ import {
   CheckCircle2,
 } from "lucide-react";
 import { motion } from "framer-motion";
+import { useLanguage } from "@/components/LanguageContext";
 
 interface CartItem {
   _id: string;
@@ -51,8 +52,8 @@ const locations = {
     districts: ["Dhaka", "Gazipur", "Narayanganj"],
     areas: ["Dhanmondi", "Gulshan", "Banani", "Uttara", "Mirpur", "Mohammadpur", "Badda", "Bashundhara"]
   },
-  Chittagong: {
-    districts: ["Chittagong", "Cox's Bazar", "Comilla"],
+  Chattogram: {
+    districts: ["Chattogram", "Cox's Bazar", "Comilla"],
     areas: ["Agrabad", "Nasirabad", "Panchlaish", "Halishahar"]
   },
   Sylhet: {
@@ -60,13 +61,6 @@ const locations = {
     areas: ["Zindabazar", "Ambarkhana", "Uposhahar"]
   }
 };
-
-const timeSlots = [
-  "Morning (9 AM - 12 PM)",
-  "Afternoon (12 PM - 3 PM)",
-  "Evening (3 PM - 6 PM)",
-  "Night (6 PM - 9 PM)",
-];
 
 export default function CheckoutForm({
   currentStep,
@@ -85,6 +79,19 @@ export default function CheckoutForm({
   totalPrice,
   cart,
 }: CheckoutFormProps) {
+  const { t } = useLanguage();
+
+  const getLocKey = (key: string) => `loc_${key.toLowerCase()}`;
+  const getDistKey = (key: string) => `dist_${key.toLowerCase().replace(/[']/g, '').replace(/\s/g, '_')}`;
+  const getAreaKey = (key: string) => `area_${key.toLowerCase().replace(/[']/g, '').replace(/\s/g, '_')}`;
+
+  const timeSlots = [
+    t('delivery_slot_morning'),
+    t('delivery_slot_afternoon'),
+    t('delivery_slot_evening'),
+    t('delivery_slot_night'),
+  ];
+
   const isStep1Valid =
     formData.name.trim() !== "" && 
     formData.phone.trim().length >= 11 && 
@@ -111,21 +118,21 @@ export default function CheckoutForm({
               <MapPin className="w-6 h-6" />
             </div>
             <h2 className="text-2xl font-black text-gray-900 dark:text-white">
-              ডেলিভারি তথ্য
+              {t('checkout_step_1')}
             </h2>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <div className="space-y-2">
               <label className="text-xs font-black text-gray-400 uppercase tracking-widest ml-1">
-                পুরো নাম
+                {t('full_name')}
               </label>
               <div className="relative group">
                 <User className="absolute left-6 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-300 group-focus-within:text-green-600 transition-colors" />
                 <input
                   type="text"
                   required
-                  placeholder="আপনার নাম লিখুন"
+                  placeholder={t('name_placeholder')}
                   className="w-full pl-16 pr-6 py-5 bg-gray-50 dark:bg-gray-800/50 border border-gray-100 dark:border-gray-800 rounded-[24px] focus:ring-4 focus:ring-green-500/10 focus:border-green-600 outline-none transition-all font-bold"
                   value={formData.name}
                   onChange={(e) =>
@@ -137,14 +144,14 @@ export default function CheckoutForm({
 
             <div className="space-y-2">
               <label className="text-xs font-black text-gray-400 uppercase tracking-widest ml-1">
-                ফোন নম্বর
+                {t('phone_number')}
               </label>
               <div className="relative group">
                 <Phone className="absolute left-6 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-300 group-focus-within:text-green-600 transition-colors" />
                 <input
                   type="tel"
                   required
-                  placeholder="০১XXXXXXXXX"
+                  placeholder={t('phone_placeholder')}
                   className="w-full pl-16 pr-6 py-5 bg-gray-50 dark:bg-gray-800/50 border border-gray-100 dark:border-gray-800 rounded-[24px] focus:ring-4 focus:ring-green-500/10 focus:border-green-600 outline-none transition-all font-bold"
                   value={formData.phone}
                   onChange={(e) =>
@@ -156,7 +163,7 @@ export default function CheckoutForm({
 
             <div className="space-y-2">
               <label className="text-xs font-black text-gray-400 uppercase tracking-widest ml-1">
-                বিভাগ
+                {t('division')}
               </label>
               <select
                 className="w-full px-6 py-5 bg-gray-50 dark:bg-gray-800/50 border border-gray-100 dark:border-gray-800 rounded-[24px] focus:ring-4 focus:ring-green-500/10 focus:border-green-600 outline-none transition-all font-bold appearance-none cursor-pointer"
@@ -165,10 +172,10 @@ export default function CheckoutForm({
                   setFormData({ ...formData, division: e.target.value, district: "", area: "" })
                 }
               >
-                <option value="">বিভাগ নির্বাচন করুন</option>
+                <option value="">{t('select_division')}</option>
                 {divisions.map((division) => (
                   <option key={division} value={division}>
-                    {division}
+                    {t(getLocKey(division))}
                   </option>
                 ))}
               </select>
@@ -176,7 +183,7 @@ export default function CheckoutForm({
 
             <div className="space-y-2">
               <label className="text-xs font-black text-gray-400 uppercase tracking-widest ml-1">
-                জেলা
+                {t('district')}
               </label>
               <select
                 className="w-full px-6 py-5 bg-gray-50 dark:bg-gray-800/50 border border-gray-100 dark:border-gray-800 rounded-[24px] focus:ring-4 focus:ring-green-500/10 focus:border-green-600 outline-none transition-all font-bold appearance-none cursor-pointer disabled:opacity-50"
@@ -186,10 +193,10 @@ export default function CheckoutForm({
                   setFormData({ ...formData, district: e.target.value })
                 }
               >
-                <option value="">জেলা নির্বাচন করুন</option>
+                <option value="">{t('select_district')}</option>
                 {districts.map((district) => (
                   <option key={district} value={district}>
-                    {district}
+                    {t(getDistKey(district))}
                   </option>
                 ))}
               </select>
@@ -197,7 +204,7 @@ export default function CheckoutForm({
 
             <div className="space-y-2 md:col-span-2">
               <label className="text-xs font-black text-gray-400 uppercase tracking-widest ml-1">
-                এলাকা
+                {t('area')}
               </label>
               <select
                 className="w-full px-6 py-5 bg-gray-50 dark:bg-gray-800/50 border border-gray-100 dark:border-gray-800 rounded-[24px] focus:ring-4 focus:ring-green-500/10 focus:border-green-600 outline-none transition-all font-bold appearance-none cursor-pointer disabled:opacity-50"
@@ -207,10 +214,10 @@ export default function CheckoutForm({
                   setFormData({ ...formData, area: e.target.value })
                 }
               >
-                <option value="">এলাকা নির্বাচন করুন</option>
+                <option value="">{t('select_area')}</option>
                 {areas.map((area) => (
                   <option key={area} value={area}>
-                    {area}
+                    {t(getAreaKey(area))}
                   </option>
                 ))}
               </select>
@@ -218,13 +225,13 @@ export default function CheckoutForm({
 
             <div className="space-y-2 md:col-span-2">
               <label className="text-xs font-black text-gray-400 uppercase tracking-widest ml-1">
-                বিস্তারিত ঠিকানা
+                {t('detailed_address')}
               </label>
               <div className="relative group">
                 <MapPin className="absolute left-6 top-6 w-5 h-5 text-gray-300 group-focus-within:text-green-600 transition-colors" />
                 <textarea
                   required
-                  placeholder="বাসা নম্বর, রোড নম্বর, ল্যান্ডমার্ক ইত্যাদি"
+                  placeholder={t('address_placeholder')}
                   className="w-full pl-16 pr-6 py-6 bg-gray-50 dark:bg-gray-800/50 border border-gray-100 dark:border-gray-800 rounded-[24px] focus:ring-4 focus:ring-green-500/10 focus:border-green-600 outline-none transition-all h-32 font-bold"
                   value={formData.address}
                   onChange={(e) =>
@@ -240,7 +247,7 @@ export default function CheckoutForm({
             disabled={!isStep1Valid}
             className="w-full bg-green-600 hover:bg-green-700 text-white py-6 rounded-[32px] font-black text-xl transition-all flex items-center justify-center gap-4 shadow-xl shadow-green-600/20 disabled:opacity-50 active:scale-95"
           >
-            পরবর্তী ধাপ
+            {t('continue')}
             <ArrowRight className="w-6 h-6" />
           </button>
         </div>
@@ -254,7 +261,7 @@ export default function CheckoutForm({
               <Clock className="w-6 h-6" />
             </div>
             <h2 className="text-2xl font-black text-gray-900 dark:text-white">
-              ডেলিভারি সময়
+              {t('delivery_time_label')}
             </h2>
           </div>
 
@@ -290,13 +297,13 @@ export default function CheckoutForm({
               className="flex-1 bg-gray-100 dark:bg-gray-800 text-gray-600 py-6 rounded-[32px] font-black transition-all flex items-center justify-center gap-2"
             >
               <ArrowLeft className="w-6 h-6" />
-              ফিরে যান
+              {t('back_to_prev')}
             </button>
             <button
               onClick={nextStep}
               className="flex-[2] bg-green-600 hover:bg-green-700 text-white py-6 rounded-[32px] font-black text-xl transition-all flex items-center justify-center gap-4 shadow-xl shadow-green-600/20"
             >
-              পরবর্তী ধাপ
+              {t('next_step')}
               <ArrowRight className="w-6 h-6" />
             </button>
           </div>
@@ -311,16 +318,16 @@ export default function CheckoutForm({
               <CreditCard className="w-6 h-6" />
             </div>
             <h2 className="text-2xl font-black text-gray-900 dark:text-white">
-              পেমেন্ট পদ্ধতি
+              {t('payment_method')}
             </h2>
           </div>
 
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
             {[
-              { id: "cod", name: "Cash on Delivery", icon: ShoppingBag },
-              { id: "bkash", name: "bKash", icon: Smartphone },
-              { id: "nagad", name: "Nagad", icon: Smartphone },
-              { id: "card", name: "Card", icon: CreditCard },
+              { id: "cod", name: t('cod_payment'), icon: ShoppingBag },
+              { id: "bkash", name: t('bkash_payment'), icon: Smartphone },
+              { id: "nagad", name: t('nagad_payment'), icon: Smartphone },
+              { id: "card", name: t('card_payment'), icon: CreditCard },
             ].map((method) => (
               <button
                 key={method.id}
@@ -351,11 +358,11 @@ export default function CheckoutForm({
           {paymentMethod !== "cod" && (
             <div className="p-6 bg-gray-900 text-white rounded-[32px] space-y-4">
               <p className="text-xs font-bold opacity-70 italic text-center">
-                অনুগ্রহ করে পেমেন্ট করার পর ট্রানজেকশন আইডি দিন
+                {t('payment_instruction')}
               </p>
               <input
                 type="text"
-                placeholder="Transaction ID (e.g. 8N7A6D5C)"
+                placeholder={t('transaction_id_placeholder')}
                 className="w-full px-6 py-4 bg-white/10 border border-white/10 rounded-2xl focus:ring-2 focus:ring-green-500 outline-none transition-all font-bold text-center"
                 value={transactionId}
                 onChange={(e) => setTransactionId(e.target.value)}
@@ -369,14 +376,14 @@ export default function CheckoutForm({
               className="flex-1 bg-gray-100 dark:bg-gray-800 text-gray-600 py-6 rounded-[32px] font-black transition-all flex items-center justify-center gap-2"
             >
               <ArrowLeft className="w-6 h-6" />
-              ফিরে যান
+              {t('back_to_prev')}
             </button>
             <button
               onClick={nextStep}
               disabled={!isStep3Valid}
               className="flex-[2] bg-green-600 hover:bg-green-700 text-white py-6 rounded-[32px] font-black text-xl transition-all flex items-center justify-center gap-4 shadow-xl shadow-green-600/20 disabled:opacity-50"
             >
-              পরবর্তী ধাপ
+              {t('next_step')}
               <ArrowRight className="w-6 h-6" />
             </button>
           </div>
@@ -391,14 +398,14 @@ export default function CheckoutForm({
               <ClipboardList className="w-6 h-6" />
             </div>
             <h2 className="text-2xl font-black text-gray-900 dark:text-white">
-              অর্ডার রিভিউ
+              {t('order_review')}
             </h2>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="bg-gray-50 dark:bg-gray-800/50 p-6 rounded-[32px] border border-gray-100 dark:border-gray-800">
               <h4 className="text-xs font-black text-gray-400 uppercase tracking-widest mb-4">
-                ডেলিভারি ঠিকানা
+                {t('delivery_address_label')}
               </h4>
               <p className="font-bold text-gray-800 dark:text-gray-200">
                 {formData.name}
@@ -413,7 +420,7 @@ export default function CheckoutForm({
 
             <div className="bg-gray-50 dark:bg-gray-800/50 p-6 rounded-[32px] border border-gray-100 dark:border-gray-800">
               <h4 className="text-xs font-black text-gray-400 uppercase tracking-widest mb-4">
-                সময় ও পেমেন্ট
+                {t('time_and_payment')}
               </h4>
               <div className="flex items-center gap-3 mb-2">
                 <Clock className="w-4 h-4 text-green-500" />
@@ -434,14 +441,14 @@ export default function CheckoutForm({
               className="flex-1 bg-gray-100 dark:bg-gray-800 text-gray-600 py-6 rounded-[32px] font-black transition-all flex items-center justify-center gap-2"
             >
               <ArrowLeft className="w-6 h-6" />
-              ফিরে যান
+              {t('back_to_prev')}
             </button>
             <button
               onClick={handleSubmit}
               disabled={loading}
               className="flex-[2] bg-green-600 hover:bg-green-700 text-white py-6 rounded-[32px] font-black text-xl transition-all flex items-center justify-center gap-4 shadow-xl shadow-green-600/20 active:scale-95 disabled:opacity-50"
             >
-              {loading ? "অর্ডার হচ্ছে..." : "অর্ডার কনফার্ম করুন"}
+              {loading ? t('ordering_status') : t('confirm_order')}
               <CheckCircle2 className="w-6 h-6" />
             </button>
           </div>

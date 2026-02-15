@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronLeft, ChevronRight, Maximize2 } from "lucide-react";
+import { useLanguage } from "@/components/LanguageContext";
 
 interface ProductImageProps {
   image?: string;
@@ -12,6 +13,7 @@ interface ProductImageProps {
 }
 
 export default function ProductImage({ image, name, id }: ProductImageProps) {
+  const { t } = useLanguage();
   // Mocking multiple images for the gallery
   const images = [
     image || `https://picsum.photos/seed/${id}/800/800`,
@@ -105,7 +107,7 @@ export default function ProductImage({ image, name, id }: ProductImageProps) {
           >
             <Image
               src={img}
-              alt={`${name} thumbnail ${idx + 1}`}
+              alt={`${name} ${t('thumbnail')} ${idx + 1}`}
               fill
               className="object-cover p-2"
             />

@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useCart } from "@/components/CartContext";
 import { Product } from "@/types/product";
 import { useRouter } from "next/navigation";
+import { useLanguage } from "@/components/LanguageContext";
 
 interface StickyCheckoutBarProps {
   product: Product;
@@ -13,6 +14,7 @@ interface StickyCheckoutBarProps {
 export default function StickyCheckoutBar({ product }: StickyCheckoutBarProps) {
   const { addToCart } = useCart();
   const router = useRouter();
+  const { t } = useLanguage();
 
   const handleBuyNow = () => {
     addToCart(product, 1);
@@ -32,10 +34,10 @@ export default function StickyCheckoutBar({ product }: StickyCheckoutBarProps) {
       >
         <div className="flex-1 flex flex-col pl-2">
           <span className="text-[10px] font-black uppercase tracking-widest text-gray-400">
-            মূল্য
+            {t('price_label')}
           </span>
           <span className="text-xl font-black text-gray-800 dark:text-white">
-            ৳{product.discountPrice || product.price}
+            {t('currency_symbol')}{product.discountPrice || product.price}
           </span>
         </div>
 
@@ -54,7 +56,7 @@ export default function StickyCheckoutBar({ product }: StickyCheckoutBarProps) {
             className="px-8 py-4 bg-green-600 text-white rounded-[24px] font-black flex items-center gap-2 shadow-lg shadow-green-600/30"
           >
             <Zap className="w-5 h-5 fill-current" />
-            অর্ডার করুন
+            {t('order_now')}
           </motion.button>
         </div>
       </motion.div>

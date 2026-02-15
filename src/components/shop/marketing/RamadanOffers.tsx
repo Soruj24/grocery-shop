@@ -1,26 +1,28 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { Moon, Star, ArrowRight } from "lucide-react";
+ 
+import { Moon, Star, ArrowRight, Plus } from "lucide-react";
 import Link from "next/link";
+import { useLanguage } from "@/components/LanguageContext";
 
 export default function RamadanOffers() {
+  const { t } = useLanguage();
   const offers = [
     {
-      title: "ইফতার কম্বো",
-      discount: "১৫% ছাড়",
+      title: t('ramadan_combo_title'),
+      discount: t('ramadan_combo_off'),
       icon: "🍱",
       color: "bg-emerald-500",
     },
     {
-      title: "খেজুর ও বাদাম",
-      discount: "২০% ছাড়",
+      title: t('ramadan_dates_title'),
+      discount: t('ramadan_dates_off'),
       icon: "🌴",
       color: "bg-amber-500",
     },
     {
-      title: "শরবত ও পানীয়",
-      discount: "১০% ছাড়",
+      title: t('ramadan_drinks_title'),
+      discount: t('ramadan_drinks_off'),
       icon: "🍹",
       color: "bg-blue-500",
     },
@@ -42,25 +44,24 @@ export default function RamadanOffers() {
           <div className="inline-flex items-center gap-2 bg-emerald-500/10 text-emerald-400 px-4 py-2 rounded-full border border-emerald-500/20">
             <Moon className="w-4 h-4 fill-current" />
             <span className="text-xs font-black uppercase tracking-widest">
-              রমজানুল মোবারক স্পেশাল
+              {t('ramadan_badge')}
             </span>
           </div>
 
           <h2 className="text-4xl md:text-5xl font-black tracking-tight leading-tight">
-            বরকতময় রমজানে <br />
-            <span className="text-emerald-400">সাশ্রয়ী বাজার</span>
+            {t('ramadan_title')} <br />
+            <span className="text-emerald-400">{t('ramadan_subtitle')}</span>
           </h2>
 
           <p className="text-gray-400 font-medium max-w-md">
-            সেহরি ও ইফতারের সব প্রয়োজনীয় পণ্য এখন পাচ্ছেন বিশেষ মূল্যে। সরাসরি
-            আপনার ঘরে পৌঁছে দিচ্ছি আমরা।
+            {t('ramadan_desc')}
           </p>
 
           <Link
             href="/products"
             className="bg-emerald-500 hover:bg-emerald-600 text-white px-8 py-4 rounded-2xl font-black transition-all inline-flex items-center gap-3 shadow-lg shadow-emerald-500/20 active:scale-95"
           >
-            সব অফার দেখুন
+            {t('ramadan_view_all')}
             <ArrowRight className="w-5 h-5" />
           </Link>
         </div>
@@ -87,9 +88,9 @@ export default function RamadanOffers() {
             className="bg-white/5 border border-dashed border-white/10 rounded-2xl p-6 flex flex-col items-center justify-center gap-2 text-center group cursor-pointer hover:bg-white/10 transition-all"
           >
             <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center">
-              <PlusIcon />
+              <Plus className="w-5 h-5 text-gray-400" />
             </div>
-            <span className="text-sm font-black text-gray-400">আরও অফার</span>
+            <span className="text-sm font-black text-gray-400">{t('ramadan_more_offers')}</span>
           </Link>
         </div>
       </div>

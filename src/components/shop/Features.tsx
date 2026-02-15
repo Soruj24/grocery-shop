@@ -2,59 +2,62 @@
 
 import { motion } from "framer-motion";
 import { Truck, ShieldCheck, Clock, CreditCard, Leaf, Headphones } from "lucide-react";
-
-const FEATURES = [
-  {
-    icon: Truck,
-    title: "দ্রুত ডেলিভারি",
-    description: "ঢাকার ভেতরে ২৪ ঘণ্টার মধ্যে নিশ্চিত ডেলিভারি।",
-    color: "bg-blue-500",
-    lightColor: "bg-blue-50 dark:bg-blue-500/10",
-    textColor: "text-blue-600 dark:text-blue-400"
-  },
-  {
-    icon: ShieldCheck,
-    title: "নিরাপদ পেমেন্ট",
-    description: "আপনার পেমেন্ট শতভাগ নিরাপদ এবং সুরক্ষিত।",
-    color: "bg-emerald-500",
-    lightColor: "bg-emerald-50 dark:bg-emerald-500/10",
-    textColor: "text-emerald-600 dark:text-emerald-400"
-  },
-  {
-    icon: Clock,
-    title: "২৪/৭ সাপোর্ট",
-    description: "যেকোনো সমস্যায় আমরা আছি আপনার পাশে সবসময়।",
-    color: "bg-amber-500",
-    lightColor: "bg-amber-50 dark:bg-amber-500/10",
-    textColor: "text-amber-600 dark:text-amber-400"
-  },
-  {
-    icon: CreditCard,
-    title: "ক্যাশ অন ডেলিভারি",
-    description: "পণ্য হাতে পেয়ে টাকা পরিশোধ করার সুবিধা।",
-    color: "bg-purple-500",
-    lightColor: "bg-purple-50 dark:bg-purple-500/10",
-    textColor: "text-purple-600 dark:text-purple-400"
-  },
-  {
-    icon: Leaf,
-    title: "সতেজ পণ্য",
-    description: "সরাসরি খামার থেকে সংগৃহীত বিষমুক্ত সতেজ সবজি।",
-    color: "bg-green-500",
-    lightColor: "bg-green-50 dark:bg-green-500/10",
-    textColor: "text-green-600 dark:text-green-400"
-  },
-  {
-    icon: Headphones,
-    title: "সহজ রিটার্ন",
-    description: "পণ্য পছন্দ না হলে ৭ দিনের মধ্যে সহজ রিটার্ন সুবিধা।",
-    color: "bg-rose-500",
-    lightColor: "bg-rose-50 dark:bg-rose-500/10",
-    textColor: "text-rose-600 dark:text-rose-400"
-  }
-];
+import { useLanguage } from "@/components/LanguageContext";
 
 export default function Features() {
+  const { t } = useLanguage();
+
+  const FEATURES = [
+    {
+      icon: Truck,
+      title: t('feature_title_1'),
+      description: t('feature_desc_1'),
+      color: "bg-blue-500",
+      lightColor: "bg-blue-50 dark:bg-blue-500/10",
+      textColor: "text-blue-600 dark:text-blue-400"
+    },
+    {
+      icon: ShieldCheck,
+      title: t('feature_title_2'),
+      description: t('feature_desc_2'),
+      color: "bg-emerald-500",
+      lightColor: "bg-emerald-50 dark:bg-emerald-500/10",
+      textColor: "text-emerald-600 dark:text-emerald-400"
+    },
+    {
+      icon: Clock,
+      title: t('feature_title_3'),
+      description: t('feature_desc_3'),
+      color: "bg-amber-500",
+      lightColor: "bg-amber-50 dark:bg-amber-500/10",
+      textColor: "text-amber-600 dark:text-amber-400"
+    },
+    {
+      icon: CreditCard,
+      title: t('feature_title_4'),
+      description: t('feature_desc_4'),
+      color: "bg-purple-500",
+      lightColor: "bg-purple-50 dark:bg-purple-500/10",
+      textColor: "text-purple-600 dark:text-purple-400"
+    },
+    {
+      icon: Leaf,
+      title: t('feature_title_5'),
+      description: t('feature_desc_5'),
+      color: "bg-green-500",
+      lightColor: "bg-green-50 dark:bg-green-500/10",
+      textColor: "text-green-600 dark:text-green-400"
+    },
+    {
+      icon: Headphones,
+      title: t('feature_title_6'),
+      description: t('feature_desc_6'),
+      color: "bg-rose-500",
+      lightColor: "bg-rose-50 dark:bg-rose-500/10",
+      textColor: "text-rose-600 dark:text-rose-400"
+    }
+  ];
+
   return (
     <section className="py-12 px-4 bg-white dark:bg-gray-900 rounded-[32px] my-8">
       <div className="max-w-7xl mx-auto">

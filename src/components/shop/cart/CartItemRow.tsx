@@ -1,4 +1,5 @@
 import { Trash2, Plus, Minus, ShoppingBag } from "lucide-react";
+import { useLanguage } from "@/components/LanguageContext";
 
 interface CartItem {
   _id: string;
@@ -19,6 +20,7 @@ export default function CartItemRow({
   removeFromCart,
   updateQuantity,
 }: CartItemRowProps) {
+  const { t } = useLanguage();
   return (
     <div className="group bg-white dark:bg-gray-900 p-6 rounded-[40px] shadow-sm border border-gray-100 dark:border-gray-800 flex flex-col sm:flex-row items-center gap-8 hover:shadow-xl hover:shadow-gray-200/50 dark:hover:shadow-none transition-all duration-500">
       <div className="w-32 h-32 bg-gray-50 dark:bg-gray-800 rounded-[32px] flex-shrink-0 flex items-center justify-center overflow-hidden border border-gray-100 dark:border-gray-700 group-hover:scale-105 transition-transform duration-500">
@@ -35,9 +37,9 @@ export default function CartItemRow({
         </h3>
         <div className="flex items-center justify-center sm:justify-start gap-4">
           <span className="text-green-600 dark:text-green-400 font-black text-xl">
-            ৳{item.price}
+            {t('currency_symbol')}{item.price}
           </span>
-          <span className="text-sm font-bold text-gray-400">/কেজি</span>
+          <span className="text-sm font-bold text-gray-400">{t('unit_kg')}</span>
         </div>
       </div>
 
@@ -62,7 +64,7 @@ export default function CartItemRow({
 
       <div className="flex flex-col items-end gap-2">
         <span className="font-black text-2xl text-gray-900 dark:text-white">
-          ৳{item.price * item.quantity}
+          {t('currency_symbol')}{item.price * item.quantity}
         </span>
         <button
           onClick={() => removeFromCart(item._id)}

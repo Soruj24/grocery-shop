@@ -54,8 +54,8 @@ export const confirmAlert = ({
   title,
   text,
   icon = "warning",
-  confirmButtonText = "হ্যাঁ",
-  cancelButtonText = "না",
+  confirmButtonText = "Yes",
+  cancelButtonText = "No",
 }: {
   title: string;
   text?: string;

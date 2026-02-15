@@ -1,18 +1,21 @@
 "use client";
 
 import { Facebook, Twitter, Instagram, Youtube } from "lucide-react";
+import { useLanguage } from "@/components/LanguageContext";
 
 export default function FooterLogo() {
+  const { t } = useLanguage();
+
   return (
     <div className="space-y-8">
       <div className="flex flex-col">
         <span className="text-3xl font-black tracking-tighter text-gray-900 dark:text-white leading-none">
-          EMRAN<span className="text-green-600 dark:text-green-500">SHOP</span>
+          {t('brand_name_first')}<span className="text-green-600 dark:text-green-500">{t('brand_name_second')}</span>
         </span>
-        <span className="text-[10px] font-black text-gray-400 dark:text-gray-500 uppercase tracking-[0.3em] mt-2">Premium Grocery</span>
+        <span className="text-[10px] font-black text-gray-400 dark:text-gray-500 uppercase tracking-[0.3em] mt-2">{t('premium_grocery')}</span>
       </div>
       <p className="text-gray-500 dark:text-gray-400 leading-relaxed font-bold text-sm">
-        আপনার নিত্যপ্রয়োজনীয় সকল মুদি পণ্য এখন এক জায়গাতেই। আমরা দিচ্ছি সেরা মানের নিশ্চয়তা এবং দ্রুততম ডেলিভারি।
+        {t('footer_desc')}
       </p>
       <div className="flex gap-4">
         {[Facebook, Twitter, Instagram, Youtube].map((Icon, i) => (

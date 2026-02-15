@@ -6,9 +6,12 @@ export interface Product {
   category?: {
     _id?: string;
     name: string;
+    nameEn?: string;
   };
   image?: string;
   description?: string;
+  descriptionEn?: string;
+  nameEn?: string;
   unit?: string;
   discount?: number;
   rating?: number;

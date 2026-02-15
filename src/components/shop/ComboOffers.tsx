@@ -6,37 +6,57 @@ import Image from "next/image";
 import Link from "next/link";
 import { useCart } from "@/components/CartContext";
 import { toast } from "react-hot-toast";
+import { useLanguage } from "@/components/LanguageContext";
 
 export default function ComboOffers() {
   const { addToCart } = useCart();
+  const { t } = useLanguage();
 
   const combos = [
     {
-      id: "combo-1",
-      name: "ফ্যামিলি বাজার প্যাক",
-      items: ["৫ কেজি চাল", "২ লিটার তেল", "১ কেজি ডাল", "১ কেজি চিনি"],
+      id: "65cd123456789012345678b1",
+      name: t('combo_family_pack'),
+      items: [
+        t('combo_item_rice_5kg'),
+        t('combo_item_oil_2l'),
+        t('combo_item_dal_1kg'),
+        t('combo_item_sugar_1kg')
+      ],
       price: 1250,
       oldPrice: 1450,
       image: "https://cdn-icons-png.flaticon.com/512/3081/3081840.png",
-      tag: "বেস্ট ভ্যালু"
+      tag: t('combo_tag_best_value'),
+      stock: 50
     },
     {
-      id: "combo-2",
-      name: "ব্রেকফাস্ট কম্বো",
-      items: ["১ প্যাকেট পাউরুটি", "১ ডজন ডিম", "৫০০ গ্রাম জেলি", "১ কেজি কলা"],
+      id: "65cd123456789012345678b2",
+      name: t('combo_breakfast'),
+      items: [
+        t('combo_item_bread_1p'),
+        t('combo_item_eggs_1d'),
+        t('combo_item_jelly_500g'),
+        t('combo_item_banana_1kg')
+      ],
       price: 450,
       oldPrice: 520,
       image: "https://cdn-icons-png.flaticon.com/512/2611/2611158.png",
-      tag: "জনপ্রিয়"
+      tag: t('combo_tag_popular'),
+      stock: 100
     },
     {
-      id: "combo-3",
-      name: "রান্নাঘর কিট",
-      items: ["১ কেজি পেঁয়াজ", "৫০০ গ্রাম রসুন", "২৫০ গ্রাম আদা", "১ কেজি আলু"],
+      id: "65cd123456789012345678b3",
+      name: t('combo_kitchen_kit'),
+      items: [
+        t('combo_item_onion_1kg'),
+        t('combo_item_garlic_500g'),
+        t('combo_item_ginger_250g'),
+        t('combo_item_potato_1kg')
+      ],
       price: 320,
       oldPrice: 380,
       image: "https://cdn-icons-png.flaticon.com/512/2329/2329903.png",
-      tag: "সুপার সেভার"
+      tag: t('combo_tag_super_saver'),
+      stock: 150
     }
   ];
 
@@ -46,8 +66,10 @@ export default function ComboOffers() {
       name: combo.name,
       price: combo.price,
       image: combo.image,
+      stock: combo.stock,
+      unit: t('combo_unit'),
     });
-    toast.success(`${combo.name} কার্টে যোগ করা হয়েছে!`);
+    toast.success(`${combo.name} ${t('add_to_cart_success')}`);
   };
 
   return (
@@ -65,7 +87,7 @@ export default function ComboOffers() {
               className="inline-flex items-center gap-2 px-5 py-2.5 bg-blue-500/10 border border-blue-500/20 text-blue-600 dark:text-blue-400 rounded-full text-xs font-black uppercase tracking-[0.2em]"
             >
               <Gift size={14} className="animate-bounce" />
-              সেরা সাশ্রয়ী অফার
+              {t('combo_badge')}
             </motion.div>
             <motion.h2 
               initial={{ opacity: 0, y: 20 }}
@@ -74,8 +96,8 @@ export default function ComboOffers() {
               transition={{ delay: 0.1 }}
               className="text-5xl md:text-7xl font-black text-gray-900 dark:text-white tracking-tight leading-[1.1]"
             >
-              একসাথে কিনুন <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-600">বেশি সাশ্রয় করুন</span>
+              {t('combo_title_1')} <br />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-600">{t('combo_title_2')}</span>
             </motion.h2>
             <motion.p 
               initial={{ opacity: 0, y: 20 }}
@@ -84,7 +106,7 @@ export default function ComboOffers() {
               transition={{ delay: 0.2 }}
               className="text-lg text-gray-500 dark:text-gray-400 font-medium leading-relaxed"
             >
-              আমাদের বিশেষ কম্বো প্যাকগুলো আপনার পরিবারের মাসিক বাজারকে করবে আরও সহজ এবং সাশ্রয়ী। আজই বেছে নিন আপনার প্রয়োজনীয় প্যাকটি।
+              {t('combo_desc')}
             </motion.p>
           </div>
           
@@ -97,7 +119,7 @@ export default function ComboOffers() {
               href="/products?category=combos"
               className="group flex items-center gap-4 bg-white dark:bg-white/5 border border-gray-100 dark:border-white/10 px-10 py-5 rounded-[28px] font-black text-gray-900 dark:text-white hover:bg-blue-600 hover:text-white hover:border-transparent transition-all duration-500 shadow-xl shadow-blue-500/5 hover:shadow-blue-500/20"
             >
-              সবগুলো কম্বো দেখুন
+              {t('see_all')} {t('combo_offers')}
               <div className="bg-blue-100 dark:bg-white/10 p-2 rounded-xl group-hover:bg-white/20 transition-colors">
                 <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
               </div>
@@ -125,10 +147,12 @@ export default function ComboOffers() {
 
               <div className="relative w-48 h-48 mx-auto mb-10">
                 <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 to-indigo-500/10 rounded-full blur-2xl group-hover:blur-3xl group-hover:scale-110 transition-all duration-700" />
-                <img 
+                <Image 
                   src={combo.image} 
                   alt={combo.name}
-                  className="relative w-full h-full object-contain transform group-hover:scale-110 group-hover:rotate-6 transition-all duration-700"
+                  fill
+                  sizes="192px"
+                  className="object-contain transform group-hover:scale-110 group-hover:rotate-6 transition-all duration-700"
                 />
               </div>
 
@@ -146,9 +170,9 @@ export default function ComboOffers() {
 
                 <div className="flex items-center justify-between pt-8 border-t border-gray-50 dark:border-white/5">
                   <div className="text-left">
-                    <div className="text-sm text-gray-400 line-through font-bold mb-1">৳{combo.oldPrice}</div>
+                    <div className="text-sm text-gray-400 line-through font-bold mb-1">{t('currency_symbol')}{combo.oldPrice}</div>
                     <div className="text-4xl font-black text-gray-900 dark:text-white flex items-center gap-1">
-                      <span className="text-lg">৳</span>{combo.price}
+                      <span className="text-lg">{t('currency_symbol')}</span>{combo.price}
                   </div>
                 </div>
                 <button 
@@ -156,7 +180,7 @@ export default function ComboOffers() {
                   className="flex items-center gap-3 bg-gray-900 dark:bg-white text-white dark:text-black hover:bg-blue-600 hover:text-white dark:hover:bg-blue-600 dark:hover:text-white px-8 py-5 rounded-[24px] font-black transition-all duration-500 shadow-xl hover:shadow-blue-500/30 active:scale-95 group/btn"
                 >
                   <ShoppingBag size={22} className="group-hover/btn:scale-110 transition-transform" />
-                  কার্টে যোগ করুন
+                  {t('add_to_cart')}
                 </button>
               </div>
               </div>

@@ -1,14 +1,21 @@
+"use client";
 import { LayoutGrid } from "lucide-react";
 import Image from "next/image";
+import { useLanguage } from "@/components/LanguageContext";
 
 export default function CategoryHero() {
+  const { t } = useLanguage();
+
   return (
     <section className="relative h-[400px] rounded-[60px] overflow-hidden flex items-center justify-center text-center">
       <div className="absolute inset-0">
         <Image
           src="https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&q=80&w=2000"
           alt="Grocery Categories"
-          className="w-full h-full object-cover scale-110 blur-sm brightness-75"
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover scale-110 blur-sm brightness-75"
         />
         <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/60" />
       </div>
@@ -19,10 +26,10 @@ export default function CategoryHero() {
         </div>
         <div className="space-y-4">
           <h1 className="text-5xl md:text-7xl font-black text-white tracking-tighter">
-            সকল <span className="text-green-400">ক্যাটাগরি</span>
+            {t('all_categories_hero_prefix')} <span className="text-green-400">{t('all_categories_hero_highlight')}</span>
           </h1>
           <p className="text-white/80 max-w-xl mx-auto font-bold text-lg md:text-xl leading-relaxed">
-            সেরা মানের তাজা পণ্যগুলো আপনার জন্য সাজানো হয়েছে ক্যাটাগরি অনুযায়ী
+            {t('category_hero_desc')}
           </p>
         </div>
       </div>

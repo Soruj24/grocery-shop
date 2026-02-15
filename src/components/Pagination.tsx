@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useSearchParams } from "next/navigation";
+import { useLanguage } from "@/components/LanguageContext";
 
 interface PaginationProps {
   totalPages: number;
@@ -14,6 +15,7 @@ interface PaginationProps {
 
 export default function Pagination({ totalPages, currentPage, basePath, totalCount, itemsPerPage = 12 }: PaginationProps) {
   const searchParams = useSearchParams();
+  const { t } = useLanguage();
   
   const createPageURL = (pageNumber: number | string) => {
     const params = new URLSearchParams(searchParams);
@@ -54,15 +56,15 @@ export default function Pagination({ totalPages, currentPage, basePath, totalCou
       {/* Showing Status */}
       {totalCount !== undefined && (
         <div className="flex flex-col items-center md:items-start text-center md:text-left">
-          <span className="text-[10px] font-black text-gray-300 dark:text-gray-600 uppercase tracking-[0.2em] mb-1">Showing</span>
+          <span className="text-[10px] font-black text-gray-300 dark:text-gray-600 uppercase tracking-[0.2em] mb-1">{t('showing_text')}</span>
           <div className="flex items-baseline gap-1.5">
             <span className="text-sm font-black text-gray-900 dark:text-gray-100">
-              {Math.min((currentPage - 1) * itemsPerPage + 1, totalCount)} to {Math.min(currentPage * itemsPerPage, totalCount)}
+              {Math.min((currentPage - 1) * itemsPerPage + 1, totalCount)} {t('to_text')} {Math.min(currentPage * itemsPerPage, totalCount)}
             </span>
-            <span className="text-[10px] font-black text-gray-300 dark:text-gray-600 uppercase tracking-[0.2em]">of</span>
+            <span className="text-[10px] font-black text-gray-300 dark:text-gray-600 uppercase tracking-[0.2em]">{t('of_text')}</span>
             <span className="text-sm font-black text-gray-900 dark:text-gray-100">{totalCount}</span>
           </div>
-          <span className="text-[10px] font-black text-gray-300 dark:text-gray-600 uppercase tracking-[0.2em] mt-1">Products</span>
+          <span className="text-[10px] font-black text-gray-300 dark:text-gray-600 uppercase tracking-[0.2em] mt-1">{t('products_text')}</span>
         </div>
       )}
 
@@ -74,7 +76,7 @@ export default function Pagination({ totalPages, currentPage, basePath, totalCou
           className={`group flex items-center justify-center w-12 h-12 rounded-2xl bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 text-gray-300 dark:text-gray-600 hover:text-green-600 dark:hover:text-green-500 hover:border-green-100 dark:hover:border-green-900 hover:shadow-lg hover:shadow-green-900/5 transition-all duration-300 ${
             currentPage <= 1 ? "pointer-events-none opacity-30 grayscale" : ""
           }`}
-          title="পূর্ববর্তী পেজ"
+          title={t('previous_page')}
         >
           <ChevronLeft className="w-5 h-5 group-hover:-translate-x-0.5 transition-transform" />
         </Link>
@@ -106,7 +108,7 @@ export default function Pagination({ totalPages, currentPage, basePath, totalCou
           className={`group flex items-center justify-center w-12 h-12 rounded-2xl bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 text-gray-300 dark:text-gray-600 hover:text-green-600 dark:hover:text-green-500 hover:border-green-100 dark:hover:border-green-900 hover:shadow-lg hover:shadow-green-900/5 transition-all duration-300 ${
             currentPage >= totalPages ? "pointer-events-none opacity-30 grayscale" : ""
           }`}
-          title="পরবর্তী পেজ"
+          title={t('next_page')}
         >
           <ChevronRight className="w-5 h-5 group-hover:translate-x-0.5 transition-transform" />
         </Link>

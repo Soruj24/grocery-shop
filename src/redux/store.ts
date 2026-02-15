@@ -7,7 +7,7 @@ interface UIState {
 }
 
 const initialState: UIState = {
-  location: 'ঢাকা',
+  location: 'loc_dhaka',
   isLocationModalOpen: false,
 };
 

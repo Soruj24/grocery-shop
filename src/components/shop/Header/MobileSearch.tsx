@@ -2,6 +2,8 @@
 
 import { Search, X } from "lucide-react";
 
+import { useLanguage } from "@/components/LanguageContext";
+
 interface MobileSearchProps {
   searchTerm: string;
   setSearchTerm: (term: string) => void;
@@ -11,6 +13,7 @@ export default function MobileSearch({
   searchTerm,
   setSearchTerm,
 }: MobileSearchProps) {
+  const { t } = useLanguage();
   return (
     <div className="lg:hidden px-4 pb-3 pt-1">
       <form action="/products" method="GET" className="relative group">
@@ -23,7 +26,7 @@ export default function MobileSearch({
             name="q"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            placeholder="সার্চ করুন..."
+            placeholder={t('search_placeholder_short')}
             className="w-full bg-transparent py-3.5 pl-12 pr-10 text-sm font-bold text-gray-900 dark:text-gray-100 placeholder:text-gray-500 outline-none"
           />
           {searchTerm && (

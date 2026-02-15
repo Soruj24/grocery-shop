@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { signOut } from "next-auth/react";
 import { Category } from "@/types/category";
 import { Session } from "next-auth";
+import { useLanguage } from "@/components/LanguageContext";
 
 interface MobileDrawerProps {
   isOpen: boolean;
@@ -20,17 +21,18 @@ export default function MobileDrawer({
   totalWishlistItems,
   session,
 }: MobileDrawerProps) {
+  const { t, language } = useLanguage();
   const displayCategories = categories.length > 0 ? categories : [
-    { _id: 'fruits', name: 'Fruits' },
-    { _id: 'vegetables', name: 'Vegetables' },
-    { _id: 'fish', name: 'Fish' },
-    { _id: 'meat', name: 'Meat' },
-    { _id: 'dairy', name: 'Dairy' },
-    { _id: 'frozen', name: 'Frozen' },
-    { _id: 'bakery', name: 'Bakery' },
-    { _id: 'beauty', name: 'Beauty' },
-    { _id: 'baby-care', name: 'Baby Care' },
-    { _id: 'cleaning', name: 'Cleaning' },
+    { _id: 'fruits', name: t('cat_fruits'), nameEn: t('cat_fruits_desc') },
+    { _id: 'vegetables', name: t('cat_vegetables'), nameEn: t('cat_vegetables_desc') },
+    { _id: 'fish', name: t('cat_fish'), nameEn: t('cat_fish_desc') },
+    { _id: 'meat', name: t('cat_meat'), nameEn: t('cat_meat_desc') },
+    { _id: 'dairy', name: t('cat_dairy'), nameEn: t('cat_dairy_desc') },
+    { _id: 'frozen', name: t('cat_frozen'), nameEn: t('cat_frozen_desc') },
+    { _id: 'bakery', name: t('cat_bakery'), nameEn: t('cat_bakery_desc') },
+    { _id: 'beauty', name: t('cat_beauty'), nameEn: t('cat_beauty_desc') },
+    { _id: 'baby-care', name: t('cat_baby_care'), nameEn: t('cat_baby_care_desc') },
+    { _id: 'cleaning', name: t('cat_cleaning'), nameEn: t('cat_cleaning_desc') },
   ];
 
   return (
@@ -61,7 +63,7 @@ export default function MobileDrawer({
                   <div className="bg-green-600 p-2 rounded-xl shadow-lg shadow-green-600/20">
                     <ShoppingBasket className="w-6 h-6 text-white" />
                   </div>
-                  <span className="text-xl font-black text-gray-900 dark:text-white">ইমরান শপ</span>
+                  <span className="text-xl font-black text-gray-900 dark:text-white">{t('shop_name')}</span>
                 </Link>
                 <button
                   onClick={onClose}
@@ -77,7 +79,7 @@ export default function MobileDrawer({
                     {session.user?.name?.charAt(0)}
                   </div>
                   <div className="flex-1 min-w-0">
-                    <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-0.5">স্বাগতম</p>
+                    <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-0.5">{t('welcome_back')}</p>
                     <p className="text-sm font-black text-gray-900 dark:text-white truncate">{session.user?.name}</p>
                   </div>
                 </div>
@@ -88,7 +90,7 @@ export default function MobileDrawer({
                   className="flex items-center gap-4 p-4 bg-gray-900 dark:bg-white text-white dark:text-black rounded-3xl font-black text-sm justify-center shadow-xl hover:bg-green-600 hover:text-white transition-all"
                 >
                   <User size={18} />
-                  লগইন / সাইনআপ
+                  {t('login_signup')}
                 </Link>
               )}
             </div>
@@ -96,13 +98,13 @@ export default function MobileDrawer({
             {/* Navigation */}
             <div className="flex-1 overflow-y-auto p-8 space-y-10 custom-scrollbar">
               <div className="space-y-4">
-                <p className="text-[10px] font-black text-gray-400 dark:text-gray-500 uppercase tracking-[0.2em]">নেভিগেশন</p>
+                <p className="text-[10px] font-black text-gray-400 dark:text-gray-500 uppercase tracking-[0.2em]">{t('navigation')}</p>
                 <div className="space-y-2">
                   {[
-                    { label: "হোম পেজ", href: "/", icon: ShoppingBasket },
-                    { label: "সব প্রোডাক্ট", href: "/products", icon: ShoppingBag },
-                    { label: "উইশলিস্ট", href: "/wishlist", icon: Heart, badge: totalWishlistItems },
-                    { label: "অফারসমূহ", href: "/products?filter=deals", icon: LayoutGrid },
+                    { label: t('home_page'), href: "/", icon: ShoppingBasket },
+                    { label: t('all_products'), href: "/products", icon: ShoppingBag },
+                    { label: t('wishlist'), href: "/wishlist", icon: Heart, badge: totalWishlistItems },
+                    { label: t('offers'), href: "/products?filter=deals", icon: LayoutGrid },
                   ].map((item) => (
                     <Link
                       key={item.href}
@@ -125,7 +127,7 @@ export default function MobileDrawer({
               </div>
 
               <div className="space-y-4">
-                <p className="text-[10px] font-black text-gray-400 dark:text-gray-500 uppercase tracking-[0.2em]">টপ ক্যাটাগরি</p>
+                <p className="text-[10px] font-black text-gray-400 dark:text-gray-500 uppercase tracking-[0.2em]">{t('top_categories')}</p>
                 <div className="grid grid-cols-2 gap-3">
                   {displayCategories.slice(0, 10).map((cat: Category) => (
                     <Link
@@ -136,12 +138,14 @@ export default function MobileDrawer({
                     >
                       <div className="w-12 h-12 rounded-2xl bg-white dark:bg-white/5 flex items-center justify-center shadow-sm group-hover:scale-110 transition-transform">
                         {cat.image ? (
-                          <img src={cat.image} alt={cat.name} className="w-8 h-8 object-contain" />
+                          <img src={cat.image} alt={language === 'en' ? (cat.nameEn || cat.name) : cat.name} className="w-8 h-8 object-contain" />
                         ) : (
-                          <span className="text-lg font-black text-green-600">{cat.name.charAt(0)}</span>
+                          <span className="text-lg font-black text-green-600">{(language === 'en' ? (cat.nameEn || cat.name) : cat.name).charAt(0)}</span>
                         )}
                       </div>
-                      <span className="text-[11px] font-black text-gray-700 dark:text-gray-300 group-hover:text-green-600 transition-colors line-clamp-1">{cat.name}</span>
+                      <span className="text-[11px] font-black text-gray-700 dark:text-gray-300 group-hover:text-green-600 transition-colors line-clamp-1">
+                        {language === 'en' ? (cat.nameEn || cat.name) : cat.name}
+                      </span>
                     </Link>
                   ))}
                 </div>
@@ -156,7 +160,7 @@ export default function MobileDrawer({
                 className="flex items-center gap-4 p-4 text-gray-500 font-bold hover:text-green-600 transition-colors"
               >
                 <PhoneCall size={20} />
-                সহায়তা কেন্দ্র
+                {t('support_center')}
               </Link>
               {session && (
                 <button
@@ -166,7 +170,7 @@ export default function MobileDrawer({
                   <div className="w-10 h-10 rounded-xl bg-rose-50 dark:bg-rose-500/10 flex items-center justify-center group-hover:bg-rose-100 transition-colors">
                     <LogOut size={20} />
                   </div>
-                  লগ আউট
+                  {t('logout')}
                 </button>
               )}
             </div>

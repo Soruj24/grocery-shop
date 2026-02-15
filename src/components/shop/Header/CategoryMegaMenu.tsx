@@ -1,33 +1,89 @@
 "use client";
 
-import Link from "next/image";
 import NextLink from "next/link";
 import { motion } from "framer-motion";
 import { ArrowRight, ChevronRight } from "lucide-react";
 import Image from "next/image";
 import { Category as ICategory } from "@/types/category";
+import { useLanguage } from "@/components/LanguageContext";
 
 interface CategoryMegaMenuProps {
   categories: ICategory[];
   onClose: () => void;
 }
 
-export default function CategoryMegaMenu({ categories, onClose }: CategoryMegaMenuProps) {
+export default function CategoryMegaMenu({
+  categories,
+  onClose,
+}: CategoryMegaMenuProps) {
+  const { t, language } = useLanguage();
+
   // Static categories as requested by user if not provided via props
   const staticCategories: ICategory[] = [
-    { _id: 'fruits', name: 'Fruits', nameEn: 'Fresh Fruits', subCategories: [] },
-    { _id: 'vegetables', name: 'Vegetables', nameEn: 'Organic Veggies', subCategories: [] },
-    { _id: 'fish', name: 'Fish', nameEn: 'Fresh Water Fish', subCategories: [] },
-    { _id: 'meat', name: 'Meat', nameEn: 'Halal Meat', subCategories: [] },
-    { _id: 'dairy', name: 'Dairy', nameEn: 'Milk & Eggs', subCategories: [] },
-    { _id: 'frozen', name: 'Frozen', nameEn: 'Frozen Foods', subCategories: [] },
-    { _id: 'bakery', name: 'Bakery', nameEn: 'Bread & Cakes', subCategories: [] },
-    { _id: 'beauty', name: 'Beauty', nameEn: 'Personal Care', subCategories: [] },
-    { _id: 'baby-care', name: 'Baby Care', nameEn: 'Baby Products', subCategories: [] },
-    { _id: 'cleaning', name: 'Cleaning', nameEn: 'Home Cleaning', subCategories: [] },
+    {
+      _id: "fruits",
+      name: t('cat_fruits'),
+      nameEn: t('cat_fruits_desc'),
+      subCategories: [],
+    },
+    {
+      _id: "vegetables",
+      name: t('cat_vegetables'),
+      nameEn: t('cat_vegetables_desc'),
+      subCategories: [],
+    },
+    {
+      _id: "fish",
+      name: t('cat_fish'),
+      nameEn: t('cat_fish_desc'),
+      subCategories: [],
+    },
+    { 
+      _id: "meat", 
+      name: t('cat_meat'), 
+      nameEn: t('cat_meat_desc'), 
+      subCategories: [] 
+    },
+    { 
+      _id: "dairy", 
+      name: t('cat_dairy'), 
+      nameEn: t('cat_dairy_desc'), 
+      subCategories: [] 
+    },
+    {
+      _id: "frozen",
+      name: t('cat_frozen'),
+      nameEn: t('cat_frozen_desc'),
+      subCategories: [],
+    },
+    {
+      _id: "bakery",
+      name: t('cat_bakery'),
+      nameEn: t('cat_bakery_desc'),
+      subCategories: [],
+    },
+    {
+      _id: "beauty",
+      name: t('cat_beauty'),
+      nameEn: t('cat_beauty_desc'),
+      subCategories: [],
+    },
+    {
+      _id: "baby-care",
+      name: t('cat_baby_care'),
+      nameEn: t('cat_baby_care_desc'),
+      subCategories: [],
+    },
+    {
+      _id: "cleaning",
+      name: t('cat_cleaning'),
+      nameEn: t('cat_cleaning_desc'),
+      subCategories: [],
+    },
   ];
 
-  const displayCategories = categories.length > 0 ? categories : staticCategories;
+  const displayCategories =
+    categories.length > 0 ? categories : staticCategories;
 
   return (
     <div
@@ -35,7 +91,7 @@ export default function CategoryMegaMenu({ categories, onClose }: CategoryMegaMe
       className="absolute top-0 left-0 w-[1100px] bg-white/95 dark:bg-[#0B1120]/95 backdrop-blur-3xl shadow-[0_32px_64px_-16px_rgba(0,0,0,0.3)] dark:shadow-black/90 border border-gray-100 dark:border-white/5 rounded-b-[40px] rounded-tr-[40px] p-12 z-50 grid grid-cols-4 gap-x-8 gap-y-12 max-h-[85vh] overflow-y-auto custom-scrollbar"
     >
       {displayCategories.map((cat: ICategory, idx: number) => (
-        <motion.div 
+        <motion.div
           key={cat._id}
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
@@ -52,24 +108,24 @@ export default function CategoryMegaMenu({ categories, onClose }: CategoryMegaMe
                 {cat.image ? (
                   <Image
                     src={cat.image}
-                    alt={cat.name}
+                    alt={language === 'en' ? (cat.nameEn || cat.name) : cat.name}
                     width={72}
                     height={72}
                     className="w-full h-full object-cover transform group-hover/item:scale-110 transition-transform duration-700"
                   />
                 ) : (
                   <div className="w-full h-full flex items-center justify-center text-green-600 dark:text-green-500 font-black bg-green-50 dark:bg-green-900/20 text-2xl">
-                    {cat.name.charAt(0)}
+                    {(language === 'en' ? (cat.nameEn || cat.name) : cat.name).charAt(0)}
                   </div>
                 )}
               </div>
             </div>
             <div className="flex flex-col gap-0.5">
               <span className="text-[19px] font-black text-gray-900 dark:text-white group-hover/item:text-green-600 dark:group-hover/item:text-green-400 transition-colors leading-tight">
-                {cat.name}
+                {language === 'en' ? (cat.nameEn || cat.name) : cat.name}
               </span>
               <span className="text-[11px] font-bold text-gray-400 dark:text-gray-500 uppercase tracking-wider">
-                {cat.nameEn || "Collection"}
+                {t('collection')}
               </span>
             </div>
           </NextLink>
@@ -84,9 +140,12 @@ export default function CategoryMegaMenu({ categories, onClose }: CategoryMegaMe
                   onClick={onClose}
                   className="group/sub flex items-center gap-3 text-[14px] font-bold text-gray-600 dark:text-gray-400 hover:text-green-600 dark:hover:text-green-400 transition-all"
                 >
-                  <ChevronRight size={14} className="text-gray-300 dark:text-gray-700 group-hover/sub:text-green-500 group-hover/sub:translate-x-1 transition-all" />
+                  <ChevronRight
+                    size={14}
+                    className="text-gray-300 dark:text-gray-700 group-hover/sub:text-green-500 group-hover/sub:translate-x-1 transition-all"
+                  />
                   <span className="flex-1 leading-snug">
-                    {sub.name}
+                    {language === 'en' ? (sub.nameEn || sub.name) : sub.name}
                   </span>
                 </NextLink>
               ))}
@@ -96,7 +155,7 @@ export default function CategoryMegaMenu({ categories, onClose }: CategoryMegaMe
                 onClick={onClose}
                 className="inline-flex items-center gap-2 text-[11px] font-black text-green-600 dark:text-green-500 uppercase tracking-widest pt-4 hover:gap-3 transition-all"
               >
-                সবগুলো দেখুন
+                {t('see_all')}
                 <ArrowRight size={14} />
               </NextLink>
             </div>

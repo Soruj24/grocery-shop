@@ -33,6 +33,9 @@ const FeaturedProducts = nextDynamic(
 const RecentlyViewedSection = nextDynamic(
   () => import("@/components/shop/RecentlyViewedSection"),
 );
+const AIRecommendations = nextDynamic(
+  () => import("@/components/shop/AIRecommendations"),
+);
 
 // Marketing components
 const DailyDealsBanner = nextDynamic(
@@ -115,13 +118,13 @@ export default async function HomePage({
   if (error) {
     return (
       <div className="flex flex-col items-center justify-center min-h-[50vh] space-y-4">
-        <h2 className="text-2xl font-bold text-red-600">সার্ভারে সমস্যা হয়েছে</h2>
-        <p className="text-gray-600">ডাটাবেজ কানেকশন বা অন্য কোনো টেকনিক্যাল সমস্যার কারণে ডাটা লোড করা যায়নি।</p>
+        <h2 className="text-2xl font-bold text-red-600">Something went wrong</h2>
+        <p className="text-gray-600">Failed to load data due to database connection or technical issues.</p>
         <button 
           onClick={() => window.location.reload()} 
           className="px-6 py-2 bg-green-600 text-white rounded-full font-bold hover:bg-green-700 transition-colors"
         >
-          আবার চেষ্টা করুন
+          Try Again
         </button>
       </div>
     );
@@ -130,18 +133,11 @@ export default async function HomePage({
   if (!categories || categories.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center min-h-[50vh] space-y-4">
-        <h2 className="text-2xl font-bold">কোনো ডাটা পাওয়া যায়নি</h2>
-        <p className="text-gray-600">এই মুহূর্তে দেখানোর মতো কোনো পণ্য বা ক্যাটাগরি নেই।</p>
+        <h2 className="text-2xl font-bold">No data found</h2>
+        <p className="text-gray-600">There are no products or categories to display at the moment.</p>
       </div>
     );
   }
-
-  const features = [
-    { icon: Truck, title: "দ্রুত ডেলিভারি", desc: "২৪ ঘন্টার মধ্যে ডেলিভারি" },
-    { icon: ShieldCheck, title: "নিরাপদ পেমেন্ট", desc: "১০০% নিরাপদ লেনদেন" },
-    { icon: Clock, title: "২৪/৭ সাপোর্ট", desc: "যেকোনো সময় সহায়তা" },
-    { icon: Star, title: "সেরা মান", desc: "বাছাইকৃত তাজা পণ্য" },
-  ];
 
   return (
     <div className="space-y-24 pb-20 relative overflow-hidden">
@@ -197,6 +193,9 @@ export default async function HomePage({
 
       {/* Recently Viewed Section */}
       <RecentlyViewedSection />
+
+      {/* AI Recommendations */}
+      <AIRecommendations />
     </div>
   );
 }

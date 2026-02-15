@@ -1,6 +1,8 @@
 import { Star, Clock } from "lucide-react";
+import { useLanguage } from "@/components/LanguageContext";
 
 export default function HeroStats() {
+  const { t } = useLanguage();
   return (
     <>
       <div className="absolute top-24 right-24 z-30 hidden lg:block animate-float">
@@ -10,8 +12,8 @@ export default function HeroStats() {
               <Star className="w-7 h-7 fill-current" />
             </div>
             <div>
-              <p className="text-white font-black text-2xl tracking-tight">৪.৯ রেটিং</p>
-              <p className="text-white/50 text-xs font-bold uppercase tracking-widest">৫০০০+ সন্তুষ্ট কাস্টমার</p>
+              <p className="text-white font-black text-2xl tracking-tight">{t('stats_rating')}</p>
+              <p className="text-white/50 text-xs font-bold uppercase tracking-widest">{t('stats_satisfied')}</p>
             </div>
           </div>
         </div>
@@ -24,8 +26,8 @@ export default function HeroStats() {
               <Clock className="w-7 h-7" />
             </div>
             <div>
-              <p className="text-white font-black text-2xl tracking-tight">দ্রুত ডেলিভারি</p>
-              <p className="text-white/50 text-xs font-bold uppercase tracking-widest">৩০ মিনিটে আপনার দোরগোড়ায়</p>
+              <p className="text-white font-black text-2xl tracking-tight">{t('stats_fast_delivery')}</p>
+              <p className="text-white/50 text-xs font-bold uppercase tracking-widest">{t('stats_at_doorstep')}</p>
             </div>
           </div>
         </div>

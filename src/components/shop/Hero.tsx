@@ -5,39 +5,41 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-
-const slides = [
-  {
-    id: 1,
-    title: "তাজা বাজার",
-    subtitle: "৬০ মিনিটে ডেলিভারি",
-    desc: "সরাসরি ফার্ম থেকে সংগৃহীত সেরা মানের পণ্য এখন আপনার দোরগোড়ায়।",
-    image: "https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&q=80&w=2000",
-    badge: "নতুন অফার - ২০% ছাড়",
-    color: "from-green-400 via-emerald-400 to-teal-300"
-  },
-  {
-    id: 2,
-    title: "অর্গানিক ফল",
-    subtitle: "১০০% প্রাকৃতিক গুণমান",
-    desc: "কোনো রকম কেমিক্যাল ছাড়াই উৎপাদিত সেরা মানের ফল সংগ্রহ করুন আমাদের থেকে।",
-    image: "https://images.unsplash.com/photo-1610832958506-aa56368176cf?auto=format&fit=crop&q=80&w=2000",
-    badge: "ফ্রি হোম ডেলিভারি",
-    color: "from-orange-400 via-amber-400 to-yellow-300"
-  },
-  {
-    id: 3,
-    title: "সেরা মুদি বাজার",
-    subtitle: "সাশ্রয়ী মূল্যে সেরা পণ্য",
-    desc: "চাউল, ডাল, তেল সহ সকল নিত্যপ্রয়োজনীয় পণ্য কিনুন সবচেয়ে কম দামে।",
-    image: "https://images.unsplash.com/photo-1578916171728-46686eac8d58?auto=format&fit=crop&q=80&w=2000",
-    badge: "আজকের সেরা ডিল",
-    color: "from-blue-400 via-indigo-400 to-purple-300"
-  }
-];
+import { useLanguage } from "@/components/LanguageContext";
 
 export default function Hero() {
+  const { t } = useLanguage();
   const [current, setCurrent] = useState(0);
+
+  const slides = [
+    {
+      id: 1,
+      title: t('hero_title_1'),
+      subtitle: t('hero_subtitle_1'),
+      desc: t('hero_desc_1'),
+      image: "https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&q=80&w=2000",
+      badge: t('hero_badge_1'),
+      color: "from-green-400 via-emerald-400 to-teal-300"
+    },
+    {
+      id: 2,
+      title: t('hero_title_2'),
+      subtitle: t('hero_subtitle_2'),
+      desc: t('hero_desc_2'),
+      image: "https://images.unsplash.com/photo-1610832958506-aa56368176cf?auto=format&fit=crop&q=80&w=2000",
+      badge: t('hero_badge_2'),
+      color: "from-orange-400 via-amber-400 to-yellow-300"
+    },
+    {
+      id: 3,
+      title: t('hero_title_3'),
+      subtitle: t('hero_subtitle_3'),
+      desc: t('hero_desc_3'),
+      image: "https://images.unsplash.com/photo-1578916171728-46686eac8d58?auto=format&fit=crop&q=80&w=2000",
+      badge: t('hero_badge_3'),
+      color: "from-blue-400 via-indigo-400 to-purple-300"
+    }
+  ];
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -115,7 +117,7 @@ export default function Hero() {
                 href="/products"
                 className="bg-white text-black min-w-[160px] min-h-[56px] px-8 py-4 rounded-2xl font-black text-sm hover:bg-green-600 hover:text-white transition-all shadow-xl active:scale-95 flex items-center justify-center gap-2"
               >
-                এখনই কিনুন
+                {t('buy_now')}
                 <ArrowRight className="w-4 h-4" />
               </Link>
             </motion.div>

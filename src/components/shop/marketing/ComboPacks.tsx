@@ -1,9 +1,9 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { Layers, CheckCircle2, ShoppingCart } from "lucide-react";
+import { CheckCircle2, ShoppingCart } from "lucide-react";
 import Link from "next/link";
 import { useState, useEffect } from "react";
+import { useLanguage } from "@/components/LanguageContext";
 
 interface Combo {
   _id: string;
@@ -16,6 +16,7 @@ interface Combo {
 }
 
 export default function ComboPacks() {
+  const { t } = useLanguage();
   const [combos, setCombos] = useState<Combo[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -51,10 +52,10 @@ export default function ComboPacks() {
       <div className="space-y-12">
         <div className="text-center space-y-4">
           <h2 className="text-4xl md:text-5xl font-black text-gray-900 dark:text-white">
-            কম্বো প্যাক - <span className="text-green-600">একসাথে সব!</span>
+            {t('combo_packs_title')}<span className="text-green-600">{t('combo_packs_title_accent')}</span>
           </h2>
           <p className="text-gray-500 font-bold">
-            আলাদা কেনার চেয়ে কম্বোতে কিনলে সাশ্রয় হয় বেশি।
+            {t('combo_packs_desc')}
           </p>
         </div>
 
@@ -76,10 +77,10 @@ export default function ComboPacks() {
                   </div>
                   <div className="text-right">
                     <div className="text-3xl font-black text-green-600">
-                      ৳{combo.price}
+                      {t('currency_symbol')}{combo.price}
                     </div>
                     <div className="text-xs font-bold text-orange-500">
-                      ৳{combo.saveAmount} সাশ্রয়
+                      {t('currency_symbol')}{combo.saveAmount} {t('combo_packs_save')}
                     </div>
                   </div>
                 </div>
@@ -101,7 +102,7 @@ export default function ComboPacks() {
                   className="w-full bg-green-600 hover:bg-green-700 text-white py-5 rounded-2xl font-black flex items-center justify-center gap-3 transition-all shadow-lg shadow-green-600/20 active:scale-95"
                 >
                   <ShoppingCart className="w-5 h-5" />
-                  কম্বোটি কিনুন
+                  {t('combo_packs_buy_now')}
                 </Link>
               </div>
             </div>

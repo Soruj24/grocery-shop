@@ -1,18 +1,23 @@
+"use client";
+
 import { ShieldCheck, Truck, Clock } from "lucide-react";
+import { useLanguage } from "@/components/LanguageContext";
 
 export default function ProductHighlights() {
+  const { t } = useLanguage();
+
   const highlights = [
     {
       icon: ShieldCheck,
-      title: "১০০% খাঁটি পণ্য",
-      desc: "সরাসরি সোর্স থেকে সংগৃহীত",
+      title: t('authentic_product'),
+      desc: t('sourced_from_source'),
     },
     {
       icon: Truck,
-      title: "দ্রুত ডেলিভারি",
-      desc: "২৪ ঘন্টার মধ্যে নিশ্চিত ডেলিভারি",
+      title: t('fast_delivery'),
+      desc: t('delivery_within_24h'),
     },
-    { icon: Clock, title: "৭ দিন রিটার্ন", desc: "সহজ রিটার্ন পলিসি" },
+    { icon: Clock, title: t('return_policy_7_days'), desc: t('easy_return_policy') },
   ];
 
   return (

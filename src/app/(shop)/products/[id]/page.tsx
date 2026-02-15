@@ -127,7 +127,6 @@ export default async function ProductDetailsPage({
           </div>
           
           <div className="space-y-12 pb-24 md:pb-0">
-            <h2 className="text-2xl font-black text-gray-800 dark:text-white">সম্পর্কিত পণ্য</h2>
             <RelatedProducts products={relatedProducts} />
           </div>
         </div>

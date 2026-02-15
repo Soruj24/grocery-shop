@@ -3,12 +3,15 @@ import { ArrowRight, ChevronRight, LayoutGrid } from "lucide-react";
 import { Category } from "@/types/category";
 import Image from "next/image";
 import { motion } from "framer-motion";
+import { useLanguage } from "@/components/LanguageContext";
 
 interface CategoryCardProps {
   category: Category;
 }
 
 export default function CategoryCard({ category }: CategoryCardProps) {
+  const { t } = useLanguage();
+
   return (
     <Link href={`/category/${category._id}`}>
       <motion.div 
@@ -35,7 +38,7 @@ export default function CategoryCard({ category }: CategoryCardProps) {
             {category.name}
           </h3>
           <p className="text-[10px] text-gray-500 font-medium">
-            {category.subCategories?.length || 0}টি আইটেম
+            {category.subCategories?.length || 0}{t('items_count')}
           </p>
         </div>
         <ChevronRight className="w-5 h-5 text-gray-300" />

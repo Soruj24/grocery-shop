@@ -2,6 +2,7 @@ import Link from "next/link";
 import { ShoppingBag, ArrowLeft } from "lucide-react";
 import { Category as ICategory } from "@/types/category";
 import Image from "next/image";
+import { useLanguage } from "@/components/LanguageContext";
 
 interface CategoryHeaderProps {
   category: ICategory;
@@ -9,6 +10,7 @@ interface CategoryHeaderProps {
 }
 
 export default function CategoryHeader({ category, totalCount }: CategoryHeaderProps) {
+  const { t } = useLanguage();
   return (
     <section className="relative h-[350px] rounded-[60px] overflow-hidden flex items-center">
       <div className="absolute inset-0">
@@ -27,19 +29,19 @@ export default function CategoryHeader({ category, totalCount }: CategoryHeaderP
           href="/categories"
           className="inline-flex items-center px-4 py-2 bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl text-white text-sm font-black hover:bg-white/20 transition-all mb-4"
         >
-          <ArrowLeft className="w-4 h-4 mr-2" /> সব ক্যাটাগরি
+          <ArrowLeft className="w-4 h-4 mr-2" /> {t('all_categories_back')}
         </Link>
         <div className="space-y-2">
           <h1 className="text-5xl md:text-7xl font-black text-white tracking-tighter">
             {category.name}
           </h1>
           <p className="text-green-100/80 max-w-lg font-bold text-lg leading-relaxed">
-            {category.name} ক্যাটাগরির সেরা এবং তাজা পণ্যগুলো আমাদের সংগ্রহে রয়েছে।
+            {category.name}{t('category_header_desc_suffix')}
           </p>
         </div>
         <div className="flex items-center gap-4 pt-4">
           <div className="px-6 py-3 bg-green-600/90 backdrop-blur-md rounded-[20px] text-white font-black text-sm shadow-xl shadow-green-600/20">
-            {totalCount}টি পণ্য
+            {totalCount}{t('items_count_suffix')}
           </div>
           <div className="w-12 h-12 bg-white/10 backdrop-blur-md border border-white/20 rounded-[20px] flex items-center justify-center">
             <ShoppingBag className="w-5 h-5 text-white" />

@@ -3,7 +3,10 @@
 import { motion } from "framer-motion";
 import { Send, Mail, Bell } from "lucide-react";
 
+import { useLanguage } from "@/components/LanguageContext";
+
 export default function Newsletter() {
+  const { t } = useLanguage();
   return (
     <section className="py-24 relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-4">
@@ -43,7 +46,7 @@ export default function Newsletter() {
                 className="inline-flex items-center gap-3 bg-white/5 backdrop-blur-xl border border-white/10 px-6 py-2 rounded-full mb-4"
               >
                 <Bell size={18} className="text-green-400 animate-bounce" />
-                <span className="text-white font-black text-xs uppercase tracking-[0.3em]">নিউজলেটার সাবস্ক্রিপশন</span>
+                <span className="text-white font-black text-xs uppercase tracking-[0.3em]">{t('newsletter_badge')}</span>
               </motion.div>
               
               <motion.h2 
@@ -53,7 +56,7 @@ export default function Newsletter() {
                 transition={{ delay: 0.1 }}
                 className="text-4xl md:text-6xl font-black text-white tracking-tight leading-tight"
               >
-                পাওয়ারফুল ডিল মিস <span className="text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-emerald-500 text-shadow-glow">করতে না চাইলে</span> সাবস্ক্রাইব করুন
+                {t('newsletter_title_1')} <span className="text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-emerald-500 text-shadow-glow">{t('newsletter_title_2')}</span> {t('newsletter_title_3')}
               </motion.h2>
               
               <motion.p 
@@ -63,7 +66,7 @@ export default function Newsletter() {
                 transition={{ delay: 0.2 }}
                 className="text-gray-400 text-lg md:text-xl font-medium max-w-2xl mx-auto leading-relaxed"
               >
-                আমাদের নতুন প্রোডাক্ট এবং স্পেশাল অফারগুলো সরাসরি আপনার ইমেইলে পেতে এখনই সাবস্ক্রাইব করে রাখুন।
+                {t('newsletter_desc')}
               </motion.p>
             </div>
 
@@ -81,14 +84,14 @@ export default function Newsletter() {
                 </div>
                 <input
                   type="email"
-                  placeholder="আপনার ইমেইল অ্যাড্রেস লিখুন..."
+                  placeholder={t('newsletter_placeholder')}
                   className="w-full bg-white/5 backdrop-blur-2xl border-2 border-white/10 focus:border-green-500/50 rounded-[30px] py-6 pl-16 pr-44 text-white placeholder:text-gray-500 outline-none transition-all text-lg font-medium shadow-2xl"
                 />
                 <button
                   type="submit"
                   className="absolute right-2 top-2 bottom-2 bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white px-8 rounded-[24px] font-black text-sm flex items-center gap-3 transition-all active:scale-95 shadow-lg shadow-green-500/20 group/btn"
                 >
-                  সাবস্ক্রাইব
+                  {t('newsletter_button')}
                   <Send size={18} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
                 </button>
               </div>
@@ -101,7 +104,7 @@ export default function Newsletter() {
               transition={{ delay: 0.4 }}
               className="text-gray-500 text-xs font-bold uppercase tracking-widest"
             >
-              আমরা স্প্যাম পছন্দ করি না। আপনার ইমেইল নিরাপদ থাকবে।
+              {t('newsletter_spam_note')}
             </motion.p>
           </div>
         </motion.div>

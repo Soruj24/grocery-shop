@@ -5,18 +5,20 @@ import { usePathname } from "next/navigation";
 import { Home, Search, ShoppingBag, Heart, User } from "lucide-react";
 import { useCart } from "@/components/CartContext";
 import { motion } from "framer-motion";
+import { useLanguage } from "@/components/LanguageContext";
 
 export default function BottomNav() {
   const pathname = usePathname();
   const { cart } = useCart();
+  const { t } = useLanguage();
   const totalItems = cart?.reduce((acc, item) => acc + item.quantity, 0) || 0;
 
   const navItems = [
-    { name: "হোম", icon: Home, path: "/" },
-    { name: "সার্চ", icon: Search, path: "/search" },
-    { name: "কার্ট", icon: ShoppingBag, path: "/cart", badge: totalItems },
-    { name: "উইশলিস্ট", icon: Heart, path: "/wishlist" },
-    { name: "প্রোফাইল", icon: User, path: "/profile" },
+    { name: t('nav_home'), icon: Home, path: "/" },
+    { name: t('nav_search'), icon: Search, path: "/search" },
+    { name: t('nav_cart'), icon: ShoppingBag, path: "/cart", badge: totalItems },
+    { name: t('nav_wishlist'), icon: Heart, path: "/wishlist" },
+    { name: t('nav_profile'), icon: User, path: "/profile" },
   ];
 
   return (

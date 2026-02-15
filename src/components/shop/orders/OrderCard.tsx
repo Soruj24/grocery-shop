@@ -11,12 +11,15 @@ import {
   CreditCard,
 } from "lucide-react";
 import { AdminOrder as Order } from "@/types/admin";
+import { useLanguage } from "@/components/LanguageContext";
 
 interface OrderCardProps {
   order: Order;
 }
 
 export default function OrderCard({ order }: OrderCardProps) {
+  const { t, language } = useLanguage();
+
   const getStatusColor = (status: string) => {
     switch (status) {
       case "pending":
@@ -35,13 +38,13 @@ export default function OrderCard({ order }: OrderCardProps) {
   const getStatusLabel = (status: string) => {
     switch (status) {
       case "pending":
-        return "পেন্ডিং";
+        return t('status_pending');
       case "confirmed":
-        return "নিশ্চিত করা হয়েছে";
+        return t('status_confirmed');
       case "delivered":
-        return "ডেলিভারি হয়েছে";
+        return t('status_delivered');
       case "cancelled":
-        return "বাতিল করা হয়েছে";
+        return t('status_cancelled');
       default:
         return status;
     }
@@ -72,7 +75,7 @@ export default function OrderCard({ order }: OrderCardProps) {
           </div>
           <div>
             <p className="text-[10px] font-black text-gray-400 dark:text-gray-500 uppercase tracking-widest">
-              অর্ডার আইডি
+              {t('order_id_label')}
             </p>
             <p className="text-sm font-black text-gray-800 dark:text-gray-100">
               #{order._id.slice(-8).toUpperCase()}
@@ -111,12 +114,12 @@ export default function OrderCard({ order }: OrderCardProps) {
                   {item.name}
                 </p>
                 <p className="text-xs font-bold text-gray-400 dark:text-gray-500">
-                  {item.quantity} x ৳{item.price}
+                  {item.quantity} x {t('currency_symbol')}{item.price}
                 </p>
               </div>
               <div className="text-right">
                 <p className="font-black text-gray-800 dark:text-gray-100">
-                  ৳{item.quantity * item.price}
+                  {t('currency_symbol')}{item.quantity * item.price}
                 </p>
               </div>
             </div>
@@ -130,7 +133,7 @@ export default function OrderCard({ order }: OrderCardProps) {
               <MapPin className="w-5 h-5 text-gray-400 dark:text-gray-500 mt-0.5" />
               <div>
                 <p className="text-[10px] font-black text-gray-400 dark:text-gray-500 uppercase tracking-widest">
-                  ডেলিভারি ঠিকানা
+                  {t('delivery_address_label')}
                 </p>
                 <p className="text-sm font-bold text-gray-700 dark:text-gray-300 leading-relaxed">
                   {order.address}
@@ -141,7 +144,7 @@ export default function OrderCard({ order }: OrderCardProps) {
               <Phone className="w-5 h-5 text-gray-400 dark:text-gray-500" />
               <div>
                 <p className="text-[10px] font-black text-gray-400 dark:text-gray-500 uppercase tracking-widest">
-                  ফোন নম্বর
+                  {t('phone_number')}
                 </p>
                 <p className="text-sm font-bold text-gray-700 dark:text-gray-300">
                   {order.phone}
@@ -152,21 +155,21 @@ export default function OrderCard({ order }: OrderCardProps) {
               <CreditCard className="w-5 h-5 text-gray-400 dark:text-gray-500 mt-0.5" />
               <div>
                 <p className="text-[10px] font-black text-gray-400 dark:text-gray-500 uppercase tracking-widest">
-                  পেমেন্ট মেথড
+                  {t('payment_method')}
                 </p>
                 <div className="flex flex-col gap-1">
                   <p className="text-sm font-bold text-gray-700 dark:text-gray-300">
                     {order.paymentMethod === "cod"
-                      ? "ক্যাশ অন ডেলিভারি"
+                      ? t('cod_payment')
                       : order.paymentMethod === "bkash"
-                      ? "বিকাশ"
+                      ? t('bkash')
                       : order.paymentMethod === "nagad"
-                      ? "নগদ"
-                      : "ক্যাশ অন ডেলিভারি"}
+                      ? t('nagad')
+                      : t('cod_payment')}
                   </p>
                   {order.transactionId && (
                     <p className="text-[10px] font-mono text-gray-400 dark:text-gray-500 bg-gray-100 dark:bg-gray-800 px-2 py-0.5 rounded w-fit border border-gray-200 dark:border-gray-700">
-                      ID: {order.transactionId}
+                      {t('transaction_id_label')}: {order.transactionId}
                     </p>
                   )}
                 </div>
@@ -178,10 +181,10 @@ export default function OrderCard({ order }: OrderCardProps) {
               <Calendar className="w-5 h-5 text-gray-400 dark:text-gray-500" />
               <div>
                 <p className="text-[10px] font-black text-gray-400 dark:text-gray-500 uppercase tracking-widest">
-                  অর্ডারের তারিখ
+                  {t('order_date')}
                 </p>
                 <p className="text-sm font-bold text-gray-700 dark:text-gray-300">
-                  {new Date(order.createdAt).toLocaleDateString("bn-BD", {
+                  {new Date(order.createdAt).toLocaleDateString(language === 'bn' ? "bn-BD" : "en-US", {
                     year: "numeric",
                     month: "long",
                     day: "numeric",
@@ -191,10 +194,10 @@ export default function OrderCard({ order }: OrderCardProps) {
             </div>
             <div className="flex items-center justify-between bg-green-50 dark:bg-green-900/10 p-4 rounded-2xl border border-green-100 dark:border-green-800/50">
               <span className="text-sm font-black text-green-800 dark:text-green-400">
-                সর্বমোট (ডেলিভারি সহ)
+                {t('total_with_delivery')}
               </span>
               <span className="text-xl font-black text-green-600 dark:text-green-500">
-                ৳{order.total}
+                {t('currency_symbol')}{order.total}
               </span>
             </div>
           </div>
@@ -204,7 +207,7 @@ export default function OrderCard({ order }: OrderCardProps) {
       {/* Footer */}
       <div className="px-6 py-4 bg-gray-50/50 dark:bg-gray-800/50 border-t border-gray-50 dark:border-gray-800 flex justify-end">
         <button className="flex items-center gap-2 text-xs font-black text-green-600 dark:text-green-500 hover:text-green-700 dark:hover:text-green-400 transition-colors uppercase tracking-widest">
-          ডিটেইলস দেখুন
+          {t('view_details')}
           <ChevronRight className="w-4 h-4" />
         </button>
       </div>

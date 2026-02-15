@@ -10,6 +10,7 @@ interface ProfileEditFormProps {
 }
 
 export default function ProfileEditForm({ session }: ProfileEditFormProps) {
+  const { t } = useLanguage();
   const [formData, setFormData] = useState({
     name: session?.user?.name || "",
     email: session?.user?.email || "",
@@ -24,7 +25,7 @@ export default function ProfileEditForm({ session }: ProfileEditFormProps) {
     // Simulate API call
     await new Promise((resolve) => setTimeout(resolve, 1000));
     setLoading(false);
-    alert("প্রোফাইল আপডেট করা হয়েছে!");
+    alert(t('profile_update_success'));
   };
 
   return (
@@ -32,10 +33,10 @@ export default function ProfileEditForm({ session }: ProfileEditFormProps) {
       <div className="flex items-center justify-between">
         <div>
           <h2 className="text-3xl font-black text-gray-900 dark:text-white">
-            প্রোফাইল এডিট
+            {t('profile_edit_title')}
           </h2>
           <p className="text-gray-500 dark:text-gray-400 mt-1">
-            আপনার ব্যক্তিগত তথ্য আপডেট করুন
+            {t('profile_edit_desc')}
           </p>
         </div>
       </div>
@@ -44,7 +45,7 @@ export default function ProfileEditForm({ session }: ProfileEditFormProps) {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="space-y-2">
             <label className="text-sm font-bold text-gray-700 dark:text-gray-300 ml-1">
-              পূর্ণ নাম
+              {t('full_name')}
             </label>
             <div className="relative group">
               <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gray-400 group-focus-within:text-green-600 transition-colors">
@@ -57,14 +58,14 @@ export default function ProfileEditForm({ session }: ProfileEditFormProps) {
                   setFormData({ ...formData, name: e.target.value })
                 }
                 className="w-full pl-11 pr-4 py-4 bg-gray-50 dark:bg-white/5 border border-transparent focus:border-green-500/50 focus:bg-white dark:focus:bg-black/20 rounded-2xl outline-none transition-all font-medium"
-                placeholder="আপনার নাম লিখুন"
+                placeholder={t('enter_name_placeholder')}
               />
             </div>
           </div>
 
           <div className="space-y-2">
             <label className="text-sm font-bold text-gray-700 dark:text-gray-300 ml-1">
-              ইমেইল এড্রেস
+              {t('email_label')}
             </label>
             <div className="relative group">
               <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gray-400 group-focus-within:text-green-600 transition-colors">
@@ -75,14 +76,14 @@ export default function ProfileEditForm({ session }: ProfileEditFormProps) {
                 value={formData.email}
                 disabled
                 className="w-full pl-11 pr-4 py-4 bg-gray-50 dark:bg-white/5 border border-transparent rounded-2xl outline-none transition-all font-medium opacity-60 cursor-not-allowed"
-                placeholder="আপনার ইমেইল"
+                placeholder={t('enter_email_placeholder')}
               />
             </div>
           </div>
 
           <div className="space-y-2">
             <label className="text-sm font-bold text-gray-700 dark:text-gray-300 ml-1">
-              ফোন নম্বর
+              {t('phone_number')}
             </label>
             <div className="relative group">
               <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gray-400 group-focus-within:text-green-600 transition-colors">
@@ -95,14 +96,14 @@ export default function ProfileEditForm({ session }: ProfileEditFormProps) {
                   setFormData({ ...formData, phone: e.target.value })
                 }
                 className="w-full pl-11 pr-4 py-4 bg-gray-50 dark:bg-white/5 border border-transparent focus:border-green-500/50 focus:bg-white dark:focus:bg-black/20 rounded-2xl outline-none transition-all font-medium"
-                placeholder="আপনার ফোন নম্বর লিখুন"
+                placeholder={t('enter_phone_placeholder')}
               />
             </div>
           </div>
 
           <div className="space-y-2 md:col-span-2">
             <label className="text-sm font-bold text-gray-700 dark:text-gray-300 ml-1">
-              ডেলিভারি ঠিকানা
+              {t('delivery_address')}
             </label>
             <div className="relative group">
               <div className="absolute top-4 left-0 pl-4 flex items-start pointer-events-none text-gray-400 group-focus-within:text-green-600 transition-colors">
@@ -115,7 +116,7 @@ export default function ProfileEditForm({ session }: ProfileEditFormProps) {
                 }
                 rows={3}
                 className="w-full pl-11 pr-4 py-4 bg-gray-50 dark:bg-white/5 border border-transparent focus:border-green-500/50 focus:bg-white dark:focus:bg-black/20 rounded-2xl outline-none transition-all font-medium resize-none"
-                placeholder="আপনার পূর্ণ ঠিকানা লিখুন"
+                placeholder={t('enter_address_placeholder')}
               />
             </div>
           </div>
@@ -134,7 +135,7 @@ export default function ProfileEditForm({ session }: ProfileEditFormProps) {
             ) : (
               <Save size={20} />
             )}
-            সেভ করুন
+            {t('save_button')}
           </motion.button>
         </div>
       </form>
