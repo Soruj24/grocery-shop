@@ -38,7 +38,7 @@ export default function BottomNav() {
               >
                 <Icon size={22} className={isActive ? "fill-current" : ""} />
                 
-                {item.badge > 0 && (
+                {item.badge && item.badge > 0 && (
                   <span className="absolute -top-1 -right-1 bg-rose-500 text-white text-[10px] font-black w-5 h-5 rounded-full flex items-center justify-center border-2 border-white dark:border-gray-950">
                     {item.badge}
                   </span>
