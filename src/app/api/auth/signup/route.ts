@@ -2,9 +2,21 @@ import { NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
 import dbConnect from "@/lib/mongodb";
 import User from "@/models/User";
+import { rateLimit } from "@/lib/rate-limit";
 
 export async function POST(req: Request) {
   try {
+    // Stricter rate limiting for signup
+    const ip = req.headers.get("x-forwarded-for") || "127.0.0.1";
+    const { success } = rateLimit(ip);
+    
+    if (!success) {
+      return NextResponse.json(
+        { message: "Too many signup attempts. Please try again later." },
+        { status: 429 }
+      );
+    }
+
     const { name, email, password } = await req.json();
 
     if (!name || !email || !password) {

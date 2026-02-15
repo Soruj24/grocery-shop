@@ -13,6 +13,7 @@ async function checkAdmin() {
 
 export async function GET() {
   try {
+    await checkAdmin();
     await dbConnect();
     let settings = await Settings.findOne({});
     if (!settings) {

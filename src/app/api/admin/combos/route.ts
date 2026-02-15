@@ -13,6 +13,7 @@ async function checkAdmin() {
 
 export async function GET() {
   try {
+    await checkAdmin();
     await dbConnect();
     const combos = await Combo.find({}).sort({ createdAt: -1 });
     return NextResponse.json(combos);

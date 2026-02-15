@@ -13,6 +13,7 @@ async function checkAdmin() {
 
 export async function GET() {
   try {
+    await checkAdmin();
     await dbConnect();
     const products = await Product.find({}).populate("category").sort({ createdAt: -1 });
     return NextResponse.json(products);
