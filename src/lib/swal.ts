@@ -36,6 +36,18 @@ export const toast = {
       },
     }).fire(options);
   },
+  success: (title: string) => {
+    return toast.fire({
+      icon: "success",
+      title,
+    });
+  },
+  error: (title: string) => {
+    return toast.fire({
+      icon: "error",
+      title,
+    });
+  },
 };
 
 export const confirmAlert = ({
