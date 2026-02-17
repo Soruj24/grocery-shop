@@ -1,25 +1,29 @@
+"use client";
+
 import Link from "next/link";
 import { Layers } from "lucide-react";
 import { Category as ICategory } from "@/types/category";
+import { useLanguage } from "@/components/LanguageContext";
 
 interface CategoryMapProps {
   categories: ICategory[];
 }
 
 export default function CategoryMap({ categories }: CategoryMapProps) {
+  const { t, language } = useLanguage();
+
   return (
-    <section className="relative bg-white dark:bg-gray-900 rounded-[60px] p-12 md:p-20 border border-gray-100 dark:border-gray-800 shadow-2xl shadow-gray-200/50 dark:shadow-none overflow-hidden">
+    <section className="relative bg-white/80 dark:bg-[#0B1120]/80 backdrop-blur-xl rounded-[60px] p-12 md:p-20 border border-gray-100 dark:border-gray-800 shadow-2xl shadow-gray-200/50 dark:shadow-none overflow-hidden">
       <div className="absolute top-0 right-0 w-96 h-96 bg-green-500/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
       <div className="absolute bottom-0 left-0 w-96 h-96 bg-blue-500/5 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2" />
 
       <div className="relative z-10 space-y-16">
         <div className="text-center space-y-4">
           <h2 className="text-4xl md:text-5xl font-black text-gray-800 dark:text-gray-100 tracking-tight">
-            ক্যাটাগরি ম্যাপ
+            {t('category_map_title')}
           </h2>
           <p className="text-gray-500 dark:text-gray-400 font-bold max-w-2xl mx-auto">
-            এক নজরে আমাদের সব কালেকশন দেখে নিন এবং সরাসরি আপনার পছন্দের সেকশনে চলে
-            যান।
+            {t('category_map_desc')}
           </p>
         </div>
 
@@ -34,7 +38,7 @@ export default function CategoryMap({ categories }: CategoryMapProps) {
                   href={`/category/${cat._id}`}
                   className="text-xl font-black text-gray-800 dark:text-gray-100 hover:text-green-600 transition-colors"
                 >
-                  {cat.name}
+                  {language === 'en' ? (cat.nameEn || cat.name) : cat.name}
                 </Link>
               </div>
 
@@ -45,14 +49,14 @@ export default function CategoryMap({ categories }: CategoryMapProps) {
                     href={`/category/${sub._id}`}
                     className="block text-sm font-bold text-gray-400 dark:text-gray-500 hover:text-green-600 dark:hover:text-green-400 transition-all hover:translate-x-2"
                   >
-                    • {sub.name}
+                    • {language === 'en' ? (sub.nameEn || sub.name) : sub.name}
                   </Link>
                 ))}
                 <Link
                   href={`/category/${cat._id}`}
                   className="block text-xs font-black text-green-600 dark:text-green-500 uppercase tracking-widest pt-2 hover:opacity-70"
                 >
-                  সবগুলো দেখুন →
+                  {t('view_all_arrow')}
                 </Link>
               </div>
             </div>

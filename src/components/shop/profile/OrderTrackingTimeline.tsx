@@ -1,15 +1,17 @@
 import { Check, Truck, Package, Clock, ShieldCheck } from "lucide-react";
+import { useLanguage } from "@/components/LanguageContext";
 
 interface OrderTrackingTimelineProps {
   status: string;
 }
 
 export default function OrderTrackingTimeline({ status }: OrderTrackingTimelineProps) {
+  const { t } = useLanguage();
   const steps = [
-    { id: 'pending', label: 'অর্ডার প্লেসড', icon: Clock },
-    { id: 'processing', label: 'প্রসেসিং', icon: Package },
-    { id: 'shipped', label: 'ডেলিভারি পথে', icon: Truck },
-    { id: 'delivered', label: 'ডেলিভারি হয়েছে', icon: ShieldCheck },
+    { id: 'pending', label: t('timeline_placed'), icon: Clock },
+    { id: 'processing', label: t('timeline_processing'), icon: Package },
+    { id: 'shipped', label: t('timeline_on_way'), icon: Truck },
+    { id: 'delivered', label: t('timeline_delivered_past'), icon: ShieldCheck },
   ];
 
   const getCurrentStepIndex = () => {

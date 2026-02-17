@@ -5,9 +5,11 @@ import { useCart } from "@/components/CartContext";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useLanguage } from "@/components/LanguageContext";
 
 export default function FloatingCart() {
   const { cart } = useCart();
+  const { t } = useLanguage();
   const pathname = usePathname();
   const totalItems = cart?.reduce((acc, item) => acc + item.quantity, 0) || 0;
   const totalPrice = cart?.reduce((acc, item) => acc + (item.price * item.quantity), 0) || 0;
@@ -36,8 +38,8 @@ export default function FloatingCart() {
           </div>
           
           <div className="hidden lg:flex flex-col items-start pr-2">
-            <span className="text-[10px] font-black uppercase tracking-widest opacity-70">আমার কার্ট</span>
-            <span className="font-black">৳{totalPrice}</span>
+            <span className="text-[10px] font-black uppercase tracking-widest opacity-70">{t('my_cart')}</span>
+            <span className="font-black">{t('currency_symbol')}{totalPrice}</span>
           </div>
         </motion.div>
       </Link>

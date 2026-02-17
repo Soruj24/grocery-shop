@@ -6,6 +6,8 @@ import { Zap, ArrowRight } from "lucide-react";
 import { useLanguage } from "@/components/LanguageContext";
 
 import Link from "next/link";
+import Image from "next/image";
+import { getProductFallbackImage } from "@/lib/category-utils";
 
 export default function DailyDealsBanner() {
   const { t, language } = useLanguage();
@@ -87,8 +89,16 @@ export default function DailyDealsBanner() {
             <div className="bg-white/5 backdrop-blur-xl rounded-32px w-full h-full border border-white/10 p-8 flex items-center justify-center overflow-hidden">
               <div className="relative w-full h-full flex flex-col items-center justify-center gap-4">
                 <div className="w-48 h-48 bg-white/10 rounded-full blur-2xl absolute" />
-                <span className="text-9xl">🍎</span>
-                <div className="text-center">
+                <div className="relative w-48 h-48">
+                  <Image
+                    src={getProductFallbackImage("apple")}
+                    alt={t("daily_deals_product_name")}
+                    fill
+                    sizes="(max-width: 768px) 192px, 192px"
+                    className="object-contain drop-shadow-2xl"
+                  />
+                </div>
+                <div className="text-center relative z-10">
                   <div className="text-3xl font-black">
                     {t("daily_deals_product_name")}
                   </div>

@@ -6,6 +6,7 @@ import { ArrowRight, ChevronRight } from "lucide-react";
 import Image from "next/image";
 import { Category as ICategory } from "@/types/category";
 import { useLanguage } from "@/components/LanguageContext";
+import { getCategoryFallbackImage } from "@/lib/category-utils";
 
 interface CategoryMegaMenuProps {
   categories: ICategory[];
@@ -105,19 +106,14 @@ export default function CategoryMegaMenu({
           >
             <div className="relative flex-shrink-0">
               <div className="w-[72px] h-[72px] rounded-[24px] overflow-hidden bg-white dark:bg-white/5 shadow-xl border border-gray-100 dark:border-white/10 group-hover/item:border-green-500/50 transition-all duration-500">
-                {cat.image ? (
-                  <Image
-                    src={cat.image}
-                    alt={language === 'en' ? (cat.nameEn || cat.name) : cat.name}
-                    width={72}
-                    height={72}
-                    className="w-full h-full object-cover transform group-hover/item:scale-110 transition-transform duration-700"
-                  />
-                ) : (
-                  <div className="w-full h-full flex items-center justify-center text-green-600 dark:text-green-500 font-black bg-green-50 dark:bg-green-900/20 text-2xl">
-                    {(language === 'en' ? (cat.nameEn || cat.name) : cat.name).charAt(0)}
-                  </div>
-                )}
+                <Image
+                  src={cat.image || getCategoryFallbackImage(cat.nameEn || cat.name)}
+                  alt={language === 'en' ? (cat.nameEn || cat.name) : cat.name}
+                  width={72}
+                  height={72}
+                  sizes="72px"
+                  className="w-full h-full object-cover transform group-hover/item:scale-110 transition-transform duration-700"
+                />
               </div>
             </div>
             <div className="flex flex-col gap-0.5">

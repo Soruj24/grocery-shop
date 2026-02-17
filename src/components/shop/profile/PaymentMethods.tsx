@@ -3,8 +3,10 @@
 import { CreditCard, Plus, Trash2, ShieldCheck, Wallet } from "lucide-react";
 import { useState } from "react";
 import { motion } from "framer-motion";
+import { useLanguage } from "@/components/LanguageContext";
 
 export default function PaymentMethods() {
+  const { t } = useLanguage();
   const [cards, setCards] = useState([
     {
       id: 1,
@@ -30,14 +32,14 @@ export default function PaymentMethods() {
         <div>
           <h2 className="text-3xl font-black text-gray-900 dark:text-white flex items-center gap-3">
             <CreditCard className="text-blue-600" />
-            পেমেন্ট পদ্ধতি
+            {t('payment_methods_title')}
           </h2>
-          <p className="text-gray-500 dark:text-gray-400 mt-1">আপনার সেভ করা কার্ড এবং পেমেন্ট মেথড</p>
+          <p className="text-gray-500 dark:text-gray-400 mt-1">{t('payment_methods_desc')}</p>
         </div>
         
         <button className="flex items-center gap-2 px-6 py-3 bg-blue-600 text-white rounded-2xl font-bold shadow-lg shadow-blue-600/20 hover:bg-blue-700 transition-all">
           <Plus size={20} />
-          নতুন কার্ড
+          {t('add_new_card')}
         </button>
       </div>
 
@@ -53,7 +55,7 @@ export default function PaymentMethods() {
             <div className="relative z-10 flex flex-col h-full justify-between gap-12">
               <div className="flex justify-between items-start">
                 <div className="space-y-1">
-                  <p className="text-[10px] font-black uppercase tracking-[0.2em] opacity-60">Card Type</p>
+                  <p className="text-[10px] font-black uppercase tracking-[0.2em] opacity-60">{t('card_type')}</p>
                   <h3 className="text-xl font-black italic tracking-wider">{card.type}</h3>
                 </div>
                 <div className="p-3 bg-white/20 backdrop-blur-lg rounded-2xl">
@@ -66,7 +68,7 @@ export default function PaymentMethods() {
                 
                 <div className="flex justify-between items-end">
                   <div className="space-y-1">
-                    <p className="text-[10px] font-black uppercase tracking-widest opacity-60">Expiry Date</p>
+                    <p className="text-[10px] font-black uppercase tracking-widest opacity-60">{t('expiry_date')}</p>
                     <p className="font-bold tracking-widest">{card.expiry}</p>
                   </div>
                   
@@ -82,7 +84,7 @@ export default function PaymentMethods() {
             {card.isDefault && (
               <div className="absolute top-4 right-4 flex items-center gap-1 px-3 py-1 bg-white text-black text-[10px] font-black uppercase tracking-widest rounded-full shadow-lg">
                 <ShieldCheck size={12} className="text-green-600" />
-                Default
+                {t('default_label')}
               </div>
             )}
           </div>
@@ -94,8 +96,8 @@ export default function PaymentMethods() {
             <Wallet size={32} />
           </div>
           <div>
-            <h4 className="font-bold text-gray-900 dark:text-white">বিকাশ বা নগদ যোগ করুন</h4>
-            <p className="text-xs text-gray-500 mt-1">আপনার মোবাইল ব্যাংকিং অ্যাকাউন্ট সেভ করুন</p>
+            <h4 className="font-bold text-gray-900 dark:text-white">{t('add_bkash_nagad')}</h4>
+            <p className="text-xs text-gray-500 mt-1">{t('add_mobile_banking_desc')}</p>
           </div>
         </div>
       </div>

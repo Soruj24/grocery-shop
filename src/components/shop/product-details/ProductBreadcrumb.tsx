@@ -3,13 +3,16 @@
 import Link from "next/link";
 import { ChevronRight } from "lucide-react";
 import { useLanguage } from "@/components/LanguageContext";
+import { Product } from "@/types/product";
 
 interface ProductBreadcrumbProps {
-  productName: string;
+  product: Product;
 }
 
-export default function ProductBreadcrumb({ productName }: ProductBreadcrumbProps) {
-  const { t } = useLanguage();
+export default function ProductBreadcrumb({ product }: ProductBreadcrumbProps) {
+  const { t, language } = useLanguage();
+
+  const productName = language === 'en' ? (product.nameEn || product.name) : product.name;
 
   return (
     <nav className="flex items-center gap-2 text-sm font-bold text-gray-400 dark:text-gray-500">

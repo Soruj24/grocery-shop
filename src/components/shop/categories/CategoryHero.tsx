@@ -2,6 +2,7 @@
 import { LayoutGrid } from "lucide-react";
 import Image from "next/image";
 import { useLanguage } from "@/components/LanguageContext";
+import { getCategoryFallbackImage } from "@/lib/category-utils";
 
 export default function CategoryHero() {
   const { t } = useLanguage();
@@ -10,7 +11,7 @@ export default function CategoryHero() {
     <section className="relative h-[400px] rounded-[60px] overflow-hidden flex items-center justify-center text-center">
       <div className="absolute inset-0">
         <Image
-          src="https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&q=80&w=2000"
+          src={getCategoryFallbackImage("vegetable")}
           alt="Grocery Categories"
           fill
           priority

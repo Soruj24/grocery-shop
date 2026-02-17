@@ -4,6 +4,8 @@
 import { Moon, Star, ArrowRight, Plus } from "lucide-react";
 import Link from "next/link";
 import { useLanguage } from "@/components/LanguageContext";
+import Image from "next/image";
+import { getProductFallbackImage } from "@/lib/category-utils";
 
 export default function RamadanOffers() {
   const { t } = useLanguage();
@@ -11,19 +13,19 @@ export default function RamadanOffers() {
     {
       title: t('ramadan_combo_title'),
       discount: t('ramadan_combo_off'),
-      icon: "🍱",
+      icon: getProductFallbackImage("rice"),
       color: "bg-emerald-500",
     },
     {
       title: t('ramadan_dates_title'),
       discount: t('ramadan_dates_off'),
-      icon: "🌴",
+      icon: getProductFallbackImage("fruit"),
       color: "bg-amber-500",
     },
     {
       title: t('ramadan_drinks_title'),
       discount: t('ramadan_drinks_off'),
-      icon: "🍹",
+      icon: getProductFallbackImage("drink"),
       color: "bg-blue-500",
     },
   ];
@@ -72,8 +74,14 @@ export default function RamadanOffers() {
               key={i}
               className={`${offer.color} bg-opacity-5 border border-white/5 rounded-2xl p-6 flex items-center gap-4 group transition-all cursor-pointer hover:bg-opacity-10`}
             >
-              <div className="text-4xl bg-white/10 p-3 rounded-2xl group-hover:scale-105 transition-transform">
-                {offer.icon}
+              <div className="w-16 h-16 bg-white/10 rounded-2xl overflow-hidden relative group-hover:scale-105 transition-transform shrink-0">
+                <Image
+                  src={offer.icon}
+                  alt={offer.title}
+                  fill
+                  sizes="64px"
+                  className="object-cover"
+                />
               </div>
               <div>
                 <h4 className="font-black text-lg">{offer.title}</h4>

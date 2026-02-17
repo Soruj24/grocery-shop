@@ -7,10 +7,11 @@ import Link from "next/link";
 import { useCart } from "@/components/CartContext";
 import { toast } from "react-hot-toast";
 import { useLanguage } from "@/components/LanguageContext";
+import { getProductFallbackImage } from "@/lib/category-utils";
 
 export default function ComboOffers() {
   const { addToCart } = useCart();
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
 
   const combos = [
     {
@@ -24,7 +25,7 @@ export default function ComboOffers() {
       ],
       price: 1250,
       oldPrice: 1450,
-      image: "https://cdn-icons-png.flaticon.com/512/3081/3081840.png",
+      image: getProductFallbackImage("rice"),
       tag: t('combo_tag_best_value'),
       stock: 50
     },
@@ -39,7 +40,7 @@ export default function ComboOffers() {
       ],
       price: 450,
       oldPrice: 520,
-      image: "https://cdn-icons-png.flaticon.com/512/2611/2611158.png",
+      image: getProductFallbackImage("bread"),
       tag: t('combo_tag_popular'),
       stock: 100
     },
@@ -54,7 +55,7 @@ export default function ComboOffers() {
       ],
       price: 320,
       oldPrice: 380,
-      image: "https://cdn-icons-png.flaticon.com/512/2329/2329903.png",
+      image: getProductFallbackImage("vegetable"),
       tag: t('combo_tag_super_saver'),
       stock: 150
     }
@@ -168,9 +169,9 @@ export default function ComboOffers() {
 
                 <div className="flex items-center justify-between pt-8 border-t border-gray-50 dark:border-white/5">
                   <div className="text-left">
-                    <div className="text-sm text-gray-400 line-through font-bold mb-1">{t('currency_symbol')}{combo.oldPrice}</div>
+                    <div className="text-sm text-gray-400 line-through font-bold mb-1">{t('currency_symbol')}{combo.oldPrice.toLocaleString(language === 'bn' ? 'bn-BD' : 'en-US')}</div>
                     <div className="text-4xl font-black text-gray-900 dark:text-white flex items-center gap-1">
-                      <span className="text-lg">{t('currency_symbol')}</span>{combo.price}
+                      <span className="text-lg">{t('currency_symbol')}</span>{combo.price.toLocaleString(language === 'bn' ? 'bn-BD' : 'en-US')}
                   </div>
                 </div>
                 <button 

@@ -3,19 +3,21 @@
 import { MapPin, Plus, Trash2, Edit2, Home, Briefcase } from "lucide-react";
 import { useState } from "react";
 import { motion } from "framer-motion";
+import { useLanguage } from "@/components/LanguageContext";
 
 export default function AddressManager() {
+  const { t } = useLanguage();
   const [addresses, setAddresses] = useState([
     {
       id: 1,
-      type: "Home",
+      typeKey: 'address_type_home',
       address: "House 12, Road 5, Dhanmondi, Dhaka",
       isDefault: true,
       icon: Home,
     },
     {
       id: 2,
-      type: "Office",
+      typeKey: 'address_type_office',
       address: "Level 4, Software Park, Karwan Bazar, Dhaka",
       isDefault: false,
       icon: Briefcase,
@@ -28,14 +30,14 @@ export default function AddressManager() {
         <div>
           <h2 className="text-3xl font-black text-gray-900 dark:text-white flex items-center gap-3">
             <MapPin className="text-green-600" />
-            আমার ঠিকানাসমূহ
+            {t('my_addresses_title')}
           </h2>
-          <p className="text-gray-500 dark:text-gray-400 mt-1">আপনার ডেলিভারি ঠিকানাগুলো ম্যানেজ করুন</p>
+          <p className="text-gray-500 dark:text-gray-400 mt-1">{t('my_addresses_desc')}</p>
         </div>
         
         <button className="flex items-center gap-2 px-6 py-3 bg-green-600 text-white rounded-2xl font-bold shadow-lg shadow-green-600/20 hover:bg-green-700 transition-all">
           <Plus size={20} />
-          নতুন ঠিকানা
+          {t('add_new_address')}
         </button>
       </div>
 
@@ -71,10 +73,10 @@ export default function AddressManager() {
               
               <div className="space-y-1">
                 <div className="flex items-center gap-2">
-                  <h3 className="font-black text-gray-900 dark:text-white">{addr.type}</h3>
+                  <h3 className="font-black text-gray-900 dark:text-white">{t(addr.typeKey as any)}</h3>
                   {addr.isDefault && (
                     <span className="px-2 py-0.5 bg-green-500 text-white text-[10px] font-black uppercase tracking-widest rounded-full">
-                      Default
+                      {t('default_label')}
                     </span>
                   )}
                 </div>

@@ -2,19 +2,22 @@
 
 import { Check, Clock, Truck, Package, Home } from "lucide-react";
 import { motion } from "framer-motion";
-
-const STAGES = [
-  { id: "pending", label: "অর্ডার গৃহীত", icon: Clock, color: "bg-amber-500" },
-  { id: "processing", label: "প্যাকিং চলছে", icon: Package, color: "bg-blue-500" },
-  { id: "shipping", label: "রাস্তায় আছে", icon: Truck, color: "bg-indigo-500" },
-  { id: "delivered", label: "ডেলিভারি সম্পন্ন", icon: Home, color: "bg-green-500" }
-];
+import { useLanguage } from "@/components/LanguageContext";
 
 interface OrderTimelineProps {
   currentStatus: string;
 }
 
 export default function OrderTimeline({ currentStatus }: OrderTimelineProps) {
+  const { t } = useLanguage();
+
+  const STAGES = [
+    { id: "pending", label: t('timeline_order_received'), icon: Clock, color: "bg-amber-500" },
+    { id: "processing", label: t('timeline_packing'), icon: Package, color: "bg-blue-500" },
+    { id: "shipping", label: t('timeline_shipping'), icon: Truck, color: "bg-indigo-500" },
+    { id: "delivered", label: t('timeline_delivered'), icon: Home, color: "bg-green-500" }
+  ];
+
   const currentIndex = STAGES.findIndex(s => s.id === currentStatus);
 
   return (
@@ -72,7 +75,7 @@ export default function OrderTimeline({ currentStatus }: OrderTimelineProps) {
                     animate={{ opacity: 1 }}
                     className="text-[10px] font-bold text-green-600 uppercase tracking-widest mt-1"
                   >
-                    ইন প্রগ্রেস
+                    {t('timeline_in_progress')}
                   </motion.p>
                 )}
               </div>

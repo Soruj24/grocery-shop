@@ -122,7 +122,7 @@ export default async function ProductDetailsPage({
         {/* Product Details Tabs & Reviews */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 lg:gap-16">
           <div className="lg:col-span-2 space-y-16">
-            <ProductDetailsTabs productName={product.name} />
+            <ProductDetailsTabs product={product} />
             <CustomerReviews productId={product._id} />
           </div>
           

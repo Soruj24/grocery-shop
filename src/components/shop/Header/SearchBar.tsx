@@ -18,16 +18,17 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useLanguage } from "@/components/LanguageContext";
+import { getProductFallbackImage } from "@/lib/category-utils";
 
 export default function SearchBar() {
   const { t, language } = useLanguage();
-  
+
   const POPULAR_SEARCHES = [
-    t('popular_search_1'),
-    t('popular_search_2'),
-    t('popular_search_3'),
-    t('popular_search_4'),
-    t('popular_search_5'),
+    t("popular_search_1"),
+    t("popular_search_2"),
+    t("popular_search_3"),
+    t("popular_search_4"),
+    t("popular_search_5"),
   ];
   const [searchTerm, setSearchTerm] = useState("");
   const [isOpen, setIsOpen] = useState(false);
@@ -58,15 +59,19 @@ export default function SearchBar() {
 
   // Voice Search implementation
   const startVoiceSearch = () => {
-    if (!('webkitSpeechRecognition' in window) && !('speechRecognition' in window)) {
-      alert(t('voice_search_not_supported'));
+    if (
+      !("webkitSpeechRecognition" in window) &&
+      !("speechRecognition" in window)
+    ) {
+      alert(t("voice_search_not_supported"));
       return;
     }
 
     const win = window as any;
-    const SpeechRecognition = win.webkitSpeechRecognition || win.SpeechRecognition;
+    const SpeechRecognition =
+      win.webkitSpeechRecognition || win.SpeechRecognition;
     const recognition = new SpeechRecognition();
-    recognition.lang = language === 'bn' ? "bn-BD" : "en-US";
+    recognition.lang = language === "bn" ? "bn-BD" : "en-US";
     recognition.continuous = false;
     recognition.interimResults = false;
 
@@ -94,12 +99,12 @@ export default function SearchBar() {
 
   // Categories for filter
   const categories = [
-    { id: "all", name: t('categories_title'), icon: "📦" },
-    { id: "fruits", name: t('cat_fruits'), icon: "🍎" },
-    { id: "vegetables", name: t('cat_vegetables'), icon: "🥦" },
-    { id: "meat", name: t('cat_meat'), icon: "🥩" },
-    { id: "fish", name: t('cat_fish'), icon: "🐟" },
-    { id: "dairy", name: t('cat_dairy'), icon: "🥛" },
+    { id: "all", name: t("categories_title"), icon: "📦" },
+    { id: "fruits", name: t("cat_fruits"), icon: "🍎" },
+    { id: "vegetables", name: t("cat_vegetables"), icon: "🥦" },
+    { id: "meat", name: t("cat_meat"), icon: "🥩" },
+    { id: "fish", name: t("cat_fish"), icon: "🐟" },
+    { id: "dairy", name: t("cat_dairy"), icon: "🥛" },
   ];
 
   const addToHistory = (term: string) => {
@@ -130,11 +135,12 @@ export default function SearchBar() {
   });
 
   // Smart suggestions for categories
-  const categorySuggestions = debouncedTerm.length >= 2 
-    ? categories.filter(cat => 
-        cat.name.includes(debouncedTerm) && cat.id !== "all"
-      )
-    : [];
+  const categorySuggestions =
+    debouncedTerm.length >= 2
+      ? categories.filter(
+          (cat) => cat.name.includes(debouncedTerm) && cat.id !== "all",
+        )
+      : [];
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -195,7 +201,7 @@ export default function SearchBar() {
                 size={16}
                 className={isCategoryOpen ? "text-green-600" : ""}
               />
-              <span className="max-w-[80px] truncate">
+              <span className="max-w-[120px] truncate">
                 {categories.find((c) => c.id === selectedCategory)?.name}
               </span>
               <ChevronDown
@@ -247,7 +253,7 @@ export default function SearchBar() {
               }}
               onFocus={() => setIsOpen(true)}
               onKeyDown={handleKeyDown}
-              placeholder={t('search_placeholder')}
+              placeholder={t("search_placeholder")}
               className="w-full bg-transparent py-4 pl-12 pr-10 outline-none text-base font-bold text-gray-900 dark:text-white placeholder:text-gray-400"
             />
           </div>
@@ -278,7 +284,7 @@ export default function SearchBar() {
               type="submit"
               className="bg-gray-900 dark:bg-white text-white dark:text-black px-6 py-2.5 rounded-xl text-xs font-black uppercase tracking-widest hover:bg-green-600 hover:text-white transition-all shadow-lg active:scale-95 ml-2"
             >
-              {t('search_action')}
+              {t("search_action")}
             </button>
           </div>
         </div>
@@ -296,7 +302,7 @@ export default function SearchBar() {
                 {!searchTerm && history.length > 0 && (
                   <div className="mb-6">
                     <p className="text-[10px] font-black uppercase tracking-[0.2em] text-gray-400 px-4 mb-3">
-                      {t('recent_searches')}
+                      {t("recent_searches")}
                     </p>
                     <div className="space-y-1">
                       {history.map((item, idx) => (
@@ -332,7 +338,7 @@ export default function SearchBar() {
                 {!searchTerm && (
                   <div className="mb-4">
                     <p className="text-[10px] font-black uppercase tracking-[0.2em] text-gray-400 px-4 mb-3">
-                      {t('popular_searches_title')}
+                      {t("popular_searches_title")}
                     </p>
                     <div className="flex flex-wrap gap-2 px-4">
                       {POPULAR_SEARCHES.map((item, idx) => (
@@ -360,7 +366,7 @@ export default function SearchBar() {
                     {categorySuggestions.length > 0 && (
                       <div className="space-y-2">
                         <p className="text-[10px] font-black uppercase tracking-[0.2em] text-gray-400 px-4">
-                          {t('suggested_categories')}
+                          {t("suggested_categories")}
                         </p>
                         <div className="grid grid-cols-2 gap-2 px-4">
                           {categorySuggestions.map((cat) => (
@@ -385,7 +391,7 @@ export default function SearchBar() {
                     {/* Product Results */}
                     <div className="space-y-2">
                       <p className="text-[10px] font-black uppercase tracking-[0.2em] text-gray-400 px-4">
-                        {t('products_title_search')}
+                        {t("products_title_search")}
                       </p>
                       {results && results.length > 0 ? (
                         <>
@@ -404,15 +410,14 @@ export default function SearchBar() {
                               }`}
                             >
                               <div className="w-14 h-14 rounded-xl overflow-hidden bg-gray-100 dark:bg-white/5 flex-shrink-0">
-                                {product.image && (
-                                  <Image
-                                    src={product.image}
-                                    alt={product.name}
-                                    width={56}
-                                    height={56}
-                                    className="w-full h-full object-cover group-hover:scale-110 transition-transform"
-                                  />
-                                )}
+                                <Image
+                                  src={product.image || getProductFallbackImage(product.name)}
+                                  alt={product.name}
+                                  width={56}
+                                  height={56}
+                                  sizes="56px"
+                                  className="w-full h-full object-cover group-hover:scale-110 transition-transform"
+                                />
                               </div>
                               <div className="flex-1">
                                 <h4
@@ -425,7 +430,8 @@ export default function SearchBar() {
                                   {product.name}
                                 </h4>
                                 <p className="text-xs text-gray-500 dark:text-gray-400">
-                                  {t('currency_symbol')}{product.price} / {product.unit}
+                                  {t("currency_symbol")}
+                                  {product.price.toLocaleString(language === 'bn' ? 'bn-BD' : 'en-US')} / {product.unit === 'kg' ? t('unit_kg') : product.unit === 'g' ? t('unit_g') : (product.unit || t('default_unit'))}
                                 </p>
                               </div>
                               <ArrowRight
@@ -445,7 +451,7 @@ export default function SearchBar() {
                             }}
                             className="flex items-center justify-center gap-2 p-4 mt-4 bg-gray-50 dark:bg-white/5 hover:bg-green-500 hover:text-white rounded-2xl text-sm font-black transition-all"
                           >
-                            {t('see_all')}
+                            {t("see_all")}
                             <ArrowRight className="w-4 h-4" />
                           </Link>
                         </>
@@ -456,7 +462,7 @@ export default function SearchBar() {
                               <Search className="w-8 h-8 text-gray-300" />
                             </div>
                             <p className="text-gray-500 dark:text-gray-400 font-bold">
-                              {t('no_products_found')}
+                              {t("no_products_found")}
                             </p>
                           </div>
                         )

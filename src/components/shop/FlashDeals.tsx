@@ -11,6 +11,7 @@ import { toast } from "react-hot-toast";
 import { ShoppingBag } from "lucide-react";
 
 import { useLanguage } from "@/components/LanguageContext";
+import { getProductFallbackImage } from "@/lib/category-utils";
 
 interface FlashDealsProps {
   products: Product[];
@@ -18,7 +19,7 @@ interface FlashDealsProps {
 
 export default function FlashDeals({ products }: FlashDealsProps) {
   const { addToCart } = useCart();
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const [timeLeft, setTimeLeft] = useState({
     hours: 12,
     minutes: 45,
@@ -98,35 +99,36 @@ export default function FlashDeals({ products }: FlashDealsProps) {
               </div>
 
               <div className="relative aspect-square rounded-[32px] overflow-hidden bg-gray-50 dark:bg-white/5 mb-6">
-                {product.image && (
-                  <Image
-                    src={product.image}
-                    alt={product.name}
-                    fill
-                    className="object-cover group-hover:scale-110 transition-transform duration-700"
-                  />
-                )}
+                <Image
+                  src={product.image || getProductFallbackImage(product.nameEn || product.name)}
+                  alt={language === 'en' ? (product.nameEn || product.name) : product.name}
+                  fill
+                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, (max-width: 1280px) 25vw, 20vw"
+                  className="object-cover group-hover:scale-110 transition-transform duration-700"
+                />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
               </div>
 
               <div className="space-y-4">
                 <div>
                   <h3 className="text-lg font-black text-gray-900 dark:text-white group-hover:text-orange-500 transition-colors line-clamp-1">
-                    {product.name}
+                    {language === 'en' ? (product.nameEn || product.name) : product.name}
                   </h3>
-                  <p className="text-sm text-gray-500 dark:text-gray-400 font-medium">{t('buy_more_save_direct').replace('!', '')} {product.unit}</p>
+                  <p className="text-sm text-gray-500 dark:text-gray-400 font-medium">
+                    {product.unit === 'kg' ? t('unit_kg') : product.unit === 'g' ? t('unit_g') : product.unit}
+                  </p>
                 </div>
 
                 <div className="flex items-end justify-between">
                     <div>
-                      <div className="text-xs text-gray-400 line-through font-bold">{t('currency_symbol')}{Math.round(product.price * 1.25)}</div>
-                      <div className="text-2xl font-black text-gray-900 dark:text-white">{t('currency_symbol')}{product.price}</div>
+                      <div className="text-xs text-gray-400 line-through font-bold">{t('currency_symbol')}{Math.round(product.price * 1.25).toLocaleString(language === 'bn' ? 'bn-BD' : 'en-US')}</div>
+                      <div className="text-2xl font-black text-gray-900 dark:text-white">{t('currency_symbol')}{product.price.toLocaleString(language === 'bn' ? 'bn-BD' : 'en-US')}</div>
                     </div>
                     <div className="flex gap-2">
                       <button
                         onClick={() => {
                           addToCart(product, 1);
-                          toast.success(`${product.name} ${t('add_to_cart_success')}`);
+                          toast.success(`${language === 'en' ? (product.nameEn || product.name) : product.name} ${t('add_to_cart_success')}`);
                         }}
                         className="w-12 h-12 rounded-2xl bg-orange-500 text-white flex items-center justify-center hover:bg-orange-600 transition-all shadow-xl shadow-orange-500/20 active:scale-95"
                       >

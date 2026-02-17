@@ -4,6 +4,8 @@ import { CheckCircle2, ShoppingCart } from "lucide-react";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import { useLanguage } from "@/components/LanguageContext";
+import Image from "next/image";
+import { getProductFallbackImage } from "@/lib/category-utils";
 
 interface Combo {
   _id: string;
@@ -16,7 +18,7 @@ interface Combo {
 }
 
 export default function ComboPacks() {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const [combos, setCombos] = useState<Combo[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -77,10 +79,10 @@ export default function ComboPacks() {
                   </div>
                   <div className="text-right">
                     <div className="text-3xl font-black text-green-600">
-                      {t('currency_symbol')}{combo.price}
+                      {t('currency_symbol')}{combo.price.toLocaleString(language === 'bn' ? 'bn-BD' : 'en-US')}
                     </div>
                     <div className="text-xs font-bold text-orange-500">
-                      {t('currency_symbol')}{combo.saveAmount} {t('combo_packs_save')}
+                      {t('currency_symbol')}{combo.saveAmount.toLocaleString(language === 'bn' ? 'bn-BD' : 'en-US')} {t('combo_packs_save')}
                     </div>
                   </div>
                 </div>
@@ -91,7 +93,15 @@ export default function ComboPacks() {
                       key={idx}
                       className="flex items-center gap-3 text-gray-600 dark:text-gray-400 font-bold"
                     >
-                      <CheckCircle2 className="w-5 h-5 text-green-500 shrink-0" />
+                      <div className="relative w-8 h-8 rounded-full overflow-hidden shrink-0 bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700">
+                        <Image
+                          src={getProductFallbackImage(item)}
+                          alt={item}
+                          fill
+                          sizes="32px"
+                          className="object-cover"
+                        />
+                      </div>
                       <span>{item}</span>
                     </div>
                   ))}

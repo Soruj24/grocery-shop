@@ -1,13 +1,19 @@
+"use client";
+
 import Image from "next/image";
+import { useLanguage } from "@/components/LanguageContext";
+import { getProductFallbackImage } from "@/lib/category-utils";
 
 export default function HeroBackground() {
+  const { t } = useLanguage();
   return (
     <>
       <div className="absolute inset-0 bg-gradient-to-tr from-[#020617] via-[#020617]/40 to-transparent z-10" />
       <Image
-        src="https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&q=80&w=2000"
-        alt="Fresh Groceries"
+        src={getProductFallbackImage("vegetable")}
+        alt={t('hero_bg_alt')}
         fill
+        sizes="100vw"
         className="object-cover transition-transform duration-[5000ms] group-hover:scale-110"
         priority
       />

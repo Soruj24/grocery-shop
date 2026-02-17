@@ -1,3 +1,5 @@
+"use client";
+
 import { ShoppingBag, ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import { useLanguage } from "@/components/LanguageContext";

@@ -114,7 +114,7 @@ export default function AppDownload() {
                 <div className="absolute inset-0 bg-gradient-to-t from-green-500/20 to-transparent rounded-[100px] blur-3xl animate-pulse" />
                 <Image
                   src="https://chaldn.com/_mpapi/static/1.0.0/web/images/home/phone-app-mockup.png" 
-                  alt="App Mockup"
+                  alt={t('app_mockup_alt')}
                   fill
                   sizes="500px"
                   className="object-contain drop-shadow-[0_50px_50px_rgba(0,0,0,0.5)]"

@@ -429,7 +429,7 @@ export default function CheckoutForm({
               <div className="flex items-center gap-3">
                 <CreditCard className="w-4 h-4 text-green-500" />
                 <span className="text-sm font-bold uppercase">
-                  {paymentMethod}
+                  {t(`${paymentMethod}_payment`)}
                 </span>
               </div>
             </div>

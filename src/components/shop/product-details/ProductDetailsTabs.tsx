@@ -2,13 +2,16 @@
 
 import { Info } from "lucide-react";
 import { useLanguage } from "@/components/LanguageContext";
+import { Product } from "@/types/product";
 
 interface ProductDetailsTabsProps {
-  productName: string;
+  product: Product;
 }
 
-export default function ProductDetailsTabs({ productName }: ProductDetailsTabsProps) {
-  const { t } = useLanguage();
+export default function ProductDetailsTabs({ product }: ProductDetailsTabsProps) {
+  const { t, language } = useLanguage();
+
+  const productName = language === 'en' ? (product.nameEn || product.name) : product.name;
 
   return (
     <div className="bg-white dark:bg-gray-900 rounded-[40px] border border-gray-100 dark:border-gray-800 p-8 md:p-12">

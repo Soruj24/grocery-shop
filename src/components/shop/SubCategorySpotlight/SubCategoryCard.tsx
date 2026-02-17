@@ -1,6 +1,8 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 
+import { useLanguage } from "@/components/LanguageContext";
+
 interface SubCategoryCardProps {
   id: string;
   name: string;
@@ -9,6 +11,7 @@ interface SubCategoryCardProps {
 }
 
 export default function SubCategoryCard({ id, name, count, index }: SubCategoryCardProps) {
+  const { t, language } = useLanguage();
   return (
     <Link
       href={`/category/${id}`}
@@ -16,7 +19,7 @@ export default function SubCategoryCard({ id, name, count, index }: SubCategoryC
     >
       {/* Decorative Number */}
       <div className="absolute top-6 right-6 text-6xl font-black text-white/5 select-none group-hover:text-white/10 transition-colors">
-        {index + 1}
+        {(index + 1).toLocaleString(language === 'bn' ? 'bn-BD' : 'en-US')}
       </div>
 
       <div className="w-16 h-16 rounded-3xl bg-white/5 border border-white/10 flex items-center justify-center text-white mb-6 group-hover:scale-110 group-hover:bg-green-600/20 group-hover:border-green-600/30 transition-all duration-500">
@@ -27,7 +30,7 @@ export default function SubCategoryCard({ id, name, count, index }: SubCategoryC
         {name}
       </h3>
       <p className="text-xs font-bold text-gray-500 mt-2 uppercase tracking-widest">
-        {count}+ পণ্য
+        {count.toLocaleString(language === 'bn' ? 'bn-BD' : 'en-US')}+ {t('products_suffix')}
       </p>
     </Link>
   );

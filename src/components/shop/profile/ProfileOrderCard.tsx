@@ -26,7 +26,7 @@ export default function ProfileOrderCard({ order }: ProfileOrderCardProps) {
         _id: item.product, // Using product ID as _id
         name: item.name,
         price: item.price,
-        image: item.image || "", // Use empty string if image is not in snapshot
+        image: item.image || getProductFallbackImage(item.name), // Use fallback if image is not in snapshot
       };
       addToCart(cartItem, item.quantity);
     });
@@ -73,7 +73,7 @@ export default function ProfileOrderCard({ order }: ProfileOrderCardProps) {
           <div className="space-y-1">
             <div className="flex items-center gap-3">
               <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest font-mono">
-                Order #{order._id.slice(-8).toUpperCase()}
+                {t('order_id_label')} #{order._id.slice(-8).toUpperCase()}
               </span>
               <span className={`px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest border ${getStatusStyle(order.status)}`}>
                 {getStatusLabel(order.status)}
@@ -143,11 +143,14 @@ export default function ProfileOrderCard({ order }: ProfileOrderCardProps) {
                   <div key={index} className="flex items-center justify-between gap-4 p-4 bg-gray-50 dark:bg-white/5 rounded-2xl">
                     <div className="flex items-center gap-4">
                       <div className="w-12 h-12 bg-white dark:bg-gray-800 rounded-xl flex items-center justify-center border border-gray-100 dark:border-white/5 overflow-hidden">
-                        {item.image ? (
-                          <Image src={item.image} alt={item.name} className="w-full h-full object-cover" />
-                        ) : (
-                          <Package className="text-gray-300" size={20} />
-                        )}
+                        <Image 
+                          src={item.image || getProductFallbackImage(item.name)} 
+                          alt={item.name} 
+                          width={48} 
+                          height={48} 
+                          sizes="48px"
+                          className="w-full h-full object-cover" 
+                        />
                       </div>
                       <div>
                         <p className="font-bold text-gray-900 dark:text-white text-sm">{item.name}</p>

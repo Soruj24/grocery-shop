@@ -4,8 +4,10 @@ import { useWishlist } from "@/components/WishlistContext";
 import ProductCard from "@/components/ProductCard";
 import EmptyWishlistState from "@/components/shop/wishlist/EmptyWishlistState";
 import { Heart, Trash2 } from "lucide-react";
+import { useLanguage } from "@/components/LanguageContext";
 
 export default function WishlistSection() {
+  const { t } = useLanguage();
   const { wishlist, totalWishlistItems, clearWishlist } = useWishlist();
 
   return (
@@ -14,9 +16,9 @@ export default function WishlistSection() {
         <div>
           <h2 className="text-3xl font-black text-gray-900 dark:text-white flex items-center gap-3">
             <Heart className="text-rose-500" fill="currentColor" />
-            আপনার উইশলিস্ট
+            {t('wishlist_title')}
           </h2>
-          <p className="text-gray-500 dark:text-gray-400 mt-1">আপনার পছন্দের প্রোডাক্টগুলো এখানে সংরক্ষিত আছে</p>
+          <p className="text-gray-500 dark:text-gray-400 mt-1">{t('wishlist_desc')}</p>
         </div>
         
         {wishlist.length > 0 && (
@@ -25,7 +27,7 @@ export default function WishlistSection() {
             className="flex items-center gap-2 px-4 py-2 text-sm font-bold text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-500/10 rounded-xl transition-all"
           >
             <Trash2 size={16} />
-            সব মুছে ফেলুন
+            {t('clear_all')}
           </button>
         )}
       </div>

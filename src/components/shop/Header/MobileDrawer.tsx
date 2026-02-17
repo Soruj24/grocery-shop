@@ -5,6 +5,8 @@ import { signOut } from "next-auth/react";
 import { Category } from "@/types/category";
 import { Session } from "next-auth";
 import { useLanguage } from "@/components/LanguageContext";
+import Image from "next/image";
+import { getCategoryFallbackImage } from "@/lib/category-utils";
 
 interface MobileDrawerProps {
   isOpen: boolean;
@@ -63,7 +65,9 @@ export default function MobileDrawer({
                   <div className="bg-green-600 p-2 rounded-xl shadow-lg shadow-green-600/20">
                     <ShoppingBasket className="w-6 h-6 text-white" />
                   </div>
-                  <span className="text-xl font-black text-gray-900 dark:text-white">{t('shop_name')}</span>
+                  <span className="text-xl font-black text-gray-900 dark:text-white">
+                    {t('brand_name_first')} <span className="text-green-600">{t('brand_name_second')}</span>
+                  </span>
                 </Link>
                 <button
                   onClick={onClose}
@@ -137,11 +141,15 @@ export default function MobileDrawer({
                       className="flex flex-col items-center gap-3 p-4 rounded-3xl bg-gray-50 dark:bg-white/[0.02] border border-gray-100 dark:border-white/5 hover:border-green-500/30 transition-all group"
                     >
                       <div className="w-12 h-12 rounded-2xl bg-white dark:bg-white/5 flex items-center justify-center shadow-sm group-hover:scale-110 transition-transform">
-                        {cat.image ? (
-                          <img src={cat.image} alt={language === 'en' ? (cat.nameEn || cat.name) : cat.name} className="w-8 h-8 object-contain" />
-                        ) : (
-                          <span className="text-lg font-black text-green-600">{(language === 'en' ? (cat.nameEn || cat.name) : cat.name).charAt(0)}</span>
-                        )}
+                        <div className="relative w-8 h-8">
+                          <Image
+                            src={cat.image || getCategoryFallbackImage(cat.nameEn || cat.name)}
+                            alt={language === 'en' ? (cat.nameEn || cat.name) : cat.name}
+                            fill
+                            sizes="32px"
+                            className="object-contain"
+                          />
+                        </div>
                       </div>
                       <span className="text-[11px] font-black text-gray-700 dark:text-gray-300 group-hover:text-green-600 transition-colors line-clamp-1">
                         {language === 'en' ? (cat.nameEn || cat.name) : cat.name}

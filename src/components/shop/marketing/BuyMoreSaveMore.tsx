@@ -4,6 +4,8 @@ import { motion } from "framer-motion";
 import { TrendingUp, Plus } from "lucide-react";
 import useEmblaCarousel from 'embla-carousel-react';
 import { useLanguage } from "@/components/LanguageContext";
+import Image from "next/image";
+import { getProductFallbackImage } from "@/lib/category-utils";
 
 export default function BuyMoreSaveMore() {
   const { t } = useLanguage();
@@ -14,11 +16,11 @@ export default function BuyMoreSaveMore() {
   });
 
   const offers = [
-    { name: t('buy_more_rice'), base: `${t('price_75_tk')}/${t('buy_more_unit_kg')}`, tiered: t('buy_more_rice_tiered'), img: "🍚", save: `${t('buy_more_save')} ${t('price_25_tk')}` },
-    { name: t('buy_more_oil'), base: `${t('price_165_tk')}/${t('buy_more_unit_liter')}`, tiered: t('buy_more_oil_tiered'), img: "🛢️", save: `${t('buy_more_save')} ${t('price_35_tk')}` },
-    { name: t('buy_more_sugar'), base: `${t('price_140_tk')}/${t('buy_more_unit_kg')}`, tiered: t('buy_more_sugar_tiered'), img: "🧂", save: `${t('buy_more_save')} ${t('price_15_tk')}` },
-    { name: t('buy_more_dal'), base: `${t('price_135_tk')}/${t('buy_more_unit_kg')}`, tiered: t('buy_more_dal_tiered'), img: "🍲", save: `${t('buy_more_save')} ${t('price_35_tk')}` },
-    { name: t('buy_more_soap'), base: `${t('price_120_tk')}/${t('buy_more_unit_pack')}`, tiered: t('buy_more_soap_tiered'), img: "🧼", save: `${t('buy_more_save')} ${t('price_30_tk')}` },
+    { name: t('buy_more_rice'), base: `${t('price_75_tk')}/${t('buy_more_unit_kg')}`, tiered: t('buy_more_rice_tiered'), img: getProductFallbackImage("rice"), save: `${t('buy_more_save')} ${t('price_25_tk')}` },
+    { name: t('buy_more_oil'), base: `${t('price_165_tk')}/${t('buy_more_unit_liter')}`, tiered: t('buy_more_oil_tiered'), img: getProductFallbackImage("oil"), save: `${t('buy_more_save')} ${t('price_35_tk')}` },
+    { name: t('buy_more_sugar'), base: `${t('price_140_tk')}/${t('buy_more_unit_kg')}`, tiered: t('buy_more_sugar_tiered'), img: getProductFallbackImage("sugar"), save: `${t('buy_more_save')} ${t('price_15_tk')}` },
+    { name: t('buy_more_dal'), base: `${t('price_135_tk')}/${t('buy_more_unit_kg')}`, tiered: t('buy_more_dal_tiered'), img: getProductFallbackImage("dal"), save: `${t('buy_more_save')} ${t('price_35_tk')}` },
+    { name: t('buy_more_soap'), base: `${t('price_120_tk')}/${t('buy_more_unit_pack')}`, tiered: t('buy_more_soap_tiered'), img: getProductFallbackImage("soap"), save: `${t('buy_more_save')} ${t('price_30_tk')}` },
   ];
 
   return (
@@ -43,8 +45,14 @@ export default function BuyMoreSaveMore() {
                   whileHover={{ y: -10 }}
                   className="bg-white dark:bg-gray-900 rounded-[40px] p-8 border border-gray-100 dark:border-white/5 shadow-xl shadow-gray-200/50 dark:shadow-none h-full flex flex-col"
                 >
-                  <div className="w-20 h-20 bg-gray-50 dark:bg-black/20 rounded-3xl flex items-center justify-center text-4xl mb-6">
-                    {offer.img}
+                  <div className="w-20 h-20 bg-gray-50 dark:bg-black/20 rounded-3xl flex items-center justify-center mb-6 overflow-hidden relative">
+                    <Image
+                      src={offer.img}
+                      alt={offer.name}
+                      fill
+                      sizes="80px"
+                      className="object-cover"
+                    />
                   </div>
                   
                   <div className="space-y-2 mb-6 flex-1">

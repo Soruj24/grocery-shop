@@ -1,7 +1,7 @@
 "use client";
 
 import OfferBanner from "./SpecialOfferBanners/OfferBanner";
-
+import { getProductFallbackImage } from "@/lib/category-utils";
 import { useLanguage } from "@/components/LanguageContext";
 
 export default function SpecialOfferBanners() {
@@ -14,7 +14,7 @@ export default function SpecialOfferBanners() {
         title={t('banner_1_title')}
         desc={t('banner_1_desc')}
         buttonText={t('banner_1_button')}
-        image="https://images.unsplash.com/photo-1610832958506-aa56338406cd?auto=format&fit=crop&q=80&w=600"
+        image={getProductFallbackImage("orange")}
         gradient="bg-gradient-to-br from-orange-400 to-rose-500"
         shadow="shadow-orange-500/20"
         textColor="text-white"
@@ -26,7 +26,7 @@ export default function SpecialOfferBanners() {
         title={t('banner_2_title')}
         desc={t('banner_2_desc')}
         buttonText={t('banner_2_button')}
-        image="https://images.unsplash.com/photo-1558961363-fa8fdf82db35?auto=format&fit=crop&q=80&w=600"
+        image={getProductFallbackImage("bread")}
         gradient="bg-gradient-to-br from-blue-500 to-indigo-600"
         shadow="shadow-blue-500/20"
         textColor="text-white"

@@ -11,7 +11,7 @@ interface SubCategorySpotlightProps {
 export default function SubCategorySpotlight({
   categories,
 }: SubCategorySpotlightProps) {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const subCategories = categories
     .flatMap((c: Category) => c.subCategories || [])
     .slice(0, 8);
@@ -36,7 +36,7 @@ export default function SubCategorySpotlight({
             <SubCategoryCard 
               key={sub._id}
               id={sub._id}
-              name={sub.name}
+              name={language === 'en' ? (sub.nameEn || sub.name) : sub.name}
               count={sub.products?.length || 24}
               index={idx}
             />

@@ -5,22 +5,28 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronLeft, ChevronRight, Maximize2 } from "lucide-react";
 import { useLanguage } from "@/components/LanguageContext";
+import { Product } from "@/types/product";
+import { getProductFallbackImage } from "@/lib/category-utils";
 
 interface ProductImageProps {
   image?: string;
   name: string;
   id: string;
+  product?: Product;
 }
 
-export default function ProductImage({ image, name, id }: ProductImageProps) {
-  const { t } = useLanguage();
-  // Mocking multiple images for the gallery
-  const images = [
-    image || `https://picsum.photos/seed/${id}/800/800`,
-    `https://picsum.photos/seed/${id}-2/800/800`,
-    `https://picsum.photos/seed/${id}-3/800/800`,
-    `https://picsum.photos/seed/${id}-4/800/800`,
-  ];
+export default function ProductImage({ image, name, id, product }: ProductImageProps) {
+  const { t, language } = useLanguage();
+  
+  const productName = product 
+    ? (language === 'en' ? (product.nameEn || product.name) : product.name)
+    : name;
+
+  // Use fallback image if no product image is available
+  const primaryImage = image || getProductFallbackImage(productName);
+  
+  // Only show multiple images if we have them (mocking disabled for relevance)
+  const images = [primaryImage];
 
   const [activeIndex, setActiveIndex] = useState(0);
   const [isZoomed, setIsZoomed] = useState(false);
@@ -71,26 +77,28 @@ export default function ProductImage({ image, name, id }: ProductImageProps) {
         </div>
 
         {/* Navigation Arrows */}
-        <div className="absolute inset-x-4 top-1/2 -translate-y-1/2 flex justify-between pointer-events-none">
-          <button
-            onClick={(e) => {
-              e.stopPropagation();
-              setActiveIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
-            }}
-            className="p-3 bg-white/90 dark:bg-gray-800/90 backdrop-blur-md rounded-2xl shadow-xl pointer-events-auto opacity-0 group-hover:opacity-100 transition-all duration-300 -translate-x-4 group-hover:translate-x-0"
-          >
-            <ChevronLeft className="w-6 h-6" />
-          </button>
-          <button
-            onClick={(e) => {
-              e.stopPropagation();
-              setActiveIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1));
-            }}
-            className="p-3 bg-white/90 dark:bg-gray-800/90 backdrop-blur-md rounded-2xl shadow-xl pointer-events-auto opacity-0 group-hover:opacity-100 transition-all duration-300 translate-x-4 group-hover:translate-x-0"
-          >
-            <ChevronRight className="w-6 h-6" />
-          </button>
-        </div>
+        {images.length > 1 && (
+          <div className="absolute inset-x-4 top-1/2 -translate-y-1/2 flex justify-between pointer-events-none">
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                setActiveIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
+              }}
+              className="p-3 bg-white/90 dark:bg-gray-800/90 backdrop-blur-md rounded-2xl shadow-xl pointer-events-auto opacity-0 group-hover:opacity-100 transition-all duration-300 -translate-x-4 group-hover:translate-x-0"
+            >
+              <ChevronLeft className="w-6 h-6" />
+            </button>
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                setActiveIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1));
+              }}
+              className="p-3 bg-white/90 dark:bg-gray-800/90 backdrop-blur-md rounded-2xl shadow-xl pointer-events-auto opacity-0 group-hover:opacity-100 transition-all duration-300 translate-x-4 group-hover:translate-x-0"
+            >
+              <ChevronRight className="w-6 h-6" />
+            </button>
+          </div>
+        )}
       </div>
 
       {/* Thumbnails */}
@@ -107,8 +115,9 @@ export default function ProductImage({ image, name, id }: ProductImageProps) {
           >
             <Image
               src={img}
-              alt={`${name} ${t('thumbnail')} ${idx + 1}`}
+              alt={`${productName} ${t('thumbnail')} ${(idx + 1).toLocaleString(language === 'bn' ? 'bn-BD' : 'en-US')}`}
               fill
+              sizes="96px"
               className="object-cover p-2"
             />
           </button>

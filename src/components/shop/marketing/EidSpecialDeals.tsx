@@ -5,10 +5,12 @@ import { Gift, Sparkles, ShoppingBag } from "lucide-react";
 import { useCart } from "@/components/CartContext";
 import { toast } from "react-hot-toast";
 import { useLanguage } from "@/components/LanguageContext";
+import Image from "next/image";
+import { getProductFallbackImage } from "@/lib/category-utils";
 
 export default function EidSpecialDeals() {
   const { addToCart } = useCart();
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
 
   const deals = [
     {
@@ -16,7 +18,7 @@ export default function EidSpecialDeals() {
       name: t('eid_semai'),
       price: 120,
       oldPrice: 150,
-      img: "🍜",
+      img: getProductFallbackImage("noodle"),
       stock: 100,
     },
     {
@@ -24,7 +26,7 @@ export default function EidSpecialDeals() {
       name: t('eid_rice'),
       price: 580,
       oldPrice: 650,
-      img: "🍚",
+      img: getProductFallbackImage("rice"),
       stock: 50,
     },
     {
@@ -32,7 +34,7 @@ export default function EidSpecialDeals() {
       name: t('eid_milk'),
       price: 850,
       oldPrice: 920,
-      img: "🥛",
+      img: getProductFallbackImage("milk"),
       stock: 30,
     },
     {
@@ -40,7 +42,7 @@ export default function EidSpecialDeals() {
       name: t('eid_spices'),
       price: 450,
       oldPrice: 500,
-      img: "🌶️",
+      img: getProductFallbackImage("spice"),
       stock: 20,
     },
   ];
@@ -93,8 +95,14 @@ export default function EidSpecialDeals() {
               viewport={{ once: true }}
               className="group relative bg-white dark:bg-white/5 rounded-[40px] p-6 border border-gray-100 dark:border-white/5 hover:border-rose-500/30 transition-all shadow-xl shadow-gray-200/50 dark:shadow-none"
             >
-              <div className="aspect-square bg-gray-50 dark:bg-black/20 rounded-[32px] flex items-center justify-center text-6xl mb-6 transform group-hover:scale-110 transition-transform">
-                {deal.img}
+              <div className="aspect-square bg-gray-50 dark:bg-black/20 rounded-[32px] flex items-center justify-center mb-6 overflow-hidden relative">
+                <Image
+                  src={deal.img}
+                  alt={deal.name}
+                  fill
+                  sizes="200px"
+                  className="object-cover transform group-hover:scale-110 transition-transform duration-500"
+                />
               </div>
 
               <div className="space-y-4">
@@ -103,10 +111,10 @@ export default function EidSpecialDeals() {
                 </h3>
                 <div className="flex items-baseline gap-2">
                   <span className="text-2xl font-black text-rose-500">
-                    {t('currency_symbol')}{deal.price}
+                    {t('currency_symbol')}{deal.price.toLocaleString(language === 'bn' ? 'bn-BD' : 'en-US')}
                   </span>
                   <span className="text-sm text-gray-400 line-through font-bold">
-                    {t('currency_symbol')}{deal.oldPrice}
+                    {t('currency_symbol')}{deal.oldPrice.toLocaleString(language === 'bn' ? 'bn-BD' : 'en-US')}
                   </span>
                 </div>
 

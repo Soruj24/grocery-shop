@@ -14,7 +14,7 @@ interface StickyCheckoutBarProps {
 export default function StickyCheckoutBar({ product }: StickyCheckoutBarProps) {
   const { addToCart } = useCart();
   const router = useRouter();
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
 
   const handleBuyNow = () => {
     addToCart(product, 1);
@@ -37,7 +37,7 @@ export default function StickyCheckoutBar({ product }: StickyCheckoutBarProps) {
             {t('price_label')}
           </span>
           <span className="text-xl font-black text-gray-800 dark:text-white">
-            {t('currency_symbol')}{product.discountPrice || product.price}
+            {t('currency_symbol')}{(product.discountPrice || product.price).toLocaleString(language === 'bn' ? 'bn-BD' : 'en-US')}
           </span>
         </div>
 

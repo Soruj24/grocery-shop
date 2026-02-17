@@ -6,6 +6,7 @@ import { useCart } from "@/components/CartContext";
 import { useLanguage } from "@/components/LanguageContext";
 import Image from "next/image";
 import Link from "next/link";
+import { getProductFallbackImage } from "@/lib/category-utils";
 
 export default function CartDrawer({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
   const { cart, removeFromCart, updateQuantity, totalPrice } = useCart();
@@ -62,14 +63,13 @@ export default function CartDrawer({ isOpen, onClose }: { isOpen: boolean; onClo
                       className="flex gap-4 p-4 bg-gray-50 dark:bg-white/5 rounded-3xl border border-transparent hover:border-green-500/20 transition-all group"
                     >
                       <div className="relative w-24 h-24 rounded-2xl overflow-hidden bg-white dark:bg-white/5 flex-shrink-0">
-                        {item.image && (
-                          <Image
-                            src={item.image}
-                            alt={item.name}
-                            fill
-                            className="object-cover group-hover:scale-110 transition-transform duration-500"
-                          />
-                        )}
+                        <Image
+                          src={item.image || getProductFallbackImage(item.name)}
+                          alt={item.name}
+                          fill
+                          sizes="96px"
+                          className="object-cover group-hover:scale-110 transition-transform duration-500"
+                        />
                       </div>
                       
                       <div className="flex-1 space-y-3">

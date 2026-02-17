@@ -9,7 +9,7 @@ interface CartSummaryProps {
 }
 
 export default function CartSummary({ totalPrice }: CartSummaryProps) {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const [promoCode, setPromoCode] = useState("");
   const [appliedCoupon, setAppliedCoupon] = useState<{
     code: string;
@@ -109,7 +109,7 @@ export default function CartSummary({ totalPrice }: CartSummaryProps) {
             <span>{t("subtotal")}</span>
             <span className="text-gray-900 dark:text-white">
               {t("currency_symbol")}
-              {totalPrice}
+              {totalPrice.toLocaleString(language === 'bn' ? 'bn-BD' : 'en-US')}
             </span>
           </div>
 
@@ -124,8 +124,8 @@ export default function CartSummary({ totalPrice }: CartSummaryProps) {
             </div>
             <span className="text-gray-900 dark:text-white">
               {deliveryFee === 0
-                ? `${t("currency_symbol")}0`
-                : `${t("currency_symbol")}${deliveryFee}`}
+                ? `${t("currency_symbol")}${(0).toLocaleString(language === 'bn' ? 'bn-BD' : 'en-US')}`
+                : `${t("currency_symbol")}${deliveryFee.toLocaleString(language === 'bn' ? 'bn-BD' : 'en-US')}`}
             </span>
           </div>
 
@@ -144,7 +144,7 @@ export default function CartSummary({ totalPrice }: CartSummaryProps) {
               <span>{t("discount")}</span>
               <span>
                 -{t("currency_symbol")}
-                {discount}
+                {discount.toLocaleString(language === 'bn' ? 'bn-BD' : 'en-US')}
               </span>
             </div>
           )}
@@ -158,7 +158,7 @@ export default function CartSummary({ totalPrice }: CartSummaryProps) {
               </span>
               <div className="text-4xl font-black text-gray-900 dark:text-white tracking-tight">
                 {t("currency_symbol")}
-                {finalTotal}
+                {finalTotal.toLocaleString(language === 'bn' ? 'bn-BD' : 'en-US')}
               </div>
             </div>
           </div>

@@ -6,6 +6,7 @@ import Link from "next/link";
 import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useLanguage } from "@/components/LanguageContext";
+import { getProductFallbackImage } from "@/lib/category-utils";
 
 export default function Hero() {
   const { t } = useLanguage();
@@ -17,7 +18,7 @@ export default function Hero() {
       title: t('hero_title_1'),
       subtitle: t('hero_subtitle_1'),
       desc: t('hero_desc_1'),
-      image: "https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&q=80&w=2000",
+      image: getProductFallbackImage("vegetable"),
       badge: t('hero_badge_1'),
       color: "from-green-400 via-emerald-400 to-teal-300"
     },
@@ -26,7 +27,7 @@ export default function Hero() {
       title: t('hero_title_2'),
       subtitle: t('hero_subtitle_2'),
       desc: t('hero_desc_2'),
-      image: "https://images.unsplash.com/photo-1610832958506-aa56368176cf?auto=format&fit=crop&q=80&w=2000",
+      image: getProductFallbackImage("fruit"),
       badge: t('hero_badge_2'),
       color: "from-orange-400 via-amber-400 to-yellow-300"
     },
@@ -35,7 +36,7 @@ export default function Hero() {
       title: t('hero_title_3'),
       subtitle: t('hero_subtitle_3'),
       desc: t('hero_desc_3'),
-      image: "https://images.unsplash.com/photo-1578916171728-46686eac8d58?auto=format&fit=crop&q=80&w=2000",
+      image: getProductFallbackImage("fish"),
       badge: t('hero_badge_3'),
       color: "from-blue-400 via-indigo-400 to-purple-300"
     }
@@ -67,6 +68,7 @@ export default function Hero() {
             src={slides[current].image}
             alt={slides[current].title}
             fill
+            sizes="(max-width: 1024px) 100vw, 100vw"
             className="object-cover"
             priority
           />

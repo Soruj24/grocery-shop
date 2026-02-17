@@ -5,7 +5,7 @@ const ComboSchema = new mongoose.Schema({
   items: [{ type: String, required: true }],
   price: { type: Number, required: true },
   saveAmount: { type: Number, required: true },
-  tag: { type: String, default: 'নতুন' },
+  tag: { type: String, default: 'new' },
   isActive: { type: Boolean, default: true },
 }, { timestamps: true });
 

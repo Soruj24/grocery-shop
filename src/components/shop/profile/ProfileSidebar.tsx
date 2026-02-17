@@ -1,9 +1,9 @@
 import { User, Package, Heart, MapPin, CreditCard, LogOut, Star, Calendar } from "lucide-react";
 import { signOut } from "next-auth/react";
-import { motion } from "framer-motion";
+import { useLanguage } from "@/components/LanguageContext";
 
 interface SidebarItemProps {
-  icon: any;
+  icon: React.ComponentType<{ size?: number; className?: string }>;
   label: string;
   id: string;
   active: boolean;
@@ -30,14 +30,15 @@ interface ProfileSidebarProps {
 }
 
 export default function ProfileSidebar({ activeTab, setActiveTab }: ProfileSidebarProps) {
+  const { t } = useLanguage();
   const menuItems = [
-    { id: "profile", label: "প্রোফাইল", icon: User },
-    { id: "orders", label: "আমার অর্ডারসমূহ", icon: Package },
-    { id: "wishlist", label: "উইশলিস্ট", icon: Heart },
-    { id: "addresses", label: "ঠিকানাসমূহ", icon: MapPin },
-    { id: "payments", label: "পেমেন্ট পদ্ধতি", icon: CreditCard },
-    { id: "loyalty", label: "লয়্যালটি পয়েন্ট", icon: Star },
-    { id: "subscription", label: "সাবস্ক্রিপশন", icon: Calendar },
+    { id: "profile", label: t('profile_menu_profile'), icon: User },
+    { id: "orders", label: t('profile_menu_orders'), icon: Package },
+    { id: "wishlist", label: t('profile_menu_wishlist'), icon: Heart },
+    { id: "addresses", label: t('profile_menu_addresses'), icon: MapPin },
+    { id: "payments", label: t('profile_menu_payments'), icon: CreditCard },
+    { id: "loyalty", label: t('profile_menu_loyalty'), icon: Star },
+    { id: "subscription", label: t('profile_menu_subscription'), icon: Calendar },
   ];
 
   return (
@@ -59,7 +60,7 @@ export default function ProfileSidebar({ activeTab, setActiveTab }: ProfileSideb
           className="w-full flex items-center gap-4 px-6 py-4 rounded-2xl text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-500/10 transition-all"
         >
           <LogOut size={20} />
-          <span className="font-bold text-sm tracking-wide">লগআউট</span>
+          <span className="font-bold text-sm tracking-wide">{t('logout')}</span>
         </button>
       </div>
     </div>

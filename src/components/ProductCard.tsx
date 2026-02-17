@@ -10,6 +10,7 @@ import { Product } from "@/types/product";
 import { useState } from "react";
 import { motion, AnimatePresence, PanInfo } from "framer-motion";
 import { useLanguage } from "@/components/LanguageContext";
+import { getProductFallbackImage } from "@/lib/category-utils";
 
 interface ProductCardProps {
   product: Product;
@@ -18,7 +19,7 @@ interface ProductCardProps {
 export default function ProductCard({ product }: ProductCardProps) {
   const { addToCart, updateQuantity, cart } = useCart();
   const { toggleWishlist, isInWishlist } = useWishlist();
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const [quantity, setQuantity] = useState(1);
   const active = isInWishlist(product._id);
 
@@ -98,16 +99,17 @@ export default function ProductCard({ product }: ProductCardProps) {
       {/* Product Image & Badges */}
       <Link href={`/products/${product._id}`} className="relative aspect-square overflow-hidden bg-gray-50 dark:bg-gray-800">
         <Image
-          src={product.image || "/placeholder.png"}
-          alt={product.name}
+          src={product.image || getProductFallbackImage(product.nameEn || product.name)}
+          alt={language === 'en' ? (product.nameEn || product.name) : product.name}
           fill
+          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, (max-width: 1280px) 33vw, 25vw"
           className="object-cover group-hover:scale-110 transition-transform duration-500"
         />
         
         {/* Discount Badge */}
         {product.discountPrice && (
-          <div className="absolute top-4 left-4 bg-rose-500 text-white text-[10px] font-black px-3 py-1.5 rounded-full shadow-lg z-10">
-            {Math.round(((product.price - product.discountPrice) / product.price) * 100)}% {t('off')}
+          <div className="absolute top-4 left-4 bg-rose-500/90 backdrop-blur-md text-white text-[10px] font-black px-3 py-1.5 rounded-full shadow-lg z-10">
+            {Math.round(((product.price - product.discountPrice) / product.price) * 100).toLocaleString(language === 'bn' ? 'bn-BD' : 'en-US')}% {t('off')}
           </div>
         )}
 
@@ -144,11 +146,21 @@ export default function ProductCard({ product }: ProductCardProps) {
         <div className="mb-2">
           <Link href={`/products/${product._id}`}>
             <h3 className="text-sm font-bold text-gray-800 dark:text-gray-100 line-clamp-2 hover:text-green-600 transition-colors">
-              {product.name}
+              {language === 'en' ? (product.nameEn || product.name) : product.name}
             </h3>
           </Link>
           <p className="text-[10px] text-gray-400 mt-1 font-medium">
-            {product.unit === 'kg' ? t('unit_kg') : product.unit === 'g' ? t('unit_g') : (product.unit || t('default_unit'))}
+            {product.unit === 'kg' ? t('unit_kg') :
+             product.unit === 'g' ? t('unit_g') :
+             product.unit === 'mg' ? t('unit_mg') :
+             product.unit === 'l' ? t('unit_l') :
+             product.unit === 'ml' ? t('unit_ml') :
+             product.unit === 'pcs' ? t('unit_piece') :
+             product.unit === 'pack' ? t('unit_pack') :
+             product.unit === 'box' ? t('unit_box') :
+             product.unit === 'bottle' ? t('unit_bottle') :
+             product.unit === 'dozen' ? t('unit_dozen') :
+             (product.unit || t('default_unit'))}
           </p>
         </div>
 
@@ -158,11 +170,11 @@ export default function ProductCard({ product }: ProductCardProps) {
             <div className="flex flex-col">
               {product.discountPrice ? (
                 <>
-                  <span className="text-lg font-black text-green-600">{t('currency_symbol')}{product.discountPrice}</span>
-                  <span className="text-xs text-gray-400 line-through">{t('currency_symbol')}{product.price}</span>
+                  <span className="text-lg font-black text-green-600">{t('currency_symbol')}{product.discountPrice.toLocaleString(language === 'bn' ? 'bn-BD' : 'en-US')}</span>
+                  <span className="text-xs text-gray-400 line-through">{t('currency_symbol')}{product.price.toLocaleString(language === 'bn' ? 'bn-BD' : 'en-US')}</span>
                 </>
               ) : (
-                <span className="text-lg font-black text-gray-800 dark:text-gray-100">{t('currency_symbol')}{product.price}</span>
+                <span className="text-lg font-black text-gray-800 dark:text-gray-100">{t('currency_symbol')}{product.price.toLocaleString(language === 'bn' ? 'bn-BD' : 'en-US')}</span>
               )}
             </div>
 
@@ -184,7 +196,7 @@ export default function ProductCard({ product }: ProductCardProps) {
                   <Minus className="w-5 h-5" />
                 </button>
                 <span className="w-8 text-center text-sm font-black dark:text-white">
-                  {cartItem.quantity}
+                  {cartItem.quantity.toLocaleString(language === 'bn' ? 'bn-BD' : 'en-US')}
                 </span>
                 <button
                   onClick={increment}

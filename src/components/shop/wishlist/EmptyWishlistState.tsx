@@ -1,7 +1,10 @@
 import Link from "next/link";
 import { Heart, ShoppingBag, ChevronRight } from "lucide-react";
+import { useLanguage } from "@/components/LanguageContext";
 
 export default function EmptyWishlistState() {
+  const { t } = useLanguage();
+
   return (
     <div className="bg-white dark:bg-gray-900 rounded-[48px] border-2 border-dashed border-gray-100 dark:border-gray-800 p-20 text-center space-y-8">
       <div className="relative inline-block">
@@ -15,10 +18,10 @@ export default function EmptyWishlistState() {
 
       <div className="space-y-3">
         <h2 className="text-3xl font-black text-gray-800 dark:text-gray-100">
-          আপনার উইশলিস্ট খালি
+          {t('empty_wishlist_title')}
         </h2>
         <p className="text-gray-400 dark:text-gray-500 font-bold max-w-md mx-auto">
-          আপনার পছন্দের পণ্যগুলো পরে কেনার জন্য উইশলিস্টে জমা করে রাখুন।
+          {t('empty_wishlist_desc')}
         </p>
       </div>
 
@@ -26,7 +29,7 @@ export default function EmptyWishlistState() {
         href="/products"
         className="inline-flex items-center gap-3 bg-green-600 dark:bg-green-500 text-white px-10 py-5 rounded-[24px] font-black text-lg hover:bg-green-700 dark:hover:bg-green-600 transition-all shadow-xl shadow-green-900/20 active:scale-95"
       >
-        পণ্য দেখতে যান
+        {t('browse_products')}
         <ChevronRight className="w-6 h-6" />
       </Link>
     </div>

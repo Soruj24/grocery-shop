@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
+import Image from "next/image";
 
 interface OfferBannerProps {
   badge: string;
@@ -79,14 +80,20 @@ export default function OfferBanner({
       </div>
 
       {/* Product Image */}
-      <motion.img
+      <motion.div
         initial={{ scale: 0.8, opacity: 0, rotate: 5 }}
         whileInView={{ scale: 1, opacity: 1, rotate: 0 }}
         transition={{ delay: 0.3, duration: 0.8, type: "spring" }}
-        src={image}
-        className={`absolute right-[-5%] bottom-[-10%] md:bottom-auto md:top-1/2 md:-translate-y-1/2 h-[60%] md:h-[90%] w-1/2 object-contain group-hover:scale-105 transition-transform duration-700 pointer-events-none drop-shadow-2xl`}
-        alt={title}
-      />
+        className={`absolute right-[-5%] bottom-[-10%] md:bottom-auto md:top-1/2 md:-translate-y-1/2 h-[60%] md:h-[90%] w-1/2 pointer-events-none drop-shadow-2xl`}
+      >
+        <Image
+          src={image}
+          alt={title}
+          fill
+          sizes="(max-width: 768px) 50vw, 33vw"
+          className="object-contain group-hover:scale-105 transition-transform duration-700"
+        />
+      </motion.div>
     </motion.div>
   );
 }

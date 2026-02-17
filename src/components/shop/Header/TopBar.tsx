@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { PhoneCall, Star, MapPin } from "lucide-react";
+import { PhoneCall, Star } from "lucide-react";
 import LocationSelector from "./LocationSelector";
 import { useLanguage } from "@/components/LanguageContext";
 

@@ -10,11 +10,12 @@ import { useCart } from "@/components/CartContext";
 import { toast } from "react-hot-toast";
 
 import { useLanguage } from "@/components/LanguageContext";
+import { getProductFallbackImage } from "@/lib/category-utils";
 
 export default function FeaturedProducts({ products }: { products: Product[] }) {
   const [activeTab, setActiveTab] = useState("trending");
   const { addToCart } = useCart();
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
 
   const TABS = [
     { id: "trending", label: t('featured_products_tab_trending'), icon: TrendingUp, color: "from-blue-500 to-cyan-500" },
@@ -24,7 +25,8 @@ export default function FeaturedProducts({ products }: { products: Product[] }) 
 
   const handleAddToCart = (product: Product) => {
     addToCart(product, 1);
-    toast.success(`${product.name} ${t('add_to_cart_success')}`);
+    const productName = language === 'en' ? (product.nameEn || product.name) : product.name;
+    toast.success(`${productName} ${t('add_to_cart_success')}`);
   };
 
   // Mock filtering for UI demonstration
@@ -86,14 +88,13 @@ export default function FeaturedProducts({ products }: { products: Product[] }) 
                 className="group bg-white dark:bg-[#0F172A] rounded-[40px] p-6 border border-gray-100 dark:border-white/5 hover:border-green-500/30 transition-all duration-500 hover:shadow-2xl hover:shadow-green-500/10"
               >
                 <div className="relative aspect-square rounded-[32px] overflow-hidden bg-gray-50 dark:bg-white/5 mb-6">
-                  {product.image && (
-                    <Image
-                      src={product.image}
-                      alt={product.name}
-                      fill
-                      className="object-cover transform group-hover:scale-110 transition-transform duration-700"
-                    />
-                  )}
+                  <Image
+                    src={product.image || getProductFallbackImage(product.nameEn || product.name)}
+                    alt={language === 'en' ? (product.nameEn || product.name) : product.name}
+                    fill
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                    className="object-cover transform group-hover:scale-110 transition-transform duration-700"
+                  />
                   <div className="absolute top-4 left-4 bg-white/90 dark:bg-black/90 backdrop-blur-md px-4 py-2 rounded-2xl text-[10px] font-black text-green-600 uppercase tracking-widest shadow-xl">
                     {activeTab === "trending" ? t('featured_products_tab_trending') : activeTab === "bestsellers" ? t('featured_products_tab_bestsellers') : t('featured_products_tab_new')}
                   </div>
@@ -102,15 +103,25 @@ export default function FeaturedProducts({ products }: { products: Product[] }) 
                 <div className="space-y-4">
                   <div>
                     <h3 className="text-xl font-black text-gray-900 dark:text-white group-hover:text-green-600 transition-colors truncate">
-                      {product.name}
+                      {language === 'en' ? (product.nameEn || product.name) : product.name}
                     </h3>
                     <p className="text-sm text-gray-400 font-bold uppercase tracking-wider">
-                      {product.unit === 'kg' ? t('unit_kg') : product.unit === 'g' ? t('unit_g') : product.unit}
+                      {product.unit === 'kg' ? t('unit_kg') :
+                       product.unit === 'g' ? t('unit_g') :
+                       product.unit === 'mg' ? t('unit_mg') :
+                       product.unit === 'l' ? t('unit_l') :
+                       product.unit === 'ml' ? t('unit_ml') :
+                       product.unit === 'pcs' ? t('unit_piece') :
+                       product.unit === 'pack' ? t('unit_pack') :
+                       product.unit === 'box' ? t('unit_box') :
+                       product.unit === 'bottle' ? t('unit_bottle') :
+                       product.unit === 'dozen' ? t('unit_dozen') :
+                       (product.unit || '')}
                     </p>
                   </div>
 
                   <div className="flex items-center justify-between">
-                    <div className="text-2xl font-black text-gray-900 dark:text-white">{t('currency_symbol')}{product.price}</div>
+                    <div className="text-2xl font-black text-gray-900 dark:text-white">{t('currency_symbol')}{product.price.toLocaleString(language === 'bn' ? 'bn-BD' : 'en-US')}</div>
                     <button 
                       onClick={() => handleAddToCart(product)}
                       className="w-14 h-14 bg-gray-900 dark:bg-white text-white dark:text-black rounded-2xl flex items-center justify-center hover:bg-green-600 hover:text-white transition-all active:scale-95 shadow-lg"
