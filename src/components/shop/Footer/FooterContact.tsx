@@ -2,26 +2,29 @@
 
 import { MapPin, Phone, Mail } from "lucide-react";
 import { useLanguage } from "@/components/LanguageContext";
+import { useSettings } from "@/context/SettingsContext";
 
 export default function FooterContact() {
   const { t } = useLanguage();
+  const settings = useSettings();
+
   const contactInfo = [
     {
       icon: MapPin,
       label: t('address'),
-      value: t('address_value'),
+      value: settings.address || t('address_value'),
       color: "green"
     },
     {
       icon: Phone,
       label: t('helpline'),
-      value: t('helpline_number'),
+      value: settings.phone || t('helpline_number'),
       color: "blue"
     },
     {
       icon: Mail,
       label: t('email'),
-      value: "support@emranshop.com",
+      value: settings.email || "support@emranshop.com",
       color: "orange"
     }
   ];
@@ -50,7 +53,7 @@ export default function FooterContact() {
             </div>
             <div>
               <p className="text-[10px] font-black text-gray-400 dark:text-gray-500 uppercase tracking-widest mb-1">{info.label}</p>
-              <p className="text-gray-700 dark:text-gray-300 text-sm font-black leading-relaxed">{info.value}</p>
+              <p className="text-gray-700 dark:text-gray-300 text-sm font-black leading-relaxed whitespace-pre-line">{info.value}</p>
             </div>
           </li>
         ))}

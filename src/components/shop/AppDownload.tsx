@@ -16,7 +16,7 @@ export default function AppDownload() {
   ];
 
   return (
-    <section className="py-24 px-4 overflow-hidden">
+    <section className="py-8 px-4 overflow-hidden">
       <div className="max-w-7xl mx-auto">
         <div className="bg-gradient-to-br from-gray-900 via-gray-800 to-black dark:from-[#0F172A] dark:via-[#1E293B] dark:to-black rounded-[64px] relative overflow-hidden">
           {/* Decorative Elements */}

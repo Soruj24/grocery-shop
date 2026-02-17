@@ -10,7 +10,7 @@ import { useLanguage } from "@/components/LanguageContext";
 export default function Newsletter() {
   const { t } = useLanguage();
   return (
-    <section className="py-24 relative overflow-hidden">
+    <section className="py-8 relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-4">
         <motion.div 
           initial={{ opacity: 0, scale: 0.95 }}

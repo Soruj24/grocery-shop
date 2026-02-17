@@ -72,7 +72,7 @@ export default function ComboOffers() {
   };
 
   return (
-    <section className="relative py-32 px-4 overflow-hidden bg-gray-50/50 dark:bg-black/20">
+    <section className="relative py-8 px-4 overflow-hidden bg-gray-50/50 dark:bg-black/20">
       <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-blue-500/5 blur-[120px] rounded-full -mr-64 -mt-64 pointer-events-none" />
       <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-indigo-500/5 blur-[120px] rounded-full -ml-64 -mb-64 pointer-events-none" />
       

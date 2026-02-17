@@ -53,7 +53,7 @@ export default function ProductTableRow({
               product.stock > 10 ? "text-gray-400" : "text-rose-500 animate-pulse"
             }`}
           >
-            স্টক: {product.stock} কেজি
+            স্টক: {product.stock} {unitLabels[product.unit || 'pcs'] || product.unit}
           </p>
         </div>
       </td>

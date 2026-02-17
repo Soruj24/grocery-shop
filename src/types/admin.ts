@@ -19,6 +19,7 @@ export interface AdminProduct {
   name: string;
   price: number;
   stock: number;
+  unit: string;
   category: string | AdminCategory;
   image: string;
   description: string;
@@ -29,6 +30,7 @@ export interface AdminProductFormData {
   name: string;
   price: number;
   stock: number;
+  unit: string;
   category: string;
   image: string;
   description: string;

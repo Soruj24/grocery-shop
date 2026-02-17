@@ -19,7 +19,7 @@ export default function ProductSection({
   totalCount,
 }: ProductSectionProps) {
   return (
-    <section id="products" className="py-12 px-4 bg-white dark:bg-gray-900 rounded-[32px] my-8">
+    <section id="products" className="py-8 px-4 bg-white dark:bg-gray-900 rounded-[32px]">
       <div className="max-w-7xl mx-auto">
         <ProductSectionHeader />
         <ProductGrid products={products} />

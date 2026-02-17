@@ -36,7 +36,7 @@ export default function AIRecommendations() {
   if (isLoading || !recommendations || recommendations.length === 0) return null;
 
   return (
-    <section className="py-12 relative overflow-hidden">
+    <section className="py-8 relative overflow-hidden">
       <div className="flex items-center justify-between mb-8">
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center shadow-lg shadow-purple-500/20">

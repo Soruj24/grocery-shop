@@ -70,9 +70,20 @@ export default function ProductCard({ product }: ProductCardProps) {
 
   const increment = () => {
     if (cartItem) {
-      updateQuantity(product._id, cartItem.quantity + 1);
+      if (cartItem.quantity < product.stock) {
+        updateQuantity(product._id, cartItem.quantity + 1);
+      } else {
+        Toast.fire({
+          icon: 'error',
+          title: t('out_of_stock_label'), // Or a more specific message like "Max stock reached"
+          background: '#020617',
+          color: '#fff',
+        });
+      }
     } else {
-      setQuantity(prev => prev + 1);
+      if (quantity < product.stock) {
+        setQuantity(prev => prev + 1);
+      }
     }
   };
 
@@ -183,7 +194,7 @@ export default function ProductCard({ product }: ProductCardProps) {
               <button
                 disabled={product.stock === 0}
                 onClick={() => addToCart(product, 1)}
-                className="bg-green-600 hover:bg-green-700 disabled:bg-gray-300 text-white min-w-[48px] min-h-[48px] flex items-center justify-center rounded-2xl shadow-lg shadow-green-600/20 active:scale-90 transition-all"
+                className="bg-green-600 hover:bg-green-700 disabled:bg-gray-400 disabled:cursor-not-allowed disabled:opacity-50 text-white min-w-[48px] min-h-[48px] flex items-center justify-center rounded-2xl shadow-lg shadow-green-600/20 active:scale-90 transition-all"
               >
                 <Plus className="w-6 h-6" />
               </button>
@@ -200,7 +211,8 @@ export default function ProductCard({ product }: ProductCardProps) {
                 </span>
                 <button
                   onClick={increment}
-                  className="min-w-[44px] min-h-[44px] flex items-center justify-center hover:bg-white dark:hover:bg-gray-700 rounded-xl transition-all text-gray-600 dark:text-gray-300"
+                  disabled={cartItem.quantity >= product.stock}
+                  className="min-w-[44px] min-h-[44px] flex items-center justify-center hover:bg-white dark:hover:bg-gray-700 rounded-xl transition-all text-gray-600 dark:text-gray-300 disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:bg-transparent"
                 >
                   <Plus className="w-5 h-5" />
                 </button>

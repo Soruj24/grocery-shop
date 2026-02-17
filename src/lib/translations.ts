@@ -128,9 +128,12 @@ export const translations = {
 
     // Product
     add_to_cart: "যোগ করুন",
+    add_to_cart_btn: "কার্টে যুক্ত করুন",
     buy_now: "এখনই কিনুন",
     stock_available: "স্টকে আছে",
     out_of_stock: "স্টকে নেই",
+    out_of_stock_label: "স্টক আউট",
+    low_stock: "স্টক সীমিত",
     related_products: "সম্পর্কিত পণ্য",
     description: "বিস্তারিত",
     reviews: "রিভিউ",

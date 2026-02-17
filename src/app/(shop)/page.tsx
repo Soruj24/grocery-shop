@@ -3,6 +3,8 @@ import Link from "next/link";
 import dbConnect from "@/lib/mongodb";
 import Product from "@/models/Product";
 import Category from "@/models/Category";
+import Section from "@/models/Section";
+import { seedSections } from "@/lib/seed-sections";
 import { Truck, ShieldCheck, Clock, Star } from "lucide-react";
 import Hero from "@/components/shop/Hero";
 import Features from "@/components/shop/Features";
@@ -61,6 +63,10 @@ async function getHomeData(searchParams: {
 }) {
   try {
     await dbConnect();
+    
+    // Seed sections if needed
+    await seedSections();
+
     const page =
       typeof searchParams.page === "string" ? parseInt(searchParams.page) : 1;
     const limit = 12;
@@ -85,10 +91,14 @@ async function getHomeData(searchParams: {
       .skip(skip)
       .limit(limit)
       .lean();
+      
+    // Fetch active sections ordered by 'order'
+    const sections = await Section.find({ isActive: true }).sort({ order: 1 }).lean();
 
     return {
       categories: JSON.parse(JSON.stringify(mainCategories)) || [],
       products: JSON.parse(JSON.stringify(products)) || [],
+      sections: JSON.parse(JSON.stringify(sections)) || [],
       totalPages: Math.ceil(totalProducts / limit) || 0,
       currentPage: page,
       totalCount: totalProducts || 0,
@@ -98,6 +108,7 @@ async function getHomeData(searchParams: {
     return {
       categories: [],
       products: [],
+      sections: [],
       totalPages: 0,
       currentPage: 1,
       totalCount: 0,
@@ -112,7 +123,7 @@ export default async function HomePage({
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }) {
   const resolvedSearchParams = await searchParams;
-  const { categories, products, totalPages, currentPage, totalCount, error } =
+  const { categories, products, sections, totalPages, currentPage, totalCount, error } =
     await getHomeData(resolvedSearchParams);
 
   if (error) {
@@ -139,63 +150,108 @@ export default async function HomePage({
     );
   }
 
+  const renderSection = (section: any) => {
+    switch (section.component) {
+      case "Hero":
+        return <Hero key={section._id} data={section.props} />;
+      case "DailyDealsBanner":
+        return (
+          <div key={section._id} className="max-w-7xl mx-auto px-4">
+            <DailyDealsBanner data={section.props} />
+          </div>
+        );
+      case "Features":
+        return <Features key={section._id} />;
+      case "RamadanOffers":
+        return (
+          <div key={section._id} className="max-w-7xl mx-auto px-4">
+            <RamadanOffers />
+          </div>
+        );
+      case "CategorySection":
+        return <CategorySection key={section._id} categories={categories} />;
+      case "FlashDeals":
+        return <FlashDeals key={section._id} products={products} />;
+      case "ComboPacks":
+        return (
+          <div key={section._id} className="max-w-7xl mx-auto px-4">
+            <ComboPacks />
+          </div>
+        );
+      case "ComboOffers":
+        return <ComboOffers key={section._id} />;
+      case "EidSpecialDeals":
+        return (
+          <div key={section._id} className="max-w-7xl mx-auto px-4">
+            <EidSpecialDeals />
+          </div>
+        );
+      case "FeaturedProducts":
+        return <FeaturedProducts key={section._id} products={products} />;
+      case "BuyMoreSaveMore":
+        return (
+          <div key={section._id} className="max-w-7xl mx-auto px-4">
+            <BuyMoreSaveMore />
+          </div>
+        );
+      case "SubCategorySpotlight":
+        return <SubCategorySpotlight key={section._id} categories={categories} />;
+      case "SpecialOfferBanners":
+        return <SpecialOfferBanners key={section._id} />;
+      case "AppDownload":
+        return <AppDownload key={section._id} />;
+      case "ProductSection":
+        return (
+          <ProductSection
+            key={section._id}
+            products={products}
+            totalPages={totalPages}
+            currentPage={currentPage}
+            totalCount={totalCount}
+          />
+        );
+      case "Testimonials":
+        return <Testimonials key={section._id} />;
+      case "Newsletter":
+        return <Newsletter key={section._id} />;
+      case "RecentlyViewedSection":
+        return <RecentlyViewedSection key={section._id} />;
+      case "AIRecommendations":
+        return <AIRecommendations key={section._id} />;
+      default:
+        return null;
+    }
+  };
+
   return (
-    <div className="space-y-24 pb-20 relative overflow-hidden">
+    <div className="space-y-12 pb-20 relative overflow-hidden">
       <PageBackground />
-
-      <Hero />
-
-      {/* Modern Marketing: Daily Deals */}
-      <div className="max-w-7xl mx-auto px-4">
-        <DailyDealsBanner />
-      </div>
-
-      <Features />
-
-      {/* Ramadan Special UI */}
-      <div className="max-w-7xl mx-auto px-4">
-        <RamadanOffers />
-      </div>
-
-      <CategorySection categories={categories} />
-      <FlashDeals products={products} />
-
-      {/* Combo Packs Section */}
-      <div className="max-w-7xl mx-auto px-4">
-        <ComboPacks />
-      </div>
-
-      <ComboOffers />
-
-      {/* Eid Special Deals */}
-      <div className="max-w-7xl mx-auto px-4">
-        <EidSpecialDeals />
-      </div>
-
-      <FeaturedProducts products={products} />
-
-      {/* Buy More Save More Slider */}
-      <div className="max-w-7xl mx-auto px-4">
-        <BuyMoreSaveMore />
-      </div>
-
-      <SubCategorySpotlight categories={categories} />
-      <SpecialOfferBanners />
-      <AppDownload />
-      <ProductSection
-        products={products}
-        totalPages={totalPages}
-        currentPage={currentPage}
-        totalCount={totalCount}
-      />
-      <Testimonials />
-      <Newsletter />
-
-      {/* Recently Viewed Section */}
-      <RecentlyViewedSection />
-
-      {/* AI Recommendations */}
-      <AIRecommendations />
+      {sections.length > 0 ? (
+        sections.map((section: any) => renderSection(section))
+      ) : (
+        // Fallback if sections fail to load for some reason (though seed should handle it)
+        <>
+          <Hero />
+          <div className="max-w-7xl mx-auto px-4"><DailyDealsBanner /></div>
+          <Features />
+          <div className="max-w-7xl mx-auto px-4"><RamadanOffers /></div>
+          <CategorySection categories={categories} />
+          <FlashDeals products={products} />
+          <div className="max-w-7xl mx-auto px-4"><ComboPacks /></div>
+          <ComboOffers />
+          <div className="max-w-7xl mx-auto px-4"><EidSpecialDeals /></div>
+          <FeaturedProducts products={products} />
+          <div className="max-w-7xl mx-auto px-4"><BuyMoreSaveMore /></div>
+          <SubCategorySpotlight categories={categories} />
+          <SpecialOfferBanners />
+          <AppDownload />
+          <ProductSection products={products} totalPages={totalPages} currentPage={currentPage} totalCount={totalCount} />
+          <Testimonials />
+          <Newsletter />
+          <RecentlyViewedSection />
+          <AIRecommendations />
+        </>
+      )}
     </div>
   );
 }

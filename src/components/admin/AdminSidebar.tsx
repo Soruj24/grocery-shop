@@ -13,7 +13,8 @@ import {
   Settings, 
   LogOut,
   Layers,
-  Tag
+  Tag,
+  LayoutTemplate
 } from "lucide-react";
 
 interface AdminSidebarProps {
@@ -25,6 +26,7 @@ export default function AdminSidebar({ session }: AdminSidebarProps) {
 
   const menuItems = [
     { name: "ড্যাশবোর্ড", icon: LayoutDashboard, href: "/admin/dashboard" },
+    { name: "হোম লেআউট", icon: LayoutTemplate, href: "/admin/sections" },
     { name: "প্রোডাক্ট", icon: Package, href: "/admin/products" },
     { name: "ক্যাটাগরি", icon: ListTree, href: "/admin/categories" },
     { name: "কম্বো প্যাক", icon: Layers, href: "/admin/combos" },

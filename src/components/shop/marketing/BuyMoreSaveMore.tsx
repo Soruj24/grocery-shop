@@ -24,7 +24,7 @@ export default function BuyMoreSaveMore() {
   ];
 
   return (
-    <section className="py-16 bg-gray-50 dark:bg-white/[0.02] rounded-[60px] px-8 md:px-12">
+    <section className="py-8 bg-gray-50 dark:bg-white/[0.02] rounded-[60px] px-8 md:px-12">
       <div className="space-y-12">
         <div className="flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="space-y-2 text-center md:text-left">

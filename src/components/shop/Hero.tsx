@@ -8,11 +8,11 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useLanguage } from "@/components/LanguageContext";
 import { getProductFallbackImage } from "@/lib/category-utils";
 
-export default function Hero() {
+export default function Hero({ data }: { data?: any }) {
   const { t } = useLanguage();
   const [current, setCurrent] = useState(0);
 
-  const slides = [
+  const defaultSlides = [
     {
       id: 1,
       title: t('hero_title_1'),
@@ -42,6 +42,8 @@ export default function Hero() {
     }
   ];
 
+  const slides = data?.slides?.length > 0 ? data.slides : defaultSlides;
+
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrent((prev) => (prev + 1) % slides.length);
@@ -53,7 +55,7 @@ export default function Hero() {
   const prevSlide = () => setCurrent((prev) => (prev - 1 + slides.length) % slides.length);
 
   return (
-    <section className="relative h-[450px] lg:h-[600px] rounded-[32px] lg:rounded-[48px] overflow-hidden group mb-8">
+    <section className="relative h-[450px] lg:h-[600px] rounded-[32px] lg:rounded-[48px] overflow-hidden group">
       <AnimatePresence mode="wait">
         <motion.div
           key={slides[current].id}

@@ -41,7 +41,7 @@ export default function FlashDeals({ products }: FlashDealsProps) {
   const flashProducts = products.slice(0, 4);
 
   return (
-    <section className="relative py-24 px-4 overflow-hidden">
+    <section className="relative py-8 px-4 overflow-hidden">
       <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-orange-500/5 blur-[120px] rounded-full -translate-y-1/2 translate-x-1/2" />
       
       <div className="max-w-7xl mx-auto space-y-12">

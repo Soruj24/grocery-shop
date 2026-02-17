@@ -31,7 +31,7 @@ export default function RamadanOffers() {
   ];
 
   return (
-    <section className="py-12 relative overflow-hidden">
+    <section className="py-8 relative overflow-hidden">
       {/* Islamic Pattern Background Mockup */}
       <div className="absolute inset-0 opacity-[0.03] dark:opacity-[0.05] pointer-events-none">
         <div className="grid grid-cols-6 gap-4 transform rotate-12">

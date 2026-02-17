@@ -11,6 +11,8 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Provider } from "react-redux";
 import { store } from "@/redux/store";
 import { useState } from "react";
+import { SettingsProvider } from "@/context/SettingsContext";
+import WhatsAppButton from "@/components/WhatsAppButton";
 
 export function Providers({ children }: { children: React.ReactNode }) {
   const [queryClient] = useState(() => new QueryClient({
@@ -27,13 +29,18 @@ export function Providers({ children }: { children: React.ReactNode }) {
         <QueryClientProvider client={queryClient}>
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
             <LanguageProvider>
-              <NotificationProvider>
-                <RecentlyViewedProvider>
-                  <WishlistProvider>
-                    <CartProvider>{children}</CartProvider>
-                  </WishlistProvider>
-                </RecentlyViewedProvider>
-              </NotificationProvider>
+              <SettingsProvider>
+                <NotificationProvider>
+                  <RecentlyViewedProvider>
+                    <WishlistProvider>
+                      <CartProvider>
+                        {children}
+                        <WhatsAppButton />
+                      </CartProvider>
+                    </WishlistProvider>
+                  </RecentlyViewedProvider>
+                </NotificationProvider>
+              </SettingsProvider>
             </LanguageProvider>
           </ThemeProvider>
         </QueryClientProvider>

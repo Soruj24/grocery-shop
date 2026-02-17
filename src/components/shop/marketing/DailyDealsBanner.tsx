@@ -9,13 +9,25 @@ import Link from "next/link";
 import Image from "next/image";
 import { getProductFallbackImage } from "@/lib/category-utils";
 
-export default function DailyDealsBanner() {
+export default function DailyDealsBanner({ data }: { data?: any }) {
   const { t, language } = useLanguage();
   const [timeLeft, setTimeLeft] = useState({
     hours: 12,
     minutes: 45,
     seconds: 30,
   });
+
+  const content = {
+    badge: data?.badge || t("daily_deals_badge"),
+    title: data?.title || t("daily_deals_title"),
+    subtitle: data?.subtitle || t("daily_deals_subtitle"),
+    desc: data?.desc || t("daily_deals_desc"),
+    productName: data?.productName || t("daily_deals_product_name"),
+    image: data?.image || getProductFallbackImage("apple"),
+    price: data?.price || t("price_80_tk"),
+    originalPrice: data?.originalPrice || t("price_160_tk"),
+    discount: data?.discount || t("percent_50")
+  };
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -41,19 +53,19 @@ export default function DailyDealsBanner() {
           <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md px-4 py-2 rounded-full border border-white/20">
             <Zap className="w-4 h-4 text-yellow-300 fill-yellow-300" />
             <span className="text-xs font-black uppercase tracking-widest">
-              {t("daily_deals_badge")}
+              {content.badge}
             </span>
           </div>
 
           <div className="space-y-4">
             <h2 className="text-5xl md:text-6xl font-black leading-tight tracking-tighter">
-              {t("daily_deals_title")} <br />
+              {content.title} <br />
               <span className="text-yellow-300">
-                {t("daily_deals_subtitle")}
+                {content.subtitle}
               </span>
             </h2>
             <p className="text-white/80 text-lg font-medium max-w-md">
-              {t("daily_deals_desc")}
+              {content.desc}
             </p>
           </div>
 
@@ -91,8 +103,8 @@ export default function DailyDealsBanner() {
                 <div className="w-48 h-48 bg-white/10 rounded-full blur-2xl absolute" />
                 <div className="relative w-48 h-48">
                   <Image
-                    src={getProductFallbackImage("apple")}
-                    alt={t("daily_deals_product_name")}
+                    src={content.image}
+                    alt={content.productName}
                     fill
                     sizes="(max-width: 768px) 192px, 192px"
                     className="object-contain drop-shadow-2xl"
@@ -100,12 +112,12 @@ export default function DailyDealsBanner() {
                 </div>
                 <div className="text-center relative z-10">
                   <div className="text-3xl font-black">
-                    {t("daily_deals_product_name")}
+                    {content.productName}
                   </div>
                   <div className="text-yellow-300 font-black text-xl">
-                    {t("price_80_tk")}{" "}
+                    {content.price}{" "}
                     <span className="text-white/50 line-through text-sm font-bold">
-                      {t("price_160_tk")}
+                      {content.originalPrice}
                     </span>
                   </div>
                 </div>
@@ -118,7 +130,7 @@ export default function DailyDealsBanner() {
             <span className="text-[10px] font-black uppercase">
               {t("daily_deals_max")}
             </span>
-            <span className="text-2xl font-black">{t("percent_50")}</span>
+            <span className="text-2xl font-black">{content.discount}</span>
             <span className="text-[10px] font-black uppercase">
               {t("daily_deals_off")}
             </span>

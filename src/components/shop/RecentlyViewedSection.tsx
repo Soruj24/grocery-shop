@@ -12,7 +12,7 @@ export default function RecentlyViewedSection() {
   if (recentlyViewed.length === 0) return null;
 
   return (
-    <section className="py-12">
+    <section className="py-8">
       <div className="flex items-center justify-between mb-8">
         <h2 className="text-2xl font-black text-gray-800 dark:text-white">{t('recently_viewed')}</h2>
         <div className="h-px flex-1 bg-gray-100 dark:bg-white/5 mx-8 hidden md:block" />

@@ -112,42 +112,70 @@ export default function ProductModal({
               </select>
             </div>
 
-            <div className="space-y-2">
-              <label className="text-[11px] font-black text-gray-500 dark:text-gray-400 uppercase tracking-widest px-1">
-                মূল্য (৳)
-              </label>
-              <input
-                type="number"
-                value={formData.price}
-                onChange={(e) =>
-                  setFormData({
-                    ...formData,
-                    price: Number(e.target.value),
-                  })
-                }
-                className="w-full px-6 py-4 bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-2xl focus:outline-none focus:ring-4 focus:ring-green-500/10 focus:border-green-600 dark:focus:border-green-500 focus:bg-white dark:focus:bg-gray-900 transition-all duration-300 text-base font-bold text-gray-900 dark:text-white placeholder:text-gray-500 dark:placeholder:text-gray-600"
-                placeholder="যেমন: ১০০"
-                required
-              />
-            </div>
+            <div className="md:col-span-2 grid grid-cols-1 md:grid-cols-3 gap-8">
+              <div className="space-y-2">
+                <label className="text-[11px] font-black text-gray-500 dark:text-gray-400 uppercase tracking-widest px-1">
+                  মূল্য (৳)
+                </label>
+                <input
+                  type="number"
+                  value={formData.price}
+                  onChange={(e) =>
+                    setFormData({
+                      ...formData,
+                      price: Number(e.target.value),
+                    })
+                  }
+                  className="w-full px-6 py-4 bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-2xl focus:outline-none focus:ring-4 focus:ring-green-500/10 focus:border-green-600 dark:focus:border-green-500 focus:bg-white dark:focus:bg-gray-900 transition-all duration-300 text-base font-bold text-gray-900 dark:text-white placeholder:text-gray-500 dark:placeholder:text-gray-600"
+                  placeholder="যেমন: ১০০"
+                  required
+                />
+              </div>
 
-            <div className="space-y-2">
-              <label className="text-[11px] font-black text-gray-500 dark:text-gray-400 uppercase tracking-widest px-1">
-                স্টক (পরিমাণ)
-              </label>
-              <input
-                type="number"
-                value={formData.stock}
-                onChange={(e) =>
-                  setFormData({
-                    ...formData,
-                    stock: Number(e.target.value),
-                  })
-                }
-                className="w-full px-6 py-4 bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-2xl focus:outline-none focus:ring-4 focus:ring-green-500/10 focus:border-green-600 dark:focus:border-green-500 focus:bg-white dark:focus:bg-gray-900 transition-all duration-300 text-base font-bold text-gray-900 dark:text-white placeholder:text-gray-500 dark:placeholder:text-gray-600"
-                placeholder="যেমন: ৫০"
-                required
-              />
+              <div className="space-y-2">
+                <label className="text-[11px] font-black text-gray-500 dark:text-gray-400 uppercase tracking-widest px-1">
+                  স্টক (পরিমাণ)
+                </label>
+                <input
+                  type="number"
+                  value={formData.stock}
+                  onChange={(e) =>
+                    setFormData({
+                      ...formData,
+                      stock: Number(e.target.value),
+                    })
+                  }
+                  className="w-full px-6 py-4 bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-2xl focus:outline-none focus:ring-4 focus:ring-green-500/10 focus:border-green-600 dark:focus:border-green-500 focus:bg-white dark:focus:bg-gray-900 transition-all duration-300 text-base font-bold text-gray-900 dark:text-white placeholder:text-gray-500 dark:placeholder:text-gray-600"
+                  placeholder="যেমন: ৫০"
+                  required
+                />
+              </div>
+
+              <div className="space-y-2">
+                <label className="text-[11px] font-black text-gray-500 dark:text-gray-400 uppercase tracking-widest px-1">
+                  ইউনিট
+                </label>
+                <select
+                  value={formData.unit || 'pcs'}
+                  onChange={(e) =>
+                    setFormData({
+                      ...formData,
+                      unit: e.target.value,
+                    })
+                  }
+                  className="w-full px-6 py-4 bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-2xl focus:outline-none focus:ring-4 focus:ring-green-500/10 focus:border-green-600 dark:focus:border-green-500 focus:bg-white dark:focus:bg-gray-900 transition-all duration-300 text-base font-bold text-gray-900 dark:text-white appearance-none cursor-pointer"
+                >
+                  <option value="pcs">Pcs (পিস)</option>
+                  <option value="kg">Kg (কেজি)</option>
+                  <option value="g">Gram (গ্রাম)</option>
+                  <option value="l">Liter (লিটার)</option>
+                  <option value="ml">ml (মিলি)</option>
+                  <option value="pack">Pack (প্যাক)</option>
+                  <option value="box">Box (বক্স)</option>
+                  <option value="bottle">Bottle (বোতল)</option>
+                  <option value="dozen">Dozen (ডজন)</option>
+                </select>
+              </div>
             </div>
 
             <div className="space-y-2 md:col-span-2">

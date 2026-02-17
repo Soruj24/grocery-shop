@@ -22,9 +22,7 @@ export default function CategoryCard({ cat, index }: CategoryCardProps) {
 
   return (
     <div
-      className={`group h-full bg-white dark:bg-[#0B1120] backdrop-blur-xl rounded-[32px] border border-gray-100 dark:border-gray-800 p-8 hover:border-green-500/50 hover:shadow-2xl hover:shadow-green-900/20 transition-all duration-500 relative flex flex-col overflow-hidden ${
-        index % 2 === 1 ? "lg:mt-12" : ""
-      }`}
+      className="group h-full bg-white dark:bg-[#0B1120] backdrop-blur-xl rounded-[32px] border border-gray-100 dark:border-gray-800 p-8 hover:border-green-500/50 hover:shadow-2xl hover:shadow-green-900/20 transition-all duration-500 relative flex flex-col overflow-hidden"
     >
       {/* Decorative Gradient Blob */}
       <div className="absolute top-0 right-0 w-64 h-64 bg-green-500/5 rounded-full blur-[80px] -z-10 transition-all duration-700 group-hover:bg-green-500/10" />

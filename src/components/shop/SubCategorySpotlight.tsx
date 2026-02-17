@@ -17,7 +17,7 @@ export default function SubCategorySpotlight({
     .slice(0, 8);
 
   return (
-    <section className="relative overflow-hidden py-24 px-6">
+    <section className="relative overflow-hidden py-8 px-6">
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full bg-gradient-to-b from-green-500/5 to-transparent blur-[120px] pointer-events-none" />
 
       <div className="relative z-10 max-w-7xl mx-auto space-y-20">

@@ -6,23 +6,44 @@ import { useCart } from "@/components/CartContext";
 import { Product } from "@/types/product";
 import { useRouter } from "next/navigation";
 import { useLanguage } from "@/components/LanguageContext";
+import { Toast } from "@/lib/toast";
 
 interface StickyCheckoutBarProps {
   product: Product;
 }
 
 export default function StickyCheckoutBar({ product }: StickyCheckoutBarProps) {
-  const { addToCart } = useCart();
+  const { addToCart, cart } = useCart();
   const router = useRouter();
   const { t, language } = useLanguage();
 
+  const cartItem = cart.find(item => item._id === product._id);
+  const currentCartQuantity = cartItem ? cartItem.quantity : 0;
+  const isMaxReached = currentCartQuantity >= product.stock;
+
   const handleBuyNow = () => {
+    if (isMaxReached) return;
     addToCart(product, 1);
     router.push("/checkout");
   };
 
   const handleAddToCart = () => {
+    if (isMaxReached) {
+        Toast.fire({
+            icon: 'warning',
+            title: t('low_stock'),
+            background: '#020617',
+            color: '#fff',
+        });
+        return;
+    }
     addToCart(product, 1);
+    Toast.fire({
+      icon: 'success',
+      title: t('added_to_cart'),
+      background: '#020617',
+      color: '#fff',
+    });
   };
 
   return (
@@ -45,7 +66,8 @@ export default function StickyCheckoutBar({ product }: StickyCheckoutBarProps) {
           <motion.button
             whileTap={{ scale: 0.95 }}
             onClick={handleAddToCart}
-            className="p-4 bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-white rounded-[24px]"
+            disabled={product.stock === 0 || isMaxReached}
+            className="p-4 bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-white rounded-[24px] disabled:opacity-50 disabled:cursor-not-allowed"
           >
             <ShoppingBag className="w-6 h-6" />
           </motion.button>
@@ -53,10 +75,11 @@ export default function StickyCheckoutBar({ product }: StickyCheckoutBarProps) {
           <motion.button
             whileTap={{ scale: 0.95 }}
             onClick={handleBuyNow}
-            className="px-8 py-4 bg-green-600 text-white rounded-[24px] font-black flex items-center gap-2 shadow-lg shadow-green-600/30"
+            disabled={product.stock === 0 || isMaxReached}
+            className="px-8 py-4 bg-green-600 text-white rounded-[24px] font-black flex items-center gap-2 shadow-lg shadow-green-600/30 disabled:opacity-50 disabled:bg-gray-400 disabled:shadow-none disabled:cursor-not-allowed"
           >
             <Zap className="w-5 h-5 fill-current" />
-            {t('order_now')}
+            {product.stock === 0 ? t('out_of_stock') : isMaxReached ? t('low_stock') : t('order_now')}
           </motion.button>
         </div>
       </motion.div>

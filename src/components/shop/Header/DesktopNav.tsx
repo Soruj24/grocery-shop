@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { LayoutGrid, ChevronDown, Flame, Percent, Star, Clock } from "lucide-react";
+import { LayoutGrid, ChevronDown, Flame, Percent, Star, Clock, Truck } from "lucide-react";
 import CategoryMegaMenu from "./CategoryMegaMenu";
 import { motion, AnimatePresence } from "framer-motion";
 import { Category } from "@/types/category";
@@ -67,6 +67,7 @@ export default function DesktopNav({
               { label: t('nav_deals'), href: '/products?filter=deals', icon: Flame, color: 'text-rose-500 bg-rose-500/10' },
               { label: t('nav_new'), href: '/products?sort=newest', icon: Star, color: 'text-blue-500 bg-blue-500/10' },
               { label: t('nav_popular'), href: '/products?sort=popular', icon: Clock, color: 'text-emerald-500 bg-emerald-500/10' },
+              { label: 'অর্ডার ট্র্যাক', href: '/track-order', icon: Truck, color: 'text-purple-500 bg-purple-500/10' },
             ].map((item, i) => (
               <Link
                 key={i}
