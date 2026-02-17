@@ -44,7 +44,7 @@ export default function ProductInfo({ product }: ProductInfoProps) {
 
   const handleBuyNow = () => {
     // Logic to handle weight variation could be added here
-    if (isMaxReached) return;
+    if (product.stock === 0) return;
     addToCart(product, 1);
     router.push("/checkout");
   };
@@ -147,11 +147,11 @@ export default function ProductInfo({ product }: ProductInfoProps) {
           <AddToCartButton product={product} />
           <button 
             onClick={handleBuyNow}
-            disabled={product.stock === 0 || isMaxReached}
+            disabled={product.stock === 0}
             className="w-full flex items-center justify-center gap-3 bg-gray-900 dark:bg-white text-white dark:text-gray-900 py-5 rounded-[24px] font-black text-lg hover:opacity-90 transition-all shadow-xl active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
           >
             <Zap className="w-6 h-6 fill-current" />
-            {product.stock === 0 ? t('out_of_stock') : isMaxReached ? t('low_stock') : t('buy_now_btn')}
+            {product.stock === 0 ? t('out_of_stock') : product.stock <= 5 ? t('low_stock') : t('buy_now_btn')}
           </button>
         </div>
       </div>
