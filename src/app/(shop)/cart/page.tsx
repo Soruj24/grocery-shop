@@ -36,9 +36,9 @@ export default function CartPage() {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 items-start">
         {/* Cart Items */}
         <div className="lg:col-span-2 space-y-6">
-          {cart.map((item) => (
+          {cart.map((item, idx) => (
             <CartItemRow
-              key={item._id}
+              key={item._id || `cart-item-${idx}`}
               item={item}
               removeFromCart={removeFromCart}
               updateQuantity={updateQuantity}

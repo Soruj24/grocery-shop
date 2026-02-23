@@ -10,12 +10,7 @@ import {
   LayoutGrid, 
   ShoppingBasket, 
   Settings, 
-  LogOut,
-  HelpCircle,
-  MessageCircle,
-  ShieldCheck,
-  RefreshCcw,
-  Truck
+  LogOut
 } from "lucide-react";
 import { useCart } from "@/components/CartContext";
 import { useWishlist } from "@/components/WishlistContext";
@@ -32,7 +27,6 @@ export default function UserActions() {
   const { totalWishlistItems } = useWishlist();
   const { data: session } = useSession();
   const [isProfileOpen, setIsProfileOpen] = useState(false);
-  const [isHelpOpen, setIsHelpOpen] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const { t } = useLanguage();
 
@@ -43,79 +37,11 @@ export default function UserActions() {
       <ThemeToggle />
       <CartDrawer isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />
 
-      {/* Help Dropdown */}
-      <div 
-        className="relative hidden xl:block"
-        onMouseEnter={() => setIsHelpOpen(true)}
-        onMouseLeave={() => setIsHelpOpen(false)}
-      >
-        <button
-          className="flex items-center gap-2 h-12 px-5 bg-gray-50 dark:bg-white/5 hover:bg-white dark:hover:bg-black text-gray-700 dark:text-gray-400 hover:text-green-600 dark:hover:text-green-500 rounded-2xl transition-all border border-transparent hover:border-gray-100 dark:hover:border-white/10 group font-bold text-sm shadow-sm hover:shadow-md"
-        >
-          <HelpCircle className="w-5 h-5 group-hover:scale-110 transition-transform" />
-          {t('help')}
-          <ChevronDown className={`w-4 h-4 transition-transform duration-300 ${isHelpOpen ? 'rotate-180' : ''}`} />
-        </button>
-
-        <AnimatePresence>
-          {isHelpOpen && (
-            <motion.div 
-              initial={{ opacity: 0, y: 10, scale: 0.95 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: 10, scale: 0.95 }}
-              transition={{ duration: 0.2, ease: "easeOut" }}
-              className="absolute right-0 mt-3 w-64 bg-white dark:bg-[#020617] rounded-[24px] shadow-[0_20px_40px_-15px_rgba(0,0,0,0.2)] border border-gray-100 dark:border-white/5 py-3 z-[100] backdrop-blur-3xl overflow-hidden"
-            >
-              <div className="px-2 space-y-1">
-                <Link 
-                  href="/support" 
-                  className="flex items-center gap-4 px-4 py-3 text-gray-600 dark:text-gray-400 hover:bg-green-50 dark:hover:bg-green-500/10 hover:text-green-600 rounded-xl transition-all font-bold group"
-                >
-                  <div className="w-10 h-10 rounded-xl bg-gray-50 dark:bg-white/5 flex items-center justify-center group-hover:bg-green-100 dark:group-hover:bg-green-500/20 transition-colors">
-                    <MessageCircle className="w-5 h-5" />
-                  </div>
-                  {t('live_chat')}
-                </Link>
-
-                <Link 
-                  href="/shipping" 
-                  className="flex items-center gap-4 px-4 py-3 text-gray-600 dark:text-gray-400 hover:bg-green-50 dark:hover:bg-green-500/10 hover:text-green-600 rounded-xl transition-all font-bold group"
-                >
-                  <div className="w-10 h-10 rounded-xl bg-gray-50 dark:bg-white/5 flex items-center justify-center group-hover:bg-green-100 dark:group-hover:bg-green-500/20 transition-colors">
-                    <Truck className="w-5 h-5" />
-                  </div>
-                  {t('shipping_policy')}
-                </Link>
-
-                <Link 
-                  href="/returns" 
-                  className="flex items-center gap-4 px-4 py-3 text-gray-600 dark:text-gray-400 hover:bg-green-50 dark:hover:bg-green-500/10 hover:text-green-600 rounded-xl transition-all font-bold group"
-                >
-                  <div className="w-10 h-10 rounded-xl bg-gray-50 dark:bg-white/5 flex items-center justify-center group-hover:bg-green-100 dark:group-hover:bg-green-500/20 transition-colors">
-                    <RefreshCcw className="w-5 h-5" />
-                  </div>
-                  {t('return_policy')}
-                </Link>
-
-                <Link 
-                  href="/privacy" 
-                  className="flex items-center gap-4 px-4 py-3 text-gray-600 dark:text-gray-400 hover:bg-green-50 dark:hover:bg-green-500/10 hover:text-green-600 rounded-xl transition-all font-bold group"
-                >
-                  <div className="w-10 h-10 rounded-xl bg-gray-50 dark:bg-white/5 flex items-center justify-center group-hover:bg-green-100 dark:group-hover:bg-green-500/20 transition-colors">
-                    <ShieldCheck className="w-5 h-5" />
-                  </div>
-                  {t('privacy_policy')}
-                </Link>
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </div>
-
       {/* Wishlist */}
       <Link 
         href="/wishlist" 
-        className="relative h-12 w-12 items-center justify-center bg-gray-50 dark:bg-white/5 hover:bg-rose-50 dark:hover:bg-rose-500/10 text-gray-700 dark:text-gray-400 hover:text-rose-500 rounded-2xl transition-all group hidden sm:flex border border-transparent hover:border-rose-100 dark:hover:border-rose-500/20 shadow-sm hover:shadow-md"
+        title={t('wishlist') || "Wishlist"}
+        className="relative h-12 w-12 flex items-center justify-center bg-gray-50 dark:bg-white/5 hover:bg-rose-50 dark:hover:bg-rose-500/10 text-gray-700 dark:text-gray-400 hover:text-rose-500 rounded-2xl transition-all group hidden sm:flex border border-transparent hover:border-rose-100 dark:hover:border-rose-500/20 shadow-sm hover:shadow-md"
       >
         <Heart className="w-6 h-6 group-hover:scale-110 transition-transform" />
         {totalWishlistItems > 0 && (
@@ -132,6 +58,7 @@ export default function UserActions() {
       {/* Cart */}
       <button 
         onClick={() => setIsCartOpen(true)}
+        title={t('cart') || "Shopping Cart"}
         className="relative h-12 w-12 flex items-center justify-center bg-gray-50 dark:bg-white/5 hover:bg-green-50 dark:hover:bg-green-500/10 text-gray-700 dark:text-gray-400 hover:text-green-600 rounded-2xl transition-all group border border-transparent hover:border-green-100 dark:hover:border-green-500/20 shadow-sm hover:shadow-md"
       >
         <ShoppingCart className="w-6 h-6 group-hover:scale-110 transition-transform" />

@@ -56,10 +56,10 @@ export default function CartDrawer({ isOpen, onClose }: { isOpen: boolean; onClo
             <div className="flex-1 overflow-y-auto p-8 custom-scrollbar">
               {cart.length > 0 ? (
                 <div className="space-y-6">
-                  {cart.map((item) => (
+                  {cart.map((item, idx) => (
                     <motion.div
                       layout
-                      key={item._id}
+                      key={item._id || `cart-item-${idx}`}
                       className="flex gap-4 p-4 bg-gray-50 dark:bg-white/5 rounded-3xl border border-transparent hover:border-green-500/20 transition-all group"
                     >
                       <div className="relative w-24 h-24 rounded-2xl overflow-hidden bg-white dark:bg-white/5 flex-shrink-0">

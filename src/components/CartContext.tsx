@@ -35,7 +35,12 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
         if (Array.isArray(parsed)) {
           // Defer state update to avoid synchronous cascading render lint error
           setTimeout(() => {
-            setCart(parsed);
+            // Filter out invalid items and ensure unique IDs
+            const validItems = parsed.filter((item: any) => item && item._id);
+            // Remove duplicates based on _id
+            const uniqueItems = Array.from(new Map(validItems.map((item: any) => [item._id, item])).values()) as CartItem[];
+            
+            setCart(uniqueItems);
             setIsInitialized(true);
           }, 0);
           return;

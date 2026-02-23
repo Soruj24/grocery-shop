@@ -5,6 +5,7 @@ import { useLanguage } from "@/components/LanguageContext";
 import { useSettings } from "@/context/SettingsContext";
 import Image from "next/image";
 import Link from "next/link";
+import { motion } from "framer-motion";
 
 export default function FooterLogo() {
   const { t } = useLanguage();
@@ -20,19 +21,19 @@ export default function FooterLogo() {
 
   return (
     <div className="space-y-8">
-      <Link href="/" className="flex flex-col">
+      <Link href="/" className="flex flex-col group">
         {settings.logo ? (
           <div className="relative w-48 h-16">
             <Image 
               src={settings.logo} 
               alt={settings.shopName} 
               fill 
-              className="object-contain object-left" 
+              className="object-contain object-left group-hover:scale-105 transition-transform duration-300" 
             />
           </div>
         ) : (
           <div className="flex items-center gap-3">
-             <div className="w-10 h-10 bg-gradient-to-br from-green-500 to-emerald-700 rounded-xl flex items-center justify-center shadow-lg shadow-green-500/20">
+             <div className="w-10 h-10 bg-gradient-to-br from-green-500 to-emerald-700 rounded-xl flex items-center justify-center shadow-lg shadow-green-500/20 group-hover:scale-110 transition-transform duration-300">
                 <ShoppingBasket className="w-6 h-6 text-white" />
              </div>
              <div>
@@ -42,7 +43,7 @@ export default function FooterLogo() {
              </div>
           </div>
         )}
-        <span className="text-[10px] font-black text-gray-400 dark:text-gray-500 uppercase tracking-[0.3em] mt-3">
+        <span className="text-[10px] font-black text-gray-400 dark:text-gray-500 uppercase tracking-[0.3em] mt-3 group-hover:text-green-500 transition-colors">
             {t('premium_grocery')}
         </span>
       </Link>
@@ -54,26 +55,30 @@ export default function FooterLogo() {
       <div className="flex gap-4">
         {socialLinks.length > 0 ? (
           socialLinks.map((item, i) => (
-            <a 
+            <motion.a 
               key={i}
               href={item.href} 
               target="_blank"
               rel="noopener noreferrer"
-              className="w-12 h-12 bg-gray-50 dark:bg-white/5 rounded-[18px] flex items-center justify-center text-gray-400 dark:text-gray-500 hover:bg-green-600 hover:text-white transition-all duration-500 group border border-transparent hover:border-green-400/20"
+              whileHover={{ scale: 1.1, rotate: 10 }}
+              whileTap={{ scale: 0.9 }}
+              className="w-12 h-12 bg-gray-50 dark:bg-white/5 rounded-[18px] flex items-center justify-center text-gray-400 dark:text-gray-500 hover:bg-green-600 hover:text-white transition-colors duration-300 border border-transparent hover:border-green-400/20 shadow-sm hover:shadow-lg hover:shadow-green-500/20"
             >
-              <item.icon className="w-5 h-5 group-hover:scale-110 transition-transform" />
-            </a>
+              <item.icon className="w-5 h-5" />
+            </motion.a>
           ))
         ) : (
           // Default placeholders if no social links set
            [Facebook, Instagram, Youtube].map((Icon, i) => (
-            <a 
+            <motion.a 
               key={i}
               href="#" 
-              className="w-12 h-12 bg-gray-50 dark:bg-white/5 rounded-[18px] flex items-center justify-center text-gray-400 dark:text-gray-500 hover:bg-green-600 hover:text-white transition-all duration-500 group border border-transparent hover:border-green-400/20"
+              whileHover={{ scale: 1.1, rotate: 10 }}
+              whileTap={{ scale: 0.9 }}
+              className="w-12 h-12 bg-gray-50 dark:bg-white/5 rounded-[18px] flex items-center justify-center text-gray-400 dark:text-gray-500 hover:bg-green-600 hover:text-white transition-colors duration-300 border border-transparent hover:border-green-400/20 shadow-sm hover:shadow-lg hover:shadow-green-500/20"
             >
-              <Icon className="w-5 h-5 group-hover:scale-110 transition-transform" />
-            </a>
+              <Icon className="w-5 h-5" />
+            </motion.a>
           ))
         )}
       </div>

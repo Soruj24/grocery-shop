@@ -3,6 +3,7 @@
 import { MapPin, Phone, Mail } from "lucide-react";
 import { useLanguage } from "@/components/LanguageContext";
 import { useSettings } from "@/context/SettingsContext";
+import { motion } from "framer-motion";
 
 export default function FooterContact() {
   const { t } = useLanguage();
@@ -44,18 +45,32 @@ export default function FooterContact() {
 
   return (
     <div className="space-y-8">
-      <h4 className="text-xs font-black text-gray-400 dark:text-gray-500 uppercase tracking-[0.3em]">{t('contact_us')}</h4>
+      <motion.h4 
+        initial={{ opacity: 0, y: 10 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        className="text-xs font-black text-gray-400 dark:text-gray-500 uppercase tracking-[0.3em]"
+      >
+        {t('contact_us')}
+      </motion.h4>
       <ul className="space-y-6">
         {contactInfo.map((info, idx) => (
-          <li key={idx} className="flex items-start gap-5 group">
+          <motion.li 
+            key={idx} 
+            initial={{ opacity: 0, x: -10 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: idx * 0.1 }}
+            className="flex items-start gap-5 group"
+          >
             <div className={`w-12 h-12 rounded-2xl flex items-center justify-center flex-shrink-0 transition-colors ${getColorClasses(info.color)}`}>
-              <info.icon className="w-5 h-5" />
+              <info.icon className="w-5 h-5 group-hover:scale-110 transition-transform" />
             </div>
             <div>
               <p className="text-[10px] font-black text-gray-400 dark:text-gray-500 uppercase tracking-widest mb-1">{info.label}</p>
-              <p className="text-gray-700 dark:text-gray-300 text-sm font-black leading-relaxed whitespace-pre-line">{info.value}</p>
+              <p className="text-gray-700 dark:text-gray-300 text-sm font-black leading-relaxed whitespace-pre-line group-hover:text-green-600 dark:group-hover:text-green-400 transition-colors">{info.value}</p>
             </div>
-          </li>
+          </motion.li>
         ))}
       </ul>
     </div>

@@ -249,15 +249,16 @@ export default async function HomePage({
         // Fallback if sections fail to load for some reason (though seed should handle it)
         <>
           <Hero />
+          <Features />
+          <CategorySection categories={categories} />
           <div className="max-w-7xl mx-auto px-4">
             <DailyDealsBanner />
           </div>
-          <Features />
+          <FlashDeals products={products} />
+          <FeaturedProducts products={products} />
           <div className="max-w-7xl mx-auto px-4">
             <RamadanOffers />
           </div>
-          <CategorySection categories={categories} />
-          <FlashDeals products={products} />
           <div className="max-w-7xl mx-auto px-4">
             <ComboPacks />
           </div>
@@ -265,19 +266,18 @@ export default async function HomePage({
           <div className="max-w-7xl mx-auto px-4">
             <EidSpecialDeals />
           </div>
-          <FeaturedProducts products={products} />
           <div className="max-w-7xl mx-auto px-4">
             <BuyMoreSaveMore />
           </div>
           <SubCategorySpotlight categories={categories} />
           <SpecialOfferBanners />
-          <AppDownload />
           <ProductSection
             products={products}
             totalPages={totalPages}
             currentPage={currentPage}
             totalCount={totalCount}
           />
+          <AppDownload />
           <Testimonials />
           <Newsletter />
           <RecentlyViewedSection />

@@ -188,51 +188,58 @@ export default function SearchBar() {
 
   return (
     <div className="hidden lg:flex flex-1 max-w-2xl px-8" ref={searchRef}>
-      <form onSubmit={handleSubmit} className="relative w-full group">
-        <div className="relative flex items-center bg-gray-50 dark:bg-white/5 rounded-[24px] border border-transparent group-focus-within:border-green-500/50 group-focus-within:bg-white dark:group-focus-within:bg-black transition-all duration-300 shadow-sm group-focus-within:shadow-[0_0_20px_rgba(34,197,94,0.15)] overflow-hidden">
+      <form onSubmit={handleSubmit} className="relative w-full group z-50">
+        <div className="relative flex items-center bg-white dark:bg-white/5 rounded-full border border-gray-200 dark:border-white/10 transition-all duration-300 shadow-sm hover:shadow-md focus-within:shadow-[0_0_0_4px_rgba(34,197,94,0.1)] focus-within:border-green-500 overflow-hidden h-[56px]">
           {/* Category Filter Dropdown */}
-          <div className="relative shrink-0">
+          <div className="relative shrink-0 hidden xl:block h-full">
             <button
               type="button"
               onClick={() => setIsCategoryOpen(!isCategoryOpen)}
-              className="flex items-center gap-2 pl-6 pr-4 py-4 text-sm font-black text-gray-700 dark:text-gray-300 hover:text-green-600 transition-colors border-r border-gray-200/50 dark:border-white/5"
+              className="flex items-center gap-2 pl-6 pr-4 h-full text-xs font-bold text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-white/5 transition-colors border-r border-gray-100 dark:border-white/5 bg-gray-50/50 dark:bg-transparent"
             >
-              <Filter
-                size={16}
-                className={isCategoryOpen ? "text-green-600" : ""}
-              />
-              <span className="max-w-[120px] truncate">
+              <div className={`p-1.5 rounded-md ${selectedCategory !== "all" ? "bg-green-100 text-green-600" : "bg-gray-100 dark:bg-white/10 text-gray-500"}`}>
+                <Filter className="w-3.5 h-3.5" />
+              </div>
+              <span className="max-w-[80px] truncate">
                 {categories.find((c) => c.id === selectedCategory)?.name}
               </span>
               <ChevronDown
-                size={14}
-                className={`transition-transform duration-300 ${isCategoryOpen ? "rotate-180" : ""}`}
+                className={`w-3 h-3 transition-transform duration-300 ${
+                  isCategoryOpen ? "rotate-180 text-green-600" : "text-gray-400"
+                }`}
               />
             </button>
 
+            {/* Category Dropdown Menu */}
             <AnimatePresence>
               {isCategoryOpen && (
                 <motion.div
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: 10 }}
-                  className="absolute top-full left-0 mt-2 w-48 bg-white dark:bg-[#0F172A] border border-gray-100 dark:border-white/10 rounded-2xl shadow-2xl z-50 overflow-hidden"
+                  initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={{ opacity: 0, y: 10, scale: 0.95 }}
+                  className="absolute top-[calc(100%+8px)] left-0 w-64 bg-white dark:bg-gray-900 rounded-2xl shadow-xl shadow-black/10 border border-gray-100 dark:border-white/10 py-2 z-50 overflow-hidden backdrop-blur-xl"
                 >
-                  {categories.map((cat) => (
+                  <div className="px-4 py-2 text-[10px] font-black uppercase tracking-widest text-gray-400">
+                    {t("categories_title")}
+                  </div>
+                  {categories.map((category) => (
                     <button
-                      key={cat.id}
-                      type="button"
+                      key={category.id}
                       onClick={() => {
-                        setSelectedCategory(cat.id);
+                        setSelectedCategory(category.id);
                         setIsCategoryOpen(false);
                       }}
-                      className={`w-full text-left px-6 py-3 text-sm font-bold hover:bg-green-50 dark:hover:bg-green-500/10 transition-colors ${
-                        selectedCategory === cat.id
-                          ? "text-green-600 bg-green-50 dark:bg-green-500/5"
+                      className={`w-full flex items-center gap-3 px-4 py-2.5 text-sm font-bold transition-all hover:bg-green-50 dark:hover:bg-white/5 ${
+                        selectedCategory === category.id
+                          ? "text-green-600 bg-green-50/50 dark:bg-green-500/10"
                           : "text-gray-600 dark:text-gray-400"
                       }`}
                     >
-                      {cat.name}
+                      <span className="text-lg">{category.icon}</span>
+                      {category.name}
+                      {selectedCategory === category.id && (
+                        <motion.div layoutId="activeDot" className="ml-auto w-1.5 h-1.5 rounded-full bg-green-500" />
+                      )}
                     </button>
                   ))}
                 </motion.div>
@@ -240,95 +247,130 @@ export default function SearchBar() {
             </AnimatePresence>
           </div>
 
-          <div className="relative flex-1 flex items-center">
-            <Search className="w-5 h-5 text-gray-400 absolute left-4 group-focus-within:text-green-600 transition-colors" />
+          {/* Search Input */}
+          <div className="flex-1 relative flex items-center h-full">
+            <Search className="absolute left-4 w-5 h-5 text-gray-400 group-focus-within:text-green-500 transition-colors pointer-events-none" />
             <input
               ref={inputRef}
               type="text"
               value={searchTerm}
-              onChange={(e) => {
-                setSearchTerm(e.target.value);
-                setIsOpen(true);
-                setSelectedIndex(-1);
-              }}
-              onFocus={() => setIsOpen(true)}
+              onChange={(e) => setSearchTerm(e.target.value)}
               onKeyDown={handleKeyDown}
+              onFocus={() => setIsOpen(true)}
               placeholder={t("search_placeholder")}
-              className="w-full bg-transparent py-4 pl-12 pr-10 outline-none text-base font-bold text-gray-900 dark:text-white placeholder:text-gray-400"
+              className="w-full h-full bg-transparent border-none pl-12 pr-12 text-gray-900 dark:text-white placeholder-gray-400 focus:ring-0 text-sm font-semibold"
             />
-          </div>
 
-          <div className="flex items-center gap-1 pr-3 shrink-0">
+            {/* Clear Button */}
+            {searchTerm && (
+              <button
+                type="button"
+                onClick={() => {
+                  setSearchTerm("");
+                  setIsOpen(false);
+                  inputRef.current?.focus();
+                }}
+                className="absolute right-12 p-1.5 rounded-full bg-gray-100 dark:bg-white/10 text-gray-400 hover:text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-500/10 transition-all"
+              >
+                <X className="w-3 h-3" />
+              </button>
+            )}
+
+            {/* Voice Search Button */}
             <button
               type="button"
               onClick={startVoiceSearch}
-              className={`p-2 rounded-xl transition-all ${isListening ? "bg-rose-500 text-white animate-pulse" : "text-gray-400 hover:bg-gray-100 dark:hover:bg-white/10 hover:text-green-500"}`}
+              className={`absolute right-3 p-2 rounded-full transition-all ${
+                isListening
+                  ? "bg-red-50 text-red-500 animate-pulse ring-2 ring-red-100"
+                  : "text-gray-400 hover:text-green-600 hover:bg-green-50 dark:hover:bg-white/5"
+              }`}
             >
-              <Mic size={20} />
-            </button>
-
-            {isLoading ? (
-              <Loader2 className="w-5 h-5 text-green-500 animate-spin mr-2" />
-            ) : (
-              searchTerm && (
-                <button
-                  type="button"
-                  onClick={() => setSearchTerm("")}
-                  className="p-2 hover:bg-gray-100 dark:hover:bg-white/10 rounded-xl text-gray-400 hover:text-gray-600 transition-colors"
-                >
-                  <X className="w-4 h-4" />
-                </button>
-              )
-            )}
-            <button
-              type="submit"
-              className="bg-gray-900 dark:bg-white text-white dark:text-black px-6 py-2.5 rounded-xl text-xs font-black uppercase tracking-widest hover:bg-green-600 hover:text-white transition-all shadow-lg active:scale-95 ml-2"
-            >
-              {t("search_action")}
+              {isListening ? (
+                <div className="w-4 h-4 relative flex items-center justify-center">
+                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+                   <Mic className="w-3 h-3 relative z-10" />
+                </div>
+              ) : (
+                <Mic className="w-5 h-5" />
+              )}
             </button>
           </div>
+
+          {/* Search Button */}
+          <button
+            type="submit"
+            className="h-[46px] mr-1.5 px-6 bg-green-600 hover:bg-green-500 text-white rounded-full font-bold text-sm transition-all duration-300 shadow-lg shadow-green-600/20 hover:shadow-green-500/30 flex items-center gap-2 transform hover:scale-105 active:scale-95"
+          >
+            {isLoading ? (
+              <Loader2 className="w-4 h-4 animate-spin" />
+            ) : (
+              <>
+                <Search className="w-4 h-4" />
+                <span className="hidden xl:inline">{t("search_button")}</span>
+              </>
+            )}
+          </button>
         </div>
 
         <AnimatePresence>
           {isOpen && (
             <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: 10 }}
-              className="absolute top-full left-0 right-0 mt-3 bg-white dark:bg-[#0F172A] border border-gray-100 dark:border-white/10 rounded-[32px] shadow-2xl z-50 overflow-hidden backdrop-blur-3xl"
+              initial={{ opacity: 0, y: 10, scale: 0.98 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: 10, scale: 0.98 }}
+              transition={{ duration: 0.2, ease: "easeOut" }}
+              className="absolute top-full left-0 right-0 mt-4 bg-white dark:bg-gray-900 border border-gray-100 dark:border-white/10 rounded-[32px] shadow-2xl shadow-black/10 z-50 overflow-hidden backdrop-blur-xl"
             >
-              <div className="p-4 max-h-[500px] overflow-y-auto custom-scrollbar">
+
+              <div className="p-6 max-h-[600px] overflow-y-auto custom-scrollbar">
                 {/* Search History */}
                 {!searchTerm && history.length > 0 && (
-                  <div className="mb-6">
-                    <p className="text-[10px] font-black uppercase tracking-[0.2em] text-gray-400 px-4 mb-3">
-                      {t("recent_searches")}
-                    </p>
+                  <div className="mb-8">
+                    <div className="flex items-center justify-between px-2 mb-4">
+                      <p className="text-[10px] font-black uppercase tracking-[0.2em] text-gray-400">
+                        {t("recent_searches")}
+                      </p>
+                      <button 
+                        onClick={() => {
+                          setHistory([]);
+                          localStorage.removeItem("search_history");
+                        }}
+                        className="text-[10px] font-bold text-red-500 hover:text-red-600 transition-colors"
+                      >
+                        Clear All
+                      </button>
+                    </div>
                     <div className="space-y-1">
                       {history.map((item, idx) => (
-                        <div
+                        <motion.div
                           key={idx}
-                          className="flex items-center justify-between group px-4 py-2 hover:bg-gray-50 dark:hover:bg-white/5 rounded-xl cursor-pointer"
+                          initial={{ opacity: 0, x: -20 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          transition={{ delay: idx * 0.05 }}
+                          className="flex items-center justify-between group px-4 py-3 hover:bg-gray-50 dark:hover:bg-white/5 rounded-2xl cursor-pointer transition-all border border-transparent hover:border-gray-100 dark:hover:border-white/5"
                         >
                           <div
-                            className="flex items-center gap-3 flex-1"
+                            className="flex items-center gap-4 flex-1"
                             onClick={() => {
                               setSearchTerm(item);
                               inputRef.current?.focus();
                             }}
                           >
-                            <History size={16} className="text-gray-300" />
-                            <span className="text-sm font-bold text-gray-600 dark:text-gray-400">
+                            <div className="w-8 h-8 rounded-full bg-gray-100 dark:bg-white/10 flex items-center justify-center text-gray-400 group-hover:text-green-500 transition-colors">
+                              <History size={14} />
+                            </div>
+                            <span className="text-sm font-bold text-gray-600 dark:text-gray-300 group-hover:text-gray-900 dark:group-hover:text-white transition-colors">
                               {item}
                             </span>
                           </div>
                           <button
                             onClick={(e) => removeFromHistory(e, item)}
-                            className="p-1 opacity-0 group-hover:opacity-100 hover:text-rose-500 transition-all"
+                            className="p-2 text-gray-300 hover:text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-500/10 rounded-full transition-all opacity-0 group-hover:opacity-100"
                           >
                             <X size={14} />
                           </button>
-                        </div>
+                        </motion.div>
                       ))}
                     </div>
                   </div>
@@ -337,23 +379,26 @@ export default function SearchBar() {
                 {/* Popular Searches */}
                 {!searchTerm && (
                   <div className="mb-4">
-                    <p className="text-[10px] font-black uppercase tracking-[0.2em] text-gray-400 px-4 mb-3">
+                    <p className="text-[10px] font-black uppercase tracking-[0.2em] text-gray-400 px-2 mb-4">
                       {t("popular_searches_title")}
                     </p>
-                    <div className="flex flex-wrap gap-2 px-4">
+                    <div className="flex flex-wrap gap-2.5 px-2">
                       {POPULAR_SEARCHES.map((item, idx) => (
-                        <button
+                        <motion.button
                           key={idx}
+                          initial={{ opacity: 0, scale: 0.9 }}
+                          animate={{ opacity: 1, scale: 1 }}
+                          transition={{ delay: idx * 0.05 }}
                           type="button"
                           onClick={() => {
                             setSearchTerm(item);
                             inputRef.current?.focus();
                           }}
-                          className="flex items-center gap-2 px-4 py-2 bg-gray-50 dark:bg-white/5 hover:bg-green-50 dark:hover:bg-green-500/10 rounded-full text-xs font-bold text-gray-600 dark:text-gray-400 transition-all"
+                          className="flex items-center gap-2 px-4 py-2.5 bg-gray-50 dark:bg-white/5 hover:bg-green-50 dark:hover:bg-green-500/10 border border-gray-100 dark:border-white/5 hover:border-green-200 dark:hover:border-green-500/30 rounded-xl text-xs font-bold text-gray-600 dark:text-gray-400 hover:text-green-700 dark:hover:text-green-400 transition-all group"
                         >
-                          <TrendingUp size={12} className="text-green-500" />
+                          <TrendingUp size={12} className="text-gray-400 group-hover:text-green-500 transition-colors" />
                           {item}
-                        </button>
+                        </motion.button>
                       ))}
                     </div>
                   </div>
@@ -361,87 +406,119 @@ export default function SearchBar() {
 
                 {/* Search Results */}
                 {searchTerm.length >= 2 && (
-                  <div className="space-y-6">
+                  <div className="space-y-8">
                     {/* Category Suggestions */}
                     {categorySuggestions.length > 0 && (
-                      <div className="space-y-2">
-                        <p className="text-[10px] font-black uppercase tracking-[0.2em] text-gray-400 px-4">
+                      <div className="space-y-3">
+                        <p className="text-[10px] font-black uppercase tracking-[0.2em] text-gray-400 px-2">
                           {t("suggested_categories")}
                         </p>
-                        <div className="grid grid-cols-2 gap-2 px-4">
-                          {categorySuggestions.map((cat) => (
-                            <Link
+                        <div className="grid grid-cols-2 gap-3 px-2">
+                          {categorySuggestions.map((cat, idx) => (
+                            <motion.div
                               key={cat.id}
-                              href={`/products?category=${cat.id}`}
-                              onClick={() => setIsOpen(false)}
-                              className="flex items-center gap-3 p-3 bg-gray-50 dark:bg-white/5 hover:bg-green-50 dark:hover:bg-green-500/10 rounded-2xl transition-all border border-transparent hover:border-green-100 dark:hover:border-green-500/20 group"
+                              initial={{ opacity: 0, y: 10 }}
+                              animate={{ opacity: 1, y: 0 }}
+                              transition={{ delay: idx * 0.05 }}
                             >
-                              <span className="text-xl group-hover:scale-110 transition-transform">
-                                {cat.icon}
-                              </span>
-                              <span className="text-sm font-bold text-gray-700 dark:text-gray-300">
-                                {cat.name}
-                              </span>
-                            </Link>
+                              <Link
+                                href={`/products?category=${cat.id}`}
+                                onClick={() => setIsOpen(false)}
+                                className="flex items-center gap-4 p-4 bg-gray-50 dark:bg-white/5 hover:bg-green-50 dark:hover:bg-green-500/10 rounded-2xl transition-all border border-gray-100 dark:border-white/5 hover:border-green-200 dark:hover:border-green-500/30 group hover:shadow-lg hover:shadow-green-500/10"
+                              >
+                                <span className="text-2xl group-hover:scale-110 transition-transform duration-300 filter grayscale group-hover:grayscale-0">
+                                  {cat.icon}
+                                </span>
+                                <span className="text-sm font-bold text-gray-700 dark:text-gray-300 group-hover:text-green-700 dark:group-hover:text-green-400 transition-colors">
+                                  {cat.name}
+                                </span>
+                                <ArrowRight className="w-4 h-4 ml-auto text-gray-300 group-hover:text-green-500 group-hover:translate-x-1 transition-all" />
+                              </Link>
+                            </motion.div>
                           ))}
                         </div>
                       </div>
                     )}
 
                     {/* Product Results */}
-                    <div className="space-y-2">
-                      <p className="text-[10px] font-black uppercase tracking-[0.2em] text-gray-400 px-4">
+                    <div className="space-y-3">
+                      <p className="text-[10px] font-black uppercase tracking-[0.2em] text-gray-400 px-2">
                         {t("products_title_search")}
                       </p>
                       {results && results.length > 0 ? (
-                        <>
+                        <div className="space-y-2">
                           {results.map((product: any, idx: number) => (
-                            <Link
+                            <motion.div
                               key={product._id}
-                              href={`/products/${product._id}`}
-                              onClick={() => {
-                                addToHistory(searchTerm);
-                                setIsOpen(false);
-                              }}
-                              className={`flex items-center gap-4 p-3 rounded-2xl transition-all group ${
-                                selectedIndex === idx
-                                  ? "bg-green-50 dark:bg-green-500/10"
-                                  : "hover:bg-gray-50 dark:hover:bg-white/5"
-                              }`}
+                              initial={{ opacity: 0, x: -10 }}
+                              animate={{ opacity: 1, x: 0 }}
+                              transition={{ delay: idx * 0.05 }}
                             >
-                              <div className="w-14 h-14 rounded-xl overflow-hidden bg-gray-100 dark:bg-white/5 flex-shrink-0">
-                                <Image
-                                  src={product.image || getProductFallbackImage(product.name)}
-                                  alt={product.name}
-                                  width={56}
-                                  height={56}
-                                  sizes="56px"
-                                  className="w-full h-full object-cover group-hover:scale-110 transition-transform"
-                                />
-                              </div>
-                              <div className="flex-1">
-                                <h4
-                                  className={`text-sm font-bold transition-colors ${
-                                    selectedIndex === idx
-                                      ? "text-green-600"
-                                      : "text-gray-900 dark:text-white group-hover:text-green-600"
-                                  }`}
-                                >
-                                  {product.name}
-                                </h4>
-                                <p className="text-xs text-gray-500 dark:text-gray-400">
-                                  {t("currency_symbol")}
-                                  {product.price.toLocaleString(language === 'bn' ? 'bn-BD' : 'en-US')} / {product.unit === 'kg' ? t('unit_kg') : product.unit === 'g' ? t('unit_g') : (product.unit || t('default_unit'))}
-                                </p>
-                              </div>
-                              <ArrowRight
-                                className={`w-4 h-4 text-gray-300 transition-all ${
+                              <Link
+                                href={`/products/${product._id}`}
+                                onClick={() => {
+                                  addToHistory(searchTerm);
+                                  setIsOpen(false);
+                                }}
+                                className={`flex items-center gap-4 p-3 rounded-2xl transition-all group border ${
                                   selectedIndex === idx
-                                    ? "opacity-100 translate-x-1 text-green-500"
-                                    : "opacity-0 group-hover:opacity-100 group-hover:translate-x-1"
+                                    ? "bg-green-50 dark:bg-green-500/10 border-green-200 dark:border-green-500/30"
+                                    : "hover:bg-gray-50 dark:hover:bg-white/5 border-transparent hover:border-gray-100 dark:hover:border-white/5"
                                 }`}
-                              />
-                            </Link>
+                              >
+                                <div className="w-16 h-16 rounded-xl overflow-hidden bg-gray-100 dark:bg-white/5 flex-shrink-0 relative group-hover:shadow-md transition-shadow">
+                                  <Image
+                                    src={
+                                      product.image ||
+                                      getProductFallbackImage(product.name)
+                                    }
+                                    alt={product.name}
+                                    fill
+                                    sizes="64px"
+                                    className="object-cover group-hover:scale-110 transition-transform duration-500"
+                                  />
+                                </div>
+                                <div className="flex-1 min-w-0">
+                                  <h4
+                                    className={`text-sm font-bold truncate transition-colors mb-1 ${
+                                      selectedIndex === idx
+                                        ? "text-green-600"
+                                        : "text-gray-900 dark:text-white group-hover:text-green-600"
+                                    }`}
+                                  >
+                                    {product.name}
+                                  </h4>
+                                  <div className="flex items-center gap-2">
+                                    <span className="text-xs font-black text-green-600 dark:text-green-400 bg-green-50 dark:bg-green-500/10 px-2 py-0.5 rounded-md">
+                                      {t("currency_symbol")}
+                                      {product.price.toLocaleString(
+                                        language === "bn" ? "bn-BD" : "en-US",
+                                      )}
+                                    </span>
+                                    <span className="text-[10px] font-bold text-gray-400 uppercase tracking-wider">
+                                      / {product.unit === "kg"
+                                        ? t("unit_kg")
+                                        : product.unit === "g"
+                                          ? t("unit_g")
+                                          : product.unit || t("default_unit")}
+                                    </span>
+                                  </div>
+                                </div>
+                                <div className={`w-8 h-8 rounded-full flex items-center justify-center transition-all ${
+                                  selectedIndex === idx
+                                    ? "bg-green-500 text-white shadow-lg shadow-green-500/30"
+                                    : "bg-gray-100 dark:bg-white/5 text-gray-400 group-hover:bg-green-500 group-hover:text-white"
+                                }`}>
+                                  <ArrowRight
+                                    className={`w-4 h-4 transition-transform ${
+                                      selectedIndex === idx
+                                        ? "translate-x-0"
+                                        : "group-hover:translate-x-0.5"
+                                    }`}
+                                  />
+                                </div>
+                              </Link>
+                            </motion.div>
                           ))}
                           <Link
                             href={`/products?q=${encodeURIComponent(searchTerm)}${selectedCategory !== "all" ? `&category=${selectedCategory}` : ""}`}
@@ -454,7 +531,7 @@ export default function SearchBar() {
                             {t("see_all")}
                             <ArrowRight className="w-4 h-4" />
                           </Link>
-                        </>
+                        </div>
                       ) : (
                         !isLoading && (
                           <div className="p-8 text-center space-y-4">

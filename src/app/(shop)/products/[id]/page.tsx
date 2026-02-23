@@ -108,7 +108,7 @@ export default async function ProductDetailsPage({
 
       <div className="max-w-7xl mx-auto px-4 py-8 lg:py-12 relative z-10 space-y-16 lg:space-y-24">
         {/* Breadcrumb */}
-        <ProductBreadcrumb productName={product.name} />
+        <ProductBreadcrumb product={product} />
 
         {/* Main Product Section */}
         <div className="flex flex-col lg:flex-row gap-12 lg:gap-20 items-start">
