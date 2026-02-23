@@ -135,7 +135,7 @@ export default function CheckoutPage() {
             quantity: item.quantity,
           })),
           total: finalTotal,
-          address: `${formData.address}, ${formData.area}, ${formData.district}, ${formData.division}`,
+          address: formData.address,
           phone: formData.phone,
           paymentMethod,
           transactionId: paymentMethod !== 'cod' ? transactionId : undefined,
