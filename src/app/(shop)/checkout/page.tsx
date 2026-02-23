@@ -37,9 +37,6 @@ export default function CheckoutPage() {
     name: "",
     phone: "",
     address: "",
-    area: "Dhanmondi",
-    division: "",
-    district: "",
   });
   const [deliverySlot, setDeliverySlot] = useState(t('delivery_slot_morning'));
   const [paymentMethod, setPaymentMethod] = useState<'cod' | 'bkash' | 'nagad' | 'card'>('cod');

@@ -8,8 +8,6 @@ import {
   Mic,
   History,
   TrendingUp,
-  Filter,
-  ChevronDown,
   Star,
 } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
@@ -42,8 +40,6 @@ export default function SearchBar() {
     }
     return [];
   });
-  const [selectedCategory, setSelectedCategory] = useState("all");
-  const [isCategoryOpen, setIsCategoryOpen] = useState(false);
   const [isListening, setIsListening] = useState(false);
   const [debouncedTerm, setDebouncedTerm] = useState("");
 
@@ -125,15 +121,15 @@ export default function SearchBar() {
   };
 
   const { data: results, isLoading } = useQuery({
-    queryKey: ["search", debouncedTerm, selectedCategory],
+    queryKey: ["search", debouncedTerm],
     queryFn: async () => {
-      if (debouncedTerm.length < 2 && selectedCategory === "all") return [];
+      if (debouncedTerm.length < 2) return [];
       const res = await fetch(
-        `/api/products/search?q=${encodeURIComponent(debouncedTerm)}&category=${selectedCategory}`,
+        `/api/products/search?q=${encodeURIComponent(debouncedTerm)}&category=all`,
       );
       return res.json();
     },
-    enabled: debouncedTerm.length >= 2 || selectedCategory !== "all",
+    enabled: debouncedTerm.length >= 2,
   });
 
   // Smart suggestions for categories
@@ -151,7 +147,6 @@ export default function SearchBar() {
         !searchRef.current.contains(event.target as Node)
       ) {
         setIsOpen(false);
-        setIsCategoryOpen(false);
       }
     };
     document.addEventListener("mousedown", handleClickOutside);
@@ -182,7 +177,7 @@ export default function SearchBar() {
     if (searchTerm.trim()) {
       addToHistory(searchTerm);
       router.push(
-        `/products?q=${encodeURIComponent(searchTerm)}${selectedCategory !== "all" ? `&category=${selectedCategory}` : ""}`,
+        `/products?q=${encodeURIComponent(searchTerm)}`,
       );
       setIsOpen(false);
     }
@@ -192,67 +187,7 @@ export default function SearchBar() {
     <div className="hidden lg:flex flex-1 max-w-2xl px-8" ref={searchRef}>
       <form onSubmit={handleSubmit} className="relative w-full group z-50">
         <div className="relative flex items-center bg-white dark:bg-white/5 rounded-full border border-gray-200 dark:border-white/10 transition-all duration-300 shadow-sm hover:shadow-md focus-within:shadow-[0_0_0_4px_rgba(34,197,94,0.1)] focus-within:border-green-500 overflow-hidden h-[56px]">
-          {/* Category Filter Dropdown */}
-          <div className="relative shrink-0 hidden xl:block h-full">
-            <button
-              type="button"
-              onClick={() => setIsCategoryOpen(!isCategoryOpen)}
-              className="flex items-center gap-2 pl-6 pr-4 h-full text-xs font-bold text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-white/5 transition-colors border-r border-gray-100 dark:border-white/5 bg-gray-50/50 dark:bg-transparent"
-            >
-              <div
-                className={`p-1.5 rounded-md ${selectedCategory !== "all" ? "bg-green-100 text-green-600" : "bg-gray-100 dark:bg-white/10 text-gray-500"}`}
-              >
-                <Filter className="w-3.5 h-3.5" />
-              </div>
-              <span className="max-w-[80px] truncate">
-                {categories.find((c) => c.id === selectedCategory)?.name}
-              </span>
-              <ChevronDown
-                className={`w-3 h-3 transition-transform duration-300 ${
-                  isCategoryOpen ? "rotate-180 text-green-600" : "text-gray-400"
-                }`}
-              />
-            </button>
 
-            {/* Category Dropdown Menu */}
-            <AnimatePresence>
-              {isCategoryOpen && (
-                <motion.div
-                  initial={{ opacity: 0, y: 10, scale: 0.95 }}
-                  animate={{ opacity: 1, y: 0, scale: 1 }}
-                  exit={{ opacity: 0, y: 10, scale: 0.95 }}
-                  className="absolute top-[calc(100%+8px)] left-0 w-64 bg-white dark:bg-gray-900 rounded-2xl shadow-xl shadow-black/10 border border-gray-100 dark:border-white/10 py-2 z-50 overflow-hidden backdrop-blur-xl"
-                >
-                  <div className="px-4 py-2 text-[10px] font-black uppercase tracking-widest text-gray-400">
-                    {t("categories_title")}
-                  </div>
-                  {categories.map((category) => (
-                    <button
-                      key={category.id}
-                      onClick={() => {
-                        setSelectedCategory(category.id);
-                        setIsCategoryOpen(false);
-                      }}
-                      className={`w-full flex items-center gap-3 px-4 py-2.5 text-sm font-bold transition-all hover:bg-green-50 dark:hover:bg-white/5 ${
-                        selectedCategory === category.id
-                          ? "text-green-600 bg-green-50/50 dark:bg-green-500/10"
-                          : "text-gray-600 dark:text-gray-400"
-                      }`}
-                    >
-                      <span className="text-lg">{category.icon}</span>
-                      {category.name}
-                      {selectedCategory === category.id && (
-                        <motion.div
-                          layoutId="activeDot"
-                          className="ml-auto w-1.5 h-1.5 rounded-full bg-green-500"
-                        />
-                      )}
-                    </button>
-                  ))}
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </div>
 
           {/* Search Input */}
           <div className="flex-1 relative flex items-center h-full">
@@ -576,7 +511,7 @@ export default function SearchBar() {
                             </motion.div>
                           ))}
                           <Link
-                            href={`/products?q=${encodeURIComponent(searchTerm)}${selectedCategory !== "all" ? `&category=${selectedCategory}` : ""}`}
+                            href={`/products?q=${encodeURIComponent(searchTerm)}`}
                             onClick={() => {
                               addToHistory(searchTerm);
                               setIsOpen(false);

@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { useLanguage } from "@/components/LanguageContext";
 import { useSettings } from "@/context/SettingsContext";
-import { CreditCard } from "lucide-react";
 
 export default function FooterBottom() {
   const currentYear = new Date().getFullYear();

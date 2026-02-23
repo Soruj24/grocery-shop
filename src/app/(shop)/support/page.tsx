@@ -10,7 +10,9 @@ import {
   ChevronDown,
   ChevronUp,
   HelpCircle,
-  Truck
+  Truck,
+  RotateCcw,
+  ShieldCheck
 } from "lucide-react";
 import { useState } from "react";
 import Image from "next/image";

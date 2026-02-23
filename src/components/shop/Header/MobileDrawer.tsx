@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ShoppingBasket, X, PhoneCall, Heart, LayoutGrid, ShoppingBag, User, LogOut, ChevronRight } from "lucide-react";
+import { ShoppingBasket, X, Heart, LayoutGrid, ShoppingBag, User, LogOut, ChevronRight } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { signOut } from "next-auth/react";
 import { Category } from "@/types/category";
@@ -179,16 +179,6 @@ export default function MobileDrawer({
 
             {/* Footer */}
             <div className="p-8 border-t border-gray-100 dark:border-white/5 space-y-4 bg-gray-50/50 dark:bg-white/[0.02]">
-              <Link
-                href="/support"
-                onClick={onClose}
-                className="flex items-center gap-4 p-4 text-gray-500 font-bold hover:text-green-600 transition-colors bg-white dark:bg-white/5 rounded-2xl border border-gray-100 dark:border-white/5 shadow-sm hover:shadow-md"
-              >
-                <div className="w-8 h-8 rounded-full bg-green-100 dark:bg-green-500/20 flex items-center justify-center text-green-600 dark:text-green-400">
-                  <PhoneCall size={16} />
-                </div>
-                {t('support_center')}
-              </Link>
               {session && (
                 <button
                   onClick={() => signOut()}
