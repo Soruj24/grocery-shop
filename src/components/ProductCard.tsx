@@ -1,6 +1,6 @@
 "use client";
 
-import { ShoppingCart, Heart, Star, Share2, Plus, Minus } from "lucide-react";
+import { ShoppingCart, Heart, Star, Share2, Plus, Minus, TrendingUp } from "lucide-react";
 import { useCart } from "@/components/CartContext";
 import { useWishlist } from "@/components/WishlistContext";
 import Link from "next/link";
@@ -8,7 +8,7 @@ import Image from "next/image";
 import { Toast } from "@/lib/toast";
 import { Product } from "@/types/product";
 import { useState } from "react";
-import { motion, AnimatePresence, PanInfo } from "framer-motion";
+import { motion, AnimatePresence, PanInfo, useMotionValue, useTransform } from "framer-motion";
 import { useLanguage } from "@/components/LanguageContext";
 import { getProductFallbackImage } from "@/lib/category-utils";
 
@@ -20,8 +20,13 @@ export default function ProductCard({ product }: ProductCardProps) {
   const { addToCart, updateQuantity, cart } = useCart();
   const { toggleWishlist, isInWishlist } = useWishlist();
   const { t, language } = useLanguage();
-  const [quantity, setQuantity] = useState(1);
   const active = isInWishlist(product._id);
+
+  // Drag Animation Logic
+  const x = useMotionValue(0);
+  const rotate = useTransform(x, [-100, 0, 100], [-5, 0, 5]);
+  const overlayOpacity = useTransform(x, [-100, 0, 100], [0.5, 0, 0.5]);
+  const overlayColor = useTransform(x, [-100, 0, 100], ["#22c55e", "transparent", "#f43f5e"]); // Green (Cart) -> Transparent -> Red (Wishlist)
 
   const handleDragEnd = (event: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
     const swipeThreshold = 50;
@@ -30,18 +35,14 @@ export default function ProductCard({ product }: ProductCardProps) {
       toggleWishlist(product);
       Toast.fire({
         icon: 'success',
-        title: active ? t('wishlist_remove_success') : t('wishlist_add_success'),
-        background: '#020617',
-        color: '#fff',
+        title: active ? t('removed_from_wishlist') : t('added_to_wishlist')
       });
     } else if (info.offset.x < -swipeThreshold) {
       // Swipe Left - Add to Cart
-      addToCart(product, quantity);
+      addToCart(product, 1);
       Toast.fire({
         icon: 'success',
-        title: t('added_to_cart'),
-        background: '#020617',
-        color: '#fff',
+        title: t('added_to_cart')
       });
     }
   };
@@ -61,9 +62,7 @@ export default function ProductCard({ product }: ProductCardProps) {
       navigator.clipboard.writeText(`${window.location.origin}/products/${product._id}`);
       Toast.fire({
         icon: 'success',
-        title: t('link_copied'),
-        background: '#020617',
-        color: '#fff',
+        title: t('share_success')
       });
     }
   };
@@ -75,14 +74,8 @@ export default function ProductCard({ product }: ProductCardProps) {
       } else {
         Toast.fire({
           icon: 'error',
-          title: t('out_of_stock_label'), // Or a more specific message like "Max stock reached"
-          background: '#020617',
-          color: '#fff',
+          title: t('out_of_stock_label')
         });
-      }
-    } else {
-      if (quantity < product.stock) {
-        setQuantity(prev => prev + 1);
       }
     }
   };
@@ -92,17 +85,18 @@ export default function ProductCard({ product }: ProductCardProps) {
       if (cartItem.quantity > 1) {
         updateQuantity(product._id, cartItem.quantity - 1);
       }
-    } else {
-      if (quantity > 1) {
-        setQuantity(prev => prev - 1);
-      }
     }
   };
 
   return (
     <motion.div 
+      style={{ x, rotate, cursor: 'grab' }}
+      whileTap={{ cursor: 'grabbing' }}
+      whileDrag={{ scale: 1.05, zIndex: 50 }}
       drag="x"
       dragConstraints={{ left: 0, right: 0 }}
+      dragElastic={0.6}
+      dragSnapToOrigin={true}
       onDragEnd={handleDragEnd}
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
@@ -110,6 +104,15 @@ export default function ProductCard({ product }: ProductCardProps) {
       whileHover={{ y: -8 }}
       className="group bg-white dark:bg-gray-900 rounded-[2rem] shadow-sm hover:shadow-2xl hover:shadow-gray-200/50 dark:hover:shadow-black/50 transition-all duration-500 flex flex-col h-full border border-gray-100 dark:border-gray-800 relative overflow-hidden"
     >
+      {/* Swipe Feedback Overlay */}
+      <motion.div 
+        style={{ 
+          backgroundColor: overlayColor, 
+          opacity: overlayOpacity 
+        }} 
+        className="absolute inset-0 z-30 pointer-events-none mix-blend-multiply dark:mix-blend-overlay"
+      />
+      
       {/* Product Image & Badges */}
       <div className="relative aspect-[4/5] overflow-hidden bg-gray-50 dark:bg-gray-800 rounded-t-[2rem]">
         <Link href={`/products/${product._id}`} className="block w-full h-full">
@@ -131,6 +134,10 @@ export default function ProductCard({ product }: ProductCardProps) {
             onClick={(e) => {
               e.preventDefault();
               toggleWishlist(product);
+              Toast.fire({
+                icon: 'success',
+                title: active ? t('removed_from_wishlist') : t('added_to_wishlist')
+              });
             }}
             className={`w-10 h-10 rounded-full flex items-center justify-center backdrop-blur-md shadow-lg transition-all duration-300 hover:scale-110 active:scale-95 ${
               active 
@@ -193,7 +200,7 @@ export default function ProductCard({ product }: ProductCardProps) {
                product.unit === 'box' ? t('unit_box') :
                product.unit === 'bottle' ? t('unit_bottle') :
                product.unit === 'dozen' ? t('unit_dozen') :
-               (product.unit || t('default_unit'))}
+               (product.unit || t('default_unit') || '')}
             </p>
             
             {/* Rating Placeholder - International Style */}
@@ -229,7 +236,13 @@ export default function ProductCard({ product }: ProductCardProps) {
           {!cartItem ? (
             <button
               disabled={product.stock === 0}
-              onClick={() => addToCart(product, 1)}
+              onClick={() => {
+                addToCart(product, 1);
+                Toast.fire({
+                  icon: 'success',
+                  title: t('added_to_cart')
+                });
+              }}
               className="bg-green-600 hover:bg-green-700 disabled:bg-gray-400 disabled:cursor-not-allowed disabled:opacity-50 text-white w-12 h-12 flex items-center justify-center rounded-2xl shadow-lg shadow-green-600/20 active:scale-90 transition-all hover:rotate-3 group/btn relative overflow-hidden"
             >
               <div className="absolute inset-0 bg-white/20 translate-y-full group-hover/btn:translate-y-0 transition-transform duration-300" />
@@ -243,7 +256,7 @@ export default function ProductCard({ product }: ProductCardProps) {
               >
                 <Minus size={18} strokeWidth={3} />
               </button>
-              <span className="w-8 text-center text-sm font-black dark:text-white select-none">
+              <span className="w-8 text-center text-sm font-black dark:text-white select-none tabular-nums">
                 {cartItem.quantity.toLocaleString(language === 'bn' ? 'bn-BD' : 'en-US')}
               </span>
               <button

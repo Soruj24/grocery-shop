@@ -19,8 +19,12 @@ export default function ProductSectionHeader() {
           <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
           <span>{t('fresh_arrivals')}</span>
         </div>
-        <h2 className="text-3xl md:text-4xl font-black text-gray-900 dark:text-white leading-tight tracking-tight">
+        <h2 className="text-3xl md:text-5xl font-black text-gray-900 dark:text-white leading-tight tracking-tight relative inline-block">
           {t('product_section_title')}
+          <span className="text-transparent bg-clip-text bg-gradient-to-tr from-green-500 to-emerald-300">.</span>
+          <svg className="absolute -bottom-2 left-0 w-full h-3 text-green-500/30" viewBox="0 0 100 10" preserveAspectRatio="none">
+            <path d="M0 5 Q 50 10 100 5" stroke="currentColor" strokeWidth="4" fill="none" strokeLinecap="round" />
+          </svg>
         </h2>
         <p className="text-lg text-gray-500 dark:text-gray-400 font-medium mt-4 max-w-lg leading-relaxed">
           {t('product_section_subtitle')}

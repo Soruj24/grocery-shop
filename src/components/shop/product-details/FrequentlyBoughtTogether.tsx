@@ -4,7 +4,7 @@ import { Plus, ShoppingCart } from "lucide-react";
 import Image from "next/image";
 import { Product } from "@/types/product";
 import { useCart } from "@/components/CartContext";
-import { Toast } from "@/lib/toast";
+import { toast } from "react-hot-toast";
 import { useLanguage } from "@/components/LanguageContext";
 import { getProductFallbackImage } from "@/lib/category-utils";
 
@@ -16,6 +16,9 @@ interface FrequentlyBoughtTogetherProps {
 export default function FrequentlyBoughtTogether({ currentProduct, relatedProducts }: FrequentlyBoughtTogetherProps) {
   const { t, language } = useLanguage();
   const { addToCart } = useCart();
+  
+  if (!relatedProducts || relatedProducts.length === 0) return null;
+
   const bundleProducts = [currentProduct, ...relatedProducts.slice(0, 2)];
   const totalPrice = bundleProducts.reduce((sum, p) => sum + (p.discountPrice || p.price), 0);
   const originalPrice = bundleProducts.reduce((sum, p) => sum + p.price, 0);
@@ -24,16 +27,11 @@ export default function FrequentlyBoughtTogether({ currentProduct, relatedProduc
 
   const handleAddBundle = () => {
     bundleProducts.forEach(p => addToCart(p, 1));
-    Toast.fire({
-      icon: 'success',
-      title: t('bundle_success'),
-      background: '#020617',
-      color: '#fff',
-    });
+    toast.success(t('bundle_success'));
   };
 
   return (
-    <div className="bg-white dark:bg-gray-900 rounded-[40px] border border-gray-100 dark:border-gray-800 p-8 md:p-12">
+    <div className="bg-white dark:bg-gray-900 rounded-[40px] border border-gray-100 dark:border-gray-800 p-8 md:p-12 shadow-xl shadow-gray-200/50 dark:shadow-black/20">
       <h2 className="text-2xl font-black text-gray-800 dark:text-white mb-8">{t('bundle_offer_title')}</h2>
       
       <div className="flex flex-col lg:flex-row items-center gap-8">

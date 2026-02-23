@@ -2,8 +2,14 @@
 
 import { Share2 } from "lucide-react";
 import { Toast } from "@/lib/toast";
+import { useLanguage } from "@/components/LanguageContext";
+import { motion } from "framer-motion";
+import { Product } from "@/types/product";
 
-export default function ShareButton({ productName }: { productName: string }) {
+export default function ShareButton({ product }: { product: Product }) {
+  const { t, language } = useLanguage();
+  const productName = language === 'en' ? (product.nameEn || product.name) : product.name;
+
   const handleShare = async () => {
     try {
       if (navigator.share) {
@@ -16,9 +22,7 @@ export default function ShareButton({ productName }: { productName: string }) {
         await navigator.clipboard.writeText(window.location.href);
         Toast.fire({
           icon: 'success',
-          title: 'লিঙ্ক কপি করা হয়েছে',
-          background: '#020617',
-          color: '#fff',
+          title: t('share_success'),
         });
       }
     } catch (err) {
@@ -27,14 +31,15 @@ export default function ShareButton({ productName }: { productName: string }) {
   };
 
   return (
-    <button 
+    <motion.button 
+      whileTap={{ scale: 0.95 }}
       onClick={handleShare}
       className="flex items-center gap-2 text-sm font-black text-gray-500 dark:text-gray-400 hover:text-blue-500 dark:hover:text-blue-400 transition-colors group"
     >
-      <div className="p-3 bg-gray-50 dark:bg-gray-800 rounded-2xl group-hover:bg-blue-50 dark:group-hover:bg-blue-900/20 transition-colors">
+      <div className="p-2 bg-gray-50 dark:bg-gray-800 rounded-xl group-hover:bg-blue-50 dark:group-hover:bg-blue-900/20 transition-colors">
         <Share2 className="w-5 h-5" />
       </div>
-      শেয়ার করুন
-    </button>
+      <span>{t('share')}</span>
+    </motion.button>
   );
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react"; 
+import { useState, useEffect } from "react";
 import { Zap, ArrowRight, Timer } from "lucide-react";
 import { motion } from "framer-motion";
 
@@ -10,7 +10,32 @@ import Link from "next/link";
 import Image from "next/image";
 import { getProductFallbackImage } from "@/lib/category-utils";
 
-export default function DailyDealsBanner({ data }: { data?: any }) {
+export default function DailyDealsBanner({
+  data,
+}: {
+  data?: {
+    badge?: string;
+    title?: string;
+    subtitle?: string;
+    desc?: string;
+    productName?: string;
+    image?: string;
+    price?: string;
+    originalPrice?: string;
+    discount?: string;
+  };
+}) {
+  interface DailyDealsBannerData {
+    badge?: string;
+    title?: string;
+    subtitle?: string;
+    desc?: string;
+    productName?: string;
+    image?: string;
+    price?: string;
+    originalPrice?: string;
+    discount?: string;
+  }
   const { t, language } = useLanguage();
   const [timeLeft, setTimeLeft] = useState({
     hours: 12,
@@ -27,7 +52,7 @@ export default function DailyDealsBanner({ data }: { data?: any }) {
     image: data?.image || getProductFallbackImage("apple"),
     price: data?.price || t("price_80_tk"),
     originalPrice: data?.originalPrice || t("price_160_tk"),
-    discount: data?.discount || t("percent_50")
+    discount: data?.discount || t("percent_50"),
   };
 
   useEffect(() => {
@@ -45,7 +70,7 @@ export default function DailyDealsBanner({ data }: { data?: any }) {
   }, []);
 
   return (
-    <motion.div 
+    <motion.div
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
@@ -56,7 +81,7 @@ export default function DailyDealsBanner({ data }: { data?: any }) {
 
       <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-12">
         <div className="space-y-8 max-w-xl text-center md:text-left">
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.2 }}
@@ -68,7 +93,7 @@ export default function DailyDealsBanner({ data }: { data?: any }) {
             </span>
           </motion.div>
 
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3 }}
@@ -85,7 +110,7 @@ export default function DailyDealsBanner({ data }: { data?: any }) {
             </p>
           </motion.div>
 
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4 }}
@@ -98,7 +123,10 @@ export default function DailyDealsBanner({ data }: { data?: any }) {
             ].map((unit, i) => (
               <div key={i} className="flex flex-col items-center group">
                 <div className="bg-white/10 backdrop-blur-md border border-white/20 text-white w-16 h-16 md:w-20 md:h-20 rounded-2xl flex items-center justify-center text-2xl md:text-3xl font-black shadow-lg group-hover:bg-white group-hover:text-orange-600 transition-all duration-300 transform group-hover:-translate-y-1">
-                  {unit.value.toLocaleString(language === 'bn' ? 'bn-BD' : 'en-US', { minimumIntegerDigits: 2 })}
+                  {unit.value.toLocaleString(
+                    language === "bn" ? "bn-BD" : "en-US",
+                    { minimumIntegerDigits: 2 },
+                  )}
                 </div>
                 <span className="text-[10px] font-black uppercase tracking-widest mt-3 text-white/80 group-hover:text-white transition-colors">
                   {unit.label}
@@ -122,7 +150,7 @@ export default function DailyDealsBanner({ data }: { data?: any }) {
           </motion.div>
         </div>
 
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, scale: 0.8, rotate: 5 }}
           whileInView={{ opacity: 1, scale: 1, rotate: 0 }}
           transition={{ duration: 0.8, type: "spring" }}
@@ -160,7 +188,7 @@ export default function DailyDealsBanner({ data }: { data?: any }) {
           </div>
 
           {/* Floating Badge */}
-          <motion.div 
+          <motion.div
             animate={{ y: [0, -10, 0] }}
             transition={{ repeat: Infinity, duration: 4, ease: "easeInOut" }}
             className="absolute -top-6 -right-6 bg-yellow-400 text-gray-900 w-28 h-28 rounded-full flex flex-col items-center justify-center shadow-2xl z-20 border-4 border-white/20 backdrop-blur-sm"
@@ -168,7 +196,9 @@ export default function DailyDealsBanner({ data }: { data?: any }) {
             <span className="text-[10px] font-black uppercase tracking-wider">
               {t("daily_deals_max")}
             </span>
-            <span className="text-3xl font-black leading-none my-1">{content.discount}</span>
+            <span className="text-3xl font-black leading-none my-1">
+              {content.discount}
+            </span>
             <span className="text-[10px] font-black uppercase tracking-wider">
               {t("daily_deals_off")}
             </span>

@@ -15,6 +15,7 @@ export default function SpecialOfferBanners() {
         desc={t('banner_1_desc')}
         buttonText={t('banner_1_button')}
         image={getProductFallbackImage("orange")}
+        href="/products?q=orange"
         gradient="bg-gradient-to-br from-orange-400 to-rose-500"
         shadow="shadow-orange-500/20"
         textColor="text-white"
@@ -27,6 +28,7 @@ export default function SpecialOfferBanners() {
         desc={t('banner_2_desc')}
         buttonText={t('banner_2_button')}
         image={getProductFallbackImage("bread")}
+        href="/products?q=bread"
         gradient="bg-gradient-to-br from-blue-500 to-indigo-600"
         shadow="shadow-blue-500/20"
         textColor="text-white"

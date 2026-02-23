@@ -2,6 +2,7 @@ export const translations = {
   bn: {
     filter: "ফিল্টার করুন",
     all_products: "সব প্রোডাক্ট",
+    clear_all: "সব মুছুন",
     clear_all_filters: "সব ফিল্টার মুছুন",
     price_range: "মূল্য পরিসীমা",
 
@@ -22,6 +23,33 @@ export const translations = {
     unit_dozen: "ডজন",
     
 
+    // Product Details
+    added_to_cart: "কার্টে যোগ করা হয়েছে",
+    added_to_wishlist: "উইশলিস্টে যোগ করা হয়েছে",
+    removed_from_wishlist: "উইশলিস্ট থেকে সরানো হয়েছে",
+    wishlist_add: "উইশলিস্টে রাখুন",
+    wishlist_remove: "সরিয়ে ফেলুন",
+    out_of_stock_label: "স্টকে নেই",
+    stock_available: "স্টক আছে",
+    low_stock: "স্টক সীমিত",
+    reviews_count: "রিভিউ",
+    current_price: "বর্তমান মূল্য",
+    authentic_product: "অরজিনাল পণ্য",
+    sourced_from_source: "সরাসরি সোর্স থেকে সংগ্রহকৃত",
+    fast_delivery: "দ্রুত ডেলিভারি",
+    delivery_within_24h: "২৪ ঘন্টার মধ্যে ডেলিভারি",
+    return_policy_7_days: "৭ দিনের রিটার্ন পলিসি",
+    easy_return_policy: "সহজ রিটার্ন পলিসি",
+    products_suffix: "পণ্য",
+    buy_now: "এখনই কিনুন",
+    add_to_cart: "কার্টে যোগ করুন",
+    share: "শেয়ার করুন",
+    share_success: "লিঙ্ক কপি করা হয়েছে",
+    share_text: "ইমরান শপে এই পণ্যটি দেখুন!",
+    off: "ছাড়",
+    items: "আইটেম",
+    shop_now: "কিনুন",
+    
     // Header
     brand_name_first: "ইমরান",
     brand_name_second: "শপ",
@@ -180,6 +208,7 @@ export const translations = {
 
     // Common
     see_all: "সবগুলো দেখুন",
+    shop_now: "এখনই কিনুন",
     back: "ফিরে যান",
     loading: "লোড হচ্ছে...",
     error: "দুঃখিত, কোনো সমস্যা হয়েছে!",
@@ -1147,6 +1176,7 @@ export const translations = {
   },
   en: {
     filter: "Filter",
+    clear_all: "Clear All",
     clear_all_filters: "Clear All Filters",
     min_price: "Min",
     max_price: "Max",
@@ -1315,6 +1345,7 @@ export const translations = {
     category_map_desc: "Check out our entire collection at a glance and jump directly to your favorite section.",
     view_all_arrow: "View All →",
     see_all: "See All",
+    shop_now: "Shop Now",
     back: "Back",
     loading: "Loading...",
     error: "Sorry, something went wrong!",

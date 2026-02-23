@@ -9,7 +9,7 @@ import { useLanguage } from "@/components/LanguageContext";
 import { getProductFallbackImage } from "@/lib/category-utils";
 import HeroStats from "./Hero/HeroStats";
 
-export default function Hero({ data }: { data?: any }) {
+export default function Hero({ data }: { data?: { slides?: Array<{ id: number; title: string; subtitle: string; desc: string; image: string; badge: string; color: string }> } }) {
   const { t } = useLanguage();
   const [current, setCurrent] = useState(0);
 
@@ -43,7 +43,7 @@ export default function Hero({ data }: { data?: any }) {
     }
   ];
 
-  const slides = data?.slides?.length > 0 ? data.slides : defaultSlides;
+  const slides = (data?.slides && data.slides.length > 0) ? data.slides : defaultSlides;
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -164,7 +164,7 @@ export default function Hero({ data }: { data?: any }) {
 
         {/* Progress Dots */}
         <div className="absolute bottom-8 left-8 lg:left-16 z-30 flex gap-2">
-          {slides.map((_, i) => (
+          {slides.map((_: unknown, i: number) => (
             <button
               key={i}
               onClick={() => setCurrent(i)}

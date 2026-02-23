@@ -112,9 +112,9 @@ export default function ComboPacks() {
                   {/* Main Image Composition */}
                   <div className="relative aspect-square">
                     <div className="absolute inset-0 bg-gradient-to-br from-purple-100 to-blue-50 dark:from-purple-900/20 dark:to-blue-900/20 rounded-full animate-pulse" />
-                    <div className="absolute inset-4 grid grid-cols-2 gap-2">
+                    <div className="absolute inset-4 grid grid-cols-2 gap-2 group-hover:rotate-3 transition-transform duration-500 ease-in-out">
                       {combo.items.slice(0, 4).map((item, i) => (
-                        <div key={i} className="relative bg-white dark:bg-gray-800 rounded-2xl p-2 shadow-sm overflow-hidden border border-gray-100 dark:border-white/5">
+                        <div key={i} className="relative bg-white dark:bg-gray-800 rounded-2xl p-2 shadow-sm overflow-hidden border border-gray-100 dark:border-white/5 group-hover:scale-105 transition-transform duration-500 delay-[50ms]">
                           <Image
                             src={getProductFallbackImage(item)}
                             alt={item}
@@ -174,10 +174,13 @@ export default function ComboPacks() {
                     
                     <Link
                       href="/products"
-                      className="w-full py-4 rounded-xl bg-gray-900 dark:bg-white text-white dark:text-black font-black uppercase tracking-widest text-xs hover:bg-purple-600 dark:hover:bg-purple-400 hover:text-white transition-all shadow-lg hover:shadow-purple-500/25 flex items-center justify-center gap-2 group/btn"
+                      className="w-full py-4 rounded-xl bg-gray-900 dark:bg-white text-white dark:text-black font-black uppercase tracking-widest text-xs hover:bg-purple-600 dark:hover:bg-purple-400 hover:text-white transition-all shadow-lg hover:shadow-purple-500/25 flex items-center justify-center gap-2 group/btn relative overflow-hidden"
                     >
-                      {t('view_deal')}
-                      <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
+                      <div className="absolute inset-0 bg-white/20 translate-y-full group-hover/btn:translate-y-0 transition-transform duration-300" />
+                      <span className="relative z-10 flex items-center gap-2">
+                        {t('view_deal')}
+                        <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
+                      </span>
                     </Link>
                   </div>
                 </div>

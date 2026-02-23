@@ -5,6 +5,7 @@ import { Star } from "lucide-react";
 import { motion } from "framer-motion";
 import { useLanguage } from "@/components/LanguageContext";
 import Modal from "@/components/ui/Modal";
+import { toast } from "react-hot-toast";
 
 interface ReviewItem {
   name: string;
@@ -56,7 +57,12 @@ export default function CustomerReviews({ productId }: { productId: string }) {
         setName("");
         setRating(5);
         setComment("");
+        toast.success(t('review_submitted_success'));
+      } else {
+        toast.error(t('review_submit_error'));
       }
+    } catch (error) {
+      toast.error(t('review_submit_error'));
     } finally {
       setSubmitting(false);
     }

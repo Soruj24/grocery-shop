@@ -1,9 +1,10 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { TrendingUp, Star, Sparkles, ArrowRight } from "lucide-react";
+import { TrendingUp, Star, Sparkles, ArrowRight, Loader2 } from "lucide-react";
 import Link from "next/link";
+import { useQuery } from "@tanstack/react-query";
 import { Product } from "@/types/product";
 import { useLanguage } from "@/components/LanguageContext";
 import ProductCard from "@/components/ProductCard";
@@ -11,7 +12,6 @@ import ProductCard from "@/components/ProductCard";
 export default function FeaturedProducts({ products }: { products: Product[] }) {
   const [activeTab, setActiveTab] = useState("trending");
   const { t } = useLanguage();
-  const [displayProducts, setDisplayProducts] = useState<Product[]>([]);
 
   const TABS = [
     { id: "trending", label: t('featured_products_tab_trending'), icon: TrendingUp, color: "from-blue-500 to-cyan-500" },
@@ -19,25 +19,33 @@ export default function FeaturedProducts({ products }: { products: Product[] }) 
     { id: "new", label: t('featured_products_tab_new'), icon: Sparkles, color: "from-purple-500 to-pink-600" }
   ];
 
-  useEffect(() => {
-    // Mock filtering logic - in a real app, this would filter by actual product data
-    // For now, we'll shuffle/sort to show different views
-    let filtered = [...products];
-    
-    if (activeTab === 'trending') {
-      // Random shuffle for trending
-      filtered = filtered.sort(() => 0.5 - Math.random());
-    } else if (activeTab === 'bestsellers') {
-      // Mock: Assume lower stock means higher sales, or just sort by price for variety
-      filtered = filtered.sort((a, b) => b.price - a.price);
-    } else if (activeTab === 'new') {
-      // Just take the first few (assuming passed in as newest)
-      filtered = filtered.slice(0, 8);
-    }
+  const { data: displayProducts, isLoading } = useQuery({
+    queryKey: ['featured-products', activeTab],
+    queryFn: async () => {
+      let sort = 'newest';
+      if (activeTab === 'trending') sort = 'rating';
+      if (activeTab === 'bestsellers') sort = 'reviews';
+      
+      const res = await fetch(`/api/products/list?sort=${sort}&limit=8`);
+      if (!res.ok) throw new Error('Failed to fetch');
+      return res.json();
+    },
+    // Use initial products for 'new' tab to avoid fetch if possible, 
+    // but since we want to switch tabs dynamically, simple fetch is cleaner.
+    // We can use placeholderData to keep previous list while loading new one
+  });
 
-    // Limit to 8 items for the grid
-    setDisplayProducts(filtered.slice(0, 8));
-  }, [activeTab, products]);
+  const getViewAllLink = () => {
+    switch (activeTab) {
+      case 'trending':
+        return '/products?sort=rating';
+      case 'bestsellers':
+        return '/products?sort=reviews'; // Assuming we have this sort option or similar
+      case 'new':
+      default:
+        return '/products?sort=newest';
+    }
+  };
 
   return (
     <section className="relative py-20 lg:py-28 px-4 overflow-hidden">
@@ -95,23 +103,31 @@ export default function FeaturedProducts({ products }: { products: Product[] }) 
         </div>
 
         <AnimatePresence mode="wait">
-          <motion.div
-            key={activeTab}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.3 }}
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8"
-          >
-            {displayProducts.map((product, idx) => (
-              <ProductCard key={`${activeTab}-${product._id}`} product={product} />
-            ))}
-          </motion.div>
+          {isLoading ? (
+             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8 w-full">
+               {[...Array(8)].map((_, i) => (
+                 <div key={i} className="bg-gray-100 dark:bg-gray-800 rounded-[2rem] aspect-[3/4] animate-pulse" />
+               ))}
+             </div>
+          ) : (
+            <motion.div
+              key={activeTab}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.3 }}
+              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8 w-full"
+            >
+              {displayProducts?.map((product: Product) => (
+                <ProductCard key={`${activeTab}-${product._id}`} product={product} />
+              ))}
+            </motion.div>
+          )}
         </AnimatePresence>
 
         <div className="flex justify-center pt-8">
           <Link
-            href="/products"
+            href={getViewAllLink()}
             className="group flex items-center gap-3 bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 px-8 py-4 rounded-full font-black text-gray-900 dark:text-white hover:bg-gray-50 dark:hover:bg-white/10 hover:border-gray-300 dark:hover:border-white/20 transition-all shadow-sm hover:shadow-xl hover:-translate-y-1"
           >
             {t('see_all')}

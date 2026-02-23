@@ -1,28 +1,24 @@
-import { NextResponse } from "next/server";
+const RATE_LIMIT_WINDOW_MS = 60 * 1000; // 1 minute
+const MAX_REQUESTS_PER_WINDOW = 60;
 
-// Simple in-memory rate limiting map
-// Note: In production, use Redis or a similar store for distributed rate limiting
-const rateLimitMap = new Map<string, { count: number; lastReset: number }>();
+const ipRequests = new Map<string, { count: number; expiresAt: number }>();
 
-const LIMIT = 50; // Max requests
-const WINDOW = 60 * 1000; // 1 minute window
-
-export function rateLimit(ip: string) {
+export function rateLimit(ip: string): { success: boolean } {
   const now = Date.now();
-  const userData = rateLimitMap.get(ip) || { count: 0, lastReset: now };
+  const requestInfo = ipRequests.get(ip);
 
-  if (now - userData.lastReset > WINDOW) {
-    userData.count = 1;
-    userData.lastReset = now;
-  } else {
-    userData.count++;
+  if (!requestInfo || now > requestInfo.expiresAt) {
+    ipRequests.set(ip, {
+      count: 1,
+      expiresAt: now + RATE_LIMIT_WINDOW_MS,
+    });
+    return { success: true };
   }
 
-  rateLimitMap.set(ip, userData);
+  if (requestInfo.count >= MAX_REQUESTS_PER_WINDOW) {
+    return { success: false };
+  }
 
-  return {
-    success: userData.count <= LIMIT,
-    remaining: Math.max(0, LIMIT - userData.count),
-    reset: userData.lastReset + WINDOW
-  };
+  requestInfo.count += 1;
+  return { success: true };
 }

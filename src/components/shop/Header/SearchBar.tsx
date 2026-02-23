@@ -10,6 +10,7 @@ import {
   TrendingUp,
   Filter,
   ChevronDown,
+  Star,
 } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
 import { useQuery } from "@tanstack/react-query";
@@ -19,6 +20,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useLanguage } from "@/components/LanguageContext";
 import { getProductFallbackImage } from "@/lib/category-utils";
+import { Product } from "@/types/product";
 
 export default function SearchBar() {
   const { t, language } = useLanguage();
@@ -197,7 +199,9 @@ export default function SearchBar() {
               onClick={() => setIsCategoryOpen(!isCategoryOpen)}
               className="flex items-center gap-2 pl-6 pr-4 h-full text-xs font-bold text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-white/5 transition-colors border-r border-gray-100 dark:border-white/5 bg-gray-50/50 dark:bg-transparent"
             >
-              <div className={`p-1.5 rounded-md ${selectedCategory !== "all" ? "bg-green-100 text-green-600" : "bg-gray-100 dark:bg-white/10 text-gray-500"}`}>
+              <div
+                className={`p-1.5 rounded-md ${selectedCategory !== "all" ? "bg-green-100 text-green-600" : "bg-gray-100 dark:bg-white/10 text-gray-500"}`}
+              >
                 <Filter className="w-3.5 h-3.5" />
               </div>
               <span className="max-w-[80px] truncate">
@@ -238,7 +242,10 @@ export default function SearchBar() {
                       <span className="text-lg">{category.icon}</span>
                       {category.name}
                       {selectedCategory === category.id && (
-                        <motion.div layoutId="activeDot" className="ml-auto w-1.5 h-1.5 rounded-full bg-green-500" />
+                        <motion.div
+                          layoutId="activeDot"
+                          className="ml-auto w-1.5 h-1.5 rounded-full bg-green-500"
+                        />
                       )}
                     </button>
                   ))}
@@ -288,8 +295,8 @@ export default function SearchBar() {
             >
               {isListening ? (
                 <div className="w-4 h-4 relative flex items-center justify-center">
-                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
-                   <Mic className="w-3 h-3 relative z-10" />
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+                  <Mic className="w-3 h-3 relative z-10" />
                 </div>
               ) : (
                 <Mic className="w-5 h-5" />
@@ -322,7 +329,6 @@ export default function SearchBar() {
               transition={{ duration: 0.2, ease: "easeOut" }}
               className="absolute top-full left-0 right-0 mt-4 bg-white dark:bg-gray-900 border border-gray-100 dark:border-white/10 rounded-[32px] shadow-2xl shadow-black/10 z-50 overflow-hidden backdrop-blur-xl"
             >
-
               <div className="p-6 max-h-[600px] overflow-y-auto custom-scrollbar">
                 {/* Search History */}
                 {!searchTerm && history.length > 0 && (
@@ -331,7 +337,7 @@ export default function SearchBar() {
                       <p className="text-[10px] font-black uppercase tracking-[0.2em] text-gray-400">
                         {t("recent_searches")}
                       </p>
-                      <button 
+                      <button
                         onClick={() => {
                           setHistory([]);
                           localStorage.removeItem("search_history");
@@ -396,7 +402,10 @@ export default function SearchBar() {
                           }}
                           className="flex items-center gap-2 px-4 py-2.5 bg-gray-50 dark:bg-white/5 hover:bg-green-50 dark:hover:bg-green-500/10 border border-gray-100 dark:border-white/5 hover:border-green-200 dark:hover:border-green-500/30 rounded-xl text-xs font-bold text-gray-600 dark:text-gray-400 hover:text-green-700 dark:hover:text-green-400 transition-all group"
                         >
-                          <TrendingUp size={12} className="text-gray-400 group-hover:text-green-500 transition-colors" />
+                          <TrendingUp
+                            size={12}
+                            className="text-gray-400 group-hover:text-green-500 transition-colors"
+                          />
                           {item}
                         </motion.button>
                       ))}
@@ -445,9 +454,16 @@ export default function SearchBar() {
                       <p className="text-[10px] font-black uppercase tracking-[0.2em] text-gray-400 px-2">
                         {t("products_title_search")}
                       </p>
-                      {results && results.length > 0 ? (
+                      {isLoading ? (
+                        <div className="py-12 text-center space-y-4">
+                          <Loader2 className="w-8 h-8 animate-spin text-green-500 mx-auto" />
+                          <p className="text-gray-400 text-xs font-black uppercase tracking-widest animate-pulse">
+                            {t("loading")}
+                          </p>
+                        </div>
+                      ) : results && results.length > 0 ? (
                         <div className="space-y-2">
-                          {results.map((product: any, idx: number) => (
+                          {results.map((product: Product, idx: number) => (
                             <motion.div
                               key={product._id}
                               initial={{ opacity: 0, x: -10 }}
@@ -460,7 +476,7 @@ export default function SearchBar() {
                                   addToHistory(searchTerm);
                                   setIsOpen(false);
                                 }}
-                                className={`flex items-center gap-4 p-3 rounded-2xl transition-all group border ${
+                                className={`flex items-center gap-4 p-3 rounded-2xl transition-all group border relative overflow-hidden ${
                                   selectedIndex === idx
                                     ? "bg-green-50 dark:bg-green-500/10 border-green-200 dark:border-green-500/30"
                                     : "hover:bg-gray-50 dark:hover:bg-white/5 border-transparent hover:border-gray-100 dark:hover:border-white/5"
@@ -475,8 +491,15 @@ export default function SearchBar() {
                                     alt={product.name}
                                     fill
                                     sizes="64px"
-                                    className="object-cover group-hover:scale-110 transition-transform duration-500"
+                                    className={`object-cover transition-transform duration-500 ${product.stock <= 0 ? "grayscale" : "group-hover:scale-110"}`}
                                   />
+                                  {product.stock <= 0 && (
+                                    <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
+                                      <span className="text-[10px] font-black text-white uppercase tracking-wider text-center px-1 leading-tight">
+                                        {t("out_of_stock")}
+                                      </span>
+                                    </div>
+                                  )}
                                 </div>
                                 <div className="flex-1 min-w-0">
                                   <h4
@@ -486,29 +509,61 @@ export default function SearchBar() {
                                         : "text-gray-900 dark:text-white group-hover:text-green-600"
                                     }`}
                                   >
-                                    {product.name}
+                                    {language === "en"
+                                      ? product.nameEn || product.name
+                                      : product.name}
                                   </h4>
-                                  <div className="flex items-center gap-2">
+                                  <div className="flex flex-wrap items-center gap-2">
                                     <span className="text-xs font-black text-green-600 dark:text-green-400 bg-green-50 dark:bg-green-500/10 px-2 py-0.5 rounded-md">
                                       {t("currency_symbol")}
-                                      {product.price.toLocaleString(
+                                      {(
+                                        product.discountPrice || product.price
+                                      ).toLocaleString(
                                         language === "bn" ? "bn-BD" : "en-US",
                                       )}
                                     </span>
+                                    {product.discountPrice && (
+                                      <span className="text-[10px] text-gray-400 line-through decoration-red-400 decoration-2">
+                                        {t("currency_symbol")}
+                                        {product.price.toLocaleString(
+                                          language === "bn" ? "bn-BD" : "en-US",
+                                        )}
+                                      </span>
+                                    )}
                                     <span className="text-[10px] font-bold text-gray-400 uppercase tracking-wider">
-                                      / {product.unit === "kg"
+                                      /{" "}
+                                      {product.unit === "kg"
                                         ? t("unit_kg")
                                         : product.unit === "g"
                                           ? t("unit_g")
                                           : product.unit || t("default_unit")}
                                     </span>
                                   </div>
+                                  {/* Rating & Stock Status */}
+                                  <div className="flex items-center gap-3 mt-1.5">
+                                    {(product.rating || 0) > 0 && (
+                                      <div className="flex items-center gap-1">
+                                        <Star className="w-3 h-3 text-orange-400 fill-current" />
+                                        <span className="text-[10px] font-bold text-gray-500 dark:text-gray-400">
+                                          {product.rating}
+                                        </span>
+                                      </div>
+                                    )}
+                                    {product.stock > 0 &&
+                                      product.stock <= 5 && (
+                                        <span className="text-[10px] font-bold text-orange-500 animate-pulse">
+                                          {t("low_stock")}
+                                        </span>
+                                      )}
+                                  </div>
                                 </div>
-                                <div className={`w-8 h-8 rounded-full flex items-center justify-center transition-all ${
-                                  selectedIndex === idx
-                                    ? "bg-green-500 text-white shadow-lg shadow-green-500/30"
-                                    : "bg-gray-100 dark:bg-white/5 text-gray-400 group-hover:bg-green-500 group-hover:text-white"
-                                }`}>
+                                <div
+                                  className={`w-8 h-8 rounded-full flex items-center justify-center transition-all ${
+                                    selectedIndex === idx
+                                      ? "bg-green-500 text-white shadow-lg shadow-green-500/30"
+                                      : "bg-gray-100 dark:bg-white/5 text-gray-400 group-hover:bg-green-500 group-hover:text-white"
+                                  }`}
+                                >
                                   <ArrowRight
                                     className={`w-4 h-4 transition-transform ${
                                       selectedIndex === idx
@@ -534,13 +589,18 @@ export default function SearchBar() {
                         </div>
                       ) : (
                         !isLoading && (
-                          <div className="p-8 text-center space-y-4">
-                            <div className="w-16 h-16 bg-gray-50 dark:bg-white/5 rounded-full flex items-center justify-center mx-auto">
+                          <div className="py-12 text-center space-y-6">
+                            <div className="w-20 h-20 bg-gray-50 dark:bg-white/5 rounded-full flex items-center justify-center mx-auto border border-dashed border-gray-200 dark:border-white/10 animate-pulse">
                               <Search className="w-8 h-8 text-gray-300" />
                             </div>
-                            <p className="text-gray-500 dark:text-gray-400 font-bold">
-                              {t("no_products_found")}
-                            </p>
+                            <div className="space-y-2">
+                              <p className="text-gray-900 dark:text-white font-black text-lg">
+                                {t("no_products_found")}
+                              </p>
+                              <p className="text-gray-500 dark:text-gray-400 text-sm font-medium">
+                                {t("search_placeholder")}
+                              </p>
+                            </div>
                           </div>
                         )
                       )}

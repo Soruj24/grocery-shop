@@ -29,9 +29,13 @@ export default function CategorySectionHeader() {
           <span>{t('browse_collections')}</span>
         </motion.div>
         
-        <h2 className="text-4xl md:text-5xl lg:text-6xl font-black text-gray-900 dark:text-white leading-[0.9] tracking-tight mb-6">
+        <h2 className="text-4xl md:text-5xl lg:text-6xl font-black text-gray-900 dark:text-white leading-[0.9] tracking-tight mb-6 relative inline-block">
           {t('categories')}
           <span className="text-transparent bg-clip-text bg-gradient-to-tr from-green-500 to-emerald-300">.</span>
+          {/* Decorative Line */}
+          <svg className="absolute -bottom-2 left-0 w-1/2 h-3 text-green-500/30" viewBox="0 0 100 10" preserveAspectRatio="none">
+             <path d="M0 5 Q 50 10 100 5" stroke="currentColor" strokeWidth="4" fill="none" strokeLinecap="round" />
+          </svg>
         </h2>
         
         <p className="text-lg text-gray-500 dark:text-gray-400 font-medium leading-relaxed border-l-4 border-green-500/30 pl-6">

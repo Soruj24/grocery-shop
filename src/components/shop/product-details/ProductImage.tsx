@@ -39,6 +39,9 @@ export default function ProductImage({ image, name, id, product }: ProductImageP
     setMousePos({ x, y });
   };
 
+  // Calculate discount percentage
+  const discountPercent = product?.discount || (product?.discountPrice ? Math.round(((product.price - product.discountPrice) / product.price) * 100) : 0);
+
   return (
     <div className="w-full lg:w-1/2 space-y-6">
       {/* Main Image with Zoom */}
@@ -48,13 +51,20 @@ export default function ProductImage({ image, name, id, product }: ProductImageP
         onMouseLeave={() => setIsZoomed(false)}
         onMouseMove={handleMouseMove}
       >
+        {/* Discount Badge */}
+        {discountPercent > 0 && (
+          <div className="absolute top-6 left-6 z-10 bg-orange-500 text-white px-4 py-2 rounded-xl font-black text-sm shadow-lg shadow-orange-500/20 animate-bounce-slow">
+            {discountPercent.toLocaleString(language === 'bn' ? 'bn-BD' : 'en-US')}% {t('off')}
+          </div>
+        )}
+
         <AnimatePresence mode="wait">
           <motion.div
             key={activeIndex}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 1.1 }}
+            transition={{ duration: 0.4, ease: "easeOut" }}
             className="w-full h-full"
           >
             <Image
@@ -62,7 +72,7 @@ export default function ProductImage({ image, name, id, product }: ProductImageP
               alt={name}
               fill
               priority
-              className={`object-contain p-8 transition-transform duration-200 ${isZoomed ? 'scale-150' : 'scale-100'}`}
+              className={`object-contain p-8 transition-transform duration-500 ease-out ${isZoomed ? 'scale-150' : 'scale-100'}`}
               style={isZoomed ? {
                 transformOrigin: `${mousePos.x}% ${mousePos.y}%`
               } : {}}

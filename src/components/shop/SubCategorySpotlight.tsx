@@ -37,6 +37,7 @@ export default function SubCategorySpotlight({
               key={sub._id}
               id={sub._id}
               name={language === 'en' ? (sub.nameEn || sub.name) : sub.name}
+              image={sub.image}
               count={sub.products?.length || 24}
               index={idx}
             />

@@ -53,7 +53,7 @@ export async function GET(request: Request) {
 
     const products = await Product.find(filter)
       .limit(5)
-      .select("name image price unit _id")
+      .select("name nameEn image price discountPrice stock unit _id rating reviews")
       .lean();
 
     return NextResponse.json(products);

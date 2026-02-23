@@ -211,7 +211,9 @@ export default async function HomePage({
         );
       case "SubCategorySpotlight":
         return (
-          <SubCategorySpotlight key={section._id} categories={categories} />
+          <div key={section._id} className="max-w-7xl mx-auto px-4">
+            <SubCategorySpotlight categories={categories} />
+          </div>
         );
       case "SpecialOfferBanners":
         return <SpecialOfferBanners key={section._id} />;
