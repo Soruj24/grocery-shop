@@ -5,7 +5,6 @@ import Product from "@/models/Product";
 import Category from "@/models/Category";
 import Section from "@/models/Section";
 import { seedSections } from "@/lib/seed-sections";
-import { Truck, ShieldCheck, Clock, Star } from "lucide-react";
 import Hero from "@/components/shop/Hero";
 import Features from "@/components/shop/Features";
 import PageBackground from "@/components/ui/PageBackground";
@@ -25,7 +24,9 @@ const ProductSection = nextDynamic(
   () => import("@/components/shop/ProductSection"),
 );
 const Newsletter = nextDynamic(() => import("@/components/shop/Newsletter"));
-const Testimonials = nextDynamic(() => import("@/components/shop/Testimonials"));
+const Testimonials = nextDynamic(
+  () => import("@/components/shop/Testimonials"),
+);
 const FlashDeals = nextDynamic(() => import("@/components/shop/FlashDeals"));
 const AppDownload = nextDynamic(() => import("@/components/shop/AppDownload"));
 const ComboOffers = nextDynamic(() => import("@/components/shop/ComboOffers"));
@@ -56,6 +57,8 @@ const BuyMoreSaveMore = nextDynamic(
   () => import("@/components/shop/marketing/BuyMoreSaveMore"),
 );
 
+import RefreshButton from "@/components/ui/RefreshButton";
+
 export const dynamic = "force-dynamic";
 
 async function getHomeData(searchParams: {
@@ -63,7 +66,7 @@ async function getHomeData(searchParams: {
 }) {
   try {
     await dbConnect();
-    
+
     // Seed sections if needed
     await seedSections();
 
@@ -91,9 +94,11 @@ async function getHomeData(searchParams: {
       .skip(skip)
       .limit(limit)
       .lean();
-      
+
     // Fetch active sections ordered by 'order'
-    const sections = await Section.find({ isActive: true }).sort({ order: 1 }).lean();
+    const sections = await Section.find({ isActive: true })
+      .sort({ order: 1 })
+      .lean();
 
     return {
       categories: JSON.parse(JSON.stringify(mainCategories)) || [],
@@ -112,7 +117,7 @@ async function getHomeData(searchParams: {
       totalPages: 0,
       currentPage: 1,
       totalCount: 0,
-      error: true
+      error: true,
     };
   }
 }
@@ -123,20 +128,28 @@ export default async function HomePage({
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }) {
   const resolvedSearchParams = await searchParams;
-  const { categories, products, sections, totalPages, currentPage, totalCount, error } =
-    await getHomeData(resolvedSearchParams);
+  const {
+    categories,
+    products,
+    sections,
+    totalPages,
+    currentPage,
+    totalCount,
+    error,
+  } = await getHomeData(resolvedSearchParams);
 
   if (error) {
     return (
       <div className="flex flex-col items-center justify-center min-h-[50vh] space-y-4">
-        <h2 className="text-2xl font-bold text-red-600">Something went wrong</h2>
-        <p className="text-gray-600">Failed to load data due to database connection or technical issues.</p>
-        <button 
-          onClick={() => window.location.reload()} 
-          className="px-6 py-2 bg-green-600 text-white rounded-full font-bold hover:bg-green-700 transition-colors"
-        >
+        <h2 className="text-2xl font-bold text-red-600">
+          Something went wrong
+        </h2>
+        <p className="text-gray-600">
+          Failed to load data due to database connection or technical issues.
+        </p>
+        <RefreshButton className="px-6 py-2 bg-green-600 text-white rounded-full font-bold hover:bg-green-700 transition-colors">
           Try Again
-        </button>
+        </RefreshButton>
       </div>
     );
   }
@@ -145,7 +158,9 @@ export default async function HomePage({
     return (
       <div className="flex flex-col items-center justify-center min-h-[50vh] space-y-4">
         <h2 className="text-2xl font-bold">No data found</h2>
-        <p className="text-gray-600">There are no products or categories to display at the moment.</p>
+        <p className="text-gray-600">
+          There are no products or categories to display at the moment.
+        </p>
       </div>
     );
   }
@@ -195,7 +210,9 @@ export default async function HomePage({
           </div>
         );
       case "SubCategorySpotlight":
-        return <SubCategorySpotlight key={section._id} categories={categories} />;
+        return (
+          <SubCategorySpotlight key={section._id} categories={categories} />
+        );
       case "SpecialOfferBanners":
         return <SpecialOfferBanners key={section._id} />;
       case "AppDownload":
@@ -232,20 +249,35 @@ export default async function HomePage({
         // Fallback if sections fail to load for some reason (though seed should handle it)
         <>
           <Hero />
-          <div className="max-w-7xl mx-auto px-4"><DailyDealsBanner /></div>
+          <div className="max-w-7xl mx-auto px-4">
+            <DailyDealsBanner />
+          </div>
           <Features />
-          <div className="max-w-7xl mx-auto px-4"><RamadanOffers /></div>
+          <div className="max-w-7xl mx-auto px-4">
+            <RamadanOffers />
+          </div>
           <CategorySection categories={categories} />
           <FlashDeals products={products} />
-          <div className="max-w-7xl mx-auto px-4"><ComboPacks /></div>
+          <div className="max-w-7xl mx-auto px-4">
+            <ComboPacks />
+          </div>
           <ComboOffers />
-          <div className="max-w-7xl mx-auto px-4"><EidSpecialDeals /></div>
+          <div className="max-w-7xl mx-auto px-4">
+            <EidSpecialDeals />
+          </div>
           <FeaturedProducts products={products} />
-          <div className="max-w-7xl mx-auto px-4"><BuyMoreSaveMore /></div>
+          <div className="max-w-7xl mx-auto px-4">
+            <BuyMoreSaveMore />
+          </div>
           <SubCategorySpotlight categories={categories} />
           <SpecialOfferBanners />
           <AppDownload />
-          <ProductSection products={products} totalPages={totalPages} currentPage={currentPage} totalCount={totalCount} />
+          <ProductSection
+            products={products}
+            totalPages={totalPages}
+            currentPage={currentPage}
+            totalCount={totalCount}
+          />
           <Testimonials />
           <Newsletter />
           <RecentlyViewedSection />
