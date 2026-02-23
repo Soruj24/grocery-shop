@@ -26,6 +26,7 @@ export default function ProductsPage() {
     name: "",
     price: 0,
     stock: 0,
+    unit: "",
     category: "",
     image: "",
     description: "",
@@ -277,6 +278,7 @@ export default function ProductsPage() {
                 name: p.name,
                 price: p.price,
                 stock: p.stock,
+                unit: p.unit,
                 category:
                   typeof p.category === "string"
                     ? p.category
