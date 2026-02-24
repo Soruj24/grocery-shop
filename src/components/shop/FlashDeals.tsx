@@ -19,7 +19,7 @@ interface FlashDealsProps {
 
 export default function FlashDeals({ products }: FlashDealsProps) {
   const { addToCart } = useCart();
-  const { t, language } = useLanguage();
+  const { t } = useLanguage();
   const [timeLeft, setTimeLeft] = useState({
     hours: 12,
     minutes: 45,
@@ -154,13 +154,9 @@ export default function FlashDeals({ products }: FlashDealsProps) {
                 <Image
                   src={
                     product.image ||
-                    getProductFallbackImage(product.nameEn || product.name)
+                    getProductFallbackImage(product.name)
                   }
-                  alt={
-                    language === "en"
-                      ? product.nameEn || product.name
-                      : product.name
-                  }
+                  alt={product.name}
                   fill
                   sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, (max-width: 1280px) 25vw, 20vw"
                   className="object-cover group-hover:scale-110 transition-transform duration-700"
@@ -183,7 +179,7 @@ export default function FlashDeals({ products }: FlashDealsProps) {
                     onClick={() => {
                       addToCart(product, 1);
                       toast.success(
-                        `${language === "en" ? product.nameEn || product.name : product.name} ${t("add_to_cart_success")}`,
+                        `${product.name} ${t("add_to_cart_success")}`,
                       );
                     }}
                     className="w-10 h-10 rounded-full bg-white text-gray-900 flex items-center justify-center shadow-lg hover:bg-orange-500 hover:text-white transition-colors"
@@ -216,9 +212,7 @@ export default function FlashDeals({ products }: FlashDealsProps) {
               <div className="pt-4 px-2 group-hover:hidden">
                 <div className="flex items-start justify-between gap-4 mb-2">
                   <h3 className="text-lg font-bold text-gray-900 dark:text-white line-clamp-2 leading-tight">
-                    {language === "en"
-                      ? product.nameEn || product.name
-                      : product.name}
+                    {product.name}
                   </h3>
                   <div className="flex items-center gap-1 bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded-lg">
                     <Star
@@ -241,15 +235,11 @@ export default function FlashDeals({ products }: FlashDealsProps) {
                     <div className="flex items-center gap-2">
                       <span className="text-xl font-black text-gray-900 dark:text-white">
                         {t("currency_symbol")}
-                        {product.price.toLocaleString(
-                          language === "bn" ? "bn-BD" : "en-US",
-                        )}
+                        {product.price.toLocaleString("bn-BD")}
                       </span>
                       <span className="text-sm text-gray-400 line-through font-bold">
                         {t("currency_symbol")}
-                        {Math.round(product.price * 1.25).toLocaleString(
-                          language === "bn" ? "bn-BD" : "en-US",
-                        )}
+                        {Math.round(product.price * 1.25).toLocaleString("bn-BD")}
                       </span>
                     </div>
                   </div>

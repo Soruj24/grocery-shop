@@ -14,11 +14,7 @@ interface CategoryCardProps {
 }
 
 export default function CategoryCard({ cat, index }: CategoryCardProps) {
-  const { t, language } = useLanguage();
-
-  // Get localized name
-  const getName = (obj: Category) =>
-    language === "en" ? obj.nameEn || obj.name : obj.name;
+  const { t } = useLanguage();
 
   return (
     <Link href={`/category/${cat._id}`} className="block h-full">
@@ -34,8 +30,8 @@ export default function CategoryCard({ cat, index }: CategoryCardProps) {
         <div className="flex items-start justify-between mb-6 relative z-10">
           <div className="w-20 h-20 sm:w-24 sm:h-24 relative rounded-2xl overflow-hidden shadow-sm group-hover:shadow-md transition-shadow bg-white dark:bg-white/5">
             <Image
-              src={cat.image || getCategoryFallbackImage(cat.nameEn || cat.name)}
-              alt={getName(cat)}
+              src={cat.image || getCategoryFallbackImage(cat.name)}
+              alt={cat.name}
               fill
               className="object-cover transform group-hover:scale-110 transition-transform duration-700 ease-out"
               sizes="(max-width: 768px) 100vw, 200px"
@@ -43,9 +39,7 @@ export default function CategoryCard({ cat, index }: CategoryCardProps) {
           </div>
 
           <span className="bg-white/80 dark:bg-white/10 backdrop-blur-md text-gray-600 dark:text-gray-300 text-[10px] font-bold px-3 py-1.5 rounded-full border border-gray-100 dark:border-white/10 uppercase tracking-wider shadow-sm">
-            {(cat.subCategories?.length || 0).toLocaleString(
-              language === "bn" ? "bn-BD" : "en-US",
-            )}{" "}
+            {(cat.subCategories?.length || 0).toLocaleString("bn-BD")}{" "}
             {t("items")}
           </span>
         </div>
@@ -53,7 +47,7 @@ export default function CategoryCard({ cat, index }: CategoryCardProps) {
         {/* Content */}
         <div className="flex-1 flex flex-col relative z-10">
           <h2 className="text-xl sm:text-2xl font-black text-gray-900 dark:text-white mb-3 leading-tight group-hover:text-green-600 dark:group-hover:text-green-400 transition-colors line-clamp-2">
-            {getName(cat)}
+            {cat.name}
           </h2>
           
           {/* Subcategories */}
@@ -63,12 +57,12 @@ export default function CategoryCard({ cat, index }: CategoryCardProps) {
                 key={sub._id}
                 className="px-2.5 py-1 rounded-lg text-[10px] font-bold bg-gray-50 dark:bg-white/5 text-gray-500 dark:text-gray-400 border border-gray-100 dark:border-white/5 group-hover:border-green-500/20 group-hover:text-green-600 dark:group-hover:text-green-400 transition-colors uppercase tracking-wide"
               >
-                {getName(sub)}
+                {sub.name}
               </span>
             ))}
             {(cat.subCategories?.length || 0) > 3 && (
               <span className="px-2.5 py-1 rounded-lg text-[10px] font-bold bg-gray-50 dark:bg-white/5 text-gray-400 dark:text-gray-500 border border-gray-100 dark:border-white/5">
-                +{((cat.subCategories?.length || 0) - 3).toLocaleString(language === "bn" ? "bn-BD" : "en-US")}
+                +{((cat.subCategories?.length || 0) - 3).toLocaleString("bn-BD")}
               </span>
             )}
           </div>

@@ -23,18 +23,18 @@ export default function MobileDrawer({
   totalWishlistItems,
   session,
 }: MobileDrawerProps) {
-  const { t, language } = useLanguage();
+  const { t } = useLanguage();
   const displayCategories = categories.length > 0 ? categories : [
-    { _id: 'fruits', name: t('cat_fruits'), nameEn: t('cat_fruits_desc') },
-    { _id: 'vegetables', name: t('cat_vegetables'), nameEn: t('cat_vegetables_desc') },
-    { _id: 'fish', name: t('cat_fish'), nameEn: t('cat_fish_desc') },
-    { _id: 'meat', name: t('cat_meat'), nameEn: t('cat_meat_desc') },
-    { _id: 'dairy', name: t('cat_dairy'), nameEn: t('cat_dairy_desc') },
-    { _id: 'frozen', name: t('cat_frozen'), nameEn: t('cat_frozen_desc') },
-    { _id: 'bakery', name: t('cat_bakery'), nameEn: t('cat_bakery_desc') },
-    { _id: 'beauty', name: t('cat_beauty'), nameEn: t('cat_beauty_desc') },
-    { _id: 'baby-care', name: t('cat_baby_care'), nameEn: t('cat_baby_care_desc') },
-    { _id: 'cleaning', name: t('cat_cleaning'), nameEn: t('cat_cleaning_desc') },
+    { _id: 'fruits', name: t('cat_fruits') },
+    { _id: 'vegetables', name: t('cat_vegetables') },
+    { _id: 'fish', name: t('cat_fish') },
+    { _id: 'meat', name: t('cat_meat') },
+    { _id: 'dairy', name: t('cat_dairy') },
+    { _id: 'frozen', name: t('cat_frozen') },
+    { _id: 'bakery', name: t('cat_bakery') },
+    { _id: 'beauty', name: t('cat_beauty') },
+    { _id: 'baby-care', name: t('cat_baby_care') },
+    { _id: 'cleaning', name: t('cat_cleaning') },
   ];
 
   return (
@@ -159,8 +159,8 @@ export default function MobileDrawer({
                         <div className="w-12 h-12 rounded-2xl bg-white dark:bg-white/5 flex items-center justify-center shadow-sm group-hover:scale-110 transition-transform relative z-10">
                           <div className="relative w-8 h-8">
                             <Image
-                              src={cat.image || getCategoryFallbackImage(cat.nameEn || cat.name)}
-                              alt={language === 'en' ? (cat.nameEn || cat.name) : cat.name}
+                              src={cat.image || getCategoryFallbackImage(cat.name)}
+                              alt={cat.name}
                               fill
                               sizes="32px"
                               className="object-contain"
@@ -168,7 +168,7 @@ export default function MobileDrawer({
                           </div>
                         </div>
                         <span className="text-[11px] font-black text-gray-700 dark:text-gray-300 group-hover:text-green-600 transition-colors line-clamp-1 relative z-10">
-                          {language === 'en' ? (cat.nameEn || cat.name) : cat.name}
+                          {cat.name}
                         </span>
                       </Link>
                     </motion.div>

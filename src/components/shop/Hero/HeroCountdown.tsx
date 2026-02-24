@@ -1,10 +1,10 @@
 import { useLanguage } from "@/components/LanguageContext";
 
 export default function HeroCountdown() {
-  const { t, language } = useLanguage();
+  const { t } = useLanguage();
 
   const formatNumber = (num: number) => {
-    return num.toLocaleString(language === 'bn' ? 'bn-BD' : 'en-US', { minimumIntegerDigits: 2 });
+    return num.toLocaleString('bn-BD', { minimumIntegerDigits: 2 });
   };
 
   return (

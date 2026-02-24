@@ -22,7 +22,7 @@ export default function CartItemRow({
   removeFromCart,
   updateQuantity,
 }: CartItemRowProps) {
-  const { t, language } = useLanguage();
+  const { t } = useLanguage();
   return (
     <div className="group bg-white dark:bg-gray-900 p-6 rounded-[40px] shadow-sm border border-gray-100 dark:border-gray-800 flex flex-col sm:flex-row items-center gap-8 hover:shadow-xl hover:shadow-gray-200/50 dark:hover:shadow-none transition-all duration-500">
       <div className="w-32 h-32 bg-gray-50 dark:bg-gray-800 rounded-[32px] flex-shrink-0 flex items-center justify-center overflow-hidden border border-gray-100 dark:border-gray-700 group-hover:scale-105 transition-transform duration-500">
@@ -42,7 +42,7 @@ export default function CartItemRow({
         </h3>
         <div className="flex items-center justify-center sm:justify-start gap-4">
           <span className="text-green-600 dark:text-green-400 font-black text-xl">
-            {t('currency_symbol')}{item.price.toLocaleString(language === 'bn' ? 'bn-BD' : 'en-US')}
+            {t('currency_symbol')}{item.price.toLocaleString('bn-BD')}
           </span>
           <span className="text-sm font-bold text-gray-400">{t('unit_kg')}</span>
         </div>
@@ -57,7 +57,7 @@ export default function CartItemRow({
           <Minus className="w-5 h-5" />
         </button>
         <span className="w-8 text-center font-black text-gray-900 dark:text-white text-xl animate-in fade-in zoom-in duration-300">
-          {item.quantity.toLocaleString(language === 'bn' ? 'bn-BD' : 'en-US')}
+          {item.quantity.toLocaleString('bn-BD')}
         </span>
         <button
           onClick={() => updateQuantity(item._id, item.quantity + 1)}
@@ -69,7 +69,7 @@ export default function CartItemRow({
 
       <div className="flex flex-col items-end gap-2">
         <span className="font-black text-2xl text-gray-900 dark:text-white">
-          {t('currency_symbol')}{(item.price * item.quantity).toLocaleString(language === 'bn' ? 'bn-BD' : 'en-US')}
+          {t('currency_symbol')}{(item.price * item.quantity).toLocaleString('bn-BD')}
         </span>
         <button
           onClick={() => removeFromCart(item._id)}

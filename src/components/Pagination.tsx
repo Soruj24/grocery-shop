@@ -15,7 +15,7 @@ interface PaginationProps {
 
 export default function Pagination({ totalPages, currentPage, basePath, totalCount, itemsPerPage = 12 }: PaginationProps) {
   const searchParams = useSearchParams();
-  const { t, language } = useLanguage();
+  const { t } = useLanguage();
   
   const createPageURL = (pageNumber: number | string) => {
     const params = new URLSearchParams(searchParams);
@@ -59,10 +59,10 @@ export default function Pagination({ totalPages, currentPage, basePath, totalCou
           <span className="text-[10px] font-black text-gray-300 dark:text-gray-600 uppercase tracking-[0.2em] mb-1">{t('showing_text')}</span>
           <div className="flex items-baseline gap-1.5">
             <span className="text-sm font-black text-gray-900 dark:text-gray-100">
-              {Math.min((currentPage - 1) * itemsPerPage + 1, totalCount).toLocaleString(language === 'bn' ? 'bn-BD' : 'en-US')} {t('to_text')} {Math.min(currentPage * itemsPerPage, totalCount).toLocaleString(language === 'bn' ? 'bn-BD' : 'en-US')}
+              {Math.min((currentPage - 1) * itemsPerPage + 1, totalCount).toLocaleString('bn-BD')} {t('to_text')} {Math.min(currentPage * itemsPerPage, totalCount).toLocaleString('bn-BD')}
             </span>
             <span className="text-[10px] font-black text-gray-300 dark:text-gray-600 uppercase tracking-[0.2em]">{t('of_text')}</span>
-            <span className="text-sm font-black text-gray-900 dark:text-gray-100">{totalCount.toLocaleString(language === 'bn' ? 'bn-BD' : 'en-US')}</span>
+            <span className="text-sm font-black text-gray-900 dark:text-gray-100">{totalCount.toLocaleString('bn-BD')}</span>
           </div>
           <span className="text-[10px] font-black text-gray-300 dark:text-gray-600 uppercase tracking-[0.2em] mt-1">{t('products_text')}</span>
         </div>
@@ -96,7 +96,7 @@ export default function Pagination({ totalPages, currentPage, basePath, totalCou
                     : "bg-white dark:bg-gray-800 text-gray-400 dark:text-gray-500 border border-gray-100 dark:border-gray-700 hover:border-green-100 dark:hover:border-green-900 hover:text-green-600 dark:hover:text-green-500 hover:shadow-sm"
                 }`}
               >
-                {typeof page === 'number' ? page.toLocaleString(language === 'bn' ? 'bn-BD' : 'en-US') : page}
+                {typeof page === 'number' ? page.toLocaleString('bn-BD') : page}
               </Link>
             )
           ))}

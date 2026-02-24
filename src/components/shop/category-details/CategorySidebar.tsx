@@ -11,7 +11,7 @@ interface CategorySidebarProps {
 }
 
 export default function CategorySidebar({ allCategories, currentId }: CategorySidebarProps) {
-  const { t, language } = useLanguage();
+  const { t } = useLanguage();
   return (
     <aside className="lg:w-1/4 space-y-8">
       <div className="bg-white/80 dark:bg-[#0B1120]/80 backdrop-blur-xl p-6 rounded-[32px] border border-gray-100 dark:border-gray-800 shadow-xl shadow-gray-200/20 dark:shadow-none sticky top-24">
@@ -41,7 +41,7 @@ export default function CategorySidebar({ allCategories, currentId }: CategorySi
                   >
                     <div className="flex items-center gap-3">
                       <div className={`w-1.5 h-1.5 rounded-full transition-colors ${isActive ? "bg-green-500" : "bg-gray-300 group-hover:bg-green-400"}`} />
-                      <span>{language === 'en' ? (cat.nameEn || cat.name) : cat.name}</span>
+                      <span>{cat.name}</span>
                     </div>
                     {isActive && <ChevronRight className="w-3.5 h-3.5" />}
                   </Link>
@@ -60,7 +60,7 @@ export default function CategorySidebar({ allCategories, currentId }: CategorySi
                                 : "text-gray-500 dark:text-gray-400 hover:text-green-600 dark:hover:text-green-400 hover:bg-gray-50 dark:hover:bg-gray-800"
                             }`}
                           >
-                            {language === 'en' ? (sub.nameEn || sub.name) : sub.name}
+                            {sub.name}
                           </Link>
                         ))}
                     </div>

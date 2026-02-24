@@ -9,7 +9,7 @@ import { useState } from "react";
 export default function NotificationBell() {
   const { notifications, unreadCount, markAsRead } = useNotifications();
   const [isOpen, setIsOpen] = useState(false);
-  const { t, language } = useLanguage();
+  const { t } = useLanguage();
 
   const getTypeStyles = (type: string) => {
     switch (type) {
@@ -85,7 +85,7 @@ export default function NotificationBell() {
                             <div className="flex items-center gap-2 pt-1">
                               <Clock size={10} className="text-gray-400" />
                               <span className="text-[10px] text-gray-400 font-bold">
-                                {new Date(n.timestamp).toLocaleTimeString(language === 'bn' ? 'bn-BD' : 'en-US')}
+                                {new Date(n.timestamp).toLocaleTimeString('bn-BD')}
                               </span>
                             </div>
                           </div>

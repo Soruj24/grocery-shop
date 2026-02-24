@@ -20,7 +20,7 @@ interface OrderCardProps {
 }
 
 export default function OrderCard({ order }: OrderCardProps) {
-  const { t, language } = useLanguage();
+  const { t } = useLanguage();
 
   const getStatusColor = (status: string) => {
     switch (status) {
@@ -114,12 +114,12 @@ export default function OrderCard({ order }: OrderCardProps) {
                   {item.name}
                 </p>
                 <p className="text-xs font-bold text-gray-400 dark:text-gray-500">
-                  {item.quantity.toLocaleString(language === 'bn' ? 'bn-BD' : 'en-US')} x {t('currency_symbol')}{item.price.toLocaleString(language === 'bn' ? 'bn-BD' : 'en-US')}
+                  {item.quantity.toLocaleString('bn-BD')} x {t('currency_symbol')}{item.price.toLocaleString('bn-BD')}
                 </p>
               </div>
               <div className="text-right">
                 <p className="font-black text-gray-800 dark:text-gray-100">
-                  {t('currency_symbol')}{(item.quantity * item.price).toLocaleString(language === 'bn' ? 'bn-BD' : 'en-US')}
+                  {t('currency_symbol')}{(item.quantity * item.price).toLocaleString('bn-BD')}
                 </p>
               </div>
             </div>
@@ -184,7 +184,7 @@ export default function OrderCard({ order }: OrderCardProps) {
                   {t('order_date')}
                 </p>
                 <p className="text-sm font-bold text-gray-700 dark:text-gray-300">
-                  {new Date(order.createdAt).toLocaleDateString(language === 'bn' ? "bn-BD" : "en-US", {
+                  {new Date(order.createdAt).toLocaleDateString("bn-BD", {
                     year: "numeric",
                     month: "long",
                     day: "numeric",
@@ -197,7 +197,7 @@ export default function OrderCard({ order }: OrderCardProps) {
                 {t('total_with_delivery')}
               </span>
               <span className="text-xl font-black text-green-600 dark:text-green-500">
-                {t('currency_symbol')}{order.total}
+                {t('currency_symbol')}{order.total.toLocaleString('bn-BD')}
               </span>
             </div>
           </div>

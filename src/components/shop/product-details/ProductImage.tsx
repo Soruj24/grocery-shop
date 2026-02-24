@@ -16,10 +16,10 @@ interface ProductImageProps {
 }
 
 export default function ProductImage({ image, name, id, product }: ProductImageProps) {
-  const { t, language } = useLanguage();
+  const { t } = useLanguage();
   
   const productName = product 
-    ? (language === 'en' ? (product.nameEn || product.name) : product.name)
+    ? product.name
     : name;
 
   // Use fallback image if no product image is available
@@ -54,7 +54,7 @@ export default function ProductImage({ image, name, id, product }: ProductImageP
         {/* Discount Badge */}
         {discountPercent > 0 && (
           <div className="absolute top-6 left-6 z-10 bg-orange-500 text-white px-4 py-2 rounded-xl font-black text-sm shadow-lg shadow-orange-500/20 animate-bounce-slow">
-            {discountPercent.toLocaleString(language === 'bn' ? 'bn-BD' : 'en-US')}% {t('off')}
+            {discountPercent.toLocaleString('bn-BD')}% {t('off')}
           </div>
         )}
 
@@ -125,7 +125,7 @@ export default function ProductImage({ image, name, id, product }: ProductImageP
           >
             <Image
               src={img}
-              alt={`${productName} ${t('thumbnail')} ${(idx + 1).toLocaleString(language === 'bn' ? 'bn-BD' : 'en-US')}`}
+              alt={`${productName} ${t('thumbnail')} ${(idx + 1).toLocaleString('bn-BD')}`}
               fill
               sizes="96px"
               className="object-cover p-2"

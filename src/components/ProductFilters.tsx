@@ -131,7 +131,7 @@ export default function ProductFilters({ categories }: ProductFiltersProps) {
         <div className="hidden lg:flex flex-wrap items-center gap-2 flex-1 px-4">
           {selectedCategory && (
             <div className="flex items-center gap-2 bg-green-50 dark:bg-green-900/20 text-green-700 dark:text-green-400 px-3 py-1.5 rounded-lg text-xs font-bold border border-green-100 dark:border-green-900/30">
-              {language === 'en' ? (selectedCategoryData?.nameEn || selectedCategoryData?.name) : selectedCategoryData?.name}
+              {selectedCategoryData?.name}
               <button onClick={() => { setSelectedCategory(""); applyFilters(); }}>
                 <X className="w-3 h-3 hover:text-red-500 dark:hover:text-red-400" />
               </button>

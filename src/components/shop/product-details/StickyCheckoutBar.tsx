@@ -15,7 +15,7 @@ interface StickyCheckoutBarProps {
 export default function StickyCheckoutBar({ product }: StickyCheckoutBarProps) {
   const { addToCart, cart } = useCart();
   const router = useRouter();
-  const { t, language } = useLanguage();
+  const { t } = useLanguage();
 
   const cartItem = cart.find(item => item._id === product._id);
   const currentCartQuantity = cartItem ? cartItem.quantity : 0;
@@ -54,11 +54,11 @@ export default function StickyCheckoutBar({ product }: StickyCheckoutBarProps) {
           </span>
           <div className="flex items-baseline gap-1.5">
             <span className="text-xl font-black text-gray-900 dark:text-white">
-              {t('currency_symbol')}{(product.discountPrice || product.price).toLocaleString(language === 'bn' ? 'bn-BD' : 'en-US')}
+              {t('currency_symbol')}{(product.discountPrice || product.price).toLocaleString('bn-BD')}
             </span>
             {product.discountPrice && (
                 <span className="text-xs text-gray-400 line-through decoration-rose-500/50">
-                    {t('currency_symbol')}{product.price.toLocaleString(language === 'bn' ? 'bn-BD' : 'en-US')}
+                    {t('currency_symbol')}{product.price.toLocaleString('bn-BD')}
                 </span>
             )}
           </div>
@@ -75,7 +75,7 @@ export default function StickyCheckoutBar({ product }: StickyCheckoutBarProps) {
             <ShoppingBag className="w-5 h-5" />
             {currentCartQuantity > 0 && (
               <span className="absolute -top-2 -right-2 bg-green-500 text-white text-[10px] font-bold w-5 h-5 flex items-center justify-center rounded-full border-2 border-white dark:border-gray-900 shadow-sm">
-                {currentCartQuantity}
+                {currentCartQuantity.toLocaleString('bn-BD')}
               </span>
             )}
           </motion.button>

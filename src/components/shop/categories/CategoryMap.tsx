@@ -10,7 +10,7 @@ interface CategoryMapProps {
 }
 
 export default function CategoryMap({ categories }: CategoryMapProps) {
-  const { t, language } = useLanguage();
+  const { t } = useLanguage();
 
   return (
     <section className="relative bg-white/80 dark:bg-[#0B1120]/80 backdrop-blur-xl rounded-[60px] p-12 md:p-20 border border-gray-100 dark:border-gray-800 shadow-2xl shadow-gray-200/50 dark:shadow-none overflow-hidden">
@@ -38,7 +38,7 @@ export default function CategoryMap({ categories }: CategoryMapProps) {
                   href={`/category/${cat._id}`}
                   className="text-xl font-black text-gray-800 dark:text-gray-100 hover:text-green-600 transition-colors"
                 >
-                  {language === 'en' ? (cat.nameEn || cat.name) : cat.name}
+                  {cat.name}
                 </Link>
               </div>
 
@@ -49,7 +49,7 @@ export default function CategoryMap({ categories }: CategoryMapProps) {
                     href={`/category/${sub._id}`}
                     className="block text-sm font-bold text-gray-400 dark:text-gray-500 hover:text-green-600 dark:hover:text-green-400 transition-all hover:translate-x-2"
                   >
-                    • {language === 'en' ? (sub.nameEn || sub.name) : sub.name}
+                    • {sub.name}
                   </Link>
                 ))}
                 <Link

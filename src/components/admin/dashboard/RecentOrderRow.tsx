@@ -33,7 +33,7 @@ export default function RecentOrderRow({
       </td>
       <td className="px-8 py-6">
         <span className="text-[15px] font-black text-gray-900 dark:text-white italic">
-          ৳{order.total}
+          ৳{order.total.toLocaleString('bn-BD')}
         </span>
       </td>
       <td className="px-8 py-6">

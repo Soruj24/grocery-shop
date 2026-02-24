@@ -10,7 +10,7 @@ interface SubCategoryNavProps {
 }
 
 export default function SubCategoryNav({ subCategories, currentId }: SubCategoryNavProps) {
-  const { t, language } = useLanguage();
+  const { t } = useLanguage();
   if (subCategories.length === 0) return null;
 
   return (
@@ -29,7 +29,7 @@ export default function SubCategoryNav({ subCategories, currentId }: SubCategory
                 : "bg-transparent text-gray-500 dark:text-gray-400 border-transparent hover:bg-gray-50 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-white"
             }`}
           >
-            {language === 'en' ? (sub.nameEn || sub.name) : sub.name}
+            {sub.name}
           </Link>
         ))}
       </div>

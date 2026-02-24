@@ -15,7 +15,7 @@ interface ReviewItem {
 }
 
 export default function CustomerReviews({ productId }: { productId: string }) {
-  const { t, language } = useLanguage();
+  const { t } = useLanguage();
   const [items, setItems] = useState<ReviewItem[]>([]);
   const [avg, setAvg] = useState<number>(0);
   const [count, setCount] = useState<number>(0);
@@ -73,12 +73,12 @@ export default function CustomerReviews({ productId }: { productId: string }) {
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
         <div>
           <h2 className="text-3xl font-black text-gray-800 dark:text-white mb-2">{t('customer_reviews_title')}</h2>
-          <p className="text-gray-500 font-bold">{count.toLocaleString(language === 'bn' ? 'bn-BD' : 'en-US')}{t('customer_experience_shared_suffix')}</p>
+          <p className="text-gray-500 font-bold">{count.toLocaleString('bn-BD')}{t('customer_experience_shared_suffix')}</p>
         </div>
         
         <div className="flex items-center gap-6 bg-green-50 dark:bg-green-900/20 p-6 rounded-[32px] border border-green-100 dark:border-green-800">
           <div className="text-center">
-            <p className="text-4xl font-black text-green-600 dark:text-green-500">{avg.toLocaleString(language === 'bn' ? 'bn-BD' : 'en-US', { minimumFractionDigits: 1, maximumFractionDigits: 1 })}</p>
+            <p className="text-4xl font-black text-green-600 dark:text-green-500">{avg.toLocaleString('bn-BD', { minimumFractionDigits: 1, maximumFractionDigits: 1 })}</p>
             <div className="flex items-center gap-0.5 text-amber-500 mt-1">
               {[...Array(5)].map((_, i) => (
                 <Star key={i} className={`w-3 h-3 ${i < Math.round(avg) ? "fill-current" : ""}`} />
@@ -113,7 +113,7 @@ export default function CustomerReviews({ productId }: { productId: string }) {
                 <div>
                   <h4 className="font-black text-gray-800 dark:text-white">{review.name}</h4>
                   <p className="text-xs font-bold text-gray-400">
-                    {new Date(review.createdAt || Date.now()).toLocaleDateString(language === 'bn' ? 'bn-BD' : 'en-US')}
+                    {new Date(review.createdAt || Date.now()).toLocaleDateString('bn-BD')}
                   </p>
                 </div>
               </div>
@@ -150,7 +150,7 @@ export default function CustomerReviews({ productId }: { productId: string }) {
                 onChange={(e) => setRating(parseInt(e.target.value))}
                 className="w-full mt-2 px-4 py-3 bg-gray-50 dark:bg-gray-800 border border-gray-100 dark:border-gray-700 rounded-xl text-sm font-bold"
               >
-                {[5,4,3,2,1].map(r => <option key={r} value={r}>{r.toLocaleString(language === 'bn' ? 'bn-BD' : 'en-US')}</option>)}
+                {[5,4,3,2,1].map(r => <option key={r} value={r}>{r.toLocaleString('bn-BD')}</option>)}
               </select>
             </div>
           </div>

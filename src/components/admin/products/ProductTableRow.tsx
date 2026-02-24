@@ -13,6 +13,17 @@ export default function ProductTableRow({
   onEdit,
   onDelete,
 }: ProductTableRowProps) {
+  const unitLabels: Record<string, string> = {
+    kg: "কেজি",
+    gm: "গ্রাম",
+    ltr: "লিটার",
+    pcs: "পিস",
+    dozen: "ডজন",
+    box: "বক্স",
+    packet: "প্যাকেট",
+    bundle: "বান্ডিল",
+  };
+
   return (
     <tr className="group hover:bg-emerald-50/30 dark:hover:bg-emerald-900/10 transition-all duration-300">
       <td className="px-8 py-6">

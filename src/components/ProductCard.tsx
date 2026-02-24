@@ -1,14 +1,13 @@
 "use client";
 
-import { ShoppingCart, Heart, Star, Share2, Plus, Minus, TrendingUp } from "lucide-react";
+import {  Heart, Star, Share2, Plus, Minus, TrendingUp } from "lucide-react";
 import { useCart } from "@/components/CartContext";
 import { useWishlist } from "@/components/WishlistContext";
 import Link from "next/link";
 import Image from "next/image";
 import { Toast } from "@/lib/toast";
 import { Product } from "@/types/product";
-import { useState } from "react";
-import { motion, AnimatePresence, PanInfo, useMotionValue, useTransform } from "framer-motion";
+import { motion, PanInfo, useMotionValue, useTransform } from "framer-motion";
 import { useLanguage } from "@/components/LanguageContext";
 import { getProductFallbackImage } from "@/lib/category-utils";
 
@@ -19,7 +18,7 @@ interface ProductCardProps {
 export default function ProductCard({ product }: ProductCardProps) {
   const { addToCart, updateQuantity, cart } = useCart();
   const { toggleWishlist, isInWishlist } = useWishlist();
-  const { t, language } = useLanguage();
+  const { t } = useLanguage();
   const active = isInWishlist(product._id);
 
   // Drag Animation Logic
@@ -117,8 +116,8 @@ export default function ProductCard({ product }: ProductCardProps) {
       <div className="relative aspect-[4/5] overflow-hidden bg-gray-50 dark:bg-gray-800 rounded-t-[2rem]">
         <Link href={`/products/${product._id}`} className="block w-full h-full">
           <Image
-            src={product.image || getProductFallbackImage(product.nameEn || product.name)}
-            alt={language === 'en' ? (product.nameEn || product.name) : product.name}
+            src={product.image || getProductFallbackImage(product.name)}
+            alt={product.name}
             fill
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, (max-width: 1280px) 33vw, 25vw"
             className="object-cover group-hover:scale-110 transition-transform duration-700 ease-in-out"
@@ -166,7 +165,7 @@ export default function ProductCard({ product }: ProductCardProps) {
               <div className="absolute inset-0 bg-rose-500 blur-sm opacity-50 rounded-full" />
               <div className="relative bg-rose-500 text-white text-[10px] font-black px-3 py-1.5 rounded-full shadow-lg flex items-center gap-1">
                 <TrendingUp size={10} className="text-white/80" />
-                {Math.round(((product.price - product.discountPrice) / product.price) * 100).toLocaleString(language === 'bn' ? 'bn-BD' : 'en-US')}% {t('off')}
+                {Math.round(((product.price - product.discountPrice) / product.price) * 100).toLocaleString('bn-BD')}% {t('off')}
               </div>
             </div>
           </div>
@@ -212,7 +211,7 @@ export default function ProductCard({ product }: ProductCardProps) {
           
           <Link href={`/products/${product._id}`} className="group/title block">
             <h3 className="text-base font-bold text-gray-800 dark:text-gray-100 line-clamp-2 leading-tight group-hover/title:text-green-600 transition-colors h-10">
-              {language === 'en' ? (product.nameEn || product.name) : product.name}
+              {product.name}
             </h3>
           </Link>
         </div>
@@ -223,12 +222,12 @@ export default function ProductCard({ product }: ProductCardProps) {
             {product.discountPrice ? (
               <>
                 <div className="flex items-baseline gap-2">
-                   <span className="text-xl font-black text-green-600">{t('currency_symbol')}{product.discountPrice.toLocaleString(language === 'bn' ? 'bn-BD' : 'en-US')}</span>
-                   <span className="text-xs text-gray-400 line-through decoration-rose-500/50">{t('currency_symbol')}{product.price.toLocaleString(language === 'bn' ? 'bn-BD' : 'en-US')}</span>
+                   <span className="text-xl font-black text-green-600">{t('currency_symbol')}{product.discountPrice.toLocaleString('bn-BD')}</span>
+                   <span className="text-xs text-gray-400 line-through decoration-rose-500/50">{t('currency_symbol')}{product.price.toLocaleString('bn-BD')}</span>
                 </div>
               </>
             ) : (
-              <span className="text-xl font-black text-gray-800 dark:text-gray-100">{t('currency_symbol')}{product.price.toLocaleString(language === 'bn' ? 'bn-BD' : 'en-US')}</span>
+              <span className="text-xl font-black text-gray-800 dark:text-gray-100">{t('currency_symbol')}{product.price.toLocaleString('bn-BD')}</span>
             )}
           </div>
 
@@ -257,7 +256,7 @@ export default function ProductCard({ product }: ProductCardProps) {
                 <Minus size={18} strokeWidth={3} />
               </button>
               <span className="w-8 text-center text-sm font-black dark:text-white select-none tabular-nums">
-                {cartItem.quantity.toLocaleString(language === 'bn' ? 'bn-BD' : 'en-US')}
+                {cartItem.quantity.toLocaleString('bn-BD')}
               </span>
               <button
                 onClick={increment}

@@ -9,7 +9,7 @@ interface CartSummaryProps {
 }
 
 export default function CartSummary({ totalPrice }: CartSummaryProps) {
-  const { t, language } = useLanguage();
+  const { t } = useLanguage();
   const [promoCode, setPromoCode] = useState("");
   const [appliedCoupon, setAppliedCoupon] = useState<{
     code: string;
@@ -109,7 +109,7 @@ export default function CartSummary({ totalPrice }: CartSummaryProps) {
             <span>{t("subtotal")}</span>
             <span className="text-gray-900 dark:text-white">
               {t("currency_symbol")}
-              {totalPrice.toLocaleString(language === 'bn' ? 'bn-BD' : 'en-US')}
+              {totalPrice.toLocaleString('bn-BD')}
             </span>
           </div>
 
@@ -124,8 +124,8 @@ export default function CartSummary({ totalPrice }: CartSummaryProps) {
             </div>
             <span className="text-gray-900 dark:text-white">
               {deliveryFee === 0
-                ? `${t("currency_symbol")}${(0).toLocaleString(language === 'bn' ? 'bn-BD' : 'en-US')}`
-                : `${t("currency_symbol")}${deliveryFee.toLocaleString(language === 'bn' ? 'bn-BD' : 'en-US')}`}
+                ? `${t("currency_symbol")}${(0).toLocaleString('bn-BD')}`
+                : `${t("currency_symbol")}${deliveryFee.toLocaleString('bn-BD')}`}
             </span>
           </div>
 
@@ -135,7 +135,7 @@ export default function CartSummary({ totalPrice }: CartSummaryProps) {
             </span>
             <span className="text-gray-900 dark:text-white">
               {t("currency_symbol")}
-              {vat}
+              {vat.toLocaleString('bn-BD')}
             </span>
           </div>
 
@@ -144,7 +144,7 @@ export default function CartSummary({ totalPrice }: CartSummaryProps) {
               <span>{t("discount")}</span>
               <span>
                 -{t("currency_symbol")}
-                {discount.toLocaleString(language === 'bn' ? 'bn-BD' : 'en-US')}
+                {discount.toLocaleString('bn-BD')}
               </span>
             </div>
           )}
@@ -158,7 +158,7 @@ export default function CartSummary({ totalPrice }: CartSummaryProps) {
               </span>
               <div className="text-4xl font-black text-gray-900 dark:text-white tracking-tight">
                 {t("currency_symbol")}
-                {finalTotal.toLocaleString(language === 'bn' ? 'bn-BD' : 'en-US')}
+                {finalTotal.toLocaleString('bn-BD')}
               </div>
             </div>
           </div>

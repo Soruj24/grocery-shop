@@ -14,7 +14,7 @@ interface FrequentlyBoughtTogetherProps {
 }
 
 export default function FrequentlyBoughtTogether({ currentProduct, relatedProducts }: FrequentlyBoughtTogetherProps) {
-  const { t, language } = useLanguage();
+  const { t } = useLanguage();
   const { addToCart } = useCart();
   
   if (!relatedProducts || relatedProducts.length === 0) return null;
@@ -23,7 +23,7 @@ export default function FrequentlyBoughtTogether({ currentProduct, relatedProduc
   const totalPrice = bundleProducts.reduce((sum, p) => sum + (p.discountPrice || p.price), 0);
   const originalPrice = bundleProducts.reduce((sum, p) => sum + p.price, 0);
 
-  const getProductName = (product: Product) => language === 'en' ? (product.nameEn || product.name) : product.name;
+  const getProductName = (product: Product) => product.name;
 
   const handleAddBundle = () => {
     bundleProducts.forEach(p => addToCart(p, 1));
@@ -40,7 +40,7 @@ export default function FrequentlyBoughtTogether({ currentProduct, relatedProduc
             <div key={product._id} className="flex items-center gap-4">
               <div className="relative w-32 aspect-square bg-gray-50 dark:bg-gray-800 rounded-3xl border border-gray-100 dark:border-gray-700 p-4">
                 <Image
-                  src={product.image || getProductFallbackImage(product.nameEn || product.name)}
+                  src={product.image || getProductFallbackImage(product.name)}
                   alt={getProductName(product)}
                   fill
                   sizes="128px"
@@ -60,8 +60,8 @@ export default function FrequentlyBoughtTogether({ currentProduct, relatedProduc
           <div className="space-y-1">
             <p className="text-sm font-bold text-gray-400 uppercase tracking-widest">{t('bundle_total_price')}</p>
             <div className="flex items-baseline justify-center lg:justify-start gap-3">
-              <span className="text-3xl font-black text-green-600 dark:text-green-500">{t('currency_symbol')}{Math.round(totalPrice * 0.95).toLocaleString(language === 'bn' ? 'bn-BD' : 'en-US')}</span>
-              <span className="text-lg text-gray-400 line-through font-bold">{t('currency_symbol')}{totalPrice.toLocaleString(language === 'bn' ? 'bn-BD' : 'en-US')}</span>
+              <span className="text-3xl font-black text-green-600 dark:text-green-500">{t('currency_symbol')}{Math.round(totalPrice * 0.95).toLocaleString('bn-BD')}</span>
+              <span className="text-lg text-gray-400 line-through font-bold">{t('currency_symbol')}{totalPrice.toLocaleString('bn-BD')}</span>
             </div>
             <p className="text-xs font-black text-orange-500 bg-orange-50 dark:bg-orange-900/20 px-3 py-1 rounded-full inline-block">{t('bundle_extra_discount')}</p>
           </div>

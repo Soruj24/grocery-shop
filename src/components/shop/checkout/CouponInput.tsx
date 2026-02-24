@@ -10,6 +10,7 @@ interface Coupon {
   discount: number;
   discountType?: "percentage" | "fixed";
   discountValue?: number;
+  message?: string;
 }
 
 interface CouponInputProps {
@@ -99,7 +100,7 @@ export default function CouponInput({ total, onApply, onRemove }: CouponInputPro
                 {appliedCoupon.code} {t('promo_applied')}
               </p>
               <p className="text-xs font-bold text-green-700 dark:text-green-500">
-                {t('you_are_saving')} {t('currency_symbol')}{appliedCoupon.discount}
+                {t('you_are_saving')} {t('currency_symbol')}{appliedCoupon.discount.toLocaleString('bn-BD')}
               </p>
             </div>
           </div>

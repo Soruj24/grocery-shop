@@ -14,7 +14,7 @@ interface SubCategoryCardProps {
 }
 
 export default function SubCategoryCard({ id, name, image, count, index }: SubCategoryCardProps) {
-  const { t, language } = useLanguage();
+  const { t } = useLanguage();
   return (
     <Link
       href={`/category/${id}`}
@@ -35,7 +35,7 @@ export default function SubCategoryCard({ id, name, image, count, index }: SubCa
       <div className="relative p-6 h-full flex flex-col justify-end items-start z-10 min-h-[200px]">
         {/* Decorative Number */}
         <div className="absolute top-4 right-4 text-4xl font-black text-white/10 select-none group-hover:text-white/20 transition-colors">
-          {(index + 1).toLocaleString(language === 'bn' ? 'bn-BD' : 'en-US')}
+          {(index + 1).toLocaleString('bn-BD')}
         </div>
 
         <h3 className="text-xl font-black text-white group-hover:text-green-400 transition-colors mb-1">
@@ -44,7 +44,7 @@ export default function SubCategoryCard({ id, name, image, count, index }: SubCa
         
         <div className="flex items-center justify-between w-full mt-2">
           <p className="text-xs font-bold text-gray-300 uppercase tracking-widest bg-white/10 backdrop-blur-md px-3 py-1 rounded-full">
-            {count.toLocaleString(language === 'bn' ? 'bn-BD' : 'en-US')}+ {t('products_suffix')}
+            {count.toLocaleString('bn-BD')}+ {t('products_suffix')}
           </p>
           
           <div className="w-10 h-10 rounded-full bg-white/10 backdrop-blur-md flex items-center justify-center text-white border border-white/20 group-hover:bg-green-500 group-hover:border-green-500 transition-all duration-300 transform group-hover:scale-110">

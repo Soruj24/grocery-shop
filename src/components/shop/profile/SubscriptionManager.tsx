@@ -4,7 +4,7 @@ import { Calendar, Truck, ShieldCheck, ChevronRight, ShoppingBag } from "lucide-
 import { useLanguage } from "@/components/LanguageContext";
 
 export default function SubscriptionManager() {
-  const { t, language } = useLanguage();
+  const { t } = useLanguage();
   const nextDelivery = [
     { id: 1, name: t('sub_item_milk'), qty: t('unit_2_liter') },
     { id: 2, name: t('sub_item_eggs'), qty: t('unit_1_dozen') },
@@ -69,7 +69,7 @@ export default function SubscriptionManager() {
           
           <div className="mt-8 pt-8 border-t border-dashed border-gray-200 dark:border-gray-700 flex justify-between items-center">
             <span className="font-black text-gray-800 dark:text-white">{t('total_estimated_bill')}</span>
-            <span className="font-black text-green-600 text-xl">{t('currency_symbol')}{(850).toLocaleString(language === 'bn' ? 'bn-BD' : 'en-US')}</span>
+            <span className="font-black text-green-600 text-xl">{t('currency_symbol')}{(850).toLocaleString('bn-BD')}</span>
           </div>
         </div>
       </div>

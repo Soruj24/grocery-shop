@@ -21,7 +21,7 @@ import { useLanguage } from "@/components/LanguageContext";
 
 export default function OrderTrackingPage() {
   const { id } = useParams();
-  const { t, language } = useLanguage();
+  const { t } = useLanguage();
 
   const { data: order, isLoading } = useQuery({
     queryKey: ["order-tracking", id],
@@ -130,7 +130,7 @@ export default function OrderTrackingPage() {
                     </p>
                     {isCurrent && order.updatedAt && (
                       <p className="text-xs text-green-600 font-black mt-2 bg-green-50 dark:bg-green-500/10 px-3 py-1 rounded-lg inline-block">
-                        {t('last_updated')}: {new Date(order.updatedAt).toLocaleTimeString(language === 'bn' ? 'bn-BD' : 'en-US')}
+                        {t('last_updated')}: {new Date(order.updatedAt).toLocaleTimeString('bn-BD')}
                       </p>
                     )}
                   </div>

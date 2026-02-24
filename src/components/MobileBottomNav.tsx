@@ -12,7 +12,7 @@ export default function MobileBottomNav() {
   const pathname = usePathname();
   const { totalItems, cart } = useCart();
   const { totalWishlistItems } = useWishlist();
-  const { t, language } = useLanguage();
+  const { t } = useLanguage();
 
   const totalPrice = cart?.reduce((acc, item) => acc + (item.price * item.quantity), 0) || 0;
 
@@ -44,12 +44,12 @@ export default function MobileBottomNav() {
                 <div className="relative">
                   <ShoppingBag className="w-6 h-6" />
                   <span className="absolute -top-2 -right-2 bg-rose-500 text-white text-[9px] font-black w-5 h-5 rounded-full flex items-center justify-center border-2 border-green-600">
-                    {totalItems.toLocaleString(language === 'bn' ? 'bn-BD' : 'en-US')}
+                    {totalItems.toLocaleString('bn-BD')}
                   </span>
                 </div>
                 <div className="flex flex-col">
                   <span className="text-[10px] font-black uppercase tracking-widest opacity-70 leading-none">{t('total')}</span>
-                  <span className="font-black leading-none">{t('currency_symbol')}{totalPrice.toLocaleString(language === 'bn' ? 'bn-BD' : 'en-US')}</span>
+                  <span className="font-black leading-none">{t('currency_symbol')}{totalPrice.toLocaleString('bn-BD')}</span>
                 </div>
               </motion.div>
             </Link>
@@ -85,7 +85,7 @@ export default function MobileBottomNav() {
                   
                   {item.badge !== undefined && item.badge > 0 && (
                     <span className="absolute -top-2 -right-2 bg-green-600 text-white text-[9px] font-black min-w-[18px] h-[18px] px-1 rounded-full flex items-center justify-center border-2 border-white dark:border-black shadow-lg">
-                      {item.badge.toLocaleString(language === 'bn' ? 'bn-BD' : 'en-US')}
+                      {item.badge.toLocaleString('bn-BD')}
                     </span>
                   )}
                 </div>

@@ -10,9 +10,9 @@ interface ProductBreadcrumbProps {
 }
 
 export default function ProductBreadcrumb({ product }: ProductBreadcrumbProps) {
-  const { t, language } = useLanguage();
+  const { t } = useLanguage();
 
-  const productName = language === 'en' ? (product.nameEn || product.name) : product.name;
+  const productName = product.name;
 
   return (
     <nav className="flex items-center gap-2 text-sm font-bold text-gray-400 dark:text-gray-500">

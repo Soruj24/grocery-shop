@@ -10,7 +10,7 @@ import { useLanguage } from "@/components/LanguageContext";
 
 export default function CartPage() {
   const { cart, removeFromCart, updateQuantity, totalPrice } = useCart();
-  const { t, language } = useLanguage();
+  const { t } = useLanguage();
 
   if (cart.length === 0) {
     return <EmptyCartState />;
@@ -22,7 +22,7 @@ export default function CartPage() {
         <div className="space-y-2">
           <h1 className="text-5xl font-black text-gray-900 dark:text-white tracking-tight">{t('your_shopping_bag')}</h1>
           <p className="text-gray-500 dark:text-gray-400 font-bold text-lg">
-            {t('items_in_bag_count_prefix')} {cart.length.toLocaleString(language === 'bn' ? 'bn-BD' : 'en-US')} {t('items_in_bag_count_suffix')}
+            {t('items_in_bag_count_prefix')} {cart.length.toLocaleString('bn-BD')} {t('items_in_bag_count_suffix')}
           </p>
         </div>
         <Link 

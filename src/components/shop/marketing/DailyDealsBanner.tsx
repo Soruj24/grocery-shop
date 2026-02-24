@@ -36,7 +36,7 @@ export default function DailyDealsBanner({
     originalPrice?: string;
     discount?: string;
   }
-  const { t, language } = useLanguage();
+  const { t } = useLanguage();
   const [timeLeft, setTimeLeft] = useState({
     hours: 12,
     minutes: 45,
@@ -123,10 +123,7 @@ export default function DailyDealsBanner({
             ].map((unit, i) => (
               <div key={i} className="flex flex-col items-center group">
                 <div className="bg-white/10 backdrop-blur-md border border-white/20 text-white w-16 h-16 md:w-20 md:h-20 rounded-2xl flex items-center justify-center text-2xl md:text-3xl font-black shadow-lg group-hover:bg-white group-hover:text-orange-600 transition-all duration-300 transform group-hover:-translate-y-1">
-                  {unit.value.toLocaleString(
-                    language === "bn" ? "bn-BD" : "en-US",
-                    { minimumIntegerDigits: 2 },
-                  )}
+                  {unit.value.toLocaleString('bn-BD', { minimumIntegerDigits: 2 })}
                 </div>
                 <span className="text-[10px] font-black uppercase tracking-widest mt-3 text-white/80 group-hover:text-white transition-colors">
                   {unit.label}

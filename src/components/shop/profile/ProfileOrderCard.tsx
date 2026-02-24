@@ -8,6 +8,7 @@ import { useCart } from "@/components/CartContext";
 import { Toast } from "@/lib/toast";
 import { Order, OrderItem } from "@/types/order";
 import Image from "next/image";
+import { getProductFallbackImage } from "@/lib/category-utils";
 import { useLanguage } from "@/components/LanguageContext";
 
 interface ProfileOrderCardProps {
@@ -17,7 +18,7 @@ interface ProfileOrderCardProps {
 export default function ProfileOrderCard({ order }: ProfileOrderCardProps) {
   const [isExpanded, setIsExpanded] = useState(false);
   const { addToCart } = useCart();
-  const { t, language } = useLanguage();
+  const { t } = useLanguage();
 
   const handleReorder = () => {
     order.items.forEach((item: OrderItem) => {
@@ -82,7 +83,7 @@ export default function ProfileOrderCard({ order }: ProfileOrderCardProps) {
             <div className="flex items-center gap-2 text-gray-500 dark:text-gray-400">
               <Clock size={14} />
               <span className="text-sm font-medium">
-                {new Date(order.createdAt).toLocaleDateString(language === 'bn' ? "bn-BD" : "en-US", {
+                {new Date(order.createdAt).toLocaleDateString("bn-BD", {
                   year: 'numeric',
                   month: 'long',
                   day: 'numeric'
@@ -93,7 +94,7 @@ export default function ProfileOrderCard({ order }: ProfileOrderCardProps) {
           
           <div className="text-right">
             <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest">{t('total_amount')}</p>
-            <p className="text-2xl font-black text-green-600">{t('currency_symbol')} {order.total.toLocaleString(language === 'bn' ? 'bn-BD' : 'en-US')}</p>
+            <p className="text-2xl font-black text-green-600">{t('currency_symbol')} {order.total.toLocaleString('bn-BD')}</p>
           </div>
         </div>
 
@@ -107,7 +108,7 @@ export default function ProfileOrderCard({ order }: ProfileOrderCardProps) {
         <div className="flex justify-between items-center pt-2">
           <div className="flex items-center gap-2 text-gray-500 dark:text-gray-400">
             <Package size={16} />
-            <span className="text-sm font-bold">{order.items.length.toLocaleString(language === 'bn' ? 'bn-BD' : 'en-US')} {t('products_count_suffix')}</span>
+            <span className="text-sm font-bold">{order.items.length.toLocaleString('bn-BD')} {t('products_count_suffix')}</span>
           </div>
           <div className="flex items-center gap-4">
             <button 
@@ -154,10 +155,10 @@ export default function ProfileOrderCard({ order }: ProfileOrderCardProps) {
                       </div>
                       <div>
                         <p className="font-bold text-gray-900 dark:text-white text-sm">{item.name}</p>
-                        <p className="text-xs text-gray-500">{item.quantity.toLocaleString(language === 'bn' ? 'bn-BD' : 'en-US')} x {t('currency_symbol')}{item.price.toLocaleString(language === 'bn' ? 'bn-BD' : 'en-US')}</p>
+                        <p className="text-xs text-gray-500">{item.quantity.toLocaleString('bn-BD')} x {t('currency_symbol')}{item.price.toLocaleString('bn-BD')}</p>
                       </div>
                     </div>
-                    <p className="font-bold text-gray-900 dark:text-white">{t('currency_symbol')} {(item.quantity * item.price).toLocaleString(language === 'bn' ? 'bn-BD' : 'en-US')}</p>
+                    <p className="font-bold text-gray-900 dark:text-white">{t('currency_symbol')} {(item.quantity * item.price).toLocaleString('bn-BD')}</p>
                   </div>
                 ))}
                 

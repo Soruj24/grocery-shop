@@ -20,7 +20,7 @@ export default function CategoryProductGrid({
   totalPages,
   currentPage,
 }: CategoryProductGridProps) {
-  const { t, language } = useLanguage();
+  const { t } = useLanguage();
   const params = useParams();
   const id = params.id as string;
   const [isSortOpen, setIsSortOpen] = useState(false);
@@ -56,7 +56,7 @@ export default function CategoryProductGrid({
               {t('results_label')}
             </p>
             <p className="text-xl font-black text-gray-800 dark:text-gray-100">
-              {sortedProducts.length.toLocaleString(language === 'bn' ? 'bn-BD' : 'en-US')}{t('items_count_suffix')}
+              {sortedProducts.length.toLocaleString('bn-BD')}{t('items_count_suffix')}
             </p>
           </div>
         </div>

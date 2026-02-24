@@ -16,7 +16,7 @@ interface ProductInfoProps {
 }
 
 export default function ProductInfo({ product }: ProductInfoProps) {
-  const { t, language } = useLanguage();
+  const { t } = useLanguage();
   const router = useRouter();
   const { addToCart } = useCart();
 
@@ -40,9 +40,9 @@ export default function ProductInfo({ product }: ProductInfoProps) {
 
   const discountPercent = product.discount || (product.discountPrice ? Math.round(((product.price - product.discountPrice) / product.price) * 100) : 0);
 
-  const productName = language === 'en' ? (product.nameEn || product.name) : product.name;
-  const productDesc = language === 'en' ? (product.descriptionEn || product.description) : product.description;
-  const categoryName = language === 'en' ? (product.category?.nameEn || product.category?.name) : product.category?.name;
+  const productName = product.name;
+  const productDesc = product.description;
+  const categoryName = product.category?.name;
 
   return (
     <div className="w-full lg:w-1/2 space-y-8">
@@ -55,7 +55,7 @@ export default function ProductInfo({ product }: ProductInfoProps) {
             </span>
             <div className="flex items-center gap-1.5 bg-amber-50 dark:bg-amber-900/20 px-3 py-1.5 rounded-2xl text-amber-600">
               <Star className="w-4 h-4 fill-current" />
-              <span className="text-sm font-black">{(product.rating || 4.9).toLocaleString(language === 'bn' ? 'bn-BD' : 'en-US')} ({(product.reviews || 120).toLocaleString(language === 'bn' ? 'bn-BD' : 'en-US')} {t('reviews_count')})</span>
+              <span className="text-sm font-black">{(product.rating || 4.9).toLocaleString('bn-BD')} ({(product.reviews || 120).toLocaleString('bn-BD')} {t('reviews_count')})</span>
             </div>
           </div>
           <div className={`flex items-center gap-1.5 font-bold text-sm ${
@@ -70,6 +70,7 @@ export default function ProductInfo({ product }: ProductInfoProps) {
               {product.stock === 0 
                 ? t('out_of_stock_label') 
                 : product.stock <= 5 
+                  // @ts-ignore
                   ? `${t('low_stock')} - ${product.stock} ${t(unitToKey[product.unit || 'pcs'] || 'unit_piece')}`
                   : t('stock_available')}
             </span>
@@ -93,11 +94,11 @@ export default function ProductInfo({ product }: ProductInfoProps) {
             <p className="text-xs font-bold text-gray-400 uppercase tracking-widest">{t('current_price')}</p>
             <div className="flex items-baseline gap-3">
               <span className="text-4xl font-black text-gray-900 dark:text-white">
-                {t('currency_symbol')}{(product.discountPrice || product.price).toLocaleString(language === 'bn' ? 'bn-BD' : 'en-US')}
+                {t('currency_symbol')}{(product.discountPrice || product.price).toLocaleString('bn-BD')}
               </span>
               {product.discountPrice && (
                 <span className="text-xl text-gray-400 dark:text-gray-500 line-through font-bold decoration-2 decoration-red-400/50">
-                  {t('currency_symbol')}{product.price.toLocaleString(language === 'bn' ? 'bn-BD' : 'en-US')}
+                  {t('currency_symbol')}{product.price.toLocaleString('bn-BD')}
                 </span>
               )}
             </div>
@@ -105,7 +106,7 @@ export default function ProductInfo({ product }: ProductInfoProps) {
           
           {discountPercent > 0 && (
             <div className="ml-auto bg-red-500 text-white px-4 py-2 rounded-2xl font-black text-xl shadow-lg shadow-red-500/20 rotate-3">
-              -{discountPercent}%
+              -{discountPercent.toLocaleString('bn-BD')}%
             </div>
           )}
         </div>

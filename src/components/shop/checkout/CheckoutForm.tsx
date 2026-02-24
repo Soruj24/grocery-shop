@@ -324,7 +324,7 @@ export default function CheckoutForm({
                 {formData.phone}
               </p>
               <p className="text-sm text-gray-500 font-medium mt-2">
-                {formData.address}, {formData.area}
+                {formData.address}
               </p>
             </div>
 

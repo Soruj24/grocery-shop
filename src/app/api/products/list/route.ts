@@ -50,7 +50,7 @@ export async function GET(request: Request) {
     const products = await Product.find(filter)
       .sort(sortOption)
       .limit(limit)
-      .select("name nameEn image price discountPrice stock unit _id rating reviews description descriptionEn")
+      .select("name image price discountPrice stock unit _id rating reviews description")
       .lean();
 
     return NextResponse.json(products);

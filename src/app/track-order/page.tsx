@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Search, Package, CheckCircle2, Clock, Truck, XCircle, MapPin, Phone } from "lucide-react";
 import Link from "next/link";
 import { format } from "date-fns";
+import { bn } from "date-fns/locale";
 
 type OrderStatus = 'pending' | 'confirmed' | 'processing' | 'shipped' | 'delivered' | 'cancelled';
 
@@ -213,7 +214,7 @@ export default function TrackOrderPage() {
                             <div key={i} className="flex justify-between items-center py-2 border-b border-gray-50 dark:border-gray-700/50 last:border-0">
                                 <div className="flex items-center gap-3">
                                     <span className="w-6 h-6 bg-gray-100 dark:bg-gray-700 rounded-full flex items-center justify-center text-xs font-bold text-gray-600 dark:text-gray-300">
-                                        {item.quantity}x
+                                        {item.quantity.toLocaleString('bn-BD')}x
                                     </span>
                                     <span className="text-gray-700 dark:text-gray-300 font-medium">{item.name}</span>
                                 </div>
@@ -222,7 +223,7 @@ export default function TrackOrderPage() {
                         ))}
                         <div className="pt-4 mt-4 border-t border-gray-100 dark:border-gray-700 flex justify-between items-center">
                             <span className="font-bold text-gray-500">মোট টাকা</span>
-                            <span className="text-xl font-black text-emerald-600 dark:text-emerald-400">৳{order.total}</span>
+                            <span className="text-xl font-black text-emerald-600 dark:text-emerald-400">৳{order.total.toLocaleString('bn-BD')}</span>
                         </div>
                     </div>
                 </div>
@@ -236,7 +237,7 @@ export default function TrackOrderPage() {
                         <div>
                             <p className="text-gray-500 font-bold mb-1">তারিখ</p>
                             <p className="text-gray-900 dark:text-white font-medium">
-                                {format(new Date(order.createdAt), "dd MMM yyyy, h:mm a")}
+                                {format(new Date(order.createdAt), "dd MMM yyyy, h:mm a", { locale: bn })}
                             </p>
                         </div>
                         <div>

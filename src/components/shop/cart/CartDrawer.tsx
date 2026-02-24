@@ -10,7 +10,7 @@ import { getProductFallbackImage } from "@/lib/category-utils";
 
 export default function CartDrawer({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
   const { cart, removeFromCart, updateQuantity, totalPrice } = useCart();
-  const { t, language } = useLanguage();
+  const { t } = useLanguage();
 
   return (
     <AnimatePresence>
@@ -41,7 +41,7 @@ export default function CartDrawer({ isOpen, onClose }: { isOpen: boolean; onClo
                 </div>
                 <div>
                   <h2 className="text-xl font-black text-gray-900 dark:text-white">{t('your_bag')}</h2>
-                  <p className="text-sm text-gray-400 font-bold uppercase tracking-widest">{cart.length.toLocaleString(language === 'bn' ? 'bn-BD' : 'en-US')}{t('items_suffix')}</p>
+                  <p className="text-sm text-gray-400 font-bold uppercase tracking-widest">{cart.length.toLocaleString('bn-BD')}{t('items_suffix')}</p>
                 </div>
               </div>
               <button
@@ -86,7 +86,7 @@ export default function CartDrawer({ isOpen, onClose }: { isOpen: boolean; onClo
                         </div>
 
                         <div className="flex items-center justify-between">
-                          <div className="text-lg font-black text-green-600">{t('currency_symbol')}{item.price.toLocaleString(language === 'bn' ? 'bn-BD' : 'en-US')}</div>
+                          <div className="text-lg font-black text-green-600">{t('currency_symbol')}{item.price.toLocaleString('bn-BD')}</div>
                           
                           <div className="flex items-center gap-3 bg-white dark:bg-white/5 rounded-xl p-1 border border-gray-100 dark:border-white/10">
                             <button
@@ -95,7 +95,7 @@ export default function CartDrawer({ isOpen, onClose }: { isOpen: boolean; onClo
                             >
                               <Minus size={14} />
                             </button>
-                            <span className="text-sm font-black w-4 text-center">{item.quantity.toLocaleString(language === 'bn' ? 'bn-BD' : 'en-US')}</span>
+                            <span className="text-sm font-black w-4 text-center">{item.quantity.toLocaleString('bn-BD')}</span>
                             <button
                               onClick={() => updateQuantity(item._id, item.quantity + 1)}
                               className="w-8 h-8 rounded-lg hover:bg-gray-100 dark:hover:bg-white/10 flex items-center justify-center text-gray-500 transition-all"
@@ -145,7 +145,7 @@ export default function CartDrawer({ isOpen, onClose }: { isOpen: boolean; onClo
                 <div className="space-y-3">
                   <div className="flex justify-between text-gray-500 font-bold">
                     <span>{t('subtotal')}</span>
-                    <span>{t('currency_symbol')}{totalPrice.toLocaleString(language === 'bn' ? 'bn-BD' : 'en-US')}</span>
+                    <span>{t('currency_symbol')}{totalPrice.toLocaleString('bn-BD')}</span>
                   </div>
                   <div className="flex justify-between text-gray-500 font-bold">
                     <span>{t('delivery_charge')}</span>
@@ -153,7 +153,7 @@ export default function CartDrawer({ isOpen, onClose }: { isOpen: boolean; onClo
                   </div>
                   <div className="flex justify-between text-2xl font-black text-gray-900 dark:text-white pt-3 border-t border-gray-100 dark:border-white/10">
                     <span>{t('total_label')}</span>
-                    <span>{t('currency_symbol')}{totalPrice.toLocaleString(language === 'bn' ? 'bn-BD' : 'en-US')}</span>
+                    <span>{t('currency_symbol')}{totalPrice.toLocaleString('bn-BD')}</span>
                   </div>
                 </div>
 

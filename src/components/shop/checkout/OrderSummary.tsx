@@ -18,7 +18,7 @@ interface OrderSummaryProps {
 }
 
 export default function OrderSummary({ cart, totalPrice, couponDiscount = 0 }: OrderSummaryProps) {
-  const { t, language } = useLanguage();
+  const { t } = useLanguage();
   const deliveryFee = totalPrice > 500 ? 0 : 50;
   const vat = Math.round(totalPrice * 0.05);
   const finalTotal = totalPrice + deliveryFee + vat - couponDiscount;
@@ -50,11 +50,11 @@ export default function OrderSummary({ cart, totalPrice, couponDiscount = 0 }: O
                   {item.name}
                 </h4>
                 <p className="text-sm font-bold text-gray-400">
-                  {t('currency_symbol')}{item.price.toLocaleString(language === 'bn' ? 'bn-BD' : 'en-US')} x {item.quantity.toLocaleString(language === 'bn' ? 'bn-BD' : 'en-US')}
+                  {t('currency_symbol')}{item.price.toLocaleString('bn-BD')} x {item.quantity.toLocaleString('bn-BD')}
                 </p>
               </div>
               <span className="font-black text-gray-900 dark:text-white">
-                {t('currency_symbol')}{(item.price * item.quantity).toLocaleString(language === 'bn' ? 'bn-BD' : 'en-US')}
+                {t('currency_symbol')}{(item.price * item.quantity).toLocaleString('bn-BD')}
               </span>
             </div>
           ))}
@@ -63,20 +63,20 @@ export default function OrderSummary({ cart, totalPrice, couponDiscount = 0 }: O
         <div className="space-y-6 relative pt-10 border-t border-gray-100 dark:border-gray-800">
           <div className="flex justify-between items-center text-lg font-bold text-gray-500 dark:text-gray-400">
             <span>{t('subtotal')}</span>
-            <span>{t('currency_symbol')}{totalPrice.toLocaleString(language === 'bn' ? 'bn-BD' : 'en-US')}</span>
+            <span>{t('currency_symbol')}{totalPrice.toLocaleString('bn-BD')}</span>
           </div>
           <div className="flex justify-between items-center text-lg font-bold text-gray-500 dark:text-gray-400">
             <span>{t('delivery_charge')}</span>
-            <span>{deliveryFee === 0 ? t('free') : `${t('currency_symbol')}${deliveryFee.toLocaleString(language === 'bn' ? 'bn-BD' : 'en-US')}`}</span>
+            <span>{deliveryFee === 0 ? t('free') : `${t('currency_symbol')}${deliveryFee.toLocaleString('bn-BD')}`}</span>
           </div>
           <div className="flex justify-between items-center text-lg font-bold text-gray-500 dark:text-gray-400">
             <span>{t('vat')}{t('vat_percentage')}</span>
-            <span>{t('currency_symbol')}{vat.toLocaleString(language === 'bn' ? 'bn-BD' : 'en-US')}</span>
+            <span>{t('currency_symbol')}{vat.toLocaleString('bn-BD')}</span>
           </div>
           {couponDiscount > 0 && (
             <div className="flex justify-between items-center text-lg font-bold text-green-600">
               <span>{t('discount')}</span>
-              <span>-{t('currency_symbol')}{couponDiscount.toLocaleString(language === 'bn' ? 'bn-BD' : 'en-US')}</span>
+              <span>-{t('currency_symbol')}{couponDiscount.toLocaleString('bn-BD')}</span>
             </div>
           )}
           <div className="flex justify-between items-end pt-4">
@@ -85,7 +85,7 @@ export default function OrderSummary({ cart, totalPrice, couponDiscount = 0 }: O
                 {t('grand_total')}
               </span>
               <div className="text-5xl font-black text-gray-900 dark:text-white">
-                {t('currency_symbol')}{finalTotal.toLocaleString(language === 'bn' ? 'bn-BD' : 'en-US')}
+                {t('currency_symbol')}{finalTotal.toLocaleString('bn-BD')}
               </div>
             </div>
           </div>

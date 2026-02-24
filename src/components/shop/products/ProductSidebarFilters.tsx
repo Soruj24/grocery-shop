@@ -23,7 +23,7 @@ export default function ProductSidebarFilters({
   mainCategories,
   parentCategory,
 }: ProductSidebarFiltersProps) {
-  const { t, language } = useLanguage();
+  const { t } = useLanguage();
 
   return (
     <aside className="hidden lg:block w-1/4 space-y-8">
@@ -62,7 +62,7 @@ export default function ProductSidebarFilters({
                         : "text-gray-600 dark:text-gray-400 hover:bg-green-50 dark:hover:bg-green-900/10"
                     }`}
                   >
-                    <span>{language === 'en' ? (cat.nameEn || cat.name) : cat.name}</span>
+                    <span>{cat.name}</span>
                     {(categoryId === cat._id || parentCategory?._id === cat._id) && (
                       <ChevronDown
                         className={`w-4 h-4 transition-transform ${
@@ -89,7 +89,7 @@ export default function ProductSidebarFilters({
                                 : "text-gray-500 dark:text-gray-400 hover:text-green-600 dark:hover:text-green-400"
                             }`}
                           >
-                            {language === 'en' ? (sub.nameEn || sub.name) : sub.name}
+                            {sub.name}
                           </Link>
                         ))}
                     </div>

@@ -15,6 +15,7 @@ interface SettingsData {
   facebook: string;
   instagram: string;
   youtube: string;
+  whatsapp: string;
   footerDescription: string;
   copyrightText: string;
   deliveryCharge: number;
@@ -35,6 +36,7 @@ export default function SettingsPage() {
     facebook: "",
     instagram: "",
     youtube: "",
+    whatsapp: "",
     footerDescription: "",
     copyrightText: "",
     deliveryCharge: 0,

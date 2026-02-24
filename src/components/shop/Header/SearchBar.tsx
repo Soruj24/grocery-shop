@@ -21,7 +21,7 @@ import { getProductFallbackImage } from "@/lib/category-utils";
 import { Product } from "@/types/product";
 
 export default function SearchBar() {
-  const { t, language } = useLanguage();
+  const { t } = useLanguage();
 
   const POPULAR_SEARCHES = [
     t("popular_search_1"),
@@ -69,7 +69,7 @@ export default function SearchBar() {
     const SpeechRecognition =
       win.webkitSpeechRecognition || win.SpeechRecognition;
     const recognition = new SpeechRecognition();
-    recognition.lang = language === "bn" ? "bn-BD" : "en-US";
+    recognition.lang = "bn-BD";
     recognition.continuous = false;
     recognition.interimResults = false;
 
@@ -444,25 +444,19 @@ export default function SearchBar() {
                                         : "text-gray-900 dark:text-white group-hover:text-green-600"
                                     }`}
                                   >
-                                    {language === "en"
-                                      ? product.nameEn || product.name
-                                      : product.name}
+                                    {product.name}
                                   </h4>
                                   <div className="flex flex-wrap items-center gap-2">
                                     <span className="text-xs font-black text-green-600 dark:text-green-400 bg-green-50 dark:bg-green-500/10 px-2 py-0.5 rounded-md">
                                       {t("currency_symbol")}
                                       {(
                                         product.discountPrice || product.price
-                                      ).toLocaleString(
-                                        language === "bn" ? "bn-BD" : "en-US",
-                                      )}
+                                      ).toLocaleString("bn-BD")}
                                     </span>
                                     {product.discountPrice && (
                                       <span className="text-[10px] text-gray-400 line-through decoration-red-400 decoration-2">
                                         {t("currency_symbol")}
-                                        {product.price.toLocaleString(
-                                          language === "bn" ? "bn-BD" : "en-US",
-                                        )}
+                                        {product.price.toLocaleString("bn-BD")}
                                       </span>
                                     )}
                                     <span className="text-[10px] font-bold text-gray-400 uppercase tracking-wider">
@@ -480,7 +474,7 @@ export default function SearchBar() {
                                       <div className="flex items-center gap-1">
                                         <Star className="w-3 h-3 text-orange-400 fill-current" />
                                         <span className="text-[10px] font-bold text-gray-500 dark:text-gray-400">
-                                          {product.rating}
+                                          {(product.rating || 0).toLocaleString('bn-BD')}
                                         </span>
                                       </div>
                                     )}

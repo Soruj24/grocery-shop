@@ -11,7 +11,7 @@ import { getProductFallbackImage } from "@/lib/category-utils";
 
 export default function ComboOffers() {
   const { addToCart } = useCart();
-  const { t, language } = useLanguage();
+  const { t } = useLanguage();
 
   const combos = [
     {
@@ -169,9 +169,9 @@ export default function ComboOffers() {
 
                 <div className="flex items-center justify-between pt-8 border-t border-gray-50 dark:border-white/5">
                   <div className="text-left">
-                    <div className="text-sm text-gray-400 line-through font-bold mb-1">{t('currency_symbol')}{combo.oldPrice.toLocaleString(language === 'bn' ? 'bn-BD' : 'en-US')}</div>
+                    <div className="text-sm text-gray-400 line-through font-bold mb-1">{t('currency_symbol')}{combo.oldPrice.toLocaleString('bn-BD')}</div>
                     <div className="text-4xl font-black text-gray-900 dark:text-white flex items-center gap-1">
-                      <span className="text-lg">{t('currency_symbol')}</span>{combo.price.toLocaleString(language === 'bn' ? 'bn-BD' : 'en-US')}
+                      <span className="text-lg">{t('currency_symbol')}</span>{combo.price.toLocaleString('bn-BD')}
                   </div>
                 </div>
                 <button 

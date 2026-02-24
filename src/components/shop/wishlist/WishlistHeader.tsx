@@ -8,7 +8,7 @@ interface WishlistHeaderProps {
 }
 
 export default function WishlistHeader({ totalItems, onClear }: WishlistHeaderProps) {
-  const { t, language } = useLanguage();
+  const { t } = useLanguage();
   return (
     <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
       <div className="space-y-4">
@@ -31,7 +31,7 @@ export default function WishlistHeader({ totalItems, onClear }: WishlistHeaderPr
           </h1>
         </div>
         <p className="text-gray-500 dark:text-gray-400 font-medium">
-          {t('wishlist_saved_prefix')} {totalItems.toLocaleString(language === 'bn' ? 'bn-BD' : 'en-US')}{t('wishlist_saved_suffix')}
+          {t('wishlist_saved_prefix')} {totalItems.toLocaleString('bn-BD')}{t('wishlist_saved_suffix')}
         </p>
       </div>
 

@@ -7,8 +7,8 @@ import { motion } from "framer-motion";
 import { Product } from "@/types/product";
 
 export default function ShareButton({ product }: { product: Product }) {
-  const { t, language } = useLanguage();
-  const productName = language === 'en' ? (product.nameEn || product.name) : product.name;
+  const { t } = useLanguage();
+  const productName = product.name;
 
   const handleShare = async () => {
     try {

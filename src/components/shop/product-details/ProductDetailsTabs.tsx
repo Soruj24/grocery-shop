@@ -9,9 +9,9 @@ interface ProductDetailsTabsProps {
 }
 
 export default function ProductDetailsTabs({ product }: ProductDetailsTabsProps) {
-  const { t, language } = useLanguage();
+  const { t } = useLanguage();
 
-  const productName = language === 'en' ? (product.nameEn || product.name) : product.name;
+  const productName = product.name;
 
   return (
     <div className="bg-white dark:bg-gray-900 rounded-[40px] border border-gray-100 dark:border-gray-800 p-8 md:p-12">

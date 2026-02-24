@@ -15,20 +15,24 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   const [language, setLanguageState] = useState<Language>('bn');
 
   useEffect(() => {
-    const stored = localStorage.getItem('language') as Language;
-    if (stored && (stored === 'bn' || stored === 'en')) {
-      setLanguageState(stored);
-    }
+    // Force 'bn' language regardless of stored value
+    setLanguageState('bn');
+    localStorage.setItem('language', 'bn');
+    document.documentElement.lang = 'bn';
   }, []);
 
   const setLanguage = (lang: Language) => {
+    // Only allow 'bn'
+    if (lang !== 'bn') return;
     setLanguageState(lang);
     localStorage.setItem('language', lang);
     document.documentElement.lang = lang;
   };
 
   const t = (key: TranslationKey): string => {
-    return translations[language][key] || translations['bn'][key] || key;
+    const langData = translations[language];
+    // @ts-ignore
+    return langData[key] || translations['bn'][key] || key;
   };
 
   return (

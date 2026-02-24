@@ -13,13 +13,13 @@ interface CategoryHeaderProps {
 }
 
 export default function CategoryHeader({ category, totalCount }: CategoryHeaderProps) {
-  const { t, language } = useLanguage();
+  const { t } = useLanguage();
   return (
     <section className="relative h-[300px] md:h-[400px] rounded-[40px] md:rounded-[60px] overflow-hidden flex items-center group">
       <div className="absolute inset-0">
         <Image
-          src={category.image || getCategoryFallbackImage(category.nameEn || category.name)}
-          alt={language === 'en' ? (category.nameEn || category.name) : category.name}
+          src={category.image || getCategoryFallbackImage(category.name)}
+          alt={category.name}
           fill
           sizes="100vw"
           className="object-cover brightness-50 group-hover:scale-105 transition-transform duration-1000"
@@ -38,18 +38,18 @@ export default function CategoryHeader({ category, totalCount }: CategoryHeaderP
         
         <div className="space-y-4">
           <h1 className="text-4xl md:text-7xl font-black text-white tracking-tight leading-tight">
-            {language === 'en' ? (category.nameEn || category.name) : category.name}
+            {category.name}
             <span className="text-green-500">.</span>
           </h1>
           <p className="text-gray-300 max-w-xl font-medium text-base md:text-lg leading-relaxed border-l-4 border-green-500 pl-6">
-            {language === 'en' ? (category.nameEn || category.name) : category.name}{t('category_header_desc_suffix')}
+            {category.name}{t('category_header_desc_suffix')}
           </p>
         </div>
 
         <div className="flex flex-wrap items-center gap-4 pt-2">
           <div className="px-6 py-3 bg-green-600 backdrop-blur-md rounded-2xl text-white font-bold text-sm shadow-xl shadow-green-600/20 flex items-center gap-2">
             <ShoppingBag className="w-4 h-4" />
-            {totalCount.toLocaleString(language === 'bn' ? 'bn-BD' : 'en-US')} {t('items')}
+            {totalCount.toLocaleString('bn-BD')} {t('items')}
           </div>
           
           {/* Decorative pill */}

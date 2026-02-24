@@ -5,7 +5,7 @@ import { Star, Gift, History, TrendingUp } from "lucide-react";
 import { useLanguage } from "@/components/LanguageContext";
 
 export default function LoyaltyPoints() {
-  const { t, language } = useLanguage();
+  const { t } = useLanguage();
   // Mock data - in a real app, this would come from the user's session/API
   const points = 1250;
   const history = [
@@ -26,7 +26,7 @@ export default function LoyaltyPoints() {
             <Star className="w-5 h-5 fill-current" />
             <span className="font-black uppercase tracking-widest text-xs">{t('your_current_points')}</span>
           </div>
-          <h2 className="text-6xl md:text-7xl font-black">{points.toLocaleString(language === 'bn' ? 'bn-BD' : 'en-US')}</h2>
+          <h2 className="text-6xl md:text-7xl font-black">{points.toLocaleString('bn-BD')}</h2>
           <p className="text-green-100 font-medium">{t('points_earning_rule')}</p>
         </div>
 
@@ -53,10 +53,10 @@ export default function LoyaltyPoints() {
               <div key={item.id} className="flex items-center justify-between p-6 border-b border-gray-100 dark:border-white/5 last:border-0">
                 <div className="space-y-1">
                   <p className="font-black text-gray-800 dark:text-gray-200">{item.action}</p>
-                  <p className="text-xs text-gray-400 font-bold">{item.date}</p>
+                  <p className="text-xs text-gray-400 font-bold">{new Date(item.date).toLocaleDateString('bn-BD')}</p>
                 </div>
                 <span className={`font-black ${item.points > 0 ? 'text-green-600' : 'text-rose-500'}`}>
-                  {item.points > 0 ? `+${item.points.toLocaleString(language === 'bn' ? 'bn-BD' : 'en-US')}` : item.points.toLocaleString(language === 'bn' ? 'bn-BD' : 'en-US')}
+                  {item.points > 0 ? `+${item.points.toLocaleString('bn-BD')}` : item.points.toLocaleString('bn-BD')}
                 </span>
               </div>
             ))}
@@ -81,7 +81,7 @@ export default function LoyaltyPoints() {
                 }`}
               >
                 <span className="font-black text-gray-800 dark:text-gray-200">{reward.label}</span>
-                <span className="text-xs font-bold text-green-600">{reward.points.toLocaleString(language === 'bn' ? 'bn-BD' : 'en-US')}{t('points_suffix')}</span>
+                <span className="text-xs font-bold text-green-600">{reward.points.toLocaleString('bn-BD')}{t('points_suffix')}</span>
               </button>
             ))}
           </div>

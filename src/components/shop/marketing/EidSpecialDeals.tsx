@@ -10,7 +10,7 @@ import { getProductFallbackImage } from "@/lib/category-utils";
 
 export default function EidSpecialDeals() {
   const { addToCart } = useCart();
-  const { t, language } = useLanguage();
+  const { t } = useLanguage();
 
   const deals = [
     {
@@ -111,10 +111,10 @@ export default function EidSpecialDeals() {
                 </h3>
                 <div className="flex items-baseline gap-2">
                   <span className="text-2xl font-black text-rose-500">
-                    {t('currency_symbol')}{deal.price.toLocaleString(language === 'bn' ? 'bn-BD' : 'en-US')}
+                    {t('currency_symbol')}{deal.price.toLocaleString('bn-BD')}
                   </span>
                   <span className="text-sm text-gray-400 line-through font-bold">
-                    {t('currency_symbol')}{deal.oldPrice.toLocaleString(language === 'bn' ? 'bn-BD' : 'en-US')}
+                    {t('currency_symbol')}{deal.oldPrice.toLocaleString('bn-BD')}
                   </span>
                 </div>
 

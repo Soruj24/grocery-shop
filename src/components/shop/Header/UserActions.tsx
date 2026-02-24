@@ -17,7 +17,6 @@ import { useWishlist } from "@/components/WishlistContext";
 import { useSession, signOut } from "next-auth/react";
 import { motion, AnimatePresence } from "framer-motion";
 import ThemeToggle from "@/components/ThemeToggle";
-import LanguageSwitcher from "@/components/LanguageSwitcher";
 import NotificationBell from "@/components/NotificationBell";
 import CartDrawer from "../cart/CartDrawer";
 import { useLanguage } from "@/components/LanguageContext";
@@ -32,7 +31,6 @@ export default function UserActions() {
 
   return (
     <div className="flex items-center gap-3">
-      <LanguageSwitcher />
       <NotificationBell />
       <ThemeToggle />
       <CartDrawer isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />

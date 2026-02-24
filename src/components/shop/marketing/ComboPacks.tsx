@@ -19,7 +19,7 @@ interface Combo {
 }
 
 export default function ComboPacks() {
-  const { t, language } = useLanguage();
+  const { t } = useLanguage();
   const [combos, setCombos] = useState<Combo[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -126,7 +126,7 @@ export default function ComboPacks() {
                     </div>
                     {/* Floating Badge */}
                     <div className="absolute -top-2 -right-2 bg-rose-500 text-white text-xs font-black px-3 py-1.5 rounded-full shadow-lg shadow-rose-500/30 rotate-12 z-10 uppercase tracking-wider">
-                      Save {t('currency_symbol')}{combo.saveAmount}
+                      Save {t('currency_symbol')}{combo.saveAmount.toLocaleString('bn-BD')}
                     </div>
                   </div>
                 </div>
@@ -155,7 +155,7 @@ export default function ComboPacks() {
                     ))}
                     {combo.items.length > 3 && (
                       <div className="text-xs font-bold text-gray-400 pl-6 text-left">
-                        + {combo.items.length - 3} more items...
+                        + {(combo.items.length - 3).toLocaleString('bn-BD')} more items...
                       </div>
                     )}
                   </div>
@@ -164,10 +164,10 @@ export default function ComboPacks() {
                     <div className="flex items-end justify-between md:justify-start gap-4 mb-4">
                        <div className="flex flex-col items-start">
                          <span className="text-xs font-bold text-gray-400 line-through">
-                           {t('currency_symbol')}{(combo.price + combo.saveAmount).toLocaleString()}
+                           {t('currency_symbol')}{(combo.price + combo.saveAmount).toLocaleString('bn-BD')}
                          </span>
                          <span className="text-3xl font-black text-purple-600 dark:text-purple-400">
-                           {t('currency_symbol')}{combo.price.toLocaleString()}
+                           {t('currency_symbol')}{combo.price.toLocaleString('bn-BD')}
                          </span>
                        </div>
                     </div>
