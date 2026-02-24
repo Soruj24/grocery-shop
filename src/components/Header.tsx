@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import { Menu, Search } from "lucide-react";
 import { useWishlist } from "@/components/WishlistContext";
+import { Category } from "@/types/category";
 import SearchBar from "./shop/Header/SearchBar";
 import UserActions from "./shop/Header/UserActions";
 import NavbarLogo from "./shop/Header/NavbarLogo";
@@ -13,7 +14,7 @@ import MobileDrawer from "./shop/Header/MobileDrawer";
 export default function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  const [categories, setCategories] = useState<any[]>([]);
+  const [categories, setCategories] = useState<Category[]>([]);
   const [isCategoryMenuOpen, setIsCategoryMenuOpen] = useState(false);
 
   const { data: session } = useSession();
