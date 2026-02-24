@@ -46,7 +46,7 @@ export const translations = {
     easy_return_policy: "সহজ রিটার্ন পলিসি",
     products_suffix: "পণ্য",
     buy_now: "এখনই কিনুন",
-    add_to_cart: "কার্টে যোগ করুন",
+    add_to_cart: "যোগ করুন",
     share: "শেয়ার করুন",
     share_text: "ইমরান শপে এই পণ্যটি দেখুন!",
     share_success: "লিঙ্ক কপি করা হয়েছে",
