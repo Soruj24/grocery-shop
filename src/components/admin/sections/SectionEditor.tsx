@@ -138,6 +138,27 @@ export default function SectionEditor({ section, onClose, onSave }: SectionEdito
       );
     }
 
+    if (field.type === "datetime") {
+      const toInputValue = (v?: string) => {
+        try {
+          return v ? new Date(v).toISOString().slice(0, 16) : "";
+        } catch {
+          return "";
+        }
+      };
+      return (
+        <input
+          type="datetime-local"
+          value={toInputValue(value)}
+          onChange={(e) => {
+            const iso = e.target.value ? new Date(e.target.value).toISOString() : "";
+            onChange(iso);
+          }}
+          className="w-full px-4 py-2 rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-green-500/20 focus:border-green-500 transition-all"
+        />
+      );
+    }
+
     return null;
   };
 

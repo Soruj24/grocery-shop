@@ -186,7 +186,7 @@ export default async function HomePage({
       case "CategorySection":
         return <CategorySection key={section._id} categories={categories} />;
       case "FlashDeals":
-        return <FlashDeals key={section._id} products={products} />;
+        return <FlashDeals key={section._id} products={products} data={section.props} />;
       case "ComboPacks":
         return (
           <div key={section._id} className="max-w-7xl mx-auto px-4">

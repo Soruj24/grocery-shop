@@ -23,6 +23,7 @@ export default function DailyDealsBanner({
     price?: string;
     originalPrice?: string;
     discount?: string;
+    endAt?: string;
   };
 }) {
   interface DailyDealsBannerData {
@@ -35,6 +36,7 @@ export default function DailyDealsBanner({
     price?: string;
     originalPrice?: string;
     discount?: string;
+    endAt?: string;
   }
   const { t } = useLanguage();
   const [timeLeft, setTimeLeft] = useState({
@@ -56,18 +58,33 @@ export default function DailyDealsBanner({
   };
 
   useEffect(() => {
-    const timer = setInterval(() => {
-      setTimeLeft((prev) => {
-        if (prev.seconds > 0) return { ...prev, seconds: prev.seconds - 1 };
-        if (prev.minutes > 0)
-          return { ...prev, minutes: prev.minutes - 1, seconds: 59 };
-        if (prev.hours > 0)
-          return { ...prev, hours: prev.hours - 1, minutes: 59, seconds: 59 };
-        return prev;
-      });
-    }, 1000);
+    const endAtMs = data?.endAt ? Date.parse(data.endAt) : 0;
+    if (!endAtMs || Number.isNaN(endAtMs)) {
+      // Fallback: simple countdown from initial state
+      const timer = setInterval(() => {
+        setTimeLeft((prev) => {
+          if (prev.seconds > 0) return { ...prev, seconds: prev.seconds - 1 };
+          if (prev.minutes > 0)
+            return { ...prev, minutes: prev.minutes - 1, seconds: 59 };
+          if (prev.hours > 0)
+            return { ...prev, hours: prev.hours - 1, minutes: 59, seconds: 59 };
+          return prev;
+        });
+      }, 1000);
+      return () => clearInterval(timer);
+    }
+    const tick = () => {
+      const now = Date.now();
+      const diff = Math.max(0, endAtMs - now);
+      const h = Math.floor(diff / 3600000);
+      const m = Math.floor((diff % 3600000) / 60000);
+      const s = Math.floor((diff % 60000) / 1000);
+      setTimeLeft({ hours: h, minutes: m, seconds: s });
+    };
+    tick();
+    const timer = setInterval(tick, 1000);
     return () => clearInterval(timer);
-  }, []);
+  }, [data?.endAt]);
 
   return (
     <motion.div
