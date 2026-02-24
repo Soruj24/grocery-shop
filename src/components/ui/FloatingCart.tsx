@@ -18,7 +18,10 @@ export default function FloatingCart() {
   if (pathname === '/cart' || pathname === '/checkout' || totalItems === 0) return null;
 
   return (
-    <div className="fixed bottom-24 right-6 z-40 lg:bottom-10 lg:right-10">
+    <div
+      className="fixed right-6 z-40 lg:right-10"
+      style={{ bottom: 'calc(6rem + env(safe-area-inset-bottom))' }}
+    >
       <Link href="/cart">
         <motion.div
           initial={{ scale: 0, opacity: 0 }}

@@ -49,6 +49,7 @@ export default function Header() {
             ? "bg-white/95 dark:bg-gray-900/95 backdrop-blur-md shadow-md py-2"
             : "bg-white dark:bg-gray-900 py-4"
         }`}
+        style={{ paddingTop: "env(safe-area-inset-top)" }}
       >
         <div className="max-w-7xl mx-auto px-4 flex items-center gap-4 lg:gap-8">
           {/* Logo */}
@@ -95,7 +96,10 @@ export default function Header() {
       </header>
 
       {/* Spacer for fixed header */}
-      <div className="h-20 md:h-32" />
+      <div
+        className="md:h-32"
+        style={{ height: "calc(5rem + env(safe-area-inset-top))" }}
+      />
 
       <MobileDrawer
         isOpen={isMobileMenuOpen}

@@ -33,7 +33,8 @@ export default function MobileBottomNav() {
             initial={{ y: 100, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: 100, opacity: 0 }}
-            className="md:hidden fixed bottom-28 right-6 z-50"
+            className="md:hidden fixed right-6 z-50"
+            style={{ bottom: 'calc(7rem + env(safe-area-inset-bottom))' }}
           >
             <Link href="/cart">
               <motion.div
@@ -57,8 +58,8 @@ export default function MobileBottomNav() {
         )}
       </AnimatePresence>
 
-      <div className="md:hidden fixed bottom-6 left-4 right-4 z-50">
-      <div className="bg-white/80 dark:bg-black/80 backdrop-blur-2xl border border-gray-100/50 dark:border-white/10 rounded-[32px] px-6 py-4 shadow-[0_20px_50px_rgba(0,0,0,0.1)] dark:shadow-black/50">
+      <div className="md:hidden fixed left-4 right-4 z-50" style={{ bottom: 'calc(1.5rem + env(safe-area-inset-bottom))' }}>
+      <div className="bg-white/80 dark:bg-black/80 backdrop-blur-2xl border border-gray-100/50 dark:border-white/10 rounded-[32px] px-6 py-4 shadow-[0_20px_50px_rgba(0,0,0,0.1)] dark:shadow-black/50" style={{ paddingBottom: 'calc(1rem + env(safe-area-inset-bottom))' }}>
         <div className="flex justify-between items-center relative">
           {navItems.map((item) => {
             const isActive = pathname === item.href;

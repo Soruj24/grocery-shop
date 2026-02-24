@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, ChevronLeft, ChevronRight, Clock, Leaf, Timer, TrendingUp } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { useLanguage } from "@/components/LanguageContext";
 import { getProductFallbackImage } from "@/lib/category-utils";
 import HeroStats from "./Hero/HeroStats";
@@ -12,6 +12,7 @@ import HeroStats from "./Hero/HeroStats";
 export default function Hero({ data }: { data?: { slides?: Array<{ id: number; title: string; subtitle: string; desc: string; image: string; badge: string; color: string }> } }) {
   const { t } = useLanguage();
   const [current, setCurrent] = useState(0);
+  const reduceMotion = useReducedMotion();
 
   const defaultSlides = [
     {
@@ -56,16 +57,16 @@ export default function Hero({ data }: { data?: { slides?: Array<{ id: number; t
   const prevSlide = () => setCurrent((prev) => (prev - 1 + slides.length) % slides.length);
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-6 h-auto min-h-[500px] lg:h-[600px] w-full">
+    <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-6 h-auto min-h-[460px] lg:h-[600px] w-full">
       {/* Main Slider */}
-      <section className="lg:col-span-8 relative h-[450px] lg:h-full rounded-[32px] lg:rounded-[48px] overflow-hidden group shadow-2xl shadow-gray-200/50 dark:shadow-black/50 ring-1 ring-gray-100 dark:ring-white/10">
+      <section className="lg:col-span-8 relative h-[420px] lg:h-full rounded-[32px] lg:rounded-[48px] overflow-hidden group shadow-2xl shadow-gray-200/50 dark:shadow-black/50 ring-1 ring-gray-100 dark:ring-white/10">
         <AnimatePresence mode="wait">
           <motion.div
             key={slides[current].id}
-            initial={{ opacity: 0, scale: 1.1 }}
+            initial={{ opacity: 0, scale: reduceMotion ? 1 : 1.1 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
+            transition={{ duration: reduceMotion ? 0.2 : 0.8, ease: "easeOut" }}
             className="absolute inset-0"
           >
             {/* Background Image */}
@@ -86,7 +87,7 @@ export default function Hero({ data }: { data?: { slides?: Array<{ id: number; t
               <motion.div
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.3, duration: 0.6 }}
+                transition={{ delay: 0.3, duration: reduceMotion ? 0.2 : 0.6 }}
                 className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md border border-white/20 px-4 py-2 rounded-full mb-6 w-fit hover:bg-white/20 transition-colors cursor-default"
               >
                 <span className="relative flex h-2 w-2">
@@ -101,7 +102,7 @@ export default function Hero({ data }: { data?: { slides?: Array<{ id: number; t
               <motion.h1
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.4, duration: 0.6, ease: "easeOut" }}
+                transition={{ delay: 0.4, duration: reduceMotion ? 0.2 : 0.6, ease: "easeOut" }}
                 className="text-4xl md:text-5xl lg:text-7xl font-black mb-6 leading-[1.1] tracking-tight drop-shadow-lg"
               >
                 {slides[current].title} <br />
@@ -113,7 +114,7 @@ export default function Hero({ data }: { data?: { slides?: Array<{ id: number; t
               <motion.p
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.5, duration: 0.6 }}
+                transition={{ delay: 0.5, duration: reduceMotion ? 0.2 : 0.6 }}
                 className="text-lg md:text-xl text-gray-200 max-w-xl mb-10 font-medium leading-relaxed drop-shadow-md"
               >
                 {slides[current].desc}
@@ -122,7 +123,7 @@ export default function Hero({ data }: { data?: { slides?: Array<{ id: number; t
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.6, duration: 0.6 }}
+                transition={{ delay: 0.6, duration: reduceMotion ? 0.2 : 0.6 }}
                 className="flex flex-wrap items-center gap-4"
               >
                 <Link

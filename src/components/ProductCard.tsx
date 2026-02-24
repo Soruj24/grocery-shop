@@ -7,7 +7,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { Toast } from "@/lib/toast";
 import { Product } from "@/types/product";
-import { motion, PanInfo, useMotionValue, useTransform } from "framer-motion";
+import { motion, PanInfo, useMotionValue, useTransform, useReducedMotion } from "framer-motion";
 import { useLanguage } from "@/components/LanguageContext";
 import { getProductFallbackImage } from "@/lib/category-utils";
 
@@ -20,12 +20,13 @@ export default function ProductCard({ product }: ProductCardProps) {
   const { toggleWishlist, isInWishlist } = useWishlist();
   const { t } = useLanguage();
   const active = isInWishlist(product._id);
+  const reduceMotion = useReducedMotion();
 
   // Drag Animation Logic
   const x = useMotionValue(0);
   const rotate = useTransform(x, [-100, 0, 100], [-5, 0, 5]);
   const overlayOpacity = useTransform(x, [-100, 0, 100], [0.5, 0, 0.5]);
-  const overlayColor = useTransform(x, [-100, 0, 100], ["#22c55e", "transparent", "#f43f5e"]); // Green (Cart) -> Transparent -> Red (Wishlist)
+  const overlayColor = useTransform(x, [-100, 0, 100], ["#22c55e", "rgba(0,0,0,0)", "#f43f5e"]); // Green (Cart) -> Transparent -> Red (Wishlist)
 
   const handleDragEnd = (event: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
     const swipeThreshold = 50;
@@ -91,16 +92,16 @@ export default function ProductCard({ product }: ProductCardProps) {
     <motion.div 
       style={{ x, rotate, cursor: 'grab' }}
       whileTap={{ cursor: 'grabbing' }}
-      whileDrag={{ scale: 1.05, zIndex: 50 }}
+      whileDrag={reduceMotion ? undefined : { scale: 1.05, zIndex: 50 }}
       drag="x"
       dragConstraints={{ left: 0, right: 0 }}
-      dragElastic={0.6}
+      dragElastic={reduceMotion ? 0.3 : 0.6}
       dragSnapToOrigin={true}
       onDragEnd={handleDragEnd}
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      whileHover={{ y: -8 }}
+      whileHover={reduceMotion ? undefined : { y: -8 }}
       className="group bg-white dark:bg-gray-900 rounded-[2rem] shadow-sm hover:shadow-2xl hover:shadow-gray-200/50 dark:hover:shadow-black/50 transition-all duration-500 flex flex-col h-full border border-gray-100 dark:border-gray-800 relative overflow-hidden"
     >
       {/* Swipe Feedback Overlay */}
