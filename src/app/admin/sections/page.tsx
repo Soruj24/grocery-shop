@@ -3,7 +3,14 @@
 import { useState, useEffect } from "react";
 import AdminHeader from "@/components/admin/AdminHeader";
 import { toast } from "@/lib/swal";
-import { ArrowUp, ArrowDown, Eye, EyeOff, GripVertical, Edit } from "lucide-react";
+import {
+  ArrowUp,
+  ArrowDown,
+  Eye,
+  EyeOff,
+  GripVertical,
+  Edit,
+} from "lucide-react";
 import SectionEditor from "@/components/admin/sections/SectionEditor";
 import { sectionConfigs } from "@/lib/section-config";
 
@@ -55,12 +62,14 @@ export default function SectionsPage() {
       if (res.ok) {
         setSections((prev) =>
           prev.map((s) =>
-            s._id === id ? { ...s, isActive: !currentStatus } : s
-          )
+            s._id === id ? { ...s, isActive: !currentStatus } : s,
+          ),
         );
         toast.fire({
           icon: "success",
-          title: !currentStatus ? "সেকশন চালু করা হয়েছে" : "সেকশন বন্ধ করা হয়েছে",
+          title: !currentStatus
+            ? "সেকশন চালু করা হয়েছে"
+            : "সেকশন বন্ধ করা হয়েছে",
         });
       }
     } catch (error) {
@@ -81,7 +90,7 @@ export default function SectionsPage() {
 
     const newSections = [...sections];
     const targetIndex = direction === "up" ? index - 1 : index + 1;
-    
+
     // Swap order values
     const tempOrder = newSections[index].order;
     newSections[index].order = newSections[targetIndex].order;
@@ -101,7 +110,7 @@ export default function SectionsPage() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(
-          newSections.map((s) => ({ _id: s._id, order: s.order }))
+          newSections.map((s) => ({ _id: s._id, order: s.order })),
         ),
       });
     } catch (error) {
@@ -114,7 +123,7 @@ export default function SectionsPage() {
     }
   };
 
-  const handleSave = async (id: string, newProps: any) => {
+  const handleSave = async (id: string, newProps: Record<string, any>) => {
     try {
       const res = await fetch(`/api/admin/sections/${id}`, {
         method: "PUT",
@@ -124,7 +133,7 @@ export default function SectionsPage() {
 
       if (res.ok) {
         setSections((prev) =>
-          prev.map((s) => (s._id === id ? { ...s, props: newProps } : s))
+          prev.map((s) => (s._id === id ? { ...s, props: newProps } : s)),
         );
         toast.fire({
           icon: "success",
@@ -146,8 +155,6 @@ export default function SectionsPage() {
         title="হোম পেজ সেকশন ম্যানেজমেন্ট"
         count={sections.length}
         countLabel="Total Sections"
-        hideSearch
-        hideAddButton
       />
 
       <div className="bg-white dark:bg-gray-900 rounded-3xl border border-gray-100 dark:border-gray-800 overflow-hidden shadow-sm">
@@ -170,7 +177,10 @@ export default function SectionsPage() {
                   >
                     <ArrowUp size={16} />
                   </button>
-                  <GripVertical size={16} className="cursor-grab active:cursor-grabbing" />
+                  <GripVertical
+                    size={16}
+                    className="cursor-grab active:cursor-grabbing"
+                  />
                   <button
                     onClick={() => handleMove(index, "down")}
                     disabled={index === sections.length - 1}
@@ -206,7 +216,7 @@ export default function SectionsPage() {
                       <Edit size={18} />
                     </button>
                   )}
-                  
+
                   <button
                     onClick={() => handleToggle(section._id, section.isActive)}
                     className={`flex items-center gap-2 px-4 py-2 rounded-full font-bold text-sm transition-all ${
