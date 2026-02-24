@@ -61,7 +61,7 @@ export default function ComboOffers() {
     }
   ];
 
-  const handleAddToCart = (combo: any) => {
+  const handleAddToCart = (combo: typeof combos[0]) => {
     addToCart({
       _id: combo.id,
       name: combo.name,
