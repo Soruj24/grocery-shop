@@ -59,30 +59,31 @@ export default function MobileBottomNav() {
       </AnimatePresence>
 
       <div className="md:hidden fixed left-4 right-4 z-50" style={{ bottom: 'calc(1.5rem + env(safe-area-inset-bottom))' }}>
-      <div className="bg-white/80 dark:bg-black/80 backdrop-blur-2xl border border-gray-100/50 dark:border-white/10 rounded-[32px] px-6 py-4 shadow-[0_20px_50px_rgba(0,0,0,0.1)] dark:shadow-black/50" style={{ paddingBottom: 'calc(1rem + env(safe-area-inset-bottom))' }}>
-        <div className="flex justify-between items-center relative">
+      <nav className="bg-white/80 dark:bg-black/80 backdrop-blur-2xl border border-gray-100/50 dark:border-white/10 rounded-[32px] px-6 py-4 shadow-[0_20px_50px_rgba(0,0,0,0.1)] dark:shadow-black/50" style={{ paddingBottom: 'calc(1rem + env(safe-area-inset-bottom))' }} aria-label="Bottom navigation">
+        <div className="flex justify-between items-center relative gap-2">
           {navItems.map((item) => {
-            const isActive = pathname === item.href;
+            const isActive = pathname === item.href || (item.href !== "/" && pathname.startsWith(item.href));
             return (
               <Link
                 key={item.href}
                 href={item.href}
-                className={`relative flex flex-col items-center gap-1.5 transition-all duration-500 ${
+                aria-label={item.label}
+                className={`relative flex flex-col items-center gap-1.5 px-2 py-2 rounded-2xl transition-all duration-500 ${
                   isActive 
-                    ? "text-green-600 dark:text-green-500" 
-                    : "text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300"
+                    ? "text-green-700 dark:text-green-400 bg-green-50/70 dark:bg-green-500/10"
+                    : "text-gray-500 dark:text-gray-500 hover:text-gray-700 dark:hover:text-gray-300"
                 }`}
               >
                 {isActive && (
                   <motion.div
                     layoutId="activeNav"
-                    className="absolute -top-1 w-1 h-1 bg-green-500 rounded-full"
+                    className="absolute -top-1 w-1.5 h-1.5 bg-green-500 rounded-full"
                     transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
                   />
                 )}
                 
                 <div className="relative">
-                  <item.icon className={`w-6 h-6 transition-transform duration-500 ${isActive ? "scale-110" : ""}`} />
+                  <item.icon className={`w-7 h-7 transition-transform duration-500 ${isActive ? "scale-110" : ""}`} />
                   
                   {item.badge !== undefined && item.badge > 0 && (
                     <span className="absolute -top-2 -right-2 bg-green-600 text-white text-[9px] font-black min-w-[18px] h-[18px] px-1 rounded-full flex items-center justify-center border-2 border-white dark:border-black shadow-lg">
@@ -91,14 +92,14 @@ export default function MobileBottomNav() {
                   )}
                 </div>
                 
-                <span className={`text-[9px] font-black uppercase tracking-wider transition-opacity duration-500 ${isActive ? "opacity-100" : "opacity-60"}`}>
+                <span className={`text-[10px] font-black uppercase tracking-wider transition-opacity duration-500 ${isActive ? "opacity-100" : "opacity-70"}`}>
                   {item.label}
                 </span>
               </Link>
             );
           })}
         </div>
-      </div>
+      </nav>
     </div>
     </>
   );

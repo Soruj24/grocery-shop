@@ -17,10 +17,15 @@ export default function CartSummary({ totalPrice }: CartSummaryProps) {
   } | null>(null);
   const [loading, setLoading] = useState(false);
 
-  const deliveryFee = totalPrice > 500 ? 0 : 50;
+  const freeDeliveryThreshold = 500;
+  const deliveryFee = totalPrice > freeDeliveryThreshold ? 0 : 50;
   const vat = Math.round(totalPrice * 0.05); // 5% VAT
   const discount = appliedCoupon ? appliedCoupon.discount : 0;
   const finalTotal = totalPrice + deliveryFee + vat - discount;
+  const progressPct = Math.min(
+    100,
+    Math.round((totalPrice / freeDeliveryThreshold) * 100),
+  );
 
   const handleApplyPromo = async () => {
     if (!promoCode) return;
@@ -56,10 +61,34 @@ export default function CartSummary({ totalPrice }: CartSummaryProps) {
 
   return (
     <div className="lg:col-span-1">
-      <div className="bg-white dark:bg-gray-900 p-8 rounded-[40px] shadow-xl border border-gray-100 dark:border-gray-800 space-y-8 sticky top-24">
+      <div className="bg-white dark:bg-gray-900 p-6 md:p-8 rounded-[32px] md:rounded-[40px] shadow-xl border border-gray-100 dark:border-gray-800 space-y-8 md:sticky md:top-24">
         <h3 className="text-2xl font-black text-gray-900 dark:text-white">
           {t("order_summary")}
         </h3>
+
+        <div className="space-y-2">
+          {deliveryFee === 0 ? (
+            <div className="flex items-center justify-between bg-green-50 dark:bg-green-900/20 px-4 py-3 rounded-2xl border border-green-100 dark:border-green-800/50">
+              <span className="text-sm font-black text-green-600">Free delivery unlocked</span>
+              <span className="text-[10px] font-black uppercase tracking-widest text-green-600">৳{freeDeliveryThreshold.toLocaleString('bn-BD')}+</span>
+            </div>
+          ) : (
+            <div className="space-y-2">
+              <div className="h-2 w-full bg-gray-100 dark:bg-gray-800 rounded-full overflow-hidden">
+                <div
+                  className="h-full bg-green-500 rounded-full transition-all"
+                  style={{ width: `${progressPct}%` }}
+                />
+              </div>
+              <div className="flex items-center justify-between text-xs font-black text-gray-500">
+                <span>Free delivery at ৳{freeDeliveryThreshold.toLocaleString('bn-BD')}</span>
+                <span>
+                  ৳{Math.max(freeDeliveryThreshold - totalPrice, 0).toLocaleString('bn-BD')} left
+                </span>
+              </div>
+            </div>
+          )}
+        </div>
 
         {/* Promo Code Input */}
         <div className="space-y-3">
@@ -170,7 +199,7 @@ export default function CartSummary({ totalPrice }: CartSummaryProps) {
               pathname: "/checkout",
               query: appliedCoupon ? { coupon: appliedCoupon.code } : {},
             }}
-            className="w-full bg-green-600 hover:bg-green-700 text-white py-5 rounded-2xl font-black text-lg transition-all flex items-center justify-center gap-3 shadow-lg shadow-green-600/20 active:scale-95 group"
+            className="w-full bg-green-600 hover:bg-green-700 text-white py-4 md:py-5 rounded-2xl font-black text-base md:text-lg transition-all flex items-center justify-center gap-3 shadow-lg shadow-green-600/20 active:scale-95 group"
           >
             {t("checkout_button")}
             <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
