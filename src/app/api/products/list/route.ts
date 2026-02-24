@@ -7,18 +7,16 @@ export async function GET(request: Request) {
   try {
     const ip = request.headers.get("x-forwarded-for") || "127.0.0.1";
     const { success } = rateLimit(ip);
-    
+
     if (!success) {
-      return NextResponse.json(
-        { error: "Too many requests" },
-        { status: 429 }
-      );
+      return NextResponse.json({ error: "Too many requests" }, { status: 429 });
     }
 
     const { searchParams } = new URL(request.url);
     const sort = searchParams.get("sort") || "newest";
     const limit = parseInt(searchParams.get("limit") || "8");
     const category = searchParams.get("category");
+    const tag = searchParams.get("tag"); // deals | popular | new
 
     await dbConnect();
 
@@ -26,8 +24,11 @@ export async function GET(request: Request) {
     if (category && category !== "all") {
       filter.category = category;
     }
+    if (tag === "deals") filter.isDeal = true;
+    if (tag === "popular") filter.isPopular = true;
+    if (tag === "new") filter.isNewArrival = true;
 
-    let sortOption: any = { createdAt: -1 };
+    let sortOption: Record<string, number> = { createdAt: -1 };
     switch (sort) {
       case "rating":
         sortOption = { rating: -1, reviews: -1 };
@@ -48,9 +49,11 @@ export async function GET(request: Request) {
     }
 
     const products = await Product.find(filter)
-      .sort(sortOption)
+      .sort(sortOption as Record<string, 1 | -1>)
       .limit(limit)
-      .select("name image price discountPrice stock unit _id rating reviews description")
+      .select(
+        "name image price discountPrice stock unit _id rating reviews description",
+      )
       .lean();
 
     return NextResponse.json(products);
@@ -58,7 +61,7 @@ export async function GET(request: Request) {
     console.error("Products List API Error:", error);
     return NextResponse.json(
       { error: "Failed to fetch products" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

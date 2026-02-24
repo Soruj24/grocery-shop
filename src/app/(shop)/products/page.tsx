@@ -20,6 +20,8 @@ async function getProducts(searchParams: {
     typeof searchParams.category === "string" ? searchParams.category : "";
   const sort =
     typeof searchParams.sort === "string" ? searchParams.sort : "newest";
+  const filterTag =
+    typeof searchParams.filter === "string" ? searchParams.filter : "";
   const minPrice =
     typeof searchParams.minPrice === "string"
       ? parseInt(searchParams.minPrice)
@@ -38,6 +40,14 @@ async function getProducts(searchParams: {
     price: { $gte: minPrice, $lte: maxPrice },
   };
 
+  // Admin-controlled tags
+  if (filterTag === "deals") {
+    query.isDeal = true;
+  } else if (filterTag === "popular") {
+    query.isPopular = true;
+  } else if (filterTag === "new") {
+    query.isNewArrival = true;
+  }
   if (search) {
     query.$or = [
       { name: { $regex: search, $options: "i" } },

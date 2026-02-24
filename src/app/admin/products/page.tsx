@@ -31,6 +31,11 @@ export default function ProductsPage() {
     image: "",
     description: "",
     isActive: true,
+    discount: 0,
+    discountPrice: 0,
+    isDeal: false,
+    isPopular: false,
+    isNewArrival: false,
   });
 
   // Search, Filter, Sort, Pagination states
@@ -177,6 +182,11 @@ export default function ProductsPage() {
         image: "",
         description: "",
         isActive: true,
+        discount: 0,
+        discountPrice: 0,
+        isDeal: false,
+        isPopular: false,
+        isNewArrival: false,
       });
       fetchProducts();
       toast.fire({
@@ -238,6 +248,11 @@ export default function ProductsPage() {
             image: "",
             description: "",
             isActive: true,
+            discount: 0,
+            discountPrice: 0,
+            isDeal: false,
+            isPopular: false,
+            isNewArrival: false,
           });
           setIsModalOpen(true);
         }}
@@ -286,6 +301,11 @@ export default function ProductsPage() {
                 image: p.image || "",
                 description: p.description || "",
                 isActive: p.isActive,
+                discount: p.discount || 0,
+                discountPrice: p.discountPrice || 0,
+                isDeal: p.isDeal || false,
+                isPopular: p.isPopular || false,
+                isNewArrival: p.isNewArrival || false,
               });
               setIsModalOpen(true);
             }}

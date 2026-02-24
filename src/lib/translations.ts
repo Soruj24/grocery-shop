@@ -573,6 +573,19 @@ export const translations = {
     banner_2_desc:
       "সেরা ব্র্যান্ডের ফ্রেশ বিস্কুট ও স্ন্যাকস এখন হাতের নাগালে।",
     banner_2_button: "সংগ্রহ করুন",
+    
+    // Hero Right-side Banners (localized)
+    daily_deal_label: "ডেইলি ডিল",
+    hours_left_24: "২৪ ঘণ্টা বাকি",
+    fresh_summer_fruits_title_line1: "গ্রীষ্মের তাজা",
+    fresh_summer_fruits_title_line2: "ফলের সেল",
+    up_to: "সর্বোচ্চ",
+    percent_30: "৩০%",
+    new_arrival_badge: "নতুন আগমন",
+    organic_100_label: "১০০% অর্গানিক",
+    organic_fresh_vegetables_title_line1: "অর্গানিক তাজা",
+    organic_fresh_vegetables_title_line2: "সবজি",
+    starting_at: "শুরু মাত্র",
 
     // Product Section
 

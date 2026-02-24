@@ -140,7 +140,7 @@ export default function Hero({ data }: { data?: { slides?: Array<{ id: number; t
                   href="/categories"
                   className="bg-white/5 backdrop-blur-md border border-white/20 text-white min-w-[160px] h-[56px] px-8 rounded-2xl font-bold text-sm hover:bg-white hover:text-black transition-all flex items-center justify-center hover:-translate-y-1"
                 >
-                  View Collections
+                  {t('browse_collections')}
                 </Link>
               </motion.div>
             </div>
@@ -199,22 +199,22 @@ export default function Hero({ data }: { data?: { slides?: Array<{ id: number; t
           <div className="absolute bottom-0 left-0 p-8 text-white w-full translate-y-2 group-hover:translate-y-0 transition-transform duration-500">
             <div className="flex items-center gap-2 mb-3">
               <div className="bg-orange-500 text-white text-[10px] font-black uppercase tracking-widest py-1 px-3 rounded-lg w-fit shadow-lg shadow-orange-500/30">
-                Daily Deal
+                {t('daily_deal_label')}
               </div>
               <div className="bg-white/20 backdrop-blur-md text-white text-[10px] font-bold uppercase tracking-widest py-1 px-2 rounded-lg">
                 <Clock className="w-3 h-3 inline mr-1" />
-                24h Left
+                {t('hours_left_24')}
               </div>
             </div>
             
             <h3 className="text-2xl font-black mb-1 leading-tight group-hover:text-orange-300 transition-colors">
-              Fresh Summer <br/> Fruits Sale
+              {t('fresh_summer_fruits_title_line1')} <br/> {t('fresh_summer_fruits_title_line2')}
             </h3>
             
             <div className="flex items-center justify-between mt-4 border-t border-white/10 pt-4">
               <div className="flex flex-col">
-                <span className="text-xs text-gray-300 uppercase tracking-wider font-bold">Up to</span>
-                <span className="text-3xl font-black text-orange-400">30% OFF</span>
+                <span className="text-xs text-gray-300 uppercase tracking-wider font-bold">{t('up_to')}</span>
+                <span className="text-3xl font-black text-orange-400">{t('percent_30')} {t('daily_deals_off')}</span>
               </div>
               <div className="w-12 h-12 rounded-full bg-white/10 backdrop-blur-md flex items-center justify-center border border-white/20 group-hover:bg-white group-hover:text-black transition-all hover:scale-110 active:scale-95 shadow-lg">
                 <ArrowRight className="w-5 h-5 -rotate-45 group-hover:rotate-0 transition-transform duration-500" />
@@ -238,22 +238,22 @@ export default function Hero({ data }: { data?: { slides?: Array<{ id: number; t
           <div className="absolute bottom-0 left-0 p-8 text-white w-full translate-y-2 group-hover:translate-y-0 transition-transform duration-500">
             <div className="flex items-center gap-2 mb-3">
               <div className="bg-green-500 text-white text-[10px] font-black uppercase tracking-widest py-1 px-3 rounded-lg w-fit shadow-lg shadow-green-500/30">
-                New Arrival
+                {t('new_arrival_badge')}
               </div>
               <div className="bg-white/20 backdrop-blur-md text-white text-[10px] font-bold uppercase tracking-widest py-1 px-2 rounded-lg">
                 <Leaf className="w-3 h-3 inline mr-1" />
-                100% Organic
+                {t('organic_100_label')}
               </div>
             </div>
 
             <h3 className="text-2xl font-black mb-1 leading-tight group-hover:text-green-300 transition-colors">
-              Organic Fresh <br/> Vegetables
+              {t('organic_fresh_vegetables_title_line1')} <br/> {t('organic_fresh_vegetables_title_line2')}
             </h3>
 
             <div className="flex items-center justify-between mt-4 border-t border-white/10 pt-4">
               <div className="flex flex-col">
-                <span className="text-xs text-gray-300 uppercase tracking-wider font-bold">Starting at</span>
-                <span className="text-3xl font-black text-green-400">$12.99</span>
+                <span className="text-xs text-gray-300 uppercase tracking-wider font-bold">{t('starting_at')}</span>
+                <span className="text-3xl font-black text-green-400">{t('price_120_tk')}</span>
               </div>
               <div className="w-12 h-12 rounded-full bg-white/10 backdrop-blur-md flex items-center justify-center border border-white/20 group-hover:bg-white group-hover:text-black transition-all hover:scale-110 active:scale-95 shadow-lg">
                 <ArrowRight className="w-5 h-5 -rotate-45 group-hover:rotate-0 transition-transform duration-500" />

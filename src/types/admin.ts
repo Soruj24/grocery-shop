@@ -24,6 +24,11 @@ export interface AdminProduct {
   image: string;
   description: string;
   isActive: boolean;
+  discount?: number;
+  discountPrice?: number;
+  isDeal?: boolean;
+  isPopular?: boolean;
+  isNewArrival?: boolean;
 }
 
 export interface AdminProductFormData {
@@ -35,6 +40,11 @@ export interface AdminProductFormData {
   image: string;
   description: string;
   isActive: boolean;
+  discount?: number;
+  discountPrice?: number;
+  isDeal?: boolean;
+  isPopular?: boolean;
+  isNewArrival?: boolean;
 }
 
 export interface AdminOrder {

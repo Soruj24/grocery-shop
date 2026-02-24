@@ -244,6 +244,79 @@ export default function ProductModal({
             </label>
           </div>
 
+          {/* Merchandising & Offers */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="space-y-2">
+              <label className="text-[11px] font-black text-gray-500 dark:text-gray-400 uppercase tracking-widest px-1">
+                ডিসকাউন্ট (%) 
+              </label>
+              <input
+                type="number"
+                min={0}
+                max={100}
+                value={formData.discount || 0}
+                onChange={(e) =>
+                  setFormData({ ...formData, discount: Number(e.target.value) })
+                }
+                className="w-full px-6 py-4 bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-2xl focus:outline-none focus:ring-4 focus:ring-green-500/10 focus:border-green-600 dark:focus:border-green-500 focus:bg-white dark:focus:bg-gray-900 transition-all duration-300 text-base font-bold text-gray-900 dark:text-white placeholder:text-gray-500 dark:placeholder:text-gray-600"
+                placeholder="যেমন: 10"
+              />
+            </div>
+            <div className="space-y-2">
+              <label className="text-[11px] font-black text-gray-500 dark:text-gray-400 uppercase tracking-widest px-1">
+                ডিসকাউন্ট প্রাইস (৳)
+              </label>
+              <input
+                type="number"
+                min={0}
+                value={formData.discountPrice || 0}
+                onChange={(e) =>
+                  setFormData({
+                    ...formData,
+                    discountPrice: Number(e.target.value),
+                  })
+                }
+                className="w-full px-6 py-4 bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-2xl focus:outline-none focus:ring-4 focus:ring-green-500/10 focus:border-green-600 dark:focus:border-green-500 focus:bg-white dark:focus:bg-gray-900 transition-all duration-300 text-base font-bold text-gray-900 dark:text-white placeholder:text-gray-500 dark:placeholder:text-gray-600"
+                placeholder="যেমন: ৮৯"
+              />
+            </div>
+            <div className="grid grid-cols-3 gap-3 items-end">
+              <label className="col-span-3 text-[11px] font-black text-gray-500 dark:text-gray-400 uppercase tracking-widest px-1">
+                হাইলাইট ট্যাগ
+              </label>
+              <label className="flex items-center gap-2 text-sm font-black text-gray-700 dark:text-gray-300">
+                <input
+                  type="checkbox"
+                  checked={!!formData.isDeal}
+                  onChange={(e) =>
+                    setFormData({ ...formData, isDeal: e.target.checked })
+                  }
+                />
+                ডিলস
+              </label>
+              <label className="flex items-center gap-2 text-sm font-black text-gray-700 dark:text-gray-300">
+                <input
+                  type="checkbox"
+                  checked={!!formData.isPopular}
+                  onChange={(e) =>
+                    setFormData({ ...formData, isPopular: e.target.checked })
+                  }
+                />
+                জনপ্রিয়
+              </label>
+              <label className="flex items-center gap-2 text-sm font-black text-gray-700 dark:text-gray-300">
+                <input
+                  type="checkbox"
+                  checked={!!formData.isNewArrival}
+                  onChange={(e) =>
+                    setFormData({ ...formData, isNewArrival: e.target.checked })
+                  }
+                />
+                নতুন
+              </label>
+            </div>
+          </div>
+
           <div className="pt-6">
             <button
               type="submit"
