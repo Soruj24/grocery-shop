@@ -1,4 +1,13 @@
-import mongoose from "mongoose";
+import mongoose, { Model, Document } from "mongoose";
+
+export interface ISection extends Document {
+  key: string;
+  label: string;
+  component: string;
+  order: number;
+  isActive: boolean;
+  props?: any;
+}
 
 const SectionSchema = new mongoose.Schema({
   key: { type: String, required: true, unique: true }, // Unique identifier
@@ -9,4 +18,6 @@ const SectionSchema = new mongoose.Schema({
   props: { type: mongoose.Schema.Types.Mixed, default: {} }, // For future dynamic content
 }, { timestamps: true });
 
-export default mongoose.models.Section || mongoose.model("Section", SectionSchema);
+const Section: Model<ISection> = mongoose.models.Section || mongoose.model<ISection>("Section", SectionSchema);
+
+export default Section;

@@ -1,22 +1,21 @@
 import type { Metadata, Viewport } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { GeistSans } from "geist/font/sans";
+import { GeistMono } from "geist/font/mono";
+
 import "./globals.css";
 import { Providers } from "@/components/Providers";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
-
 export const metadata: Metadata = {
   title: "EMRAN SHOP | সেরা গ্রোসারি অনলাইন শপ",
-  description: "EMRAN SHOP থেকে কিনুন তাজা ফল, শাকসবজি এবং নিত্যপ্রয়োজনীয় সকল গ্রোসারি পণ্য। দ্রুত ডেলিভারি এবং সেরা মানের নিশ্চয়তা।",
-  keywords: ["grocery shop", "online grocery bangladesh", "fresh vegetables", "organic fruits", "emran shop"],
+  description:
+    "EMRAN SHOP থেকে কিনুন তাজা ফল, শাকসবজি এবং নিত্যপ্রয়োজনীয় সকল গ্রোসারি পণ্য। দ্রুত ডেলিভারি এবং সেরা মানের নিশ্চয়তা।",
+  keywords: [
+    "grocery shop",
+    "online grocery bangladesh",
+    "fresh vegetables",
+    "organic fruits",
+    "emran shop",
+  ],
   authors: [{ name: "Emran" }],
   openGraph: {
     title: "EMRAN SHOP | সেরা গ্রোসারি অনলাইন শপ",
@@ -60,7 +59,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${GeistSans.variable} ${GeistMono.variable} antialiased`}
       >
         <Providers>{children}</Providers>
       </body>
