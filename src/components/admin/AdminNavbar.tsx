@@ -6,7 +6,6 @@ import {
   ChevronRight,
   User as UserIcon
 } from "lucide-react";
-import ThemeToggle from "@/components/ThemeToggle";
 
 export default function AdminNavbar() {
   const pathname = usePathname();
@@ -42,7 +41,6 @@ export default function AdminNavbar() {
       </div>
 
       <div className="flex items-center gap-4">
-        <ThemeToggle />
         <div className="hidden md:flex items-center gap-2 px-4 py-2 bg-gray-50 dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 shadow-sm">
           <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
           <span className="text-[11px] font-black text-gray-600 dark:text-gray-400 uppercase tracking-wider">সিস্টেম অনলাইন</span>
