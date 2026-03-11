@@ -1,4 +1,7 @@
-export const sectionConfigs: Record<string, any> = {
+export const sectionConfigs: Record<
+  string,
+  { label: string; fields: { name: string; label: string; type: string }[] }
+> = {
   hero: {
     label: "Hero Slider",
     fields: [
@@ -29,7 +32,10 @@ export const sectionConfigs: Record<string, any> = {
                 label: "Blue/Indigo",
                 value: "from-blue-400 via-indigo-400 to-purple-300",
               },
-              { label: "Rose/Pink", value: "from-rose-400 via-pink-400 to-red-300" },
+              {
+                label: "Rose/Pink",
+                value: "from-rose-400 via-pink-400 to-red-300",
+              },
             ],
           },
         ],
@@ -49,14 +55,14 @@ export const sectionConfigs: Record<string, any> = {
       { name: "discount", label: "Discount Label", type: "text" },
       { name: "badge", label: "Top Badge Text", type: "text" },
       { name: "endAt", label: "Offer End Time", type: "datetime" },
-      { 
-        name: "expiredBehavior", 
-        label: "Behavior After Expiry", 
+      {
+        name: "expiredBehavior",
+        label: "Behavior After Expiry",
         type: "select",
         options: [
           { label: "Hide Section", value: "hide" },
-          { label: "Show 'Offer Ended' Badge", value: "badge" }
-        ]
+          { label: "Show 'Offer Ended' Badge", value: "badge" },
+        ],
       },
     ],
   },
@@ -64,14 +70,14 @@ export const sectionConfigs: Record<string, any> = {
     label: "Flash Deals",
     fields: [
       { name: "endAt", label: "Offer End Time", type: "datetime" },
-      { 
-        name: "expiredBehavior", 
-        label: "Behavior After Expiry", 
+      {
+        name: "expiredBehavior",
+        label: "Behavior After Expiry",
         type: "select",
         options: [
           { label: "Hide Section", value: "hide" },
-          { label: "Show 'Offer Ended' Badge", value: "badge" }
-        ]
+          { label: "Show 'Offer Ended' Badge", value: "badge" },
+        ],
       },
     ],
   },
