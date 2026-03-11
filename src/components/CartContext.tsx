@@ -36,10 +36,12 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
           // Defer state update to avoid synchronous cascading render lint error
           setTimeout(() => {
             // Filter out invalid items and ensure unique IDs
-            const validItems = parsed.filter((item: any) => item && item._id);
+            const validItems = parsed.filter((item: CartItem) => item && item._id);
             // Remove duplicates based on _id
-            const uniqueItems = Array.from(new Map(validItems.map((item: any) => [item._id, item])).values()) as CartItem[];
-            
+            const uniqueItems = Array.from(
+              new Map(validItems.map((item: CartItem) => [item._id, item])).values(),
+            ) as CartItem[];
+
             setCart(uniqueItems);
             setIsInitialized(true);
           }, 0);
@@ -62,7 +64,10 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     }
   }, [cart, isInitialized]);
 
-  const addToCart = (product: Omit<CartItem, "quantity">, quantity: number = 1) => {
+  const addToCart = (
+    product: Omit<CartItem, "quantity">,
+    quantity: number = 1,
+  ) => {
     setCart((prevCart) => {
       const existingItem = prevCart.find((item) => item._id === product._id);
       if (existingItem) {
