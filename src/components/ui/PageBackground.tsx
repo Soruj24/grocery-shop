@@ -4,7 +4,7 @@ interface PageBackgroundProps {
   color1?: string;
   color2?: string;
   color3?: string;
-  children: React.ReactNode;
+  children?: React.ReactNode;
 }
 
 export default function PageBackground({

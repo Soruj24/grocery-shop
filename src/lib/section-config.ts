@@ -1,7 +1,12 @@
-export const sectionConfigs: Record<
-  string,
-  { label: string; fields: { name: string; label: string; type: string }[] }
-> = {
+type SectionField = {
+  name: string;
+  label: string;
+  type: string;
+  itemFields?: SectionField[];
+  options?: { label: string; value: string }[];
+};
+
+export const sectionConfigs: Record<string, { label: string; fields: SectionField[] }> = {
   hero: {
     label: "Hero Slider",
     fields: [

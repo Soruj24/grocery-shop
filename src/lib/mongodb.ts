@@ -1,5 +1,12 @@
 import mongoose from "mongoose";
 
+async function setupDns() {
+  if (typeof window === "undefined") {
+    const dns = await import("dns");
+    dns.setServers(["1.1.1.1", "8.8.8.8"]);
+  }
+}
+
 const MONGODB_URI =
   process.env.MONGODB_URI || "mongodb://localhost:27017/grocery_shop";
 
@@ -25,6 +32,8 @@ if (!cached) {
 }
 
 async function dbConnect() {
+  await setupDns();
+
   if (cached!.conn) {
     return cached!.conn;
   }

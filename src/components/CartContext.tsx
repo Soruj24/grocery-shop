@@ -28,9 +28,11 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
 
   // Load cart from localStorage on mount
   useEffect(() => {
-    const savedCart = localStorage.getItem("cart");
-    if (savedCart) {
-      try {
+    if (typeof window === "undefined") return;
+
+    try {
+      const savedCart = localStorage.getItem("cart");
+      if (savedCart) {
         const parsed = JSON.parse(savedCart);
         if (Array.isArray(parsed)) {
           // Defer state update to avoid synchronous cascading render lint error
@@ -47,9 +49,9 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
           }, 0);
           return;
         }
-      } catch (e) {
-        console.error("Failed to parse cart from localStorage");
       }
+    } catch (e) {
+      console.error("Failed to parse cart from localStorage");
     }
     // Defer initialization flag to avoid synchronous cascading render lint error
     setTimeout(() => {

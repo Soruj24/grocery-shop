@@ -1,9 +1,9 @@
-import { User, Package, Heart, MapPin, CreditCard, LogOut, Star, Calendar } from "lucide-react";
+import { User, Package, Heart, MapPin, CreditCard, LogOut, Star, Calendar, LucideIcon } from "lucide-react";
 import { signOut } from "next-auth/react";
 import { useLanguage } from "@/components/LanguageContext";
 
 interface SidebarItemProps {
-  icon: React.ComponentType<{ size?: number; className?: string }>;
+  icon: LucideIcon;
   label: string;
   id: string;
   active: boolean;

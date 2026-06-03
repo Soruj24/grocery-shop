@@ -6,7 +6,7 @@ import { useSettings } from "@/context/SettingsContext";
 export default function WhatsAppButton() {
   const settings = useSettings();
 
-  if (!settings.whatsapp) return null;
+  if (!settings?.whatsapp) return null;
 
   // Clean the number: remove spaces, dashes, parentheses
   const cleanNumber = settings.whatsapp.replace(/[^0-9]/g, "");

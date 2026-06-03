@@ -42,9 +42,15 @@ const defaultSettings: Settings = {
   currencySymbol: "৳",
 };
 
-const SettingsContext = createContext<Settings>(defaultSettings);
+const SettingsContext = createContext<Settings | null>(null);
 
-export const useSettings = () => useContext(SettingsContext);
+export const useSettings = () => {
+  const context = useContext(SettingsContext);
+  if (!context) {
+    return defaultSettings;
+  }
+  return context;
+};
 
 export function SettingsProvider({ children }: { children: React.ReactNode }) {
   const [settings, setSettings] = useState<Settings>(defaultSettings);
