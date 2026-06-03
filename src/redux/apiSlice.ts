@@ -1,11 +1,13 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { Category } from "@/types/category";
 import { Product } from "@/types/product";
+import { AdminStats } from "@/types/admin";
+import { AdminAnalytics } from "@/types/analytics";
 
 export const apiSlice = createApi({
   reducerPath: "api",
   baseQuery: fetchBaseQuery({ baseUrl: "/api" }),
-  tagTypes: ["Product", "Category"],
+  tagTypes: ["Product", "Category", "AdminStats", "AdminAnalytics"],
   endpoints: (builder) => ({
     // Categories
     getCategories: builder.query<Category[], void>({
@@ -34,6 +36,16 @@ export const apiSlice = createApi({
       query: (id) => `/products/${id}`,
       providesTags: (result, error, id) => [{ type: "Product", id }],
     }),
+
+    // Admin
+    getAdminStats: builder.query<AdminStats, void>({
+      query: () => "/admin/stats",
+      providesTags: ["AdminStats"],
+    }),
+    getAdminAnalytics: builder.query<AdminAnalytics, void>({
+      query: () => "/admin/analytics",
+      providesTags: ["AdminAnalytics"],
+    }),
   }),
 });
 
@@ -41,4 +53,6 @@ export const {
   useGetCategoriesQuery,
   useGetProductsQuery,
   useGetProductQuery,
+  useGetAdminStatsQuery,
+  useGetAdminAnalyticsQuery,
 } = apiSlice;
