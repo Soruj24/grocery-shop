@@ -1,74 +1,24 @@
 "use client";
 
-import React, { createContext, useContext, useState, useEffect } from "react";
-
-interface CartItem {
-  _id: string;
-  name: string;
-  price: number;
-  quantity: number;
-  image?: string;
-}
-
-interface CartContextType {
-  cart: CartItem[];
-  addToCart: (product: Omit<CartItem, "quantity">, quantity?: number) => void;
-  removeFromCart: (productId: string) => void;
-  updateQuantity: (productId: string, quantity: number) => void;
-  clearCart: () => void;
-  totalItems: number;
-  totalPrice: number;
-}
+import React, { createContext, useContext } from "react";
+import { CartItem, CartContextType } from "@/types/cart";
+import { useLocalStorage } from "@/hooks/useLocalStorage";
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
+function dedupeCart(items: CartItem[]): CartItem[] {
+  const valid = items.filter((item) => item && item._id);
+  return Array.from(
+    new Map(valid.map((item) => [item._id, item])).values()
+  );
+}
+
 export function CartProvider({ children }: { children: React.ReactNode }) {
-  const [cart, setCart] = useState<CartItem[]>([]);
-  const [isInitialized, setIsInitialized] = useState(false);
-
-  // Load cart from localStorage on mount
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-
-    try {
-      const savedCart = localStorage.getItem("cart");
-      if (savedCart) {
-        const parsed = JSON.parse(savedCart);
-        if (Array.isArray(parsed)) {
-          // Defer state update to avoid synchronous cascading render lint error
-          setTimeout(() => {
-            // Filter out invalid items and ensure unique IDs
-            const validItems = parsed.filter((item: CartItem) => item && item._id);
-            // Remove duplicates based on _id
-            const uniqueItems = Array.from(
-              new Map(validItems.map((item: CartItem) => [item._id, item])).values(),
-            ) as CartItem[];
-
-            setCart(uniqueItems);
-            setIsInitialized(true);
-          }, 0);
-          return;
-        }
-      }
-    } catch (e) {
-      console.error("Failed to parse cart from localStorage");
-    }
-    // Defer initialization flag to avoid synchronous cascading render lint error
-    setTimeout(() => {
-      setIsInitialized(true);
-    }, 0);
-  }, []);
-
-  // Save cart to localStorage whenever it changes, but only after initialization
-  useEffect(() => {
-    if (isInitialized) {
-      localStorage.setItem("cart", JSON.stringify(cart));
-    }
-  }, [cart, isInitialized]);
+  const [cart, setCart] = useLocalStorage<CartItem[]>("cart", [], dedupeCart);
 
   const addToCart = (
     product: Omit<CartItem, "quantity">,
-    quantity: number = 1,
+    quantity: number = 1
   ) => {
     setCart((prevCart) => {
       const existingItem = prevCart.find((item) => item._id === product._id);
@@ -76,7 +26,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
         return prevCart.map((item) =>
           item._id === product._id
             ? { ...item, quantity: item.quantity + quantity }
-            : item,
+            : item
         );
       }
       return [...prevCart, { ...product, quantity }];
@@ -91,19 +41,17 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     if (quantity < 1) return;
     setCart((prevCart) =>
       prevCart.map((item) =>
-        item._id === productId ? { ...item, quantity } : item,
-      ),
+        item._id === productId ? { ...item, quantity } : item
+      )
     );
   };
 
-  const clearCart = () => {
-    setCart([]);
-  };
+  const clearCart = () => setCart([]);
 
   const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
   const totalPrice = cart.reduce(
     (sum, item) => sum + item.price * item.quantity,
-    0,
+    0
   );
 
   return (
