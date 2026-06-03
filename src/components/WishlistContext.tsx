@@ -1,54 +1,13 @@
 "use client";
 
-import React, { createContext, useContext, useState, useEffect } from "react";
-import { Product as WishlistItem } from "@/types/product";
-
-interface WishlistContextType {
-  wishlist: WishlistItem[];
-  addToWishlist: (product: WishlistItem) => void;
-  removeFromWishlist: (productId: string) => void;
-  toggleWishlist: (product: WishlistItem) => void;
-  isInWishlist: (productId: string) => boolean;
-  clearWishlist: () => void;
-  totalWishlistItems: number;
-}
+import React, { createContext, useContext } from "react";
+import { WishlistItem, WishlistContextType } from "@/types/wishlist";
+import { useLocalStorage } from "@/hooks/useLocalStorage";
 
 const WishlistContext = createContext<WishlistContextType | undefined>(undefined);
 
 export function WishlistProvider({ children }: { children: React.ReactNode }) {
-  const [wishlist, setWishlist] = useState<WishlistItem[]>([]);
-  const [isInitialized, setIsInitialized] = useState(false);
-
-  // Load wishlist from localStorage on mount
-  useEffect(() => {
-    const savedWishlist = localStorage.getItem("wishlist");
-    if (savedWishlist) {
-      try {
-        const parsed = JSON.parse(savedWishlist);
-        if (Array.isArray(parsed)) {
-          // Defer state update to avoid synchronous cascading render lint error
-          setTimeout(() => {
-            setWishlist(parsed);
-            setIsInitialized(true);
-          }, 0);
-          return;
-        }
-      } catch (e) {
-        console.error("Failed to parse wishlist from localStorage");
-      }
-    }
-    // Defer initialization flag to avoid synchronous cascading render lint error
-    setTimeout(() => {
-      setIsInitialized(true);
-    }, 0);
-  }, []);
-
-  // Save wishlist to localStorage whenever it changes, but only after initialization
-  useEffect(() => {
-    if (isInitialized) {
-      localStorage.setItem("wishlist", JSON.stringify(wishlist));
-    }
-  }, [wishlist, isInitialized]);
+  const [wishlist, setWishlist] = useLocalStorage<WishlistItem[]>("wishlist", []);
 
   const addToWishlist = (product: WishlistItem) => {
     setWishlist((prev) => {
@@ -72,14 +31,10 @@ export function WishlistProvider({ children }: { children: React.ReactNode }) {
     });
   };
 
-  const isInWishlist = (productId: string) => {
-    return wishlist.some((item) => item._id === productId);
-  };
+  const isInWishlist = (productId: string) =>
+    wishlist.some((item) => item._id === productId);
 
-  const clearWishlist = () => {
-    setWishlist([]);
-  };
-
+  const clearWishlist = () => setWishlist([]);
   const totalWishlistItems = wishlist.length;
 
   return (
