@@ -1,10 +1,11 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useSession } from "next-auth/react";
 import { Menu, Search } from "lucide-react";
 import { useWishlist } from "@/components/WishlistContext";
-import { Category } from "@/types/category";
+import { useGetCategoriesQuery } from "@/redux/apiSlice";
+import { useScrollPosition } from "@/hooks/useScrollPosition";
 import SearchBar from "./shop/Header/SearchBar";
 import UserActions from "./shop/Header/UserActions";
 import NavbarLogo from "./shop/Header/NavbarLogo";
@@ -13,34 +14,12 @@ import MobileDrawer from "./shop/Header/MobileDrawer";
 
 export default function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [categories, setCategories] = useState<Category[]>([]);
   const [isCategoryMenuOpen, setIsCategoryMenuOpen] = useState(false);
+  const isScrolled = useScrollPosition(20);
 
   const { data: session } = useSession();
   const { totalWishlistItems } = useWishlist();
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
-    };
-    window.addEventListener("scroll", handleScroll);
-
-    // Fetch categories for the navbar
-    fetch("/api/categories")
-      .then((res) => {
-        if (!res.ok) throw new Error("Network response was not ok");
-        const contentType = res.headers.get("content-type");
-        if (!contentType || !contentType.includes("application/json")) {
-          throw new TypeError("Oops, we haven't got JSON!");
-        }
-        return res.json();
-      })
-      .then((data) => setCategories(data))
-      .catch((err) => console.error("Failed to fetch categories:", err));
-
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  const { data: categories = [] } = useGetCategoriesQuery();
 
   return (
     <>
@@ -53,23 +32,19 @@ export default function Header() {
         style={{ paddingTop: "env(safe-area-inset-top)" }}
       >
         <div className="max-w-7xl mx-auto px-4 flex items-center gap-4 lg:gap-8">
-          {/* Logo */}
           <div className="shrink-0">
             <NavbarLogo />
           </div>
 
-          {/* Desktop Search */}
           <div className="hidden md:flex flex-1 max-w-2xl">
             <SearchBar />
           </div>
 
-          {/* User Actions */}
           <div className="flex items-center gap-2 ml-auto">
             <div className="hidden lg:block">
               <UserActions />
             </div>
 
-            {/* Mobile Search Trigger */}
             <button
               onClick={() => setIsMobileMenuOpen(true)}
               className="md:hidden p-2 text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-full transition-colors"
@@ -86,7 +61,6 @@ export default function Header() {
           </div>
         </div>
 
-        {/* Categories Bar (Desktop Only) */}
         <div className="hidden md:block border-t border-gray-100 dark:border-gray-800 mt-2">
           <DesktopNav
             categories={categories}
@@ -96,7 +70,6 @@ export default function Header() {
         </div>
       </header>
 
-      {/* Spacer for fixed header */}
       <div
         className="md:h-32"
         style={{ height: "calc(5rem + env(safe-area-inset-top))" }}
