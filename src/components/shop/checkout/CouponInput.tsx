@@ -1,61 +1,42 @@
 "use client";
 
-import { useState } from "react";
 import { Ticket, Loader2, CheckCircle2, XCircle } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useLanguage } from "@/components/LanguageContext";
-
-interface Coupon {
-  code: string;
-  discount: number;
-  discountType?: "percentage" | "fixed";
-  discountValue?: number;
-  message?: string;
-}
+import { useCouponValidation } from "@/hooks/useCouponValidation";
 
 interface CouponInputProps {
   total: number;
-  onApply: (coupon: Coupon) => void;
+  onApply: (coupon: { code: string; discount: number }) => void;
   onRemove: () => void;
 }
 
-export default function CouponInput({ total, onApply, onRemove }: CouponInputProps) {
+export default function CouponInput({
+  total,
+  onApply,
+  onRemove,
+}: CouponInputProps) {
   const { t } = useLanguage();
-  const [code, setCode] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState("");
-  const [appliedCoupon, setAppliedCoupon] = useState<Coupon | null>(null);
+  const {
+    promoCode,
+    setPromoCode,
+    appliedCoupon,
+    loading,
+    error,
+    applyCoupon,
+    removeCoupon,
+  } = useCouponValidation(total);
 
   const handleApply = async () => {
-    if (!code) return;
-    setIsLoading(true);
-    setError("");
-
-    try {
-      const res = await fetch("/api/coupons/validate", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ code, total }),
-      });
-
-      const data: Coupon = await res.json();
-
-      if (res.ok) {
-        setAppliedCoupon(data);
-        onApply(data);
-        setCode("");
-      } else {
-        setError(data.message || t('coupon_invalid'));
-      }
-    } catch (err) {
-      setError(t('server_error'));
-    } finally {
-      setIsLoading(false);
+    const result = await applyCoupon();
+    if (result) {
+      onApply(result);
+      setPromoCode("");
     }
   };
 
   const handleRemove = () => {
-    setAppliedCoupon(null);
+    removeCoupon();
     onRemove();
   };
 
@@ -65,7 +46,9 @@ export default function CouponInput({ total, onApply, onRemove }: CouponInputPro
         <div className="w-10 h-10 rounded-xl bg-yellow-50 dark:bg-yellow-500/10 flex items-center justify-center text-yellow-600">
           <Ticket className="w-5 h-5" />
         </div>
-        <h3 className="font-black text-gray-900 dark:text-white">{t('discount_code')} / {t('coupon_code')}</h3>
+        <h3 className="font-black text-gray-900 dark:text-white">
+          {t("discount_code")} / {t("coupon_code")}
+        </h3>
       </div>
 
       {!appliedCoupon ? (
@@ -73,18 +56,22 @@ export default function CouponInput({ total, onApply, onRemove }: CouponInputPro
           <div className="relative flex-1">
             <input
               type="text"
-              value={code}
-              onChange={(e) => setCode(e.target.value.toUpperCase())}
-              placeholder={t('coupon_placeholder')}
+              value={promoCode}
+              onChange={(e) => setPromoCode(e.target.value.toUpperCase())}
+              placeholder={t("coupon_placeholder")}
               className="w-full bg-gray-50 dark:bg-white/5 border border-gray-100 dark:border-white/10 rounded-2xl px-4 py-3 font-bold outline-none focus:border-green-500 transition-all dark:text-white"
             />
           </div>
           <button
             onClick={handleApply}
-            disabled={isLoading || !code}
+            disabled={loading || !promoCode}
             className="bg-green-600 text-white px-6 py-3 rounded-2xl font-black hover:bg-green-700 transition-all disabled:opacity-50 flex items-center gap-2"
           >
-            {isLoading ? <Loader2 className="w-5 h-5 animate-spin" /> : t('apply_coupon')}
+            {loading ? (
+              <Loader2 className="w-5 h-5 animate-spin" />
+            ) : (
+              t("apply_coupon")
+            )}
           </button>
         </div>
       ) : (
@@ -97,10 +84,11 @@ export default function CouponInput({ total, onApply, onRemove }: CouponInputPro
             <CheckCircle2 className="text-green-600 w-5 h-5" />
             <div>
               <p className="font-black text-green-900 dark:text-green-400">
-                {appliedCoupon.code} {t('promo_applied')}
+                {appliedCoupon.code} {t("promo_applied")}
               </p>
               <p className="text-xs font-bold text-green-700 dark:text-green-500">
-                {t('you_are_saving')} {t('currency_symbol')}{appliedCoupon.discount.toLocaleString('bn-BD')}
+                {t("you_are_saving")} {t("currency_symbol")}
+                {appliedCoupon.discount.toLocaleString("bn-BD")}
               </p>
             </div>
           </div>

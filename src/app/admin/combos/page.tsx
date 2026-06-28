@@ -1,121 +1,29 @@
 "use client";
 
-import { useState, useEffect } from "react";
 import { Plus, Search, Layers, RefreshCw } from "lucide-react";
 import AdminTable from "@/components/admin/AdminTable";
 import ComboTableRow from "@/components/admin/combos/ComboTableRow";
 import ComboModal from "@/components/admin/ComboModal";
-import { AdminCombo, AdminComboFormData } from "@/types/admin";
-import { toast } from "react-hot-toast";
-
-const initialFormData: AdminComboFormData = {
-  name: "",
-  items: "",
-  price: 0,
-  saveAmount: 0,
-  tag: "নতুন",
-  isActive: true,
-};
+import { useAdminCombos } from "@/hooks/useAdminCombos";
 
 export default function CombosPage() {
-  const [combos, setCombos] = useState<AdminCombo[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [searchTerm, setSearchTerm] = useState("");
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [editingCombo, setEditingCombo] = useState<AdminCombo | null>(null);
-  const [formData, setFormData] = useState<AdminComboFormData>(initialFormData);
-  const [isSubmitting, setIsSubmitting] = useState(false);
-
-  useEffect(() => {
-    fetchCombos();
-  }, []);
-
-  const fetchCombos = async () => {
-    try {
-      setLoading(true);
-      const res = await fetch("/api/admin/combos");
-      if (!res.ok) throw new Error("Failed to fetch combos");
-      const data = await res.json();
-      setCombos(data);
-    } catch (error) {
-      toast.error("কম্বো লিস্ট লোড করতে সমস্যা হয়েছে");
-      console.error(error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleEdit = (combo: AdminCombo) => {
-    setEditingCombo(combo);
-    setFormData({
-      name: combo.name,
-      items: combo.items.join(", "),
-      price: combo.price,
-      saveAmount: combo.saveAmount,
-      tag: combo.tag,
-      isActive: combo.isActive,
-    });
-    setIsModalOpen(true);
-  };
-
-  const handleDelete = async (id: string) => {
-    if (!confirm("আপনি কি নিশ্চিতভাবে এই কম্বোটি ডিলিট করতে চান?")) return;
-
-    try {
-      const res = await fetch(`/api/admin/combos/${id}`, {
-        method: "DELETE",
-      });
-
-      if (!res.ok) throw new Error("Failed to delete combo");
-
-      toast.success("কম্বো ডিলিট করা হয়েছে");
-      fetchCombos();
-    } catch (error) {
-      toast.error("ডিলিট করতে সমস্যা হয়েছে");
-      console.error(error);
-    }
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-
-    try {
-      const payload = {
-        ...formData,
-        items: formData.items.split(",").map((i) => i.trim()).filter((i) => i !== ""),
-      };
-
-      const url = editingCombo
-        ? `/api/admin/combos/${editingCombo._id}`
-        : "/api/admin/combos";
-      
-      const method = editingCombo ? "PUT" : "POST";
-
-      const res = await fetch(url, {
-        method,
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      });
-
-      if (!res.ok) throw new Error("Failed to save combo");
-
-      toast.success(editingCombo ? "কম্বো আপডেট করা হয়েছে" : "নতুন কম্বো যোগ করা হয়েছে");
-      setIsModalOpen(false);
-      setEditingCombo(null);
-      setFormData(initialFormData);
-      fetchCombos();
-    } catch (error) {
-      toast.error("সেভ করতে সমস্যা হয়েছে");
-      console.error(error);
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
-
-  const filteredCombos = combos.filter((combo) =>
-    combo.name.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  const {
+    filteredCombos,
+    loading,
+    searchTerm,
+    setSearchTerm,
+    isModalOpen,
+    editingCombo,
+    formData,
+    setFormData,
+    isSubmitting,
+    openAddModal,
+    openEditModal,
+    closeModal,
+    handleSubmit,
+    handleDelete,
+    fetchCombos,
+  } = useAdminCombos();
 
   return (
     <div className="p-8 space-y-10 max-w-[1600px] mx-auto">
@@ -135,11 +43,7 @@ export default function CombosPage() {
         </div>
 
         <button
-          onClick={() => {
-            setEditingCombo(null);
-            setFormData(initialFormData);
-            setIsModalOpen(true);
-          }}
+          onClick={openAddModal}
           className="flex items-center justify-center gap-3 bg-green-600 hover:bg-green-700 text-white px-8 py-4 rounded-[2rem] font-black transition-all duration-300 shadow-xl shadow-green-600/20 hover:scale-[1.02] active:scale-95 group"
         >
           <div className="w-8 h-8 bg-white/20 rounded-xl flex items-center justify-center group-hover:rotate-90 transition-transform duration-500">
@@ -186,7 +90,7 @@ export default function CombosPage() {
           <ComboTableRow
             key={combo._id}
             combo={combo}
-            onEdit={handleEdit}
+            onEdit={openEditModal}
             onDelete={handleDelete}
           />
         ))}
@@ -194,7 +98,7 @@ export default function CombosPage() {
 
       <ComboModal
         isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
+        onClose={closeModal}
         editingCombo={editingCombo}
         formData={formData}
         setFormData={setFormData}
