@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import dbConnect from "@/lib/mongodb";
 import Product from "@/models/Product";
 import CategoryModel from "@/models/Category";
@@ -11,6 +12,19 @@ import CategoryNotFound from "@/components/shop/category-details/CategoryNotFoun
 
 export const dynamic = "force-dynamic";
 
+async function findCategory(id: string) {
+  if (mongoose.Types.ObjectId.isValid(id)) {
+    return CategoryModel.findById(id).lean();
+  }
+  return CategoryModel.findOne({
+    name: { $regex: new RegExp(`^${escapeRegex(id)}$`, "i") },
+  }).lean();
+}
+
+function escapeRegex(str: string) {
+  return str.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
 async function getCategoryData(
   id: string,
   searchParams: { [key: string]: string | string[] | undefined },
@@ -21,7 +35,7 @@ async function getCategoryData(
   const limit = 12;
   const skip = (page - 1) * limit;
 
-  const category = await CategoryModel.findById(id).lean();
+  const category = await findCategory(id);
   if (!category)
     return {
       category: null,
@@ -31,16 +45,17 @@ async function getCategoryData(
       allCategories: [],
     };
 
+  const categoryId = (category as unknown as ICategory)._id.toString();
+
   // Fetch all active categories for the sidebar
   const allCategories = await CategoryModel.find({ isActive: true }).lean();
 
-  // Find all sub-categories if this is a parent category
   const subCategoryIds = (allCategories as unknown as ICategory[])
-    .filter((c: ICategory) => c.parentId && c.parentId.toString() === id)
+    .filter((c: ICategory) => c.parentId && c.parentId.toString() === categoryId)
     .map((c: ICategory) => c._id);
 
   const query = {
-    category: { $in: [id, ...subCategoryIds] },
+    category: { $in: [categoryId, ...subCategoryIds] },
     isActive: true,
   };
 
