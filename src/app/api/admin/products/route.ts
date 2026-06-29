@@ -3,6 +3,7 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/config/auth";
 import dbConnect from "@/lib/config/mongodb";
 import Product from "@/models/Product";
+import Category from "@/models/Category";
 
 async function checkAdmin() {
   const session = await getServerSession(authOptions);

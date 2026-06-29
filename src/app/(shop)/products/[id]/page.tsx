@@ -1,5 +1,6 @@
 import dbConnect from "@/lib/config/mongodb";
 import Product from "@/models/Product";
+import Category from "@/models/Category";
 import { notFound } from "next/navigation";
 import { Metadata } from "next";
 import ProductBreadcrumb from "@/components/shop/product-details/ProductBreadcrumb";
