@@ -2,7 +2,7 @@
 
 import { ShoppingBag, ArrowLeft } from "lucide-react";
 import Link from "next/link";
-import { useLanguage } from "@/components/LanguageContext";
+import { useLanguage } from "@/providers/LanguageContext";
 
 export default function CategoryNotFound() {
   const { t } = useLanguage();

@@ -1,7 +1,7 @@
 "use client";
 
 import { Info } from "lucide-react";
-import { useLanguage } from "@/components/LanguageContext";
+import { useLanguage } from "@/providers/LanguageContext";
 import { Product } from "@/types/product";
 
 interface ProductDetailsTabsProps {

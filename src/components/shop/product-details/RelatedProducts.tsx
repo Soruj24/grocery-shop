@@ -1,8 +1,8 @@
 "use client";
 
-import ProductCard from "@/components/ProductCard";
+import ProductCard from "@/components/shop/products/ProductCard";
 import { Product } from "@/types/product";
-import { useLanguage } from "@/components/LanguageContext";
+import { useLanguage } from "@/providers/LanguageContext";
 
 interface RelatedProductsProps {
   products: Product[];

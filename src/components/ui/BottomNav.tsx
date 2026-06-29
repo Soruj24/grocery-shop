@@ -3,9 +3,9 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Home, Search, ShoppingBag, Heart, User } from "lucide-react";
-import { useCart } from "@/components/CartContext";
+import { useCart } from "@/providers/CartContext";
 import { motion } from "framer-motion";
-import { useLanguage } from "@/components/LanguageContext";
+import { useLanguage } from "@/providers/LanguageContext";
 
 export default function BottomNav() {
   const pathname = usePathname();

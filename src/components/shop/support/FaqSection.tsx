@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { HelpCircle, ChevronDown, ChevronUp } from "lucide-react";
-import { SUPPORT_FAQS } from "@/lib/support-constants";
+import { SUPPORT_FAQS } from "@/lib/constants/support-constants";
 
 export default function FaqSection() {
   const [openFaq, setOpenFaq] = useState<number | null>(null);

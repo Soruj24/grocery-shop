@@ -4,9 +4,9 @@ import Image from "next/image";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronLeft, ChevronRight, Maximize2 } from "lucide-react";
-import { useLanguage } from "@/components/LanguageContext";
+import { useLanguage } from "@/providers/LanguageContext";
 import { Product } from "@/types/product";
-import { getProductFallbackImage } from "@/lib/category-utils";
+import { getProductFallbackImage } from "@/lib/utils/category-utils";
 
 interface ProductImageProps {
   image?: string;

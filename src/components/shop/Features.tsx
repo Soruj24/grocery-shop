@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { Truck, ShieldCheck, Clock, CreditCard, Headphones, LucideIcon, RefreshCw, Lock } from "lucide-react";
-import { useLanguage } from "@/components/LanguageContext";
+import { useLanguage } from "@/providers/LanguageContext";
 
 interface Feature {
   icon: LucideIcon;

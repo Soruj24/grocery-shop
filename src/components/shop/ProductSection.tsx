@@ -1,9 +1,7 @@
-"use client";
-
-import Pagination from "@/components/Pagination";
+import Pagination from "@/components/ui/Pagination";
 import { Product } from "@/types/product";
-import ProductSectionHeader from "./ProductSection/ProductSectionHeader";
-import ProductGrid from "./ProductSection/ProductGrid";
+import ProductSectionHeader from "./product-section/ProductSectionHeader";
+import ProductGrid from "./product-section/ProductGrid";
 
 interface ProductSectionProps {
   products: Product[];

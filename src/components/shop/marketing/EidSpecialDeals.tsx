@@ -2,11 +2,11 @@
 
 import { motion } from "framer-motion";
 import { Gift, Sparkles, ShoppingBag } from "lucide-react";
-import { useCart } from "@/components/CartContext";
+import { useCart } from "@/providers/CartContext";
 import { toast } from "react-hot-toast";
-import { useLanguage } from "@/components/LanguageContext";
+import { useLanguage } from "@/providers/LanguageContext";
 import Image from "next/image";
-import { getProductFallbackImage } from "@/lib/category-utils";
+import { getProductFallbackImage } from "@/lib/utils/category-utils";
 
 export default function EidSpecialDeals() {
   const { addToCart } = useCart();

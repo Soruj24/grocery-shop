@@ -1,9 +1,9 @@
 "use client";
 
-import { useCart } from "@/components/CartContext";
-import { Toast } from "@/lib/toast";
-import { useLanguage } from "@/components/LanguageContext";
-import { getProductFallbackImage } from "@/lib/category-utils";
+import { useCart } from "@/providers/CartContext";
+import { Toast } from "@/lib/utils/toast";
+import { useLanguage } from "@/providers/LanguageContext";
+import { getProductFallbackImage } from "@/lib/utils/category-utils";
 import type { OrderItem } from "@/types/order";
 
 export function useReorder() {

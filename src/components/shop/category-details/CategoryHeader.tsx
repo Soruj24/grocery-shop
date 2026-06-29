@@ -4,8 +4,8 @@ import Link from "next/link";
 import { ShoppingBag, ArrowLeft } from "lucide-react";
 import { Category as ICategory } from "@/types/category";
 import Image from "next/image";
-import { useLanguage } from "@/components/LanguageContext";
-import { getCategoryFallbackImage } from "@/lib/category-utils";
+import { useLanguage } from "@/providers/LanguageContext";
+import { getCategoryFallbackImage } from "@/lib/utils/category-utils";
 
 interface CategoryHeaderProps {
   category: ICategory;

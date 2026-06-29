@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { Star, Quote, User } from "lucide-react";
-import { useLanguage } from "@/components/LanguageContext";
+import { useLanguage } from "@/providers/LanguageContext";
 
 export default function Testimonials() {
   const { t } = useLanguage();

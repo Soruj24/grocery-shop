@@ -5,10 +5,10 @@ import { Zap, Star, ShoppingBag, ArrowRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { Product } from "@/types/product";
-import { useCart } from "@/components/CartContext";
+import { useCart } from "@/providers/CartContext";
 import { toast } from "react-hot-toast";
-import { useLanguage } from "@/components/LanguageContext";
-import { getProductFallbackImage } from "@/lib/category-utils";
+import { useLanguage } from "@/providers/LanguageContext";
+import { getProductFallbackImage } from "@/lib/utils/category-utils";
 
 interface FlashDealCardProps {
   product: Product;

@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { Star, Gift, History, TrendingUp } from "lucide-react";
-import { useLanguage } from "@/components/LanguageContext";
+import { useLanguage } from "@/providers/LanguageContext";
 
 export default function LoyaltyPoints() {
   const { t } = useLanguage();

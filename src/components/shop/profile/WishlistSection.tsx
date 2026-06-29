@@ -1,10 +1,10 @@
 "use client";
 
-import { useWishlist } from "@/components/WishlistContext";
-import ProductCard from "@/components/ProductCard";
+import { useWishlist } from "@/providers/WishlistContext";
+import ProductCard from "@/components/shop/products/ProductCard";
 import EmptyWishlistState from "@/components/shop/wishlist/EmptyWishlistState";
 import { Heart, Trash2 } from "lucide-react";
-import { useLanguage } from "@/components/LanguageContext";
+import { useLanguage } from "@/providers/LanguageContext";
 
 export default function WishlistSection() {
   const { t } = useLanguage();

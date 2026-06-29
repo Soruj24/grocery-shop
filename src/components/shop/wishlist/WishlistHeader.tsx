@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Heart, ChevronRight } from "lucide-react";
-import { useLanguage } from "@/components/LanguageContext";
+import { useLanguage } from "@/providers/LanguageContext";
 
 interface WishlistHeaderProps {
   totalItems: number;

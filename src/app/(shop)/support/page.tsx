@@ -1,5 +1,3 @@
-"use client";
-
 import SupportHero from "@/components/shop/support/SupportHero";
 import ContactInfoCards from "@/components/shop/support/ContactInfoCards";
 import ContactForm from "@/components/shop/support/ContactForm";

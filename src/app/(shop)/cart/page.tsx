@@ -1,14 +1,14 @@
 "use client";
 
-import { useCart } from "@/components/CartContext";
+import { useCart } from "@/providers/CartContext";
 import { ArrowRight } from "lucide-react";
 import Link from "next/link"; 
 import { motion } from "framer-motion";
 import EmptyCartState from "@/components/shop/cart/EmptyCartState";
 import CartItemRow from "@/components/shop/cart/CartItemRow";
 import CartSummary from "@/components/shop/cart/CartSummary";
-import { useLanguage } from "@/components/LanguageContext";
-import { confirmAlert, toast } from "@/lib/swal";
+import { useLanguage } from "@/providers/LanguageContext";
+import { confirmAlert, toast } from "@/lib/utils/swal";
 
 export default function CartPage() {
   const { cart, removeFromCart, updateQuantity, totalPrice, clearCart } = useCart();

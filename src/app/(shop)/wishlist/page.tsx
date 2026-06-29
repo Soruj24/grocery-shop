@@ -1,7 +1,7 @@
 "use client";
 
-import { useWishlist } from "@/components/WishlistContext";
-import ProductCard from "@/components/ProductCard";
+import { useWishlist } from "@/providers/WishlistContext";
+import ProductCard from "@/components/shop/products/ProductCard";
 import WishlistHeader from "@/components/shop/wishlist/WishlistHeader";
 import EmptyWishlistState from "@/components/shop/wishlist/EmptyWishlistState";
 import PageBackground from "@/components/ui/PageBackground";

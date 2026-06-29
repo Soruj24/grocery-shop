@@ -1,7 +1,7 @@
 "use client";
 
 import { ClipboardList, Clock, CreditCard, ArrowLeft, CheckCircle2 } from "lucide-react";
-import { useLanguage } from "@/components/LanguageContext";
+import { useLanguage } from "@/providers/LanguageContext";
 import type { CheckoutFormData, PaymentMethod } from "@/types/checkout";
 
 interface ReviewStepProps {

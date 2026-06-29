@@ -1,8 +1,8 @@
 "use client";
 
 import { MapPin, Phone, Mail } from "lucide-react";
-import { useLanguage } from "@/components/LanguageContext";
-import { useSettings } from "@/context/SettingsContext";
+import { useLanguage } from "@/providers/LanguageContext";
+import { useSettings } from "@/providers/SettingsContext";
 import { motion } from "framer-motion";
 
 export default function FooterContact() {

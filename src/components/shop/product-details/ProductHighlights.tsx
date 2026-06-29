@@ -1,7 +1,7 @@
 "use client";
 
 import { ShieldCheck, Truck, RefreshCcw } from "lucide-react";
-import { useLanguage } from "@/components/LanguageContext";
+import { useLanguage } from "@/providers/LanguageContext";
 import { motion } from "framer-motion";
 
 export default function ProductHighlights() {

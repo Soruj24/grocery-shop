@@ -32,7 +32,7 @@ import DashboardSectionHeader from "@/components/admin/dashboard/DashboardSectio
 import LoadingState from "@/components/ui/LoadingState";
 import ChartCard from "@/components/admin/dashboard/ChartCard";
 import { useAdminDashboard } from "@/hooks/useAdminDashboard";
-import { getStatusLabel } from "@/lib/admin-utils";
+import { getStatusLabel } from "@/lib/utils/admin-utils";
 import { AdminOrder } from "@/types/admin";
 
 const COLORS = ["#10B981", "#3B82F6", "#F59E0B", "#EF4444", "#8B5CF6"];

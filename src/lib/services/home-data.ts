@@ -1,8 +1,8 @@
-import dbConnect from "@/lib/mongodb";
+import dbConnect from "@/lib/config/mongodb";
 import Product from "@/models/Product";
 import Category from "@/models/Category";
 import Section from "@/models/Section";
-import { seedSections } from "@/lib/seed-sections";
+import { seedSections } from "@/lib/constants/seed-sections";
 import { Category as ICategory } from "@/types/category";
 import { HomeData, SearchParams } from "@/types/home";
 

@@ -4,11 +4,11 @@ import { useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Filter } from "lucide-react";
 import { Category } from "@/types/category";
-import { useLanguage } from "@/components/LanguageContext";
-import ProductSearchBar from "./products/ProductSearchBar";
-import SortSelect from "./products/SortSelect";
-import DesktopFilterChips from "./products/DesktopFilterChips";
-import MobileFilterSidebar from "./products/MobileFilterSidebar";
+import { useLanguage } from "@/providers/LanguageContext";
+import ProductSearchBar from "./ProductSearchBar";
+import SortSelect from "./SortSelect";
+import DesktopFilterChips from "./DesktopFilterChips";
+import MobileFilterSidebar from "./MobileFilterSidebar";
 
 interface ProductFiltersProps {
   categories: Category[];

@@ -1,6 +1,6 @@
 "use client";
 
-import { useLanguage } from "@/components/LanguageContext";
+import { useLanguage } from "@/providers/LanguageContext";
 
 interface PriceRangeFilterProps {
   minPrice: string;

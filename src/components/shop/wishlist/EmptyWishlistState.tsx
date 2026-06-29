@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Heart, ShoppingBag, ChevronRight } from "lucide-react";
-import { useLanguage } from "@/components/LanguageContext";
+import { useLanguage } from "@/providers/LanguageContext";
 
 export default function EmptyWishlistState() {
   const { t } = useLanguage();

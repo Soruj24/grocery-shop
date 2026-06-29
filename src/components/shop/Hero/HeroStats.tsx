@@ -1,5 +1,5 @@
 import { Star, Clock } from "lucide-react";
-import { useLanguage } from "@/components/LanguageContext";
+import { useLanguage } from "@/providers/LanguageContext";
 
 export default function HeroStats() {
   const { t } = useLanguage();

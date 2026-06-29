@@ -1,7 +1,7 @@
 import { ShoppingBag, ShieldCheck } from "lucide-react";
-import { useLanguage } from "@/components/LanguageContext";
+import { useLanguage } from "@/providers/LanguageContext";
 import Image from "next/image";
-import { getProductFallbackImage } from "@/lib/category-utils";
+import { getProductFallbackImage } from "@/lib/utils/category-utils";
 
 interface CartItem {
   _id: string;

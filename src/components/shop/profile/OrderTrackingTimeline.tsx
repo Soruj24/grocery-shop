@@ -1,5 +1,5 @@
 import { Check, Truck, Package, Clock, ShieldCheck } from "lucide-react";
-import { useLanguage } from "@/components/LanguageContext";
+import { useLanguage } from "@/providers/LanguageContext";
 
 interface OrderTrackingTimelineProps {
   status: string;

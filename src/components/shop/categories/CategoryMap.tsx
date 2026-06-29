@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { Layers } from "lucide-react";
 import { Category as ICategory } from "@/types/category";
-import { useLanguage } from "@/components/LanguageContext";
+import { useLanguage } from "@/providers/LanguageContext";
 
 interface CategoryMapProps {
   categories: ICategory[];

@@ -9,8 +9,8 @@ export interface ComboOffer {
   stock: number;
 }
 
-import { getProductFallbackImage } from "@/lib/category-utils";
-import type { TranslationKey } from "@/lib/translations";
+import { getProductFallbackImage } from "@/lib/utils/category-utils";
+import type { TranslationKey } from "@/lib/constants/translations";
 
 export function getComboOffers(t: (key: TranslationKey) => string): ComboOffer[] {
   return [

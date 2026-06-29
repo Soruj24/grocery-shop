@@ -1,8 +1,8 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useLanguage } from "@/components/LanguageContext";
-import { getProductFallbackImage } from "@/lib/category-utils";
+import { useLanguage } from "@/providers/LanguageContext";
+import { getProductFallbackImage } from "@/lib/utils/category-utils";
 
 export interface Slide {
   id: number;

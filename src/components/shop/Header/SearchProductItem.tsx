@@ -4,8 +4,8 @@ import { motion } from "framer-motion";
 import { ArrowRight, Star } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { useLanguage } from "@/components/LanguageContext";
-import { getProductFallbackImage } from "@/lib/category-utils";
+import { useLanguage } from "@/providers/LanguageContext";
+import { getProductFallbackImage } from "@/lib/utils/category-utils";
 import type { Product } from "@/types/product";
 
 interface SearchProductItemProps {

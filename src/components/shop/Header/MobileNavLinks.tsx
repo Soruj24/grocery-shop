@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { ShoppingBasket, ShoppingBag, Heart, LayoutGrid, ChevronRight } from "lucide-react";
-import { useLanguage } from "@/components/LanguageContext";
+import { useLanguage } from "@/providers/LanguageContext";
 
 interface MobileNavLinksProps {
   onClose: () => void;

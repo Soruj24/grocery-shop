@@ -1,12 +1,12 @@
 "use client";
 
 import { useState } from "react";
-import ProductCard from "@/components/ProductCard";
-import Pagination from "@/components/Pagination";
+import ProductCard from "@/components/shop/products/ProductCard";
+import Pagination from "@/components/ui/Pagination";
 import { LayoutGrid, ShoppingBag, ChevronDown, Check } from "lucide-react";
 import { useParams } from "next/navigation";
 import { Product } from "@/types/product";
-import { useLanguage } from "@/components/LanguageContext";
+import { useLanguage } from "@/providers/LanguageContext";
 import { motion, AnimatePresence } from "framer-motion";
 
 interface CategoryProductGridProps {

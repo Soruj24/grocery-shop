@@ -7,8 +7,8 @@ import ShareButton from "@/app/(shop)/products/[id]/ShareButton";
 import ProductHighlights from "./ProductHighlights";
 import { Product } from "@/types/product";
 import { useRouter } from "next/navigation";
-import { useCart } from "@/components/CartContext";
-import { useLanguage } from "@/components/LanguageContext";
+import { useCart } from "@/providers/CartContext";
+import { useLanguage } from "@/providers/LanguageContext";
 import { motion } from "framer-motion";
 
 interface ProductInfoProps {

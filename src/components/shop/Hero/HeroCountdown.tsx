@@ -1,4 +1,4 @@
-import { useLanguage } from "@/components/LanguageContext";
+import { useLanguage } from "@/providers/LanguageContext";
 
 export default function HeroCountdown() {
   const { t } = useLanguage();

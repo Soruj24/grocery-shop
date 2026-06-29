@@ -1,7 +1,7 @@
 "use client";
 
 import { PackageX } from "lucide-react";
-import { useLanguage } from "@/components/LanguageContext";
+import { useLanguage } from "@/providers/LanguageContext";
 import Link from "next/link";
 
 export default function EmptyProductState() {

@@ -1,8 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { toast } from "@/lib/swal";
-import { useLanguage } from "@/components/LanguageContext";
+import { toast } from "@/lib/utils/swal";
+import { useLanguage } from "@/providers/LanguageContext";
 
 export interface AppliedCoupon {
   code: string;

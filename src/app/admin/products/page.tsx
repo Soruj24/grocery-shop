@@ -9,7 +9,7 @@ import ProductFilters from "@/components/admin/products/ProductFilters";
 import ProductTableRow from "@/components/admin/products/ProductTableRow";
 import { AdminProduct, AdminProductFormData } from "@/types/admin";
 import { useAdminProducts } from "@/hooks/useAdminProducts";
-import { EMPTY_PRODUCT_FORM, productToFormData, resetForm } from "@/lib/admin-products-utils";
+import { EMPTY_PRODUCT_FORM, productToFormData, resetForm } from "@/lib/utils/admin-products-utils";
 
 export default function ProductsPage() {
   const {

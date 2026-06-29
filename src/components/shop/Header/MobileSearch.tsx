@@ -2,7 +2,7 @@
 
 import { Search, X } from "lucide-react";
 
-import { useLanguage } from "@/components/LanguageContext";
+import { useLanguage } from "@/providers/LanguageContext";
 
 interface MobileSearchProps {
   searchTerm: string;

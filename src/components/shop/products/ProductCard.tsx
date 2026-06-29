@@ -1,13 +1,13 @@
 "use client";
 
 import { Plus } from "lucide-react";
-import { useCart } from "@/components/CartContext";
-import { useWishlist } from "@/components/WishlistContext";
-import { Toast } from "@/lib/toast";
+import { useCart } from "@/providers/CartContext";
+import { useWishlist } from "@/providers/WishlistContext";
+import { Toast } from "@/lib/utils/toast";
 import { Product } from "@/types/product";
 import { motion, useReducedMotion } from "framer-motion";
-import { useLanguage } from "@/components/LanguageContext";
-import { handleShare } from "@/lib/product-utils";
+import { useLanguage } from "@/providers/LanguageContext";
+import { handleShare } from "@/lib/utils/product-utils";
 import { useProductSwipe } from "@/hooks/useProductSwipe";
 import ProductImageSection from "@/components/shop/ProductImageSection";
 import ProductInfo from "@/components/shop/ProductInfo";

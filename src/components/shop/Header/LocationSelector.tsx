@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState, setLocation, toggleLocationModal } from "@/redux/store";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { useLanguage } from "@/components/LanguageContext";
+import { useLanguage } from "@/providers/LanguageContext";
 
 const locations = [
   { key: "loc_dhaka" },

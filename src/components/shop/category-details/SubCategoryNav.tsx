@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { Category as ICategory } from "@/types/category";
-import { useLanguage } from "@/components/LanguageContext";
+import { useLanguage } from "@/providers/LanguageContext";
 
 interface SubCategoryNavProps {
   subCategories: ICategory[];

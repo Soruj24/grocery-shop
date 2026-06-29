@@ -1,8 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { useLanguage } from "@/components/LanguageContext";
-import { useSettings } from "@/context/SettingsContext";
+import { useLanguage } from "@/providers/LanguageContext";
+import { useSettings } from "@/providers/SettingsContext";
 
 export default function FooterBottom() {
   const currentYear = new Date().getFullYear();

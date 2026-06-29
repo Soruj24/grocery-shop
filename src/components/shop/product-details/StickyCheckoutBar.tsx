@@ -2,10 +2,10 @@
 
 import { ShoppingBag, Zap, ArrowRight } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import { useCart } from "@/components/CartContext";
+import { useCart } from "@/providers/CartContext";
 import { Product } from "@/types/product";
 import { useRouter } from "next/navigation";
-import { useLanguage } from "@/components/LanguageContext";
+import { useLanguage } from "@/providers/LanguageContext";
 import { toast } from "react-hot-toast";
 
 interface StickyCheckoutBarProps {

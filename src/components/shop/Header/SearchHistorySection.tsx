@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { History, X } from "lucide-react";
-import { useLanguage } from "@/components/LanguageContext";
+import { useLanguage } from "@/providers/LanguageContext";
 
 interface SearchHistorySectionProps {
   history: string[];

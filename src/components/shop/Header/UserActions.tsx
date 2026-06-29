@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import NotificationBell from "@/components/NotificationBell";
+import NotificationBell from "@/components/shared/NotificationBell";
 import CartDrawer from "../cart/CartDrawer";
 import WishlistIcon from "./WishlistIcon";
 import CartIcon from "./CartIcon";

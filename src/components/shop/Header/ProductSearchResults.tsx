@@ -2,7 +2,7 @@
 
 import { Loader2, Search, ArrowRight } from "lucide-react";
 import Link from "next/link";
-import { useLanguage } from "@/components/LanguageContext";
+import { useLanguage } from "@/providers/LanguageContext";
 import type { Product } from "@/types/product";
 import SearchProductItem from "./SearchProductItem";
 

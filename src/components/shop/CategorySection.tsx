@@ -1,8 +1,8 @@
-"use client";
+
 
 import { Category } from "@/types/category";
-import CategorySectionHeader from "./CategorySection/CategorySectionHeader";
-import CategoryGrid from "./CategorySection/CategoryGrid";
+import CategorySectionHeader from "./category-section/CategorySectionHeader";
+import CategoryGrid from "./category-section/CategoryGrid";
 
 interface CategorySectionProps {
   categories: Category[];

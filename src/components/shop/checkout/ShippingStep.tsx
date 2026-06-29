@@ -1,7 +1,7 @@
 "use client";
 
 import { MapPin, User, Phone, ArrowRight } from "lucide-react";
-import { useLanguage } from "@/components/LanguageContext";
+import { useLanguage } from "@/providers/LanguageContext";
 import type { CheckoutFormData } from "@/types/checkout";
 
 interface ShippingStepProps {

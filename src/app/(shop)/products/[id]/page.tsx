@@ -1,4 +1,4 @@
-import dbConnect from "@/lib/mongodb";
+import dbConnect from "@/lib/config/mongodb";
 import Product from "@/models/Product";
 import { notFound } from "next/navigation";
 import { Metadata } from "next";

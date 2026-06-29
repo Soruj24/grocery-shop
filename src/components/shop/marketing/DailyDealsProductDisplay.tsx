@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import Image from "next/image";
-import { TranslationKey } from "@/lib/translations";
+import { TranslationKey } from "@/lib/constants/translations";
 
 interface DailyDealsProductDisplayProps {
   image: string;

@@ -5,7 +5,7 @@ import { ArrowRight, ChevronDown, LayoutGrid, Filter } from "lucide-react";
 import { useState } from "react";
 
 import { motion } from "framer-motion";
-import { useLanguage } from "@/components/LanguageContext";
+import { useLanguage } from "@/providers/LanguageContext";
 
 export default function CategorySectionHeader() {
   const { t } = useLanguage();

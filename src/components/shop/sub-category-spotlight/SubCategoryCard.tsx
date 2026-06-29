@@ -2,8 +2,8 @@ import Link from "next/link";
 import Image from "next/image";
 import { ArrowRight } from "lucide-react";
 
-import { useLanguage } from "@/components/LanguageContext";
-import { getCategoryFallbackImage } from "@/lib/category-utils";
+import { useLanguage } from "@/providers/LanguageContext";
+import { getCategoryFallbackImage } from "@/lib/utils/category-utils";
 
 interface SubCategoryCardProps {
   id: string;

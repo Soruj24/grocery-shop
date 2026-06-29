@@ -1,7 +1,7 @@
 "use client";
 
 import { ArrowUp, ArrowDown, GripVertical, Eye, EyeOff, Edit } from "lucide-react";
-import { sectionConfigs } from "@/lib/section-config";
+import { sectionConfigs } from "@/lib/constants/section-config";
 import type { Section } from "@/hooks/useAdminSections";
 
 interface SectionListItemProps {

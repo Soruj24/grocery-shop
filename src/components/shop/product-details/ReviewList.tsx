@@ -2,7 +2,7 @@
 
 import { Star } from "lucide-react";
 import { motion } from "framer-motion";
-import { useLanguage } from "@/components/LanguageContext";
+import { useLanguage } from "@/providers/LanguageContext";
 import type { ReviewItem } from "@/types/review";
 
 interface ReviewListProps {

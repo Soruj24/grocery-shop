@@ -1,8 +1,8 @@
 import { NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
-import dbConnect from "@/lib/mongodb";
+import dbConnect from "@/lib/config/mongodb";
 import User from "@/models/User";
-import { rateLimit } from "@/lib/rate-limit";
+import { rateLimit } from "@/lib/utils/rate-limit";
 
 export async function POST(req: Request) {
   try {

@@ -1,7 +1,7 @@
 "use client";
 
 import { Tag, X } from "lucide-react";
-import { useLanguage } from "@/components/LanguageContext";
+import { useLanguage } from "@/providers/LanguageContext";
 import type { AppliedCoupon } from "@/hooks/useCouponValidation";
 
 interface CouponSectionProps {

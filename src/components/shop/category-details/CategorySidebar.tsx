@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { ListFilter, ChevronRight } from "lucide-react";
 import { Category as ICategory } from "@/types/category";
-import { useLanguage } from "@/components/LanguageContext";
+import { useLanguage } from "@/providers/LanguageContext";
 
 interface CategorySidebarProps {
   allCategories: ICategory[];

@@ -1,6 +1,6 @@
 "use client";
 
-import CategoryCard from "@/components/CategoryCard";
+import CategoryCard from "@/components/shop/categories/CategoryCard";
 import { Category } from "@/types/category";
 import { motion } from "framer-motion";
 

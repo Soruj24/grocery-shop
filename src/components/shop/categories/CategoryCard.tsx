@@ -5,8 +5,8 @@ import { ArrowRight, ChevronRight, LayoutGrid } from "lucide-react";
 import { Category } from "@/types/category";
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { useLanguage } from "@/components/LanguageContext";
-import { getCategoryFallbackImage } from "@/lib/category-utils";
+import { useLanguage } from "@/providers/LanguageContext";
+import { getCategoryFallbackImage } from "@/lib/utils/category-utils";
 
 interface CategoryCardProps {
   cat: Category;

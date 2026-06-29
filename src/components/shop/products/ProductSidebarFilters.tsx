@@ -2,9 +2,9 @@
 
 import { Filter, ChevronDown, X } from "lucide-react";
 import Link from "next/link";
-import PriceFilter from "@/components/PriceFilter";
+import PriceFilter from "@/components/products/PriceFilter";
 import { Category } from "@/types/category";
-import { useLanguage } from "@/components/LanguageContext";
+import { useLanguage } from "@/providers/LanguageContext";
 
 interface ProductSidebarFiltersProps {
   categories: Category[];

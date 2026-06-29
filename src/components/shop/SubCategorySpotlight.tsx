@@ -1,8 +1,8 @@
 "use client";
 
-import SubCategoryCard from "./SubCategorySpotlight/SubCategoryCard";
+import SubCategoryCard from "./sub-category-spotlight/SubCategoryCard";
 import { Category } from "@/types/category";
-import { useLanguage } from "@/components/LanguageContext";
+import { useLanguage } from "@/providers/LanguageContext";
 
 interface SubCategorySpotlightProps {
   categories: Category[];

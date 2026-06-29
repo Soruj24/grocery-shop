@@ -1,10 +1,10 @@
-"use client";
+
 
 import Link from "next/link";
 import { Star } from "lucide-react";
 import { Product } from "@/types/product";
-import { TranslationKey } from "@/lib/translations";
-import { getUnitLabel } from "@/lib/product-utils";
+import { TranslationKey } from "@/lib/constants/translations";
+import { getUnitLabel } from "@/lib/utils/product-utils";
 
 interface ProductInfoProps {
   product: Product;

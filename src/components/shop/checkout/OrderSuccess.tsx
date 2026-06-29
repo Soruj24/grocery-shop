@@ -1,6 +1,6 @@
 import { CheckCircle2 } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useLanguage } from "@/components/LanguageContext";
+import { useLanguage } from "@/providers/LanguageContext";
 
 export default function OrderSuccess() {
   const router = useRouter();

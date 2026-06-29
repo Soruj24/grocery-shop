@@ -1,4 +1,6 @@
-import ProductCard from "@/components/ProductCard";
+"use client";
+
+import ProductCard from "@/components/shop/products/ProductCard";
 import { Product } from "@/types/product";
 import { motion } from "framer-motion";
 

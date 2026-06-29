@@ -1,8 +1,8 @@
 import { NextResponse } from "next/server";
-import dbConnect from "@/lib/mongodb";
+import dbConnect from "@/lib/config/mongodb";
 import User from "@/models/User";
 import { getServerSession } from "next-auth";
-import { authOptions } from "@/lib/auth";
+import { authOptions } from "@/lib/config/auth";
 
 export async function PATCH(
   req: Request, 

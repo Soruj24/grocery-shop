@@ -2,10 +2,10 @@
 
 import { Heart } from "lucide-react";
 import { motion } from "framer-motion";
-import { useWishlist } from "@/components/WishlistContext";
-import { Toast } from "@/lib/toast";
+import { useWishlist } from "@/providers/WishlistContext";
+import { Toast } from "@/lib/utils/toast";
 import { Product } from "@/types/product";
-import { useLanguage } from "@/components/LanguageContext";
+import { useLanguage } from "@/providers/LanguageContext";
 
 export default function WishlistButton({ product }: { product: Product }) {
   const { toggleWishlist, isInWishlist } = useWishlist();

@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
-import dbConnect from "@/lib/mongodb";
+import dbConnect from "@/lib/config/mongodb";
 import Coupon from "@/models/Coupon";
-import { rateLimit } from "@/lib/rate-limit";
+import { rateLimit } from "@/lib/utils/rate-limit";
 
 export async function POST(req: Request) {
   try {

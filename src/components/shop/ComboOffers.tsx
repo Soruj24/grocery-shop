@@ -4,10 +4,10 @@ import { motion } from "framer-motion";
 import { ShoppingBag, ArrowRight, Gift } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { useCart } from "@/components/CartContext";
+import { useCart } from "@/providers/CartContext";
 import { toast } from "react-hot-toast";
-import { useLanguage } from "@/components/LanguageContext";
-import { getComboOffers } from "@/lib/combo-offers-data";
+import { useLanguage } from "@/providers/LanguageContext";
+import { getComboOffers } from "@/lib/constants/combo-offers-data";
 
 export default function ComboOffers() {
   const { addToCart } = useCart();

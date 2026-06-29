@@ -1,6 +1,5 @@
-"use client";
 
-import { TranslationKey } from "@/lib/translations";
+import { TranslationKey } from "@/lib/constants/translations";
 interface TimeLeft { hours: number; minutes: number; seconds: number; }
 interface DailyDealsTimerProps { timeLeft: TimeLeft; t: (key: TranslationKey) => string; }
 

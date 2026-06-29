@@ -6,8 +6,8 @@ import { TrendingUp, Star, Sparkles, ArrowRight, Loader2 } from "lucide-react";
 import Link from "next/link";
 import { useQuery } from "@tanstack/react-query";
 import { Product } from "@/types/product";
-import { useLanguage } from "@/components/LanguageContext";
-import ProductCard from "@/components/ProductCard";
+import { useLanguage } from "@/providers/LanguageContext";
+import ProductCard from "@/components/shop/products/ProductCard";
 
 export default function FeaturedProducts({ products }: { products: Product[] }) {
   const [activeTab, setActiveTab] = useState("trending");

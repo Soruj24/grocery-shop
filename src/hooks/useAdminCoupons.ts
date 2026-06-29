@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback } from "react";
 import { AdminCoupon, AdminCouponFormData } from "@/types/admin";
-import { toast } from "@/lib/swal";
+import { toast } from "@/lib/utils/swal";
 
 export function useAdminCoupons() {
   const [coupons, setCoupons] = useState<AdminCoupon[]>([]);

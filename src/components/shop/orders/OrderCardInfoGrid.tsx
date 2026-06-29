@@ -1,5 +1,5 @@
 import { MapPin, Phone, Calendar, CreditCard } from "lucide-react";
-import { TranslationKey } from "@/lib/translations";
+import { TranslationKey } from "@/lib/constants/translations";
 
 interface OrderInfoGridProps {
   address: string;

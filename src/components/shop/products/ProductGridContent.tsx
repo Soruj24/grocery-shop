@@ -1,5 +1,5 @@
-import ProductCard from "@/components/ProductCard";
-import Pagination from "@/components/Pagination";
+import ProductCard from "@/components/shop/products/ProductCard";
+import Pagination from "@/components/ui/Pagination";
 import { Product } from "@/types/product";
 
 interface ProductGridContentProps {

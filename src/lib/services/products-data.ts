@@ -1,4 +1,4 @@
-import dbConnect from "@/lib/mongodb";
+import dbConnect from "@/lib/config/mongodb";
 import Product from "@/models/Product";
 import Category from "@/models/Category";
 import mongoose from "mongoose";

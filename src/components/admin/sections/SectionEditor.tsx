@@ -1,7 +1,7 @@
 "use client";
 
 import { X, Save, Plus, Trash } from "lucide-react";
-import { sectionConfigs } from "@/lib/section-config";
+import { sectionConfigs } from "@/lib/constants/section-config";
 import { useSectionEditor } from "@/hooks/useSectionEditor";
 import SectionFieldInput from "./SectionFieldInput";
 

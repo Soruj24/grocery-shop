@@ -2,7 +2,7 @@
 
 import { useQuery } from "@tanstack/react-query";
 import { Clock, CheckCircle2, Package, Truck } from "lucide-react";
-import { useLanguage } from "@/components/LanguageContext";
+import { useLanguage } from "@/providers/LanguageContext";
 
 export interface OrderTrackingData {
   _id: string;

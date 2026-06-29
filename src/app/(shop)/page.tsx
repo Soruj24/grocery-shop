@@ -3,7 +3,7 @@ import SectionRenderer from "@/components/shop/SectionRenderer";
 import HomeErrorState from "@/components/shop/HomeErrorState";
 import HomeEmptyState from "@/components/shop/HomeEmptyState";
 import HomeFallbackSections from "@/components/shop/HomeFallbackSections";
-import { getHomeData } from "@/lib/home-data";
+import { getHomeData } from "@/lib/services/home-data";
 import { SearchParams } from "@/types/home";
 
 export const dynamic = "force-dynamic";

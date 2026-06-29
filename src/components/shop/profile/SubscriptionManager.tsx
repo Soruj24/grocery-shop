@@ -1,7 +1,7 @@
 "use client";
 
 import { Calendar, Truck, ShieldCheck, ChevronRight, ShoppingBag } from "lucide-react";
-import { useLanguage } from "@/components/LanguageContext";
+import { useLanguage } from "@/providers/LanguageContext";
 
 export default function SubscriptionManager() {
   const { t } = useLanguage();

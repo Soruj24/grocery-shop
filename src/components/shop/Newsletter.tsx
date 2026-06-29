@@ -3,9 +3,9 @@
 import { motion } from "framer-motion";
 import { Send, Mail, Bell } from "lucide-react";
 import Image from "next/image";
-import { getProductFallbackImage } from "@/lib/category-utils";
+import { getProductFallbackImage } from "@/lib/utils/category-utils";
 
-import { useLanguage } from "@/components/LanguageContext";
+import { useLanguage } from "@/providers/LanguageContext";
 
 export default function Newsletter() {
   const { t } = useLanguage();

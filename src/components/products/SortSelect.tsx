@@ -1,7 +1,7 @@
 "use client";
 
 import { SlidersHorizontal, ChevronDown } from "lucide-react";
-import { useLanguage } from "@/components/LanguageContext";
+import { useLanguage } from "@/providers/LanguageContext";
 
 interface SortSelectProps {
   sort: string;

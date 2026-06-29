@@ -7,8 +7,8 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useReorder } from "@/hooks/useReorder";
 import { Order, OrderItem } from "@/types/order";
 import Image from "next/image";
-import { getProductFallbackImage } from "@/lib/category-utils";
-import { useLanguage } from "@/components/LanguageContext";
+import { getProductFallbackImage } from "@/lib/utils/category-utils";
+import { useLanguage } from "@/providers/LanguageContext";
 import OrderStatusBadge from "./OrderStatusBadge";
 
 interface ProfileOrderCardProps {

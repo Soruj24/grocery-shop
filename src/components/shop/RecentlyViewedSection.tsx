@@ -1,9 +1,9 @@
 "use client";
 
-import { useRecentlyViewed } from "@/components/RecentlyViewedContext";
-import ProductCard from "@/components/ProductCard";
+import { useRecentlyViewed } from "@/providers/RecentlyViewedContext";
+import ProductCard from "@/components/shop/products/ProductCard";
 import { motion, AnimatePresence } from "framer-motion";
-import { useLanguage } from "@/components/LanguageContext";
+import { useLanguage } from "@/providers/LanguageContext";
 import { Clock, Trash2 } from "lucide-react";
 
 export default function RecentlyViewedSection() {

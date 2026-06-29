@@ -4,8 +4,8 @@ import Link from "next/link";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { Category } from "@/types/category";
-import { useLanguage } from "@/components/LanguageContext";
-import { getCategoryFallbackImage } from "@/lib/category-utils";
+import { useLanguage } from "@/providers/LanguageContext";
+import { getCategoryFallbackImage } from "@/lib/utils/category-utils";
 
 interface MobileCategoryGridProps {
   onClose: () => void;

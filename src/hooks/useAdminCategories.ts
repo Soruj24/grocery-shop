@@ -5,7 +5,7 @@ import {
   AdminCategory,
   AdminCategoryFormData,
 } from "@/types/admin";
-import { toast, confirmAlert, errorAlert } from "@/lib/swal";
+import { toast, confirmAlert, errorAlert } from "@/lib/utils/swal";
 
 export function useAdminCategories() {
   const [categories, setCategories] = useState<AdminCategory[]>([]);

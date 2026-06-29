@@ -3,10 +3,10 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Home,  ShoppingBag, Heart, User, LayoutGrid } from "lucide-react";
-import { useCart } from "@/components/CartContext";
-import { useWishlist } from "@/components/WishlistContext";
+import { useCart } from "@/providers/CartContext";
+import { useWishlist } from "@/providers/WishlistContext";
 import { motion, AnimatePresence } from "framer-motion";
-import { useLanguage } from "@/components/LanguageContext";
+import { useLanguage } from "@/providers/LanguageContext";
 
 export default function MobileBottomNav() {
   const pathname = usePathname();

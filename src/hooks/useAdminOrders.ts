@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { AdminOrder } from "@/types/admin";
-import { toast } from "@/lib/swal";
+import { toast } from "@/lib/utils/swal";
 
 interface DeliveryForm {
   deliveryStatus: string;

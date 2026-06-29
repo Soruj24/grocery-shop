@@ -1,8 +1,8 @@
 "use client";
 
 import { Facebook, Twitter, Instagram, Youtube, ShoppingBasket } from "lucide-react";
-import { useLanguage } from "@/components/LanguageContext";
-import { useSettings } from "@/context/SettingsContext";
+import { useLanguage } from "@/providers/LanguageContext";
+import { useSettings } from "@/providers/SettingsContext";
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";

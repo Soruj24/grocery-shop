@@ -1,6 +1,6 @@
 import { Package } from "lucide-react";
-import { TranslationKey } from "@/lib/translations";
-import { getStatusColor, getStatusLabel, getStatusIcon } from "@/lib/order-utils";
+import { TranslationKey } from "@/lib/constants/translations";
+import { getStatusColor, getStatusLabel, getStatusIcon } from "@/lib/utils/order-utils";
 
 interface OrderCardHeaderProps {
   orderId: string;

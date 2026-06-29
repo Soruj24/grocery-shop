@@ -2,7 +2,7 @@
 
 import { ChevronDown } from "lucide-react";
 import { Category } from "@/types/category";
-import { useLanguage } from "@/components/LanguageContext";
+import { useLanguage } from "@/providers/LanguageContext";
 
 interface CategoryTreeProps {
   categories: Category[];

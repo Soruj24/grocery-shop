@@ -3,7 +3,7 @@
 import { Package } from "lucide-react";
 import ProfileOrderCard from "./ProfileOrderCard";
 import { Order } from "@/types/order";
-import { useLanguage } from "@/components/LanguageContext";
+import { useLanguage } from "@/providers/LanguageContext";
 
 interface ProfileOrderListProps {
   orders: Order[];

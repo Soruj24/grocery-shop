@@ -1,10 +1,10 @@
 import { NextResponse } from "next/server";
-import dbConnect from "@/lib/mongodb";
+import dbConnect from "@/lib/config/mongodb";
 import User from "@/models/User";
 import Product from "@/models/Product";
 import Order from "@/models/Order";
 import { getServerSession } from "next-auth";
-import { authOptions } from "@/lib/auth";
+import { authOptions } from "@/lib/config/auth";
 
 export async function GET() {
   try {

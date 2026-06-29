@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import Image from "next/image";
-import { getProductFallbackImage } from "@/lib/category-utils";
+import { getProductFallbackImage } from "@/lib/utils/category-utils";
 import { CheckCircle2, ShoppingBag, Truck, Users } from "lucide-react";
 
 export default function AboutPage() {

@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
-import { useLanguage } from "@/components/LanguageContext";
+import { useLanguage } from "@/providers/LanguageContext";
 import { useDebounce } from "@/hooks/useDebounce";
 import { useSearchHistory } from "@/hooks/useSearchHistory";
 import type { Product } from "@/types/product";

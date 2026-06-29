@@ -2,8 +2,8 @@
 
 import { useState, useEffect, useMemo } from "react";
 import { AdminProduct, AdminCategory, AdminProductFormData } from "@/types/admin";
-import { groupCategories } from "@/lib/category-utils";
-import { toast, confirmAlert, errorAlert } from "@/lib/swal";
+import { groupCategories } from "@/lib/utils/category-utils";
+import { toast, confirmAlert, errorAlert } from "@/lib/utils/swal";
 
 interface SortConfig {
   key: keyof AdminProduct | "category";

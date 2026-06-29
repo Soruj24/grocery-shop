@@ -3,9 +3,9 @@
 import { motion } from "framer-motion";
 import { TrendingUp, Plus } from "lucide-react";
 import useEmblaCarousel from 'embla-carousel-react';
-import { useLanguage } from "@/components/LanguageContext";
+import { useLanguage } from "@/providers/LanguageContext";
 import Image from "next/image";
-import { getProductFallbackImage } from "@/lib/category-utils";
+import { getProductFallbackImage } from "@/lib/utils/category-utils";
 
 export default function BuyMoreSaveMore() {
   const { t } = useLanguage();

@@ -3,9 +3,9 @@
  
 import { Moon, Star, ArrowRight, Plus } from "lucide-react";
 import Link from "next/link";
-import { useLanguage } from "@/components/LanguageContext";
+import { useLanguage } from "@/providers/LanguageContext";
 import Image from "next/image";
-import { getProductFallbackImage } from "@/lib/category-utils";
+import { getProductFallbackImage } from "@/lib/utils/category-utils";
 
 export default function RamadanOffers() {
   const { t } = useLanguage();

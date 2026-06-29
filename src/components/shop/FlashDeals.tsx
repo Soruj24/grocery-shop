@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { Product } from "@/types/product";
-import { useLanguage } from "@/components/LanguageContext";
+import { useLanguage } from "@/providers/LanguageContext";
 import { useCountdown } from "@/hooks/useCountdown";
 import FlashDealsHeader from "./FlashDealsHeader";
 import CountdownTimer from "./CountdownTimer";

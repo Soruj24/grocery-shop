@@ -2,7 +2,7 @@
 
 import { Check, Clock, Truck, Package, Home } from "lucide-react";
 import { motion } from "framer-motion";
-import { useLanguage } from "@/components/LanguageContext";
+import { useLanguage } from "@/providers/LanguageContext";
 
 interface OrderTimelineProps {
   currentStatus: string;

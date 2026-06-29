@@ -5,7 +5,7 @@ import { LayoutGrid, ChevronDown, Flame, Percent, Star, Clock, Truck } from "luc
 import CategoryMegaMenu from "./CategoryMegaMenu";
 import { motion, AnimatePresence } from "framer-motion";
 import { Category } from "@/types/category";
-import { useLanguage } from "@/components/LanguageContext";
+import { useLanguage } from "@/providers/LanguageContext";
 
 interface DesktopNavProps {
   categories: Category[];

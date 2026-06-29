@@ -1,10 +1,10 @@
 "use client";
 
-import FooterLogo from "./shop/Footer/FooterLogo";
-import FooterLinks from "./shop/Footer/FooterLinks";
-import FooterContact from "./shop/Footer/FooterContact";
-import FooterBottom from "./shop/Footer/FooterBottom";
-import { useLanguage } from "@/components/LanguageContext";
+import FooterLogo from "../shop/footer/FooterLogo";
+import FooterLinks from "../shop/footer/FooterLinks";
+import FooterContact from "../shop/footer/FooterContact";
+import FooterBottom from "../shop/footer/FooterBottom";
+import { useLanguage } from "@/providers/LanguageContext";
 
 export default function Footer() {
   const { t } = useLanguage();

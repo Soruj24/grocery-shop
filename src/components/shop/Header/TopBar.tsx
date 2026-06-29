@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { PhoneCall, Star } from "lucide-react";
 import LocationSelector from "./LocationSelector";
-import { useLanguage } from "@/components/LanguageContext";
+import { useLanguage } from "@/providers/LanguageContext";
 
 export default function TopBar() {
   const { t } = useLanguage();

@@ -5,8 +5,8 @@ import { motion } from "framer-motion";
 import { ArrowRight, ChevronRight } from "lucide-react";
 import Image from "next/image";
 import { Category as ICategory } from "@/types/category";
-import { useLanguage } from "@/components/LanguageContext";
-import { getCategoryFallbackImage } from "@/lib/category-utils";
+import { useLanguage } from "@/providers/LanguageContext";
+import { getCategoryFallbackImage } from "@/lib/utils/category-utils";
 
 interface CategoryMegaMenuProps {
   categories: ICategory[];

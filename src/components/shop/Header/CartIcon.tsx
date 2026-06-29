@@ -2,8 +2,8 @@
 
 import { ShoppingCart } from "lucide-react";
 import { motion } from "framer-motion";
-import { useCart } from "@/components/CartContext";
-import { useLanguage } from "@/components/LanguageContext";
+import { useCart } from "@/providers/CartContext";
+import { useLanguage } from "@/providers/LanguageContext";
 
 interface CartIconProps {
   onClick: () => void;

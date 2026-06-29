@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import { Phone } from "lucide-react";
 import Image from "next/image";
-import { getProductFallbackImage } from "@/lib/category-utils";
+import { getProductFallbackImage } from "@/lib/utils/category-utils";
 
 export default function SupportHero() {
   return (

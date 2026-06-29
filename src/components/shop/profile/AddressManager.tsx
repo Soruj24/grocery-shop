@@ -3,7 +3,7 @@
 import { MapPin, Plus, Trash2, Edit2, Home, Briefcase } from "lucide-react";
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { useLanguage } from "@/components/LanguageContext";
+import { useLanguage } from "@/providers/LanguageContext";
 
 export default function AddressManager() {
   const { t } = useLanguage();

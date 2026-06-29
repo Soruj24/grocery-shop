@@ -2,7 +2,7 @@
 
 import { Ticket, Loader2, CheckCircle2, XCircle } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import { useLanguage } from "@/components/LanguageContext";
+import { useLanguage } from "@/providers/LanguageContext";
 import { useCouponValidation } from "@/hooks/useCouponValidation";
 
 interface CouponInputProps {

@@ -1,7 +1,7 @@
 "use client";
 
 import { X, ShoppingBag } from "lucide-react";
-import { useLanguage } from "@/components/LanguageContext";
+import { useLanguage } from "@/providers/LanguageContext";
 
 interface CartDrawerHeaderProps {
   itemCount: number;

@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import dbConnect from "@/lib/mongodb";
+import dbConnect from "@/lib/config/mongodb";
 import Product from "@/models/Product";
 import CategoryModel from "@/models/Category";
 

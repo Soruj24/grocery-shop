@@ -1,6 +1,6 @@
 import { User, Package, Heart, MapPin, CreditCard, LogOut, Star, Calendar, LucideIcon } from "lucide-react";
 import { signOut } from "next-auth/react";
-import { useLanguage } from "@/components/LanguageContext";
+import { useLanguage } from "@/providers/LanguageContext";
 
 interface SidebarItemProps {
   icon: LucideIcon;

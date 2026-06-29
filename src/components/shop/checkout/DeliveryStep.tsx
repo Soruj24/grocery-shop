@@ -1,7 +1,7 @@
 "use client";
 
 import { Clock, ArrowLeft, ArrowRight } from "lucide-react";
-import { useLanguage } from "@/components/LanguageContext";
+import { useLanguage } from "@/providers/LanguageContext";
 
 interface DeliveryStepProps {
   deliverySlot: string;

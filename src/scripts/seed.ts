@@ -5,7 +5,7 @@ import path from 'path';
 // Load environment variables from .env.local
 dotenv.config({ path: path.resolve(process.cwd(), '.env.local') });
 
-import dbConnect from '../lib/mongodb';
+import dbConnect from '../lib/config/mongodb';
 import Product from '../models/Product';
 import Category from '../models/Category';
 

@@ -1,6 +1,6 @@
 import Image from "next/image";
-import { TranslationKey } from "@/lib/translations";
-import { getProductFallbackImage } from "@/lib/category-utils";
+import { TranslationKey } from "@/lib/constants/translations";
+import { getProductFallbackImage } from "@/lib/utils/category-utils";
 
 interface OrderItem {
   _id: string;

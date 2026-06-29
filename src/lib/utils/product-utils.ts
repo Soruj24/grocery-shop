@@ -1,5 +1,5 @@
-import { Toast } from "@/lib/toast";
-import type { TranslationKey } from "@/lib/translations";
+import { Toast } from "@/lib/utils/toast";
+import type { TranslationKey } from "@/lib/constants/translations";
 
 const unitLabelMap: Record<string, string> = {
   kg: "unit_kg",

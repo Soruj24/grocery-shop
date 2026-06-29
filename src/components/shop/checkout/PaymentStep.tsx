@@ -7,7 +7,7 @@ import {
   ArrowLeft,
   ArrowRight,
 } from "lucide-react";
-import { useLanguage } from "@/components/LanguageContext";
+import { useLanguage } from "@/providers/LanguageContext";
 import type { PaymentMethod } from "@/types/checkout";
 
 interface PaymentStepProps {

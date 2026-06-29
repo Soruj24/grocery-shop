@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import { Apple, PlayCircle, Smartphone, CheckCircle2 } from "lucide-react";
  
-import { useLanguage } from "@/components/LanguageContext";
+import { useLanguage } from "@/providers/LanguageContext";
 import Image from "next/image";
 
 export default function AppDownload() {

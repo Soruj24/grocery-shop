@@ -3,11 +3,11 @@
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import Image from "next/image";
-import { useLanguage } from "@/components/LanguageContext";
+import { useLanguage } from "@/providers/LanguageContext";
 import { useHeroSlides } from "@/hooks/useHeroSlides";
-import HeroStats from "./Hero/HeroStats";
-import HeroSlideContent from "./Hero/HeroSlideContent";
-import HeroSideBanner from "./Hero/HeroSideBanner";
+import HeroStats from "./hero/HeroStats";
+import HeroSlideContent from "./hero/HeroSlideContent";
+import HeroSideBanner from "./hero/HeroSideBanner";
 
 export default function Hero({ data }: { data?: { slides?: Array<{ id: number; title: string; subtitle: string; desc: string; image: string; badge: string; color: string }> } }) {
   const { t } = useLanguage();

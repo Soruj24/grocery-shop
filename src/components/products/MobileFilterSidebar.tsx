@@ -2,7 +2,7 @@
 
 import { Filter, X } from "lucide-react";
 import { Category } from "@/types/category";
-import { useLanguage } from "@/components/LanguageContext";
+import { useLanguage } from "@/providers/LanguageContext";
 import CategoryTree from "./CategoryTree";
 import PriceRangeFilter from "./PriceRangeFilter";
 

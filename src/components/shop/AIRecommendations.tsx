@@ -1,11 +1,11 @@
 "use client";
 
-import { useRecentlyViewed } from "@/components/RecentlyViewedContext";
+import { useRecentlyViewed } from "@/providers/RecentlyViewedContext";
 import { useQuery } from "@tanstack/react-query";
-import ProductCard from "@/components/ProductCard";
+import ProductCard from "@/components/shop/products/ProductCard";
 import { motion } from "framer-motion";
 import { Sparkles } from "lucide-react";
-import { useLanguage } from "@/components/LanguageContext";
+import { useLanguage } from "@/providers/LanguageContext";
 
 export default function AIRecommendations() {
   const { recentlyViewed } = useRecentlyViewed();

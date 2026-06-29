@@ -3,8 +3,8 @@
 import { Heart } from "lucide-react";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { useWishlist } from "@/components/WishlistContext";
-import { useLanguage } from "@/components/LanguageContext";
+import { useWishlist } from "@/providers/WishlistContext";
+import { useLanguage } from "@/providers/LanguageContext";
 
 export default function WishlistIcon() {
   const { totalWishlistItems } = useWishlist();

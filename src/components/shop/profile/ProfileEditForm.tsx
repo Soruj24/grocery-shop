@@ -4,7 +4,7 @@ import { useState } from "react";
 import { User, Mail, Phone, MapPin, Save, Camera } from "lucide-react";
 import { motion } from "framer-motion";
 import { Session } from "next-auth";
-import { useLanguage } from "@/components/LanguageContext";
+import { useLanguage } from "@/providers/LanguageContext";
 
 interface ProfileEditFormProps {
   session: Session | null;

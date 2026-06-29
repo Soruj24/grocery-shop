@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import dbConnect from "@/lib/mongodb";
+import dbConnect from "@/lib/config/mongodb";
 import CategoryModel from "@/models/Category";
 import { Category as ICategory } from "@/types/category";
 

@@ -1,12 +1,12 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useCart } from "@/components/CartContext";
-import { useNotifications } from "@/components/NotificationContext";
+import { useCart } from "@/providers/CartContext";
+import { useNotifications } from "@/providers/NotificationContext";
 import { useSession } from "next-auth/react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Swal from "sweetalert2";
-import { useLanguage } from "@/components/LanguageContext";
+import { useLanguage } from "@/providers/LanguageContext";
 import { CheckoutFormData, PaymentMethod } from "@/types/checkout";
 
 export function useCheckout() {

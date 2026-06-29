@@ -3,7 +3,7 @@
 import { CreditCard, Plus, Trash2, ShieldCheck, Wallet } from "lucide-react";
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { useLanguage } from "@/components/LanguageContext";
+import { useLanguage } from "@/providers/LanguageContext";
 
 export default function PaymentMethods() {
   const { t } = useLanguage();

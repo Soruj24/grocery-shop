@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import { Zap, ArrowRight } from "lucide-react";
 import Link from "next/link";
-import { useLanguage } from "@/components/LanguageContext";
+import { useLanguage } from "@/providers/LanguageContext";
 
 export default function FlashDealsHeader() {
   const { t } = useLanguage();

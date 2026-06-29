@@ -1,8 +1,8 @@
 "use client";
 
 import Image from "next/image";
-import { useLanguage } from "@/components/LanguageContext";
-import { getProductFallbackImage } from "@/lib/category-utils";
+import { useLanguage } from "@/providers/LanguageContext";
+import { getProductFallbackImage } from "@/lib/utils/category-utils";
 
 export default function HeroBackground() {
   const { t } = useLanguage();

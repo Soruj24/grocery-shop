@@ -11,7 +11,7 @@ import {
 import { signOut } from "next-auth/react";
 import { motion } from "framer-motion";
 import { Session } from "next-auth";
-import { useLanguage } from "@/components/LanguageContext";
+import { useLanguage } from "@/providers/LanguageContext";
 
 interface ProfileHeaderProps {
   session: Session | null;

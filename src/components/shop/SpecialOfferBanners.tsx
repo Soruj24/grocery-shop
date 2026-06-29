@@ -1,8 +1,8 @@
 "use client";
 
-import OfferBanner from "./SpecialOfferBanners/OfferBanner";
-import { getProductFallbackImage } from "@/lib/category-utils";
-import { useLanguage } from "@/components/LanguageContext";
+import OfferBanner from "./special-offer-banners/OfferBanner";
+import { getProductFallbackImage } from "@/lib/utils/category-utils";
+import { useLanguage } from "@/providers/LanguageContext";
 
 export default function SpecialOfferBanners() {
   const { t } = useLanguage();

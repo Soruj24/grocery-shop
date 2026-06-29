@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { useLanguage } from "@/components/LanguageContext";
+import { useLanguage } from "@/providers/LanguageContext";
 import { useCountdown } from "@/hooks/useCountdown";
 
 export interface DailyDealsBannerData {

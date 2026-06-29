@@ -1,8 +1,8 @@
 import { NextResponse } from "next/server";
-import dbConnect from "@/lib/mongodb";
+import dbConnect from "@/lib/config/mongodb";
 import Product from "@/models/Product";
 import Category from "@/models/Category";
-import { rateLimit } from "@/lib/rate-limit";
+import { rateLimit } from "@/lib/utils/rate-limit";
 
 export async function GET(request: Request) {
   try {

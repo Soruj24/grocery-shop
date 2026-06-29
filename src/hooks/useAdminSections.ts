@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
-import { toast } from "@/lib/swal";
+import { toast } from "@/lib/utils/swal";
 
 export interface Section {
   _id: string;

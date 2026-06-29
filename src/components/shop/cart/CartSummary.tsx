@@ -2,7 +2,7 @@
 
 import { ArrowRight, ShieldCheck } from "lucide-react";
 import Link from "next/link";
-import { useLanguage } from "@/components/LanguageContext";
+import { useLanguage } from "@/providers/LanguageContext";
 import { useCouponValidation } from "@/hooks/useCouponValidation";
 import DeliveryProgress from "./DeliveryProgress";
 import PriceBreakdown from "./PriceBreakdown";

@@ -1,7 +1,7 @@
 "use client";
 
 import { Search, Loader2, Mic, X } from "lucide-react";
-import { useLanguage } from "@/components/LanguageContext";
+import { useLanguage } from "@/providers/LanguageContext";
 import { useSearch } from "@/hooks/useSearch";
 import SearchDropdownContent from "./SearchDropdownContent";
 

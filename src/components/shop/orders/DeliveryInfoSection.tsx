@@ -1,7 +1,6 @@
-"use client";
 
 import { MapPin, Phone, Package, Truck } from "lucide-react";
-import { TranslationKey } from "@/lib/translations";
+import { TranslationKey } from "@/lib/constants/translations";
 
 interface DeliveryBoy {
   name: string;

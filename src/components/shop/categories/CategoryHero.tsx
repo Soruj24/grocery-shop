@@ -1,8 +1,8 @@
 "use client";
 import { LayoutGrid } from "lucide-react";
 import Image from "next/image";
-import { useLanguage } from "@/components/LanguageContext";
-import { getCategoryFallbackImage } from "@/lib/category-utils";
+import { useLanguage } from "@/providers/LanguageContext";
+import { getCategoryFallbackImage } from "@/lib/utils/category-utils";
 
 export default function CategoryHero() {
   const { t } = useLanguage();

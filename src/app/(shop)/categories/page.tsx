@@ -1,7 +1,7 @@
-import dbConnect from "@/lib/mongodb";
+import dbConnect from "@/lib/config/mongodb";
 import Category from "@/models/Category";
 import CategoryHero from "@/components/shop/categories/CategoryHero";
-import CategoryCard from "@/components/CategoryCard";
+import CategoryCard from "@/components/shop/categories/CategoryCard";
 import CategoryMap from "@/components/shop/categories/CategoryMap";
 import { Category as ICategory } from "@/types/category";
 

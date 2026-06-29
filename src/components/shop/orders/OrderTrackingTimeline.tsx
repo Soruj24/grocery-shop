@@ -1,7 +1,6 @@
-"use client";
 
 import { CheckCircle2 } from "lucide-react";
-import { TranslationKey } from "@/lib/translations";
+import { TranslationKey } from "@/lib/constants/translations";
 
 interface Step {
   key: string;

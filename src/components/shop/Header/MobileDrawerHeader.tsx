@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { ShoppingBasket, X, User } from "lucide-react";
 import { Session } from "next-auth";
-import { useLanguage } from "@/components/LanguageContext";
+import { useLanguage } from "@/providers/LanguageContext";
 
 interface MobileDrawerHeaderProps {
   onClose: () => void;

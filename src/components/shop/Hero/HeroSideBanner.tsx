@@ -1,9 +1,8 @@
-"use client";
 
 import Link from "next/link";
 import Image from "next/image";
 import { Clock, Leaf, ArrowRight } from "lucide-react";
-import { getProductFallbackImage } from "@/lib/category-utils";
+import { getProductFallbackImage } from "@/lib/utils/category-utils";
 
 interface HeroSideBannerProps {
   href: string;

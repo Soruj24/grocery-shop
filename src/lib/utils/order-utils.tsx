@@ -1,6 +1,6 @@
 import { Package, Clock, CheckCircle2, XCircle } from "lucide-react";
 import type { ReactNode } from "react";
-import type { TranslationKey } from "@/lib/translations";
+import type { TranslationKey } from "@/lib/constants/translations";
 
 export function getStatusColor(status: string): string {
   switch (status) {

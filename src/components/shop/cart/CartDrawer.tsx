@@ -2,10 +2,10 @@
 
 import { motion, AnimatePresence } from "framer-motion";
 import { Plus, Minus, Trash2 } from "lucide-react";
-import { useCart } from "@/components/CartContext";
-import { useLanguage } from "@/components/LanguageContext";
+import { useCart } from "@/providers/CartContext";
+import { useLanguage } from "@/providers/LanguageContext";
 import Image from "next/image";
-import { getProductFallbackImage } from "@/lib/category-utils";
+import { getProductFallbackImage } from "@/lib/utils/category-utils";
 import CartDrawerHeader from "./CartDrawerHeader";
 import CartDrawerEmpty from "./CartDrawerEmpty";
 import CartDrawerFooter from "./CartDrawerFooter";

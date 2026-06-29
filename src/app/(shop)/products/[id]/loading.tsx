@@ -1,4 +1,4 @@
-import { Skeleton, ProductCardSkeleton } from "@/components/Skeleton";
+import { Skeleton, ProductCardSkeleton } from "@/components/ui/Skeleton";
 import { ChevronRight, Info } from "lucide-react";
 
 export default function ProductLoading() {

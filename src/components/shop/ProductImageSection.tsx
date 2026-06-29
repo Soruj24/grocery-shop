@@ -5,8 +5,8 @@ import Image from "next/image";
 import { Heart, Share2, TrendingUp } from "lucide-react";
 import { motion } from "framer-motion";
 import { Product } from "@/types/product";
-import { TranslationKey } from "@/lib/translations";
-import { getProductFallbackImage } from "@/lib/category-utils";
+import { TranslationKey } from "@/lib/constants/translations";
+import { getProductFallbackImage } from "@/lib/utils/category-utils";
 
 interface ProductImageSectionProps {
   product: Product;

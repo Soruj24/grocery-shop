@@ -6,7 +6,7 @@ import Pagination from "@/components/admin/Pagination";
 import AdminTable from "@/components/admin/AdminTable";
 import CustomerTableRow from "@/components/admin/customers/CustomerTableRow";
 import { AdminCustomer } from "@/types/admin";
-import { toast } from "@/lib/swal";
+import { toast } from "@/lib/utils/swal";
 
 export default function AdminCustomersPage() {
   const [customers, setCustomers] = useState<AdminCustomer[]>([]);

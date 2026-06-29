@@ -7,9 +7,9 @@ import {
   Package,
 } from "lucide-react";
 import Link from "next/link";
-import { useLanguage } from "@/components/LanguageContext";
+import { useLanguage } from "@/providers/LanguageContext";
 import Image from "next/image";
-import { getProductFallbackImage } from "@/lib/category-utils";
+import { getProductFallbackImage } from "@/lib/utils/category-utils";
 import { motion } from "framer-motion";
 import { useCombos } from "@/hooks/useCombos";
 

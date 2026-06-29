@@ -1,6 +1,6 @@
 import { ChevronRight, ShoppingBag } from "lucide-react";
 import { AdminOrder as Order } from "@/types/admin";
-import { useLanguage } from "@/components/LanguageContext";
+import { useLanguage } from "@/providers/LanguageContext";
 import OrderCardHeader from "./OrderCardHeader";
 import OrderItemsList from "./OrderItemsList";
 import OrderCardInfoGrid from "./OrderCardInfoGrid";

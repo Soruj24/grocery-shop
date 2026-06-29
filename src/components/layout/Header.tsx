@@ -3,14 +3,14 @@
 import { useState } from "react";
 import { useSession } from "next-auth/react";
 import { Menu, Search } from "lucide-react";
-import { useWishlist } from "@/components/WishlistContext";
+import { useWishlist } from "@/providers/WishlistContext";
 import { useGetCategoriesQuery } from "@/redux/apiSlice";
 import { useScrollPosition } from "@/hooks/useScrollPosition";
-import SearchBar from "./shop/Header/SearchBar";
-import UserActions from "./shop/Header/UserActions";
-import NavbarLogo from "./shop/Header/NavbarLogo";
-import DesktopNav from "./shop/Header/DesktopNav";
-import MobileDrawer from "./shop/Header/MobileDrawer";
+import SearchBar from "../shop/header/SearchBar";
+import UserActions from "../shop/header/UserActions";
+import NavbarLogo from "../shop/header/NavbarLogo";
+import DesktopNav from "../shop/header/DesktopNav";
+import MobileDrawer from "../shop/header/MobileDrawer";
 
 export default function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
