@@ -1,19 +1,19 @@
-import dbConnect from "@/lib/config/mongodb";
-import Product from "@/models/Product";
-import Category from "@/models/Category";
+import dbConnect from "@/config/mongodb";
+import Product from "@/schemas/Product";
+import Category from "@/schemas/Category";
 import { notFound } from "next/navigation";
 import { Metadata } from "next";
-import ProductBreadcrumb from "@/components/shop/product-details/ProductBreadcrumb";
-import ProductImage from "@/components/shop/product-details/ProductImage";
-import ProductInfo from "@/components/shop/product-details/ProductInfo";
-import ProductDetailsTabs from "@/components/shop/product-details/ProductDetailsTabs";
-import RelatedProducts from "@/components/shop/product-details/RelatedProducts";
-import FrequentlyBoughtTogether from "@/components/shop/product-details/FrequentlyBoughtTogether";
-import CustomerReviews from "@/components/shop/product-details/CustomerReviews";
+import ProductBreadcrumb from "@/features/products/components/details/ProductBreadcrumb";
+import ProductImage from "@/features/products/components/details/ProductImage";
+import ProductInfo from "@/features/products/components/details/ProductInfo";
+import ProductDetailsTabs from "@/features/products/components/details/ProductDetailsTabs";
+import RelatedProducts from "@/features/products/components/details/RelatedProducts";
+import FrequentlyBoughtTogether from "@/features/products/components/details/FrequentlyBoughtTogether";
+import CustomerReviews from "@/features/products/components/details/CustomerReviews";
 import PageBackground from "@/components/ui/PageBackground";
 import { Product as ProductType } from "@/types/product";
-import StickyCheckoutBar from "@/components/shop/product-details/StickyCheckoutBar";
-import RecentlyViewedTracker from "@/components/shop/product-details/RecentlyViewedTracker";
+import StickyCheckoutBar from "@/features/products/components/details/StickyCheckoutBar";
+import RecentlyViewedTracker from "@/features/products/components/details/RecentlyViewedTracker";
 
 export const dynamic = "force-dynamic";
 

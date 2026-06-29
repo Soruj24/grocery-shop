@@ -3,8 +3,8 @@
 import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import EmptyOrdersState from "@/components/shop/orders/EmptyOrdersState";
-import OrderCard from "@/components/shop/orders/OrderCard";
+import EmptyOrdersState from "@/features/orders/components/EmptyOrdersState";
+import OrderCard from "@/features/orders/components/OrderCard";
 import { AdminOrder as Order } from "@/types/admin";
 
 export default function OrdersPage() {

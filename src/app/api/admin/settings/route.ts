@@ -1,8 +1,8 @@
 import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
-import { authOptions } from "@/lib/config/auth";
-import dbConnect from "@/lib/config/mongodb";
-import Settings from "@/models/Settings";
+import { authOptions } from "@/config/auth";
+import dbConnect from "@/config/mongodb";
+import Settings from "@/schemas/Settings";
 
 async function checkAdmin() {
   const session = await getServerSession(authOptions);

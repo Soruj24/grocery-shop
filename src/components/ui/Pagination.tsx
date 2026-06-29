@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useSearchParams } from "next/navigation";
-import { useLanguage } from "@/providers/LanguageContext";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 interface PaginationProps {
   totalPages: number;

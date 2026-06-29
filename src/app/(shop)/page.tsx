@@ -1,9 +1,9 @@
 import PageBackground from "@/components/ui/PageBackground";
-import SectionRenderer from "@/components/shop/SectionRenderer";
-import HomeErrorState from "@/components/shop/HomeErrorState";
-import HomeEmptyState from "@/components/shop/HomeEmptyState";
-import HomeFallbackSections from "@/components/shop/HomeFallbackSections";
-import { getHomeData } from "@/lib/services/home-data";
+import SectionRenderer from "@/features/home/components/sections/SectionRenderer";
+import HomeErrorState from "@/features/home/components/sections/HomeErrorState";
+import HomeEmptyState from "@/features/home/components/sections/HomeEmptyState";
+import HomeFallbackSections from "@/features/home/components/sections/HomeFallbackSections";
+import { getHomeData } from "@/features/home/services/home-data";
 import { SearchParams } from "@/types/home";
 
 export const dynamic = "force-dynamic";

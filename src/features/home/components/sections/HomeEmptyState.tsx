@@ -1,0 +1,1 @@
+export default function HomeEmptyState() {   return (     <div className="flex flex-col items-center justify-center min-h-[50vh] space-y-4">       <h2 className="text-2xl font-bold">No data found</h2>       <p className="text-gray-600">         There are no products or categories to display at the moment.       </p>     </div>   ); }

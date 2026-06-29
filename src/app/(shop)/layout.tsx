@@ -1,8 +1,8 @@
 import Link from "next/link";
 import { ShoppingBasket, User, Search, ShoppingCart } from "lucide-react";
-import Header from "@/components/layout/Header";
-import Footer from "@/components/layout/Footer";
-import MobileBottomNav from "@/components/layout/MobileBottomNav";
+import Header from "@/components/navigation/Header";
+import Footer from "@/components/navigation/Footer";
+import MobileBottomNav from "@/components/navigation/MobileBottomNav";
 
 export default async function ShopLayout({
   children,

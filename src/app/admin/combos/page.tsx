@@ -1,10 +1,10 @@
 "use client";
 
 import { Plus, Search, Layers, RefreshCw } from "lucide-react";
-import AdminTable from "@/components/admin/AdminTable";
-import ComboTableRow from "@/components/admin/combos/ComboTableRow";
-import ComboModal from "@/components/admin/ComboModal";
-import { useAdminCombos } from "@/hooks/useAdminCombos";
+import AdminTable from "@/features/admin/components/AdminTable";
+import ComboTableRow from "@/features/admin/combos/components/ComboTableRow";
+import ComboModal from "@/features/admin/components/ComboModal";
+import { useAdminCombos } from "@/features/admin/combos/hooks/useAdminCombos";
 
 export default function CombosPage() {
   const {

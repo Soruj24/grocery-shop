@@ -16,8 +16,8 @@ import {
 } from "lucide-react";
 import ThemeToggle from "@/components/ui/ThemeToggle";
 
-import AdminSidebar from "@/components/admin/AdminSidebar";
-import AdminNavbar from "@/components/admin/AdminNavbar";
+import AdminSidebar from "@/features/admin/components/AdminSidebar";
+import AdminNavbar from "@/features/admin/components/AdminNavbar";
 
 export default function AdminLayout({
   children,

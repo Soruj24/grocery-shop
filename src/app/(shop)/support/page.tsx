@@ -1,8 +1,8 @@
-import SupportHero from "@/components/shop/support/SupportHero";
-import ContactInfoCards from "@/components/shop/support/ContactInfoCards";
-import ContactForm from "@/components/shop/support/ContactForm";
-import FaqSection from "@/components/shop/support/FaqSection";
-import TrustBadges from "@/components/shop/support/TrustBadges";
+import SupportHero from "@/features/support/components/SupportHero";
+import ContactInfoCards from "@/features/support/components/ContactInfoCards";
+import ContactForm from "@/features/support/components/ContactForm";
+import FaqSection from "@/features/support/components/FaqSection";
+import TrustBadges from "@/features/support/components/TrustBadges";
 
 export default function SupportPage() {
   return (

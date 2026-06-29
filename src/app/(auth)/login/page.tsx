@@ -1,7 +1,7 @@
-import AuthLogo from "@/components/auth/AuthLogo";
-import LoginForm from "@/components/auth/LoginForm";
+import AuthLogo from "@/features/auth/components/AuthLogo";
+import LoginForm from "@/features/auth/components/LoginForm";
 import Image from "next/image";
-import { getProductFallbackImage } from "@/lib/utils/category-utils";
+import { getProductFallbackImage } from "@/constants/fallback-images";
 
 export default function LoginPage() {
   return (

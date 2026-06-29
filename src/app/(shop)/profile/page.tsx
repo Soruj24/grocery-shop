@@ -2,14 +2,14 @@
 
 import { useSession } from "next-auth/react";
 import { useState, useEffect } from "react";
-import ProfileSidebar from "@/components/shop/profile/ProfileSidebar";
-import ProfileOrderList from "@/components/shop/profile/ProfileOrderList";
-import ProfileEditForm from "@/components/shop/profile/ProfileEditForm";
-import WishlistSection from "@/components/shop/profile/WishlistSection";
-import AddressManager from "@/components/shop/profile/AddressManager";
-import PaymentMethods from "@/components/shop/profile/PaymentMethods";
-import LoyaltyPoints from "@/components/shop/profile/LoyaltyPoints";
-import SubscriptionManager from "@/components/shop/profile/SubscriptionManager";
+import ProfileSidebar from "@/features/profile/components/ProfileSidebar";
+import ProfileOrderList from "@/features/profile/components/ProfileOrderList";
+import ProfileEditForm from "@/features/profile/components/ProfileEditForm";
+import WishlistSection from "@/features/profile/components/WishlistSection";
+import AddressManager from "@/features/profile/components/AddressManager";
+import PaymentMethods from "@/features/profile/components/PaymentMethods";
+import LoyaltyPoints from "@/features/profile/components/LoyaltyPoints";
+import SubscriptionManager from "@/features/profile/components/SubscriptionManager";
 import PageBackground from "@/components/ui/PageBackground";
 import { motion, AnimatePresence } from "framer-motion";
 

@@ -1,11 +1,11 @@
 "use client";
 
-import AdminHeader from "@/components/admin/AdminHeader";
-import Pagination from "@/components/admin/Pagination";
-import CategoryModal from "@/components/admin/CategoryModal";
-import AdminTable from "@/components/admin/AdminTable";
-import CategoryTableRow from "@/components/admin/categories/CategoryTableRow";
-import { useAdminCategories } from "@/hooks/useAdminCategories";
+import AdminHeader from "@/features/admin/components/AdminHeader";
+import Pagination from "@/features/admin/components/Pagination";
+import CategoryModal from "@/features/admin/components/CategoryModal";
+import AdminTable from "@/features/admin/components/AdminTable";
+import CategoryTableRow from "@/features/admin/categories/components/CategoryTableRow";
+import { useAdminCategories } from "@/features/admin/categories/hooks/useAdminCategories";
 
 export default function CategoriesPage() {
   const {

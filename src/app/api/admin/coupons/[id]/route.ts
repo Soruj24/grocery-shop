@@ -1,8 +1,8 @@
 import { NextResponse } from "next/server";
-import dbConnect from "@/lib/config/mongodb";
-import Coupon from "@/models/Coupon";
+import dbConnect from "@/config/mongodb";
+import Coupon from "@/schemas/Coupon";
 import { getServerSession } from "next-auth";
-import { authOptions } from "@/lib/config/auth";
+import { authOptions } from "@/config/auth";
 
 export async function PUT(
   req: Request, 

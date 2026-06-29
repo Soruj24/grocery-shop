@@ -1,11 +1,11 @@
 "use client";
 
 import { ShoppingCart } from "lucide-react";
-import { useCart } from "@/providers/CartContext";
+import { useCart } from "@/contexts/CartContext";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useLanguage } from "@/providers/LanguageContext";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export default function FloatingCart() {
   const { cart } = useCart();

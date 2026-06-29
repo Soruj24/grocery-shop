@@ -1,8 +1,8 @@
-import dbConnect from "@/lib/config/mongodb";
-import Category from "@/models/Category";
-import CategoryHero from "@/components/shop/categories/CategoryHero";
-import CategoryCard from "@/components/shop/categories/CategoryCard";
-import CategoryMap from "@/components/shop/categories/CategoryMap";
+import dbConnect from "@/config/mongodb";
+import Category from "@/schemas/Category";
+import CategoryHero from "@/features/categories/components/CategoryHero";
+import CategoryCard from "@/features/categories/components/CategoryCard";
+import CategoryMap from "@/features/categories/components/CategoryMap";
 import { Category as ICategory } from "@/types/category";
 
 export const dynamic = "force-dynamic";

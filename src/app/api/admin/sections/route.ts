@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
-import dbConnect from "@/lib/config/mongodb";
-import Section from "@/models/Section";
-import { seedSections } from "@/lib/constants/seed-sections";
+import dbConnect from "@/config/mongodb";
+import Section from "@/schemas/Section";
+import { seedSections } from "@/constants/seed-sections";
 
 export async function GET() {
   await dbConnect();

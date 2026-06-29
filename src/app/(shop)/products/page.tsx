@@ -1,9 +1,9 @@
-import ProductFilters from "@/components/products/ProductFilters";
-import EmptyProductState from "@/components/shop/products/EmptyProductState";
-import ProductSidebarFilters from "@/components/shop/products/ProductSidebarFilters";
-import ProductGridContent from "@/components/shop/products/ProductGridContent";
-import ProductStatusBar from "@/components/shop/products/ProductStatusBar";
-import { getProducts } from "@/lib/services/products-data";
+import ProductFilters from "@/features/products/components/filters/ProductFilters";
+import EmptyProductState from "@/features/products/components/EmptyProductState";
+import ProductSidebarFilters from "@/features/products/components/ProductSidebarFilters";
+import ProductGridContent from "@/features/products/components/ProductGridContent";
+import ProductStatusBar from "@/features/products/components/ProductStatusBar";
+import { getProducts } from "@/services/products-data";
 import type { ProductsSearchParams } from "@/types/products-page";
 import { Category as ICategory } from "@/types/category";
 

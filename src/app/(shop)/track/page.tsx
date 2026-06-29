@@ -5,9 +5,9 @@ import { useRouter } from "next/navigation";
 import { Search, Package, ArrowRight, Truck } from "lucide-react";
 import PageBackground from "@/components/ui/PageBackground";
 import { motion } from "framer-motion";
-import { useLanguage } from "@/providers/LanguageContext";
+import { useLanguage } from "@/contexts/LanguageContext";
 import Image from "next/image";
-import { getProductFallbackImage } from "@/lib/utils/category-utils";
+import { getProductFallbackImage } from "@/constants/fallback-images";
 
 export default function TrackOrderSearchPage() {
   const { t } = useLanguage();

@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
-import dbConnect from "@/lib/config/mongodb";
-import Section from "@/models/Section";
+import dbConnect from "@/config/mongodb";
+import Section from "@/schemas/Section";
 
 export async function PUT(
   req: Request,

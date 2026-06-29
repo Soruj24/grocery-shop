@@ -2,11 +2,11 @@
 
 import { useState } from "react";
 import { AdminCoupon } from "@/types/admin";
-import { useAdminCoupons } from "@/hooks/useAdminCoupons";
-import AdminHeader from "@/components/admin/AdminHeader";
-import AdminTable from "@/components/admin/AdminTable";
-import CouponTableRow from "@/components/admin/coupons/CouponTableRow";
-import CouponFormModal from "@/components/admin/coupons/CouponFormModal";
+import { useAdminCoupons } from "@/features/admin/coupons/hooks/useAdminCoupons";
+import AdminHeader from "@/features/admin/components/AdminHeader";
+import AdminTable from "@/features/admin/components/AdminTable";
+import CouponTableRow from "@/features/admin/coupons/components/CouponTableRow";
+import CouponFormModal from "@/features/admin/coupons/components/CouponFormModal";
 
 export default function CouponsPage() {
   const { coupons, loading, handleSubmit, handleDelete } = useAdminCoupons();

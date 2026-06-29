@@ -1,9 +1,9 @@
 "use client";
 
-import AdminHeader from "@/components/admin/AdminHeader";
-import SectionEditor from "@/components/admin/sections/SectionEditor";
-import SectionListItem from "@/components/admin/sections/SectionListItem";
-import { useAdminSections } from "@/hooks/useAdminSections";
+import AdminHeader from "@/features/admin/components/AdminHeader";
+import SectionEditor from "@/features/admin/sections/components/SectionEditor";
+import SectionListItem from "@/features/admin/sections/components/SectionListItem";
+import { useAdminSections } from "@/features/admin/sections/hooks/useAdminSections";
 
 export default function SectionsPage() {
   const { sections, isLoading, editingSection, setEditingSection, handleToggle, handleMove, handleSave } = useAdminSections();

@@ -3,10 +3,10 @@
 import { useState } from "react";
 import { ShoppingCart, Minus, Plus } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import { useCart } from "@/providers/CartContext";
+import { useCart } from "@/contexts/CartContext";
 import { Product } from "@/types/product";
-import { Toast } from "@/lib/utils/toast";
-import { useLanguage } from "@/providers/LanguageContext";
+import { Toast } from "@/utils/toast";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export default function AddToCartButton({ product }: { product: Product }) {
   const [quantity, setQuantity] = useState(1);

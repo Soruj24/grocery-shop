@@ -1,9 +1,9 @@
 "use client";
 
-import { useWishlist } from "@/providers/WishlistContext";
-import ProductCard from "@/components/shop/products/ProductCard";
-import WishlistHeader from "@/components/shop/wishlist/WishlistHeader";
-import EmptyWishlistState from "@/components/shop/wishlist/EmptyWishlistState";
+import { useWishlist } from "@/contexts/WishlistContext";
+import ProductCard from "@/features/products/components/ProductCard";
+import WishlistHeader from "@/features/wishlist/components/WishlistHeader";
+import EmptyWishlistState from "@/features/wishlist/components/EmptyWishlistState";
 import PageBackground from "@/components/ui/PageBackground";
 
 export default function WishlistPage() {

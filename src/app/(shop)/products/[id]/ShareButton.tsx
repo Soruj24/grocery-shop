@@ -1,8 +1,8 @@
 "use client";
 
 import { Share2 } from "lucide-react";
-import { Toast } from "@/lib/utils/toast";
-import { useLanguage } from "@/providers/LanguageContext";
+import { Toast } from "@/utils/toast";
+import { useLanguage } from "@/contexts/LanguageContext";
 import { motion } from "framer-motion";
 import { Product } from "@/types/product";
 

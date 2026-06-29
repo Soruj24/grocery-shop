@@ -2,12 +2,12 @@
 
 import { ArrowLeft, MapPin, Clock, CreditCard, ClipboardList } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import { useCheckout } from "@/hooks/useCheckout";
-import CheckoutStepper from "@/components/shop/checkout/CheckoutStepper";
-import OrderSuccess from "@/components/shop/checkout/OrderSuccess";
-import CheckoutForm from "@/components/shop/checkout/CheckoutForm";
-import OrderSummary from "@/components/shop/checkout/OrderSummary";
-import CouponInput from "@/components/shop/checkout/CouponInput";
+import { useCheckout } from "@/features/checkout/hooks/useCheckout";
+import CheckoutStepper from "@/features/checkout/components/CheckoutStepper";
+import OrderSuccess from "@/features/checkout/components/OrderSuccess";
+import CheckoutForm from "@/features/checkout/components/CheckoutForm";
+import OrderSummary from "@/features/checkout/components/OrderSummary";
+import CouponInput from "@/features/checkout/components/CouponInput";
 
 export default function CheckoutPage() {
   const {

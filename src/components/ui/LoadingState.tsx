@@ -1,6 +1,6 @@
 "use client";
 
-import { useLanguage } from "@/providers/LanguageContext";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export default function LoadingState({ message }: { message?: string }) {
   const { t } = useLanguage();

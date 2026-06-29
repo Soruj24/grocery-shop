@@ -1,7 +1,7 @@
-import AuthLogo from "@/components/auth/AuthLogo";
-import SignupForm from "@/components/auth/SignupForm";
+import AuthLogo from "@/features/auth/components/AuthLogo";
+import SignupForm from "@/features/auth/components/SignupForm";
 import Image from "next/image";
-import { getProductFallbackImage } from "@/lib/utils/category-utils";
+import { getProductFallbackImage } from "@/constants/fallback-images";
 
 export default function SignupPage() {
   return (

@@ -24,15 +24,15 @@ import {
   Cell,
   Legend,
 } from "recharts";
-import AdminHeader from "@/components/admin/AdminHeader";
-import StatCard from "@/components/admin/StatCard";
-import AdminTable from "@/components/admin/AdminTable";
-import RecentOrderRow from "@/components/admin/dashboard/RecentOrderRow";
-import DashboardSectionHeader from "@/components/admin/dashboard/DashboardSectionHeader";
+import AdminHeader from "@/features/admin/components/AdminHeader";
+import StatCard from "@/features/admin/components/StatCard";
+import AdminTable from "@/features/admin/components/AdminTable";
+import RecentOrderRow from "@/features/admin/dashboard/components/RecentOrderRow";
+import DashboardSectionHeader from "@/features/admin/dashboard/components/DashboardSectionHeader";
 import LoadingState from "@/components/ui/LoadingState";
-import ChartCard from "@/components/admin/dashboard/ChartCard";
-import { useAdminDashboard } from "@/hooks/useAdminDashboard";
-import { getStatusLabel } from "@/lib/utils/admin-utils";
+import ChartCard from "@/features/admin/dashboard/components/ChartCard";
+import { useAdminDashboard } from "@/features/admin/dashboard/hooks/useAdminDashboard";
+import { getStatusLabel } from "@/utils/admin-utils";
 import { AdminOrder } from "@/types/admin";
 
 const COLORS = ["#10B981", "#3B82F6", "#F59E0B", "#EF4444", "#8B5CF6"];

@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
-import dbConnect from "@/lib/config/mongodb";
-import Product from "@/models/Product";
-import { rateLimit } from "@/lib/utils/rate-limit";
+import dbConnect from "@/config/mongodb";
+import Product from "@/schemas/Product";
+import { rateLimit } from "@/utils/rate-limit";
 
 export async function GET(request: Request) {
   try {

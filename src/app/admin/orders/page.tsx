@@ -1,11 +1,11 @@
 "use client";
 
-import AdminHeader from "@/components/admin/AdminHeader";
-import Pagination from "@/components/admin/Pagination";
-import AdminTable from "@/components/admin/AdminTable";
-import OrderTableRow from "@/components/admin/orders/OrderTableRow";
-import DeliveryFormModal from "@/components/admin/orders/DeliveryFormModal";
-import { useAdminOrders } from "@/hooks/useAdminOrders";
+import AdminHeader from "@/features/admin/components/AdminHeader";
+import Pagination from "@/features/admin/components/Pagination";
+import AdminTable from "@/features/admin/components/AdminTable";
+import OrderTableRow from "@/features/admin/orders/components/OrderTableRow";
+import DeliveryFormModal from "@/features/admin/orders/components/DeliveryFormModal";
+import { useAdminOrders } from "@/features/admin/orders/hooks/useAdminOrders";
 
 export default function AdminOrdersPage() {
   const {

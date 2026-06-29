@@ -1,14 +1,14 @@
 "use client";
 
 import { Globe, Phone, DollarSign, Layout, Save } from "lucide-react";
-import AdminHeader from "@/components/admin/AdminHeader";
-import { useSettings } from "@/hooks/useSettings";
+import AdminHeader from "@/features/admin/components/AdminHeader";
+import { useSettings } from "@/features/admin/settings/hooks/useSettings";
 import type { SettingsTab } from "@/types/settings";
-import TabSidebar from "@/components/admin/settings/TabSidebar";
-import GeneralTab from "@/components/admin/settings/GeneralTab";
-import ContactTab from "@/components/admin/settings/ContactTab";
-import BusinessTab from "@/components/admin/settings/BusinessTab";
-import FooterTab from "@/components/admin/settings/FooterTab";
+import TabSidebar from "@/features/admin/settings/components/TabSidebar";
+import GeneralTab from "@/features/admin/settings/components/GeneralTab";
+import ContactTab from "@/features/admin/settings/components/ContactTab";
+import BusinessTab from "@/features/admin/settings/components/BusinessTab";
+import FooterTab from "@/features/admin/settings/components/FooterTab";
 
 const tabs: SettingsTab[] = [
   { id: "general", label: "সাধারণ", icon: Globe },

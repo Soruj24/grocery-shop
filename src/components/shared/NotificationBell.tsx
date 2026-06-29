@@ -1,7 +1,7 @@
 "use client";
 
-import { useNotifications } from "@/providers/NotificationContext";
-import { useLanguage } from "@/providers/LanguageContext";
+import { useNotifications } from "@/contexts/NotificationContext";
+import { useLanguage } from "@/contexts/LanguageContext";
 import { Bell, X, CheckCircle2, AlertCircle, Info, Clock } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";

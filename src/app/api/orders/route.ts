@@ -1,10 +1,10 @@
 import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
-import { authOptions } from "@/lib/config/auth";
-import dbConnect from "@/lib/config/mongodb";
-import Order from "@/models/Order";
-import Product from "@/models/Product";
-import { rateLimit } from "@/lib/utils/rate-limit";
+import { authOptions } from "@/config/auth";
+import dbConnect from "@/config/mongodb";
+import Order from "@/schemas/Order";
+import Product from "@/schemas/Product";
+import { rateLimit } from "@/utils/rate-limit";
 import mongoose from "mongoose";
 
 export async function POST(req: Request) {

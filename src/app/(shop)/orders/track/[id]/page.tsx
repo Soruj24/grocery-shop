@@ -5,9 +5,9 @@ import { motion } from "framer-motion";
 import { Calendar, ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import PageBackground from "@/components/ui/PageBackground";
-import { useOrderTracking } from "@/hooks/useOrderTracking";
-import OrderTrackingTimeline from "@/components/shop/orders/OrderTrackingTimeline";
-import DeliveryInfoSection from "@/components/shop/orders/DeliveryInfoSection";
+import { useOrderTracking } from "@/features/orders/hooks/useOrderTracking";
+import OrderTrackingTimeline from "@/features/orders/components/OrderTrackingTimeline";
+import DeliveryInfoSection from "@/features/orders/components/DeliveryInfoSection";
 
 export default function OrderTrackingPage() {
   const { id } = useParams();

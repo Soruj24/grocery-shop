@@ -1,14 +1,14 @@
 import mongoose from "mongoose";
-import dbConnect from "@/lib/config/mongodb";
-import Product from "@/models/Product";
-import CategoryModel from "@/models/Category";
+import dbConnect from "@/config/mongodb";
+import Product from "@/schemas/Product";
+import CategoryModel from "@/schemas/Category";
 
-import CategoryHeader from "@/components/shop/category-details/CategoryHeader";
-import SubCategoryNav from "@/components/shop/category-details/SubCategoryNav";
-import CategorySidebar from "@/components/shop/category-details/CategorySidebar";
-import CategoryProductGrid from "@/components/shop/category-details/CategoryProductGrid";
+import CategoryHeader from "@/features/categories/components/details/CategoryHeader";
+import SubCategoryNav from "@/features/categories/components/details/SubCategoryNav";
+import CategorySidebar from "@/features/categories/components/details/CategorySidebar";
+import CategoryProductGrid from "@/features/categories/components/details/CategoryProductGrid";
 import { Category as ICategory } from "@/types/category";
-import CategoryNotFound from "@/components/shop/category-details/CategoryNotFound";
+import CategoryNotFound from "@/features/categories/components/details/CategoryNotFound";
 
 export const dynamic = "force-dynamic";
 

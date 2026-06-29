@@ -1,7 +1,7 @@
 "use client";
 
 import { MessageCircle } from "lucide-react";
-import { useSettings } from "@/providers/SettingsContext";
+import { useSettings } from "@/contexts/SettingsContext";
 
 export default function WhatsAppButton() {
   const settings = useSettings();

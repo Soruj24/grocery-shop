@@ -1,15 +1,15 @@
 "use client";
 
 import { useState } from "react";
-import AdminHeader from "@/components/admin/AdminHeader";
-import ProductModal from "@/components/admin/ProductModal";
-import Pagination from "@/components/admin/Pagination";
-import AdminTable from "@/components/admin/AdminTable";
-import ProductFilters from "@/components/admin/products/ProductFilters";
-import ProductTableRow from "@/components/admin/products/ProductTableRow";
+import AdminHeader from "@/features/admin/components/AdminHeader";
+import ProductModal from "@/features/admin/components/ProductModal";
+import Pagination from "@/features/admin/components/Pagination";
+import AdminTable from "@/features/admin/components/AdminTable";
+import ProductFilters from "@/features/admin/products/components/ProductFilters";
+import ProductTableRow from "@/features/admin/products/components/ProductTableRow";
 import { AdminProduct, AdminProductFormData } from "@/types/admin";
-import { useAdminProducts } from "@/hooks/useAdminProducts";
-import { EMPTY_PRODUCT_FORM, productToFormData, resetForm } from "@/lib/utils/admin-products-utils";
+import { useAdminProducts } from "@/features/admin/products/hooks/useAdminProducts";
+import { EMPTY_PRODUCT_FORM, productToFormData, resetForm } from "@/utils/admin-products-utils";
 
 export default function ProductsPage() {
   const {
