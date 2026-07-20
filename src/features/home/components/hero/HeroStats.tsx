@@ -8,7 +8,7 @@ export default function HeroStats() {
   return (
     <>
       <div className="absolute top-24 right-24 z-30 hidden lg:block animate-float">
-        <div className="bg-white/5 backdrop-blur-2xl p-8 rounded-[40px] border border-white/10 shadow-[0_32px_64px_-15px_rgba(0,0,0,0.5)]">
+        <div className="bg-white/5 backdrop-blur-2xl p-8 rounded-2xl border border-white/10 shadow-[0_32px_64px_-15px_rgba(0,0,0,0.5)]">
           <div className="flex items-center gap-5">
             <div className="w-14 h-14 bg-gradient-to-br from-primary to-primary-hover rounded-2xl flex items-center justify-center text-white shadow-primary">
               <Star className="w-7 h-7 fill-current" />
@@ -22,7 +22,7 @@ export default function HeroStats() {
       </div>
 
       <div className="absolute bottom-24 right-24 z-30 hidden lg:block animate-float animation-delay-2000">
-        <div className="bg-white/5 backdrop-blur-2xl p-8 rounded-[40px] border border-white/10 shadow-[0_32px_64px_-15px_rgba(0,0,0,0.5)]">
+        <div className="bg-white/5 backdrop-blur-2xl p-8 rounded-2xl border border-white/10 shadow-[0_32px_64px_-15px_rgba(0,0,0,0.5)]">
           <div className="flex items-center gap-5">
             <div className="w-14 h-14 bg-gradient-to-br from-warning to-danger rounded-2xl flex items-center justify-center text-white shadow-sm">
               <Clock className="w-7 h-7" />

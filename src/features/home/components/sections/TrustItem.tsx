@@ -30,7 +30,7 @@ export default function TrustItem({ icon: Icon, title, desc, color }: TrustItemP
 
   return (
     <div className="flex flex-col items-center gap-4">
-      <div className={`w-20 h-20 ${style.bg} border ${style.border} rounded-[30px] flex items-center justify-center ${style.text} mb-2`}>
+      <div className={`w-20 h-20 ${style.bg} border ${style.border} rounded-2xl flex items-center justify-center ${style.text} mb-2`}>
         <Icon className="w-10 h-10" />
       </div>
       <h4 className="text-foreground text-xl font-black">{title}</h4>

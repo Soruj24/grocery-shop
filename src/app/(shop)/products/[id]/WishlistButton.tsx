@@ -29,8 +29,8 @@ export default function WishlistButton({ product }: { product: Product }) {
       onClick={handleToggle}
       className={`flex items-center gap-2 text-sm font-black transition-colors ${
         active
-          ? "text-red-600 dark:text-red-500"
-          : "text-gray-500 hover:text-red-500 dark:text-gray-400 dark:hover:text-red-400"
+          ? "text-danger"
+          : "text-muted-foreground hover:text-danger"
       }`}
     >
       <motion.div

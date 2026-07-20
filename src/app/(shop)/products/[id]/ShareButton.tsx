@@ -34,9 +34,9 @@ export default function ShareButton({ product }: { product: Product }) {
     <motion.button 
       whileTap={{ scale: 0.95 }}
       onClick={handleShare}
-      className="flex items-center gap-2 text-sm font-black text-gray-500 dark:text-gray-400 hover:text-blue-500 dark:hover:text-blue-400 transition-colors group"
+      className="flex items-center gap-2 text-sm font-black text-muted-foreground hover:text-info transition-colors group"
     >
-      <div className="p-2 bg-gray-50 dark:bg-gray-800 rounded-xl group-hover:bg-blue-50 dark:group-hover:bg-blue-900/20 transition-colors">
+      <div className="p-2 bg-muted rounded-xl group-hover:bg-info-subtle transition-colors">
         <Share2 className="w-5 h-5" />
       </div>
       <span>{t('share')}</span>

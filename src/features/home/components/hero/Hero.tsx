@@ -16,7 +16,7 @@ export default function Hero({ data }: { data?: { slides?: Array<{ id: number; t
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-6 h-auto min-h-[460px] lg:h-[600px] w-full">
-      <section className="lg:col-span-8 relative h-[420px] lg:h-full rounded-2xl lg:rounded-[48px] overflow-hidden group shadow-lg ring-1 ring-border">
+      <section className="lg:col-span-8 relative h-[420px] lg:h-full rounded-2xl overflow-hidden group shadow-lg ring-1 ring-border">
         <AnimatePresence mode="wait">
           <motion.div key={slides[current].id} initial={{ opacity: 0, scale: reduceMotion ? 1 : 1.1 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0 }}
             transition={{ duration: reduceMotion ? 0.2 : 0.8, ease: "easeOut" }} className="absolute inset-0">

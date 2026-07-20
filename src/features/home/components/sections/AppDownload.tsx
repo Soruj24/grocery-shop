@@ -18,7 +18,7 @@ export default function AppDownload() {
   return (
     <section className="py-8 px-4 overflow-hidden">
       <div className="max-w-7xl mx-auto">
-        <div className="bg-gradient-to-br from-gray-900 via-gray-800 to-black dark:from-[#0F172A] dark:via-[#1E293B] dark:to-black rounded-[64px] relative overflow-hidden">
+        <div className="bg-gradient-to-br from-gray-900 via-gray-800 to-black dark:from-[#0F172A] dark:via-[#1E293B] dark:to-black rounded-2xl relative overflow-hidden">
           {/* Decorative Elements */}
           <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-primary/10 blur-[120px] rounded-full -mr-64 -mt-64 pointer-events-none" />
           <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-info/10 blur-[120px] rounded-full -ml-64 -mb-64 pointer-events-none" />
@@ -111,7 +111,7 @@ export default function AppDownload() {
               className="relative hidden lg:block"
             >
                 <div className="relative w-[500px] h-[600px] mx-auto">
-                <div className="absolute inset-0 bg-gradient-to-t from-primary/20 to-transparent rounded-[100px] blur-3xl animate-pulse" />
+                <div className="absolute inset-0 bg-gradient-to-t from-primary/20 to-transparent rounded-full blur-3xl animate-pulse" />
                 <Image
                   src="https://chaldn.com/_mpapi/static/1.0.0/web/images/home/phone-app-mockup.png" 
                   alt={t('app_mockup_alt')}

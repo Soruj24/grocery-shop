@@ -110,7 +110,7 @@ export default function Newsletter() {
               className="relative hidden lg:block h-[500px] w-full"
             >
               <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-transparent to-transparent z-10 opacity-60" />
-              <div className="relative w-full h-full rounded-[40px] overflow-hidden transform rotate-3 hover:rotate-0 transition-all duration-700 shadow-2xl shadow-black/50 border-4 border-white/5 group">
+              <div className="relative w-full h-full rounded-2xl overflow-hidden transform rotate-3 hover:rotate-0 transition-all duration-700 shadow-2xl shadow-black/50 border-4 border-white/5 group">
                  <Image 
                   src={getProductFallbackImage("newsletter")}
                   alt="Newsletter"

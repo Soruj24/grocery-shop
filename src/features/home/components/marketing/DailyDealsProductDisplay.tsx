@@ -18,7 +18,7 @@ export default function DailyDealsProductDisplay({ image, productName, price, or
     <motion.div initial={{ opacity: 0, scale: 0.8, rotate: 5 }} whileInView={{ opacity: 1, scale: 1, rotate: 0 }}
       transition={{ duration: 0.8, type: "spring" }} className="relative w-full max-w-md aspect-square">
       <div className="relative z-10 w-full h-full">
-        <div className="bg-white/10 backdrop-blur-xl rounded-[40px] w-full h-full border border-white/20 p-8 flex items-center justify-center overflow-hidden shadow-2xl">
+        <div className="bg-white/10 backdrop-blur-xl rounded-2xl w-full h-full border border-white/20 p-8 flex items-center justify-center overflow-hidden shadow-2xl">
           <div className="relative w-full h-full flex flex-col items-center justify-center gap-6">
             <div className="w-64 h-64 bg-white/20 rounded-full blur-3xl absolute animate-pulse" />
             <div className="relative w-56 h-56 transform hover:scale-110 transition-transform duration-700">

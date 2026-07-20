@@ -10,7 +10,7 @@ export default function HeroCountdown() {
   };
 
   return (
-    <div className="hidden sm:flex items-center gap-6 bg-white/5 backdrop-blur-xl border border-white/10 px-8 py-4 rounded-[32px] shadow-2xl">
+    <div className="hidden sm:flex items-center gap-6 bg-white/5 backdrop-blur-xl border border-white/10 px-8 py-4 rounded-2xl shadow-2xl">
       <div className="flex flex-col items-center">
         <span className="text-2xl font-black tabular-nums">{formatNumber(5)}</span>
         <span className="text-[10px] font-black uppercase tracking-widest text-white/40">{t('countdown_hours')}</span>
