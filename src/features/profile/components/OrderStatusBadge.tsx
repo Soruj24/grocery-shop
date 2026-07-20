@@ -1,6 +1,8 @@
 "use client";
 
 import { useLanguage } from "@/contexts/LanguageContext";
+import { Badge } from "@/components/ui";
+import type { Tone } from "@/components/ui";
 
 interface OrderStatusBadgeProps {
   status: string;
@@ -26,28 +28,26 @@ export default function OrderStatusBadge({ status }: OrderStatusBadgeProps) {
     }
   };
 
-  const getStatusStyle = (s: string) => {
+  const getStatusTone = (s: string): Tone => {
     switch (s) {
       case "pending":
-        return "bg-yellow-500/10 text-yellow-600 border-yellow-500/20";
+        return "warning";
       case "processing":
-        return "bg-blue-500/10 text-blue-600 border-blue-500/20";
+        return "info";
       case "shipped":
-        return "bg-purple-500/10 text-purple-600 border-purple-500/20";
+        return "accent";
       case "delivered":
-        return "bg-green-500/10 text-green-600 border-green-500/20";
+        return "success";
       case "cancelled":
-        return "bg-red-500/10 text-red-600 border-red-500/20";
+        return "danger";
       default:
-        return "bg-gray-500/10 text-gray-600 border-gray-500/20";
+        return "neutral";
     }
   };
 
   return (
-    <span
-      className={`px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest border ${getStatusStyle(status)}`}
-    >
+    <Badge tone={getStatusTone(status)} size="sm" className="uppercase tracking-widest">
       {getStatusLabel(status)}
-    </span>
+    </Badge>
   );
 }

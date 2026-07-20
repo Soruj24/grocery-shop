@@ -9,6 +9,7 @@ import { motion, useReducedMotion } from "framer-motion";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { handleShare } from "@/utils/product-utils";
 import { useProductSwipe } from "@/features/products/hooks/useProductSwipe";
+import { Button } from "@/components/ui";
 import ProductImageSection from "@/features/home/components/sections/ProductImageSection";
 import ProductInfo from "@/features/home/components/sections/ProductInfo";
 import QuantityControls from "@/features/home/components/sections/QuantityControls";
@@ -54,7 +55,7 @@ export default function ProductCard({ product }: ProductCardProps) {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       whileHover={reduceMotion ? undefined : { y: -8 }}
-      className="group bg-white dark:bg-gray-900 rounded-[2rem] shadow-sm hover:shadow-2xl hover:shadow-gray-200/50 dark:hover:shadow-black/50 transition-all duration-500 flex flex-col h-full border border-gray-100 dark:border-gray-800 relative overflow-hidden"
+      className="group bg-card rounded-xl shadow-sm hover:shadow-lg transition-all duration-500 flex flex-col h-full border border-border relative overflow-hidden"
     >
       <ProductImageSection
         product={product}
@@ -74,19 +75,20 @@ export default function ProductCard({ product }: ProductCardProps) {
 
       <ProductInfo product={product} t={t} />
 
-      <div className="px-6 pb-6 -mt-3 relative z-10 bg-white dark:bg-gray-900">
+      <div className="px-6 pb-6 -mt-3 relative z-10 bg-card">
         {!cartItem ? (
-          <button
+          <Button
+            variant="primary"
+            size="md"
             disabled={product.stock === 0}
             onClick={() => {
               addToCart(product, 1);
               Toast.fire({ icon: "success", title: t("added_to_cart") });
             }}
-            className="bg-green-600 hover:bg-green-700 disabled:bg-gray-400 disabled:cursor-not-allowed disabled:opacity-50 text-white w-12 h-12 flex items-center justify-center rounded-2xl shadow-lg shadow-green-600/20 active:scale-90 transition-all hover:rotate-3 group/btn relative overflow-hidden ml-auto"
-          >
-            <div className="absolute inset-0 bg-white/20 translate-y-full group-hover/btn:translate-y-0 transition-transform duration-300" />
-            <Plus size={24} strokeWidth={3} />
-          </button>
+            leftIcon={<Plus size={20} strokeWidth={3} />}
+            className="ml-auto rounded-md"
+            aria-label={t("add_to_cart")}
+          />
         ) : (
           <QuantityControls
             quantity={cartItem.quantity}

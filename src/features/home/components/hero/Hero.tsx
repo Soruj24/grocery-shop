@@ -16,7 +16,7 @@ export default function Hero({ data }: { data?: { slides?: Array<{ id: number; t
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-6 h-auto min-h-[460px] lg:h-[600px] w-full">
-      <section className="lg:col-span-8 relative h-[420px] lg:h-full rounded-[32px] lg:rounded-[48px] overflow-hidden group shadow-2xl shadow-gray-200/50 dark:shadow-black/50 ring-1 ring-gray-100 dark:ring-white/10">
+      <section className="lg:col-span-8 relative h-[420px] lg:h-full rounded-2xl lg:rounded-[48px] overflow-hidden group shadow-lg ring-1 ring-border">
         <AnimatePresence mode="wait">
           <motion.div key={slides[current].id} initial={{ opacity: 0, scale: reduceMotion ? 1 : 1.1 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0 }}
             transition={{ duration: reduceMotion ? 0.2 : 0.8, ease: "easeOut" }} className="absolute inset-0">
@@ -42,7 +42,7 @@ export default function Hero({ data }: { data?: { slides?: Array<{ id: number; t
         <div className="absolute bottom-8 left-8 lg:left-16 z-30 flex gap-2">
           {slides.map((_, i) => (
             <button key={i} onClick={() => setCurrent(i)} className="group/dot p-2">
-              <div className={`transition-all duration-500 h-1.5 rounded-full ${current === i ? "w-10 bg-green-500 shadow-[0_0_10px_rgba(34,197,94,0.5)]" : "w-2 bg-white/30 group-hover/dot:bg-white/60"}`} />
+              <div className={`transition-all duration-500 h-1.5 rounded-full ${current === i ? "w-10 bg-primary shadow-primary" : "w-2 bg-white/30 group-hover/dot:bg-white/60"}`} />
             </button>
           ))}
         </div>

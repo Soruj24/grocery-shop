@@ -20,9 +20,9 @@ export default function DeliveryProgress({
 
   if (deliveryFee === 0) {
     return (
-      <div className="flex items-center justify-between bg-green-50 dark:bg-green-900/20 px-4 py-3 rounded-2xl border border-green-100 dark:border-green-800/50">
-        <span className="text-sm font-black text-green-600">Free delivery unlocked</span>
-        <span className="text-[10px] font-black uppercase tracking-widest text-green-600">
+      <div className="flex items-center justify-between bg-primary-subtle text-primary-subtle-foreground px-4 py-3 rounded-lg border border-border">
+        <span className="text-sm font-black text-primary">Free delivery unlocked</span>
+        <span className="text-[10px] font-black uppercase tracking-widest text-primary">
           {t("currency_symbol")}{freeDeliveryThreshold.toLocaleString("bn-BD")}+
         </span>
       </div>
@@ -31,13 +31,13 @@ export default function DeliveryProgress({
 
   return (
     <div className="space-y-2">
-      <div className="h-2 w-full bg-gray-100 dark:bg-gray-800 rounded-full overflow-hidden">
+      <div className="h-2 w-full bg-muted rounded-full overflow-hidden">
         <div
-          className="h-full bg-green-500 rounded-full transition-all"
+          className="h-full bg-primary rounded-full transition-all"
           style={{ width: `${progressPct}%` }}
         />
       </div>
-      <div className="flex items-center justify-between text-xs font-black text-gray-500">
+      <div className="flex items-center justify-between text-xs font-black text-muted-foreground">
         <span>
           Free delivery at {t("currency_symbol")}
           {freeDeliveryThreshold.toLocaleString("bn-BD")}

@@ -60,9 +60,9 @@ export default function ProfilePage() {
   return (
     <div className="max-w-7xl mx-auto px-4 py-12 relative overflow-hidden">
       <PageBackground
-        color1="bg-green-500/5"
-        color2="bg-emerald-500/5"
-        color3="bg-blue-500/5"
+        color1="bg-primary/5"
+        color2="bg-primary/5"
+        color3="bg-accent/5"
       />
       
       <div className="relative z-10 flex flex-col lg:flex-row gap-8">
@@ -75,7 +75,7 @@ export default function ProfilePage() {
 
         {/* Main Content */}
         <main className="flex-1 min-w-0">
-          <div className="bg-white/80 dark:bg-[#0B1120]/80 backdrop-blur-2xl p-8 md:p-12 rounded-[48px] border border-gray-100 dark:border-white/5 shadow-xl min-h-[600px]">
+          <div className="bg-card/80 backdrop-blur-2xl p-8 md:p-12 rounded-2xl border border-border shadow-xl min-h-[600px]">
             <AnimatePresence mode="wait">
               <motion.div
                 key={activeTab}

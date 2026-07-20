@@ -41,25 +41,25 @@ export default function PriceFilter({ initialMin, initialMax }: PriceFilterProps
 
   return (
     <div className="space-y-4">
-      <div className="flex items-center justify-between text-sm font-bold text-gray-700 dark:text-gray-300">
+      <div className="flex items-center justify-between text-sm font-bold text-foreground">
         <span>{t('currency_symbol')} {min}</span>
         <span>{t('currency_symbol')} {max}</span>
       </div>
       <div className="grid grid-cols-2 gap-3">
         <div className="space-y-1">
-          <label className="text-[10px] font-black text-gray-400 dark:text-gray-500 uppercase ml-1">{t('min_price')}</label>
+          <label className="text-[10px] font-black text-muted-foreground uppercase ml-1">{t('min_price')}</label>
           <input
             type="number"
-            className="w-full px-4 py-2 bg-gray-50 dark:bg-gray-800 border-none rounded-xl text-sm font-bold outline-none focus:ring-2 focus:ring-green-500 text-gray-900 dark:text-gray-100"
+            className="w-full px-4 py-2 bg-muted border-none rounded-xl text-sm font-bold outline-none focus:ring-2 focus:ring-primary text-foreground"
             value={min}
             onChange={(e) => setMin(e.target.value)}
           />
         </div>
         <div className="space-y-1">
-          <label className="text-[10px] font-black text-gray-400 dark:text-gray-500 uppercase ml-1">{t('max_price')}</label>
+          <label className="text-[10px] font-black text-muted-foreground uppercase ml-1">{t('max_price')}</label>
           <input
             type="number"
-            className="w-full px-4 py-2 bg-gray-50 dark:bg-gray-800 border-none rounded-xl text-sm font-bold outline-none focus:ring-2 focus:ring-green-500 text-gray-900 dark:text-gray-100"
+            className="w-full px-4 py-2 bg-muted border-none rounded-xl text-sm font-bold outline-none focus:ring-2 focus:ring-primary text-foreground"
             value={max}
             onChange={(e) => setMax(e.target.value)}
           />
@@ -70,7 +70,7 @@ export default function PriceFilter({ initialMin, initialMax }: PriceFilterProps
         min="0"
         max="10000"
         step="100"
-        className="w-full h-2 bg-gray-100 dark:bg-gray-800 rounded-lg appearance-none cursor-pointer accent-green-600"
+        className="w-full h-2 bg-muted rounded-lg appearance-none cursor-pointer accent-primary"
         value={max}
         onChange={(e) => setMax(e.target.value)}
       />

@@ -1,33 +1,23 @@
-import { cn } from "@/utils/utils";
+import { Skeleton as SystemSkeleton } from "@/components/ui";
 
-export function Skeleton({
-  className,
-  ...props
-}: React.HTMLAttributes<HTMLDivElement>) {
-  return (
-    <div
-      className={cn("animate-pulse rounded-md bg-gray-200 dark:bg-gray-800", className)}
-      {...props}
-    />
-  );
-}
+export { SystemSkeleton as Skeleton };
 
 export function ProductCardSkeleton() {
   return (
-    <div className="bg-white dark:bg-gray-900 rounded-[48px] p-3 border border-gray-100 dark:border-gray-800 h-full flex flex-col">
-      <Skeleton className="aspect-[4/5] rounded-[40px] w-full" />
+    <div className="bg-card rounded-xl p-3 border border-border h-full flex flex-col">
+      <SystemSkeleton className="aspect-[4/5] rounded-lg w-full" />
       <div className="p-5 space-y-4">
         <div className="flex justify-between">
-          <Skeleton className="h-6 w-20 rounded-xl" />
-          <Skeleton className="h-4 w-10 rounded-lg" />
+          <SystemSkeleton className="h-6 w-20 rounded-md" />
+          <SystemSkeleton className="h-4 w-10 rounded-md" />
         </div>
-        <Skeleton className="h-8 w-3/4 rounded-xl" />
-        <div className="flex justify-between items-end pt-4 border-t border-gray-100 dark:border-gray-800">
+        <SystemSkeleton className="h-8 w-3/4 rounded-md" />
+        <div className="flex justify-between items-end pt-4 border-t border-border">
           <div className="space-y-2">
-            <Skeleton className="h-4 w-12 rounded-lg" />
-            <Skeleton className="h-8 w-20 rounded-xl" />
+            <SystemSkeleton className="h-4 w-12 rounded-md" />
+            <SystemSkeleton className="h-8 w-20 rounded-md" />
           </div>
-          <Skeleton className="h-12 w-12 rounded-2xl" />
+          <SystemSkeleton className="h-12 w-12 rounded-md" />
         </div>
       </div>
     </div>

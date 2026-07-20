@@ -39,19 +39,19 @@ export default function AIRecommendations() {
     <section className="py-8 relative overflow-hidden">
       <div className="flex items-center justify-between mb-8">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center shadow-lg shadow-purple-500/20">
+          <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-accent to-primary flex items-center justify-center shadow-sm">
             <Sparkles className="w-6 h-6 text-white" />
           </div>
           <div>
-            <h2 className="text-2xl font-black text-gray-800 dark:text-white leading-tight">
+            <h2 className="text-2xl font-black text-foreground leading-tight">
               {t('special_recommendations')}
             </h2>
-            <p className="text-sm text-gray-500 dark:text-gray-400 font-bold">
+            <p className="text-sm text-muted-foreground font-bold">
               {t('recommendations_desc')}
             </p>
           </div>
         </div>
-        <div className="h-px flex-1 bg-gray-100 dark:bg-white/5 mx-8 hidden md:block" />
+        <div className="h-px flex-1 bg-border mx-8 hidden md:block" />
       </div>
 
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 md:gap-6">

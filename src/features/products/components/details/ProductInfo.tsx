@@ -1,6 +1,6 @@
 "use client";
 
-import { Star, Zap, CheckCircle2, AlertCircle } from "lucide-react";
+import { Zap, CheckCircle2, AlertCircle } from "lucide-react";
 import AddToCartButton from "@/app/(shop)/products/[id]/AddToCartButton";
 import WishlistButton from "@/app/(shop)/products/[id]/WishlistButton";
 import ShareButton from "@/app/(shop)/products/[id]/ShareButton";
@@ -10,6 +10,7 @@ import { useRouter } from "next/navigation";
 import { useCart } from "@/contexts/CartContext";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { motion } from "framer-motion";
+import { Badge, Rating } from "@/components/ui";
 
 interface ProductInfoProps {
   product: Product;
@@ -50,20 +51,20 @@ export default function ProductInfo({ product }: ProductInfoProps) {
         {/* Category & Badge */}
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <span className="bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 px-4 py-1.5 rounded-2xl text-xs font-black uppercase tracking-widest">
+            <Badge tone="primary" size="md" className="uppercase tracking-widest">
               {categoryName || t('grocery')}
-            </span>
-            <div className="flex items-center gap-1.5 bg-amber-50 dark:bg-amber-900/20 px-3 py-1.5 rounded-2xl text-amber-600">
-              <Star className="w-4 h-4 fill-current" />
+            </Badge>
+            <div className="flex items-center gap-1.5 bg-warning-subtle px-3 py-1.5 rounded-2xl text-warning">
+              <Rating value={product.rating || 4.9} size="xs" />
               <span className="text-sm font-black">{(product.rating || 4.9).toLocaleString('bn-BD')} ({(product.reviews || 120).toLocaleString('bn-BD')} {t('reviews_count')})</span>
             </div>
           </div>
           <div className={`flex items-center gap-1.5 font-bold text-sm ${
             product.stock === 0 
-              ? "text-red-500" 
+              ? "text-danger" 
               : product.stock <= 5 
-                ? "text-amber-500" 
-                : "text-emerald-600 dark:text-emerald-400"
+                ? "text-warning" 
+                : "text-success"
           }`}>
             {product.stock === 0 ? <AlertCircle className="w-4 h-4" /> : <CheckCircle2 className="w-4 h-4" />}
             <span>
@@ -77,49 +78,49 @@ export default function ProductInfo({ product }: ProductInfoProps) {
           </div>
         </div>
 
-        <h1 className="text-3xl md:text-5xl font-black text-gray-900 dark:text-white leading-tight tracking-tight">
+        <h1 className="text-3xl md:text-5xl font-black text-foreground leading-tight tracking-tight">
           {productName}
         </h1>
 
         {/* Short Description */}
         {productDesc && (
-          <p className="text-gray-600 dark:text-gray-400 text-base leading-relaxed line-clamp-3">
+          <p className="text-muted-foreground text-base leading-relaxed line-clamp-3">
             {productDesc}
           </p>
         )}
 
         {/* Price Section */}
-        <div className="flex items-center gap-6 bg-gray-50 dark:bg-gray-900/50 p-6 rounded-[32px] border border-gray-100 dark:border-gray-800">
+        <div className="flex items-center gap-6 bg-subtle p-6 rounded-2xl border border-border">
           <div className="space-y-1">
-            <p className="text-xs font-bold text-gray-400 uppercase tracking-widest">{t('current_price')}</p>
+            <p className="text-xs font-bold text-muted-foreground uppercase tracking-widest">{t('current_price')}</p>
             <div className="flex items-baseline gap-3">
-              <span className="text-4xl font-black text-gray-900 dark:text-white">
+              <span className="text-4xl font-black text-foreground">
                 {t('currency_symbol')}{(product.discountPrice || product.price).toLocaleString('bn-BD')}
               </span>
               {product.discountPrice && (
-                <span className="text-xl text-gray-400 dark:text-gray-500 line-through font-bold decoration-2 decoration-red-400/50">
+                <span className="text-xl text-muted-foreground line-through font-bold decoration-2 decoration-danger/50">
                   {t('currency_symbol')}{product.price.toLocaleString('bn-BD')}
                 </span>
               )}
             </div>
           </div>
-          
+           
           {discountPercent > 0 && (
-            <div className="ml-auto bg-red-500 text-white px-4 py-2 rounded-2xl font-black text-xl shadow-lg shadow-red-500/20 rotate-3">
+            <div className="ml-auto bg-danger text-danger-foreground px-4 py-2 rounded-2xl font-black text-xl shadow-lg shadow-danger/20 rotate-3">
               -{discountPercent.toLocaleString('bn-BD')}%
             </div>
           )}
         </div>
       </div>
 
-      <div className="flex flex-col gap-4 pt-4 border-t border-gray-100 dark:border-gray-800">
+      <div className="flex flex-col gap-4 pt-4 border-t border-border">
         <div className="flex flex-col sm:flex-row gap-4">
           <AddToCartButton product={product} />
           <motion.button 
             whileTap={{ scale: 0.98 }}
             onClick={handleBuyNow}
             disabled={product.stock === 0}
-            className={`flex-1 bg-green-600 hover:bg-green-700 text-white px-8 py-4 rounded-[20px] font-black text-sm uppercase tracking-wider flex items-center justify-center gap-2 transition-all shadow-xl shadow-green-600/20 ${product.stock === 0 ? 'opacity-50 cursor-not-allowed shadow-none' : 'hover:-translate-y-1'}`}
+            className={`flex-1 bg-primary hover:bg-primary-hover text-primary-foreground px-8 py-4 rounded-lg font-black text-sm uppercase tracking-wider flex items-center justify-center gap-2 transition-all shadow-lg shadow-primary ${product.stock === 0 ? 'opacity-50 cursor-not-allowed shadow-none' : 'hover:-translate-y-1'}`}
           >
             <Zap className="w-5 h-5 fill-current" />
             {t('buy_now')}

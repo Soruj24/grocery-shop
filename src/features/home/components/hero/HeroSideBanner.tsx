@@ -21,7 +21,7 @@ interface HeroSideBannerProps {
 
 export default function HeroSideBanner({ href, imageKey, badge, badgeColor, icon, iconLabel, titleLine1, titleLine2, subtitlePrefix, priceText, priceColor, hoverTextColor }: HeroSideBannerProps) {
   return (
-    <Link href={href} className="relative flex-1 rounded-[40px] overflow-hidden group cursor-pointer ring-1 ring-gray-100 dark:ring-white/10 shadow-lg shadow-gray-200/50 dark:shadow-black/30 block">
+    <Link href={href} className="relative flex-1 rounded-2xl overflow-hidden group cursor-pointer ring-1 ring-border shadow-lg block">
       <Image src={getProductFallbackImage(imageKey)} alt={titleLine1} fill sizes="(max-width: 1280px) 33vw, 25vw"
         className="object-cover transition-transform duration-700 group-hover:scale-110" />
       <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-80 group-hover:opacity-90 transition-opacity" />

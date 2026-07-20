@@ -11,6 +11,7 @@ import UserActions from "./UserActions";
 import NavbarLogo from "./NavbarLogo";
 import DesktopNav from "./DesktopNav";
 import MobileDrawer from "./MobileDrawer";
+import TopBar from "./TopBar";
 
 export default function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -23,11 +24,12 @@ export default function Header() {
 
   return (
     <>
+      <TopBar />
       <header
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        className={`fixed left-0 right-0 z-50 transition-all duration-300 top-0 md:top-[37px] ${
           isScrolled
-            ? "bg-white/95 dark:bg-gray-900/95 backdrop-blur-md shadow-md py-2"
-            : "bg-white dark:bg-gray-900 py-4"
+            ? "bg-card/95 dark:bg-card/95 backdrop-blur-md shadow-md py-2"
+            : "bg-card dark:bg-card py-4"
         }`}
         style={{ paddingTop: "env(safe-area-inset-top)" }}
       >
@@ -47,21 +49,21 @@ export default function Header() {
 
             <button
               onClick={() => setIsMobileMenuOpen(true)}
-              className="md:hidden p-2 text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-full transition-colors"
+              className="md:hidden p-2 text-muted-foreground hover:bg-muted rounded-full transition-colors"
             >
               <Search className="w-6 h-6" />
             </button>
 
             <button
               onClick={() => setIsMobileMenuOpen(true)}
-              className="lg:hidden p-2 text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-full transition-colors"
+              className="lg:hidden p-2 text-muted-foreground hover:bg-muted rounded-full transition-colors"
             >
               <Menu className="w-6 h-6" />
             </button>
           </div>
         </div>
 
-        <div className="hidden md:block border-t border-gray-100 dark:border-gray-800 mt-2">
+        <div className="hidden md:block border-t border-border mt-2">
           <DesktopNav
             categories={categories}
             isCategoryMenuOpen={isCategoryMenuOpen}

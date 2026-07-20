@@ -30,10 +30,10 @@ export default function MobileDrawer({ isOpen, onClose, categories, totalWishlis
 
           <motion.div initial={{ x: "-100%" }} animate={{ x: 0 }} exit={{ x: "-100%" }}
             transition={{ type: "spring", damping: 25, stiffness: 200 }}
-            className="fixed top-0 left-0 bottom-0 w-[90%] max-w-[360px] bg-white dark:bg-[#0B1120] z-[201] lg:hidden flex flex-col shadow-2xl overflow-hidden"
+            className="fixed top-0 left-0 bottom-0 w-[90%] max-w-[360px] bg-card z-[201] lg:hidden flex flex-col shadow-2xl overflow-hidden"
             role="dialog" aria-modal="true"
             style={{ paddingTop: "env(safe-area-inset-top)", paddingBottom: "env(safe-area-inset-bottom)" }}>
-            <div className="absolute top-0 right-0 w-64 h-64 bg-green-500/5 blur-[80px] rounded-full pointer-events-none" />
+            <div className="absolute top-0 right-0 w-64 h-64 bg-primary/5 blur-[80px] rounded-full pointer-events-none" />
 
             <MobileDrawerHeader onClose={onClose} session={session} />
 

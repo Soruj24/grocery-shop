@@ -12,9 +12,9 @@ export default function ComboOffers() {
   const combos = getComboOffers(t);
 
   return (
-    <section className="relative py-8 px-4 overflow-hidden bg-gray-50/50 dark:bg-black/20">
-      <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-blue-500/5 blur-[120px] rounded-full -mr-64 -mt-64 pointer-events-none" />
-      <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-indigo-500/5 blur-[120px] rounded-full -ml-64 -mb-64 pointer-events-none" />
+    <section className="relative py-8 px-4 overflow-hidden bg-subtle">
+      <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-info/5 blur-[120px] rounded-full -mr-64 -mt-64 pointer-events-none" />
+      <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-accent/5 blur-[120px] rounded-full -ml-64 -mb-64 pointer-events-none" />
 
       <div className="max-w-7xl mx-auto space-y-20">
         <div className="flex flex-col md:flex-row items-end justify-between gap-8">
@@ -23,7 +23,7 @@ export default function ComboOffers() {
               initial={{ opacity: 0, x: -20 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
-              className="inline-flex items-center gap-2 px-5 py-2.5 bg-blue-500/10 border border-blue-500/20 text-blue-600 dark:text-blue-400 rounded-full text-xs font-black uppercase tracking-[0.2em]"
+              className="inline-flex items-center gap-2 px-5 py-2.5 bg-info-subtle border border-info/20 text-info rounded-full text-xs font-black uppercase tracking-[0.2em]"
             >
               <Gift size={14} className="animate-bounce" />
               {t("combo_badge")}
@@ -33,10 +33,10 @@ export default function ComboOffers() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.1 }}
-              className="text-5xl md:text-7xl font-black text-gray-900 dark:text-white tracking-tight leading-[1.1]"
+              className="text-5xl md:text-7xl font-black text-foreground tracking-tight leading-[1.1]"
             >
               {t("combo_title_1")} <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-600">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-info via-accent to-accent">
                 {t("combo_title_2")}
               </span>
             </motion.h2>
@@ -45,7 +45,7 @@ export default function ComboOffers() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.2 }}
-              className="text-lg text-gray-500 dark:text-gray-400 font-medium leading-relaxed"
+              className="text-lg text-muted-foreground font-medium leading-relaxed"
             >
               {t("combo_desc")}
             </motion.p>
@@ -58,10 +58,10 @@ export default function ComboOffers() {
           >
             <Link
               href="/products?category=combos"
-              className="group flex items-center gap-4 bg-white dark:bg-white/5 border border-gray-100 dark:border-white/10 px-10 py-5 rounded-[28px] font-black text-gray-900 dark:text-white hover:bg-blue-600 hover:text-white hover:border-transparent transition-all duration-500 shadow-xl shadow-blue-500/5 hover:shadow-blue-500/20"
+              className="group flex items-center gap-4 bg-card border border-border px-10 py-5 rounded-2xl font-black text-foreground hover:bg-info hover:text-info-foreground hover:border-transparent transition-all duration-500 shadow-sm hover:shadow-lg"
             >
               {t("see_all")} {t("combo_offers")}
-              <div className="bg-blue-100 dark:bg-white/10 p-2 rounded-xl group-hover:bg-white/20 transition-colors">
+              <div className="bg-info-subtle p-2 rounded-xl group-hover:bg-white/20 transition-colors">
                 <ArrowRight
                   size={20}
                   className="group-hover:translate-x-1 transition-transform"

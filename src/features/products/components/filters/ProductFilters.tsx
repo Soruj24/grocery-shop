@@ -66,8 +66,8 @@ export default function ProductFilters({ categories }: ProductFiltersProps) {
         <div className="flex items-center gap-3 w-full lg:w-auto">
           <SortSelect sort={sort} onChange={(value) => pushParams({ sort: value !== "newest" ? value : undefined })} />
           <button onClick={() => setIsMobileFiltersOpen(true)}
-            className="lg:hidden flex items-center gap-2 bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 px-4 py-3 rounded-2xl shadow-sm font-bold text-gray-700 dark:text-gray-100 hover:bg-gray-50 dark:hover:bg-gray-800 active:scale-95 transition-all">
-            <Filter className="w-5 h-5 text-green-600 dark:text-green-400" /> {t("filter")}
+            className="lg:hidden flex items-center gap-2 bg-card border border-border px-4 py-3 rounded-2xl shadow-sm font-bold text-foreground hover:bg-muted active:scale-95 transition-all">
+            <Filter className="w-5 h-5 text-primary" /> {t("filter")}
           </button>
         </div>
         <DesktopFilterChips selectedCategory={selectedCategory} search={search} selectedCategoryData={selectedCategoryData}

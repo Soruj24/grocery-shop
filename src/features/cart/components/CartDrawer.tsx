@@ -29,7 +29,7 @@ export default function CartDrawer({
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={onClose}
-            className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[200]"
+            className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[200] bg-background"
           />
 
           <motion.div
@@ -37,20 +37,20 @@ export default function CartDrawer({
             animate={{ x: 0 }}
             exit={{ x: "100%" }}
             transition={{ type: "spring", damping: 25, stiffness: 200 }}
-            className="fixed right-0 top-0 h-full w-full max-w-[450px] bg-white dark:bg-[#0B1120] shadow-[0_0_100px_rgba(0,0,0,0.5)] z-[201] flex flex-col"
+            className="fixed right-0 top-0 h-full w-full max-w-[450px] bg-card shadow-2xl z-[201] flex flex-col"
           >
             <CartDrawerHeader itemCount={cart.length} onClose={onClose} />
 
-            <div className="flex-1 overflow-y-auto p-8 custom-scrollbar">
+            <div className="flex-1 overflow-y-auto p-8 custom-scrollbar bg-card">
               {cart.length > 0 ? (
                 <div className="space-y-6">
                   {cart.map((item, idx) => (
                     <motion.div
                       layout
                       key={item._id || `cart-item-${idx}`}
-                      className="flex gap-4 p-4 bg-gray-50 dark:bg-white/5 rounded-3xl border border-transparent hover:border-green-500/20 transition-all group"
+                      className="flex gap-4 p-4 bg-muted rounded-xl border border-transparent hover:border-border transition-all group"
                     >
-                      <div className="relative w-24 h-24 rounded-2xl overflow-hidden bg-white dark:bg-white/5 flex-shrink-0">
+                      <div className="relative w-24 h-24 rounded-lg overflow-hidden bg-card flex-shrink-0">
                         <Image
                           src={
                             item.image ||
@@ -65,24 +65,24 @@ export default function CartDrawer({
 
                       <div className="flex-1 space-y-3">
                         <div className="flex justify-between items-start gap-2">
-                          <h3 className="font-bold text-gray-900 dark:text-white line-clamp-2 leading-tight">
+                          <h3 className="font-bold text-foreground line-clamp-2 leading-tight">
                             {item.name}
                           </h3>
                           <button
                             onClick={() => removeFromCart(item._id)}
-                            className="text-gray-400 hover:text-rose-500 transition-colors"
+                            className="text-muted-foreground hover:text-danger transition-colors"
                           >
                             <Trash2 size={18} />
                           </button>
                         </div>
 
                         <div className="flex items-center justify-between">
-                          <div className="text-lg font-black text-green-600">
+                          <div className="text-lg font-black text-primary">
                             {t("currency_symbol")}
                             {item.price.toLocaleString("bn-BD")}
                           </div>
 
-                          <div className="flex items-center gap-3 bg-white dark:bg-white/5 rounded-xl p-1 border border-gray-100 dark:border-white/10">
+                          <div className="flex items-center gap-3 bg-card rounded-md p-1 border border-border">
                             <button
                               onClick={() =>
                                 updateQuantity(
@@ -90,7 +90,7 @@ export default function CartDrawer({
                                   Math.max(1, item.quantity - 1),
                                 )
                               }
-                              className="w-8 h-8 rounded-lg hover:bg-gray-100 dark:hover:bg-white/10 flex items-center justify-center text-gray-500 transition-all"
+                              className="w-8 h-8 rounded-md hover:bg-muted flex items-center justify-center text-muted-foreground transition-all"
                             >
                               <Minus size={14} />
                             </button>
@@ -104,7 +104,7 @@ export default function CartDrawer({
                                   item.quantity + 1,
                                 )
                               }
-                              className="w-8 h-8 rounded-lg hover:bg-gray-100 dark:hover:bg-white/10 flex items-center justify-center text-gray-500 transition-all"
+                              className="w-8 h-8 rounded-md hover:bg-muted flex items-center justify-center text-muted-foreground transition-all"
                             >
                               <Plus size={14} />
                             </button>

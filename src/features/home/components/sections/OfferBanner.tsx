@@ -37,7 +37,7 @@ export default function OfferBanner({
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      className={`group relative ${gradient} rounded-[32px] p-8 md:p-12 overflow-hidden flex flex-col justify-center min-h-[350px] md:min-h-[450px] shadow-2xl ${shadow} transition-all duration-500`}
+      className={`group relative ${gradient} rounded-2xl p-8 md:p-12 overflow-hidden flex flex-col justify-center min-h-[350px] md:min-h-[450px] shadow-lg ${shadow} transition-all duration-500`}
     >
       {/* Decorative Overlays */}
       <div className="absolute inset-0 bg-white/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
@@ -76,7 +76,7 @@ export default function OfferBanner({
             initial={{ y: 20, opacity: 0 }}
             whileInView={{ y: 0, opacity: 1 }}
             transition={{ delay: 0.5 }}
-            className={`bg-white ${buttonTextColor} min-h-[56px] min-w-[160px] hover:pr-12 px-8 py-4 rounded-2xl font-black text-sm transition-all shadow-2xl active:scale-95 flex items-center justify-center gap-3 relative overflow-hidden group/btn w-full`}
+            className={`bg-white ${buttonTextColor} min-h-[56px] min-w-[160px] hover:pr-12 px-8 py-4 rounded-2xl font-black text-sm transition-all shadow-lg active:scale-95 flex items-center justify-center gap-3 relative overflow-hidden group/btn w-full`}
           >
             <span>{buttonText}</span>
             <ArrowRight className="w-4 h-4 absolute right-4 opacity-0 group-hover/btn:opacity-100 transition-all" />

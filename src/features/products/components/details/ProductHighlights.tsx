@@ -22,7 +22,7 @@ export default function ProductHighlights() {
   ];
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 py-8 border-y border-gray-100 dark:border-gray-800">
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 py-8 border-y border-border">
       {highlights.map((item, idx) => (
         <motion.div 
           key={idx} 
@@ -34,15 +34,15 @@ export default function ProductHighlights() {
         >
           <motion.div 
             whileHover={{ scale: 1.1, rotate: 10 }}
-            className="bg-gray-50 dark:bg-gray-800 p-3 rounded-2xl text-green-600 dark:text-green-500 group-hover:bg-green-50 dark:group-hover:bg-green-900/20 transition-colors"
+            className="bg-subtle p-3 rounded-2xl text-primary group-hover:bg-primary-subtle transition-colors"
           >
             <item.icon className="w-5 h-5" />
           </motion.div>
           <div className="flex flex-col">
-            <span className="text-sm font-black text-gray-800 dark:text-gray-200 group-hover:text-green-700 dark:group-hover:text-green-400 transition-colors">
+            <span className="text-sm font-black text-foreground group-hover:text-primary transition-colors">
               {item.title}
             </span>
-            <span className="text-[10px] font-bold text-gray-400 dark:text-gray-500">
+            <span className="text-[10px] font-bold text-muted-foreground">
               {item.desc}
             </span>
           </div>

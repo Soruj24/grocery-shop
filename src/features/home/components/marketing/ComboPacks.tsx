@@ -5,6 +5,7 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import { motion } from "framer-motion";
 import { useCombos } from "@/features/home/hooks/useCombos";
 import ComboPackCard from "./ComboPackCard";
+import { Spinner } from "@/components/ui";
 
 export default function ComboPacks() {
   const { t } = useLanguage();
@@ -13,10 +14,7 @@ export default function ComboPacks() {
   if (loading) {
     return (
       <div className="py-20 flex justify-center">
-        <div className="relative w-20 h-20">
-          <div className="absolute inset-0 border-4 border-gray-100 rounded-full" />
-          <div className="absolute inset-0 border-4 border-green-500 rounded-full border-t-transparent animate-spin" />
-        </div>
+        <Spinner size="lg" />
       </div>
     );
   }
@@ -24,10 +22,10 @@ export default function ComboPacks() {
   if (combos.length === 0) return null;
 
   return (
-    <section className="py-20 relative overflow-hidden bg-gray-50/50 dark:bg-black/20">
+    <section className="py-20 relative overflow-hidden bg-subtle">
       <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
-        <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-purple-500/5 blur-[100px] rounded-full mix-blend-multiply dark:mix-blend-screen" />
-        <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-blue-500/5 blur-[100px] rounded-full mix-blend-multiply dark:mix-blend-screen" />
+        <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-accent/5 blur-[100px] rounded-full mix-blend-multiply dark:mix-blend-screen" />
+        <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-info/5 blur-[100px] rounded-full mix-blend-multiply dark:mix-blend-screen" />
       </div>
 
       <div className="max-w-7xl mx-auto px-4 relative z-10">
@@ -36,7 +34,7 @@ export default function ComboPacks() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="inline-flex items-center gap-2 px-4 py-2 bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 rounded-full text-xs font-black uppercase tracking-widest"
+            className="inline-flex items-center gap-2 px-4 py-2 bg-accent-subtle text-accent-subtle-foreground rounded-full text-xs font-black uppercase tracking-widest"
           >
             <Package size={14} className="animate-bounce" />
             <span>{t("combo_packs_badge")}</span>
@@ -47,10 +45,10 @@ export default function ComboPacks() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
-            className="text-4xl md:text-5xl lg:text-6xl font-black text-gray-900 dark:text-white tracking-tight"
+            className="text-4xl md:text-5xl lg:text-6xl font-black text-foreground tracking-tight"
           >
             {t("combo_packs_title")}{" "}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-blue-600">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent to-info">
               {t("combo_packs_title_accent")}
             </span>
           </motion.h2>
@@ -60,7 +58,7 @@ export default function ComboPacks() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.2 }}
-            className="text-lg text-gray-500 dark:text-gray-400 font-medium max-w-2xl mx-auto"
+            className="text-lg text-muted-foreground font-medium max-w-2xl mx-auto"
           >
             {t("combo_packs_desc")}
           </motion.p>

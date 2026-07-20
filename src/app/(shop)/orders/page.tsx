@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import EmptyOrdersState from "@/features/orders/components/EmptyOrdersState";
 import OrderCard from "@/features/orders/components/OrderCard";
 import { AdminOrder as Order } from "@/types/admin";
+import { LoadingState } from "@/components/ui";
 
 export default function OrdersPage() {
   const { data: session, status } = useSession();
@@ -37,8 +38,8 @@ export default function OrdersPage() {
 
   if (loading) {
     return (
-      <div className="min-h-[60vh] flex items-center justify-center bg-white dark:bg-black/5">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-green-600"></div>
+      <div className="min-h-[60vh] flex items-center justify-center bg-background">
+        <LoadingState />
       </div>
     );
   }
@@ -50,10 +51,10 @@ export default function OrdersPage() {
   return (
     <div className="max-w-4xl mx-auto py-8 space-y-10">
       <div className="flex flex-col gap-2">
-        <h1 className="text-3xl font-black text-gray-800 dark:text-gray-100 tracking-tight">
+        <h1 className="text-3xl font-black text-foreground tracking-tight">
           আমার অর্ডারসমূহ
         </h1>
-        <p className="text-gray-500 dark:text-gray-400 font-bold">
+        <p className="text-muted-foreground font-bold">
           আপনার সব অর্ডারের স্ট্যাটাস এবং ডিটেইলস এখানে দেখুন
         </p>
       </div>

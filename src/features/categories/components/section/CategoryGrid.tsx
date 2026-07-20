@@ -12,8 +12,8 @@ export default function CategoryGrid({ categories }: CategoryGridProps) {
   return (
     <div className="relative">
       {/* Decorative background elements */}
-      <div className="absolute top-0 left-1/4 w-[800px] h-[800px] bg-green-500/5 blur-[120px] rounded-full -z-10 mix-blend-multiply dark:mix-blend-screen" />
-      <div className="absolute bottom-0 right-1/4 w-[600px] h-[600px] bg-blue-500/5 blur-[120px] rounded-full -z-10 mix-blend-multiply dark:mix-blend-screen" />
+      <div className="absolute top-0 left-1/4 w-[800px] h-[800px] bg-primary/5 blur-[120px] rounded-full -z-10 mix-blend-multiply dark:mix-blend-screen" />
+      <div className="absolute bottom-0 right-1/4 w-[600px] h-[600px] bg-info/5 blur-[120px] rounded-full -z-10 mix-blend-multiply dark:mix-blend-screen" />
       
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 lg:gap-8">
         {categories.map((cat, index) => (

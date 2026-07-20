@@ -13,6 +13,7 @@ import { store } from "@/redux/store";
 import { useState } from "react";
 import { SettingsProvider } from "@/contexts/SettingsContext";
 import WhatsAppButton from "@/components/shared/WhatsAppButton";
+import { ToastProvider } from "@/components/ui/system/Toast";
 
 export function Providers({ children }: { children: React.ReactNode }) {
   const [queryClient] = useState(() => new QueryClient({
@@ -34,8 +35,10 @@ export function Providers({ children }: { children: React.ReactNode }) {
                   <RecentlyViewedProvider>
                     <WishlistProvider>
                       <CartProvider>
-                        {children}
-                        <WhatsAppButton />
+                        <ToastProvider>
+                          {children}
+                          <WhatsAppButton />
+                        </ToastProvider>
                       </CartProvider>
                     </WishlistProvider>
                   </RecentlyViewedProvider>

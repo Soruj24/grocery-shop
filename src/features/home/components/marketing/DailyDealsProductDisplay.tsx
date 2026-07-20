@@ -35,7 +35,7 @@ export default function DailyDealsProductDisplay({ image, productName, price, or
         </div>
       </div>
       <motion.div animate={{ y: [0, -10, 0] }} transition={{ repeat: Infinity, duration: 4, ease: "easeInOut" }}
-        className="absolute -top-6 -right-6 bg-yellow-400 text-gray-900 w-28 h-28 rounded-full flex flex-col items-center justify-center shadow-2xl z-20 border-4 border-white/20 backdrop-blur-sm">
+        className="absolute -top-6 -right-6 bg-warning text-warning-foreground w-28 h-28 rounded-full flex flex-col items-center justify-center shadow-lg z-20 border-4 border-white/20 backdrop-blur-sm">
         <span className="text-[10px] font-black uppercase tracking-wider">{t("daily_deals_max")}</span>
         <span className="text-3xl font-black leading-none my-1">{discount}</span>
         <span className="text-[10px] font-black uppercase tracking-wider">{t("daily_deals_off")}</span>

@@ -1,6 +1,7 @@
 "use client";
 
 import Modal from "@/components/ui/Modal";
+import { Button, Input, Textarea } from "@/components/ui";
 import { useLanguage } from "@/contexts/LanguageContext";
 
 interface ReviewFormProps {
@@ -35,24 +36,24 @@ export default function ReviewForm({
       <form onSubmit={onSubmit} className="space-y-4">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <label className="text-xs font-black text-gray-500 dark:text-gray-400">
+            <label className="text-xs font-black text-muted-foreground">
               {t("your_name")}
             </label>
-            <input
+            <Input
               value={name}
               onChange={(e) => onNameChange(e.target.value)}
-              className="w-full mt-2 px-4 py-3 bg-gray-50 dark:bg-gray-800 border border-gray-100 dark:border-gray-700 rounded-xl text-sm font-bold"
+              className="mt-2 font-bold"
               required
             />
           </div>
           <div>
-            <label className="text-xs font-black text-gray-500 dark:text-gray-400">
+            <label className="text-xs font-black text-muted-foreground">
               {t("your_rating")}
             </label>
             <select
               value={rating}
-              onChange={(e) => onRatingChange(parseInt(e.target.value))}
-              className="w-full mt-2 px-4 py-3 bg-gray-50 dark:bg-gray-800 border border-gray-100 dark:border-gray-700 rounded-xl text-sm font-bold"
+              onChange={(e: React.ChangeEvent<HTMLSelectElement>) => onRatingChange(parseInt(e.target.value))}
+              className="mt-2 w-full px-4 py-3 bg-card border border-input rounded-md text-sm font-bold text-foreground focus:border-primary focus:shadow-focus outline-none transition-all"
             >
               {[5, 4, 3, 2, 1].map((r) => (
                 <option key={r} value={r}>
@@ -63,24 +64,26 @@ export default function ReviewForm({
           </div>
         </div>
         <div>
-          <label className="text-xs font-black text-gray-500 dark:text-gray-400">
+          <label className="text-xs font-black text-muted-foreground">
             {t("your_review")}
           </label>
-          <textarea
+          <Textarea
             value={comment}
             onChange={(e) => onCommentChange(e.target.value)}
-            className="w-full mt-2 px-4 py-3 bg-gray-50 dark:bg-gray-800 border border-gray-100 dark:border-gray-700 rounded-xl text-sm font-bold min-h-28"
+            className="mt-2 font-bold min-h-28"
             required
           />
         </div>
         <div className="flex justify-end">
-          <button
+          <Button
             type="submit"
+            variant="primary"
+            size="md"
             disabled={submitting}
-            className="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-2xl font-black disabled:opacity-50"
+            className="rounded-2xl font-black"
           >
             {t("submit_review")}
-          </button>
+          </Button>
         </div>
       </form>
     </Modal>

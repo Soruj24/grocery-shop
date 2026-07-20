@@ -32,9 +32,9 @@ export default function OrderTrackingTimeline({ status }: OrderTrackingTimelineP
     <div className="py-8 px-4">
       <div className="relative flex justify-between items-center">
         {/* Progress Line */}
-        <div className="absolute left-0 top-1/2 -translate-y-1/2 w-full h-1 bg-gray-100 dark:bg-white/5 -z-10" />
+        <div className="absolute left-0 top-1/2 -translate-y-1/2 w-full h-1 bg-muted -z-10" />
         <div 
-          className="absolute left-0 top-1/2 -translate-y-1/2 h-1 bg-green-500 transition-all duration-500 -z-10"
+          className="absolute left-0 top-1/2 -translate-y-1/2 h-1 bg-primary transition-all duration-500 -z-10"
           style={{ width: `${(currentIndex / (steps.length - 1)) * 100}%` }}
         />
 
@@ -44,20 +44,20 @@ export default function OrderTrackingTimeline({ status }: OrderTrackingTimelineP
           const isActive = index === currentIndex;
 
           return (
-            <div key={step.id} className="flex flex-col items-center gap-3 bg-white dark:bg-[#0B1120] px-4">
+            <div key={step.id} className="flex flex-col items-center gap-3 bg-card px-4">
               <div 
                 className={`w-12 h-12 rounded-2xl flex items-center justify-center transition-all duration-300 ${
                   isCompleted 
-                    ? "bg-green-500 text-white" 
+                    ? "bg-primary text-primary-foreground" 
                     : isActive 
-                      ? "bg-green-600 text-white shadow-lg shadow-green-600/30 scale-110" 
-                      : "bg-gray-100 dark:bg-white/5 text-gray-400"
+                      ? "bg-primary text-primary-foreground shadow-primary scale-110" 
+                      : "bg-muted text-muted-foreground"
                 }`}
               >
                 {isCompleted ? <Check size={20} /> : <Icon size={20} />}
               </div>
               <p className={`text-[10px] font-black uppercase tracking-widest ${
-                isActive ? "text-green-600" : "text-gray-400"
+                isActive ? "text-primary" : "text-muted-foreground"
               }`}>
                 {step.label}
               </p>

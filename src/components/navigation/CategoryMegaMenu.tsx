@@ -79,10 +79,10 @@ export default function CategoryMegaMenu({
   return (
     <div
       onMouseLeave={onClose}
-      className="absolute top-0 left-0 w-[1100px] bg-white/95 dark:bg-[#0B1120]/95 backdrop-blur-3xl shadow-[0_32px_64px_-16px_rgba(0,0,0,0.3)] dark:shadow-black/90 border border-gray-100 dark:border-white/5 rounded-b-[40px] rounded-tr-[40px] p-12 z-50 grid grid-cols-4 gap-x-8 gap-y-12 max-h-[85vh] overflow-y-auto custom-scrollbar"
+      className="absolute top-0 left-0 w-[1100px] bg-card backdrop-blur-3xl shadow-2xl border border-border rounded-b-2xl rounded-tr-2xl p-12 z-50 grid grid-cols-4 gap-x-8 gap-y-12 max-h-[85vh] overflow-y-auto custom-scrollbar"
     >
       {/* Decorative Background Elements */}
-      <div className="absolute top-0 right-0 w-96 h-96 bg-green-500/5 blur-[100px] rounded-full pointer-events-none" />
+      <div className="absolute top-0 right-0 w-96 h-96 bg-primary/5 blur-[100px] rounded-full pointer-events-none" />
       <div className="absolute bottom-0 left-0 w-64 h-64 bg-purple-500/5 blur-[80px] rounded-full pointer-events-none" />
 
       {displayCategories.map((cat: ICategory, idx: number) => (
@@ -99,7 +99,7 @@ export default function CategoryMegaMenu({
             className="flex items-center gap-5 group/item"
           >
             <div className="relative flex-shrink-0">
-              <div className="w-[72px] h-[72px] rounded-[24px] overflow-hidden bg-white dark:bg-white/5 shadow-xl border border-gray-100 dark:border-white/10 group-hover/item:border-green-500/50 transition-all duration-500 relative">
+              <div className="w-[72px] h-[72px] rounded-xl overflow-hidden bg-card shadow-xl border border-border group-hover/item:border-primary/50 transition-all duration-500 relative">
                 <Image
                   src={cat.image || getCategoryFallbackImage(cat.name)}
                   alt={cat.name}
@@ -112,10 +112,10 @@ export default function CategoryMegaMenu({
               </div>
             </div>
             <div className="flex flex-col gap-0.5">
-              <span className="text-[19px] font-black text-gray-900 dark:text-white group-hover/item:text-green-600 dark:group-hover/item:text-green-400 transition-colors leading-tight">
+              <span className="text-[19px] font-black text-foreground group-hover/item:text-primary transition-colors leading-tight">
                 {cat.name}
               </span>
-              <span className="text-[11px] font-bold text-gray-400 dark:text-gray-500 uppercase tracking-wider group-hover/item:text-green-500/70 transition-colors">
+              <span className="text-[11px] font-bold text-muted-foreground uppercase tracking-wider group-hover/item:text-primary/70 transition-colors">
                 {t('collection')}
               </span>
             </div>
@@ -129,9 +129,9 @@ export default function CategoryMegaMenu({
                   key={sub._id}
                   href={`/products?category=${sub._id}`}
                   onClick={onClose}
-                  className="group/sub flex items-center gap-3 text-[14px] font-bold text-gray-600 dark:text-gray-400 hover:text-green-600 dark:hover:text-green-400 transition-all pl-2 border-l-2 border-transparent hover:border-green-500/30"
+                  className="group/sub flex items-center gap-3 text-[14px] font-bold text-muted-foreground hover:text-primary transition-all pl-2 border-l-2 border-transparent hover:border-primary/30"
                 >
-                  <span className="w-1.5 h-1.5 rounded-full bg-gray-300 dark:bg-gray-700 group-hover/sub:bg-green-500 transition-colors" />
+                  <span className="w-1.5 h-1.5 rounded-full bg-border-strong group-hover/sub:bg-primary transition-colors" />
                   <span className="flex-1 leading-snug group-hover/sub:translate-x-1 transition-transform">
                     {sub.name}
                   </span>
@@ -141,7 +141,7 @@ export default function CategoryMegaMenu({
               <NextLink
                 href={`/products?category=${cat._id}`}
                 onClick={onClose}
-                className="inline-flex items-center gap-2 text-[11px] font-black text-green-600 dark:text-green-500 uppercase tracking-widest pt-4 hover:gap-3 transition-all pl-2"
+                className="inline-flex items-center gap-2 text-[11px] font-black text-primary uppercase tracking-widest pt-4 hover:gap-3 transition-all pl-2"
               >
                 {t('see_all')}
                 <ArrowRight size={14} />

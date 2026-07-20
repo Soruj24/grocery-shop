@@ -28,14 +28,14 @@ export default function FloatingCart() {
           animate={{ scale: 1, opacity: 1 }}
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
-          className="bg-green-600 text-white p-4 rounded-[28px] shadow-2xl shadow-green-600/40 flex items-center gap-4 group overflow-hidden relative"
+          className="bg-primary text-primary-foreground p-4 rounded-2xl shadow-2xl shadow-primary/40 flex items-center gap-4 group overflow-hidden relative"
         >
           {/* Shine effect */}
           <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:animate-shine" />
           
           <div className="relative">
             <ShoppingCart size={24} />
-            <span className="absolute -top-2 -right-2 bg-rose-500 text-white text-[10px] font-black w-5 h-5 rounded-full flex items-center justify-center border-2 border-green-600">
+            <span className="absolute -top-2 -right-2 bg-danger text-white text-[10px] font-black w-5 h-5 rounded-full flex items-center justify-center border-2 border-primary">
               {totalItems}
             </span>
           </div>

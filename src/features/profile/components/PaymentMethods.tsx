@@ -2,8 +2,8 @@
 
 import { CreditCard, Plus, Trash2, ShieldCheck, Wallet } from "lucide-react";
 import { useState } from "react";
-import { motion } from "framer-motion";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { Button } from "@/components/ui";
 
 export default function PaymentMethods() {
   const { t } = useLanguage();
@@ -30,24 +30,23 @@ export default function PaymentMethods() {
     <div className="space-y-8">
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-3xl font-black text-gray-900 dark:text-white flex items-center gap-3">
-            <CreditCard className="text-blue-600" />
+          <h2 className="text-3xl font-black text-foreground flex items-center gap-3">
+            <CreditCard className="text-info" />
             {t('payment_methods_title')}
           </h2>
-          <p className="text-gray-500 dark:text-gray-400 mt-1">{t('payment_methods_desc')}</p>
+          <p className="text-muted-foreground mt-1">{t('payment_methods_desc')}</p>
         </div>
         
-        <button className="flex items-center gap-2 px-6 py-3 bg-blue-600 text-white rounded-2xl font-bold shadow-lg shadow-blue-600/20 hover:bg-blue-700 transition-all">
-          <Plus size={20} />
+        <Button variant="info" leftIcon={<Plus size={20} />}>
           {t('add_new_card')}
-        </button>
+        </Button>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {cards.map((card) => (
           <div 
             key={card.id}
-            className={`relative p-8 rounded-[32px] text-white shadow-2xl overflow-hidden group ${card.color}`}
+            className={`relative p-8 rounded-2xl text-white shadow-xl overflow-hidden group ${card.color}`}
           >
             {/* Background pattern */}
             <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full -mr-32 -mt-32 blur-3xl group-hover:bg-white/20 transition-all duration-500" />
@@ -91,13 +90,13 @@ export default function PaymentMethods() {
         ))}
 
         {/* Other methods */}
-        <div className="p-8 rounded-[32px] border-2 border-dashed border-gray-200 dark:border-gray-800 flex flex-col items-center justify-center gap-4 text-center group hover:border-blue-500/50 transition-all cursor-pointer">
-          <div className="p-4 bg-gray-50 dark:bg-white/5 rounded-2xl text-gray-400 group-hover:bg-blue-500/10 group-hover:text-blue-500 transition-all">
+        <div className="p-8 rounded-2xl border-2 border-dashed border-border flex flex-col items-center justify-center gap-4 text-center group hover:border-info/50 transition-all cursor-pointer">
+          <div className="p-4 bg-muted rounded-2xl text-muted-foreground group-hover:bg-info-subtle group-hover:text-info transition-all">
             <Wallet size={32} />
           </div>
           <div>
-            <h4 className="font-bold text-gray-900 dark:text-white">{t('add_bkash_nagad')}</h4>
-            <p className="text-xs text-gray-500 mt-1">{t('add_mobile_banking_desc')}</p>
+            <h4 className="font-bold text-foreground">{t('add_bkash_nagad')}</h4>
+            <p className="text-xs text-muted-foreground mt-1">{t('add_mobile_banking_desc')}</p>
           </div>
         </div>
       </div>

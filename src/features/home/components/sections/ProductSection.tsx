@@ -17,9 +17,9 @@ export default function ProductSection({
   totalCount,
 }: ProductSectionProps) {
   return (
-    <section 
-      id="products" 
-      className="py-12 lg:py-16 px-4 bg-white dark:bg-gray-900 rounded-[32px] shadow-2xl shadow-gray-200/50 dark:shadow-black/20 border border-gray-100 dark:border-gray-800 scroll-mt-24"
+    <section
+      id="products"
+      className="py-12 lg:py-16 px-4 bg-card rounded-2xl shadow-sm border border-border scroll-mt-24"
     >
       <div className="max-w-7xl mx-auto">
         <ProductSectionHeader />

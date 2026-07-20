@@ -22,7 +22,7 @@ export default function SearchHistorySection({
   return (
     <div className="mb-8">
       <div className="flex items-center justify-between px-2 mb-4">
-        <p className="text-[10px] font-black uppercase tracking-[0.2em] text-gray-400">
+        <p className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground">
           {t("recent_searches")}
         </p>
         <button
@@ -39,22 +39,22 @@ export default function SearchHistorySection({
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: idx * 0.05 }}
-            className="flex items-center justify-between group px-4 py-3 hover:bg-gray-50 dark:hover:bg-white/5 rounded-2xl cursor-pointer transition-all border border-transparent hover:border-gray-100 dark:hover:border-white/5"
+            className="flex items-center justify-between group px-4 py-3 hover:bg-muted rounded-2xl cursor-pointer transition-all border border-transparent hover:border-border"
           >
             <div
               className="flex items-center gap-4 flex-1"
               onClick={() => onItemClick(item)}
             >
-              <div className="w-8 h-8 rounded-full bg-gray-100 dark:bg-white/10 flex items-center justify-center text-gray-400 group-hover:text-green-500 transition-colors">
+              <div className="w-8 h-8 rounded-full bg-muted flex items-center justify-center text-muted-foreground group-hover:text-primary transition-colors">
                 <History size={14} />
               </div>
-              <span className="text-sm font-bold text-gray-600 dark:text-gray-300 group-hover:text-gray-900 dark:group-hover:text-white transition-colors">
+              <span className="text-sm font-bold text-foreground group-hover:text-foreground transition-colors">
                 {item}
               </span>
             </div>
             <button
               onClick={(e) => onItemRemove(e, item)}
-              className="p-2 text-gray-300 hover:text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-500/10 rounded-full transition-all opacity-0 group-hover:opacity-100"
+              className="p-2 text-muted-foreground hover:text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-500/10 rounded-full transition-all opacity-0 group-hover:opacity-100"
             >
               <X size={14} />
             </button>

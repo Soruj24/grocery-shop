@@ -17,11 +17,11 @@ const SidebarItem = ({ icon: Icon, label, id, active, onClick }: SidebarItemProp
     onClick={() => onClick(id)}
     className={`w-full flex items-center gap-4 px-6 py-4 rounded-2xl transition-all ${
       active
-        ? "bg-green-600 text-white shadow-lg shadow-green-600/20"
-        : "text-gray-500 hover:bg-gray-50 dark:hover:bg-white/5 hover:text-green-600"
+        ? "bg-primary-subtle text-primary-subtle-foreground"
+        : "text-muted-foreground hover:bg-muted hover:text-primary"
     }`}
   >
-    <Icon size={20} className={active ? "text-white" : "text-inherit"} />
+    <Icon size={20} className="text-inherit" />
     <span className="font-bold text-sm tracking-wide">{label}</span>
   </button>
 );
@@ -44,7 +44,7 @@ export default function ProfileSidebar({ activeTab, setActiveTab }: ProfileSideb
   ];
 
   return (
-    <div className="bg-white/80 dark:bg-[#0B1120]/80 backdrop-blur-2xl rounded-[32px] border border-gray-100 dark:border-white/5 shadow-xl p-4 flex flex-col h-full">
+    <div className="bg-card/80 backdrop-blur-2xl rounded-2xl border border-border shadow-xl p-4 flex flex-col h-full">
       <div className="space-y-2 flex-1">
         {menuItems.map((item) => (
           <SidebarItem
@@ -56,10 +56,10 @@ export default function ProfileSidebar({ activeTab, setActiveTab }: ProfileSideb
         ))}
       </div>
 
-      <div className="pt-4 border-t border-gray-100 dark:border-white/5">
+      <div className="pt-4 border-t border-border">
         <button
           onClick={() => signOut()}
-          className="w-full flex items-center gap-4 px-6 py-4 rounded-2xl text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-500/10 transition-all"
+          className="w-full flex items-center gap-4 px-6 py-4 rounded-2xl text-danger hover:bg-danger-subtle transition-all"
         >
           <LogOut size={20} />
           <span className="font-bold text-sm tracking-wide">{t('logout')}</span>

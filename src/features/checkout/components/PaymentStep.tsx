@@ -40,12 +40,12 @@ export default function PaymentStep({
     paymentMethod === "cod" || transactionId.trim().length >= 8;
 
   return (
-    <div className="bg-white dark:bg-gray-900 p-8 rounded-[40px] shadow-sm border border-gray-100 dark:border-gray-800 space-y-8">
+    <div className="bg-card p-8 rounded-xl shadow-sm border border-border space-y-8">
       <div className="flex items-center gap-4">
-        <div className="w-12 h-12 bg-purple-50 dark:bg-purple-900/30 rounded-2xl flex items-center justify-center text-purple-600">
+        <div className="w-12 h-12 bg-accent-subtle rounded-lg flex items-center justify-center text-accent">
           <CreditCard className="w-6 h-6" />
         </div>
-        <h2 className="text-2xl font-black text-gray-900 dark:text-white">
+        <h2 className="text-2xl font-black text-foreground">
           {t("payment_method")}
         </h2>
       </div>
@@ -59,17 +59,17 @@ export default function PaymentStep({
               key={method.id}
               type="button"
               onClick={() => onMethodChange(method.id)}
-              className={`p-4 rounded-[32px] border-2 transition-all flex flex-col items-center gap-3 text-center ${
+              className={`p-4 rounded-xl border-2 transition-all flex flex-col items-center gap-3 text-center ${
                 isActive
-                  ? "border-green-600 bg-green-50 dark:bg-green-900/20"
-                  : "border-gray-50 dark:border-gray-800 bg-gray-50/50 dark:bg-gray-800/50 hover:border-gray-200"
+                  ? "border-primary bg-primary-subtle"
+                  : "border-border bg-muted hover:border-border-strong"
               }`}
             >
               <div
-                className={`w-10 h-10 rounded-xl flex items-center justify-center ${
+                className={`w-10 h-10 rounded-md flex items-center justify-center ${
                   isActive
-                    ? "bg-green-600 text-white"
-                    : "bg-white dark:bg-gray-900 text-gray-300"
+                    ? "bg-primary text-primary-foreground"
+                    : "bg-card text-muted-foreground"
                 }`}
               >
                 <Icon className="w-5 h-5" />
@@ -83,14 +83,14 @@ export default function PaymentStep({
       </div>
 
       {paymentMethod !== "cod" && (
-        <div className="p-6 bg-gray-900 text-white rounded-[32px] space-y-4">
+        <div className="p-6 bg-foreground text-background rounded-xl space-y-4">
           <p className="text-xs font-bold opacity-70 italic text-center">
             {t("payment_instruction")}
           </p>
           <input
             type="text"
             placeholder={t("transaction_id_placeholder")}
-            className="w-full px-6 py-4 bg-white/10 border border-white/10 rounded-2xl focus:ring-2 focus:ring-green-500 outline-none transition-all font-bold text-center"
+            className="w-full px-6 py-4 bg-background/10 border border-border rounded-lg focus:ring-2 focus:ring-primary outline-none transition-all font-bold text-center"
             value={transactionId}
             onChange={(e) => onTransactionIdChange(e.target.value)}
           />
@@ -100,7 +100,7 @@ export default function PaymentStep({
       <div className="flex gap-4">
         <button
           onClick={onPrev}
-          className="flex-1 bg-gray-100 dark:bg-gray-800 text-gray-600 py-6 rounded-[32px] font-black transition-all flex items-center justify-center gap-2"
+          className="flex-1 bg-muted text-muted-foreground py-6 rounded-lg font-black transition-all flex items-center justify-center gap-2"
         >
           <ArrowLeft className="w-6 h-6" />
           {t("back_to_prev")}
@@ -108,7 +108,7 @@ export default function PaymentStep({
         <button
           onClick={onNext}
           disabled={!isValid}
-          className="flex-[2] bg-green-600 hover:bg-green-700 text-white py-6 rounded-[32px] font-black text-xl transition-all flex items-center justify-center gap-4 shadow-xl shadow-green-600/20 disabled:opacity-50"
+          className="flex-[2] bg-primary hover:bg-primary-hover text-primary-foreground py-6 rounded-lg font-black text-xl transition-all flex items-center justify-center gap-4 shadow-primary disabled:opacity-50"
         >
           {t("next_step")}
           <ArrowRight className="w-6 h-6" />

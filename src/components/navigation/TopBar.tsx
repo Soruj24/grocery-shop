@@ -8,20 +8,20 @@ import { useLanguage } from "@/contexts/LanguageContext";
 export default function TopBar() {
   const { t } = useLanguage();
   return (
-    <div className="bg-[#0B1120] text-gray-400 py-2.5 px-4 hidden md:block border-b border-white/5 transition-colors relative z-50">
+    <div className="bg-[#0B1120] text-muted-foreground py-2.5 px-4 hidden md:fixed md:top-0 md:left-0 md:right-0 md:block border-b border-border transition-colors relative z-50">
       <div className="max-w-7xl mx-auto flex justify-between items-center text-[10px] font-bold uppercase tracking-widest">
         <div className="flex items-center gap-6">
           <LocationSelector />
           <div className="w-px h-3 bg-white/10" />
           <div className="flex items-center gap-2 group cursor-default">
             <span className="relative flex h-1.5 w-1.5">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-500 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-green-500"></span>
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-primary"></span>
             </span>
             <span className="group-hover:text-white transition-colors">{t('fresh_organic')}</span>
           </div>
           <div className="flex items-center gap-2 group cursor-pointer hover:text-white transition-colors">
-            <PhoneCall className="w-3 h-3 text-green-500" />
+             <PhoneCall className="w-3 h-3 text-primary" />
             <span>{t('helpline')}: <span className="text-white">{t('helpline_number')}</span></span>
           </div>
         </div>

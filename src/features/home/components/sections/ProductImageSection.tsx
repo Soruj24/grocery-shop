@@ -2,11 +2,12 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { Heart, Share2, TrendingUp } from "lucide-react";
+import { Heart, Share2 } from "lucide-react";
 import { motion } from "framer-motion";
 import { Product } from "@/types/product";
 import { TranslationKey } from "@/constants/translations";
 import { getProductFallbackImage } from "@/constants/fallback-images";
+import { Badge } from "@/components/ui";
 
 interface ProductImageSectionProps {
   product: Product;
@@ -28,7 +29,7 @@ export default function ProductImageSection({
   t,
 }: ProductImageSectionProps) {
   return (
-    <div className="relative aspect-[4/5] overflow-hidden bg-gray-50 dark:bg-gray-800 rounded-t-[2rem]">
+    <div className="relative aspect-[4/5] overflow-hidden bg-subtle rounded-t-xl">
       <motion.div
         style={{ backgroundColor: overlayColor, opacity: overlayOpacity }}
         className="absolute inset-0 z-30 pointer-events-none mix-blend-multiply dark:mix-blend-overlay"
@@ -52,7 +53,7 @@ export default function ProductImageSection({
           className={`w-10 h-10 rounded-full flex items-center justify-center backdrop-blur-md shadow-lg transition-all duration-300 hover:scale-110 active:scale-95 ${
             isWishlistActive
               ? "bg-rose-500 text-white shadow-rose-500/40"
-              : "bg-white/90 dark:bg-black/60 text-gray-500 dark:text-gray-300 hover:bg-rose-500 hover:text-white"
+              : "bg-card text-muted-foreground hover:bg-rose-500 hover:text-white"
           }`}
         >
           <Heart className={`w-5 h-5 ${isWishlistActive ? "fill-current" : ""}`} />
@@ -60,7 +61,7 @@ export default function ProductImageSection({
 
         <button
           onClick={(e) => { e.preventDefault(); onShare(e); }}
-          className="w-10 h-10 rounded-full bg-white/90 dark:bg-black/60 text-gray-500 dark:text-gray-300 flex items-center justify-center backdrop-blur-md shadow-lg transition-all duration-300 hover:bg-blue-500 hover:text-white hover:scale-110 active:scale-95 delay-75"
+          className="w-10 h-10 rounded-full bg-card text-muted-foreground flex items-center justify-center backdrop-blur-md shadow-lg transition-all duration-300 hover:bg-blue-500 hover:text-white hover:scale-110 active:scale-95 delay-75"
         >
           <Share2 className="w-5 h-5" />
         </button>
@@ -68,24 +69,20 @@ export default function ProductImageSection({
 
       {product.discountPrice && (
         <div className="absolute top-4 left-4 z-10">
-          <div className="relative">
-            <div className="absolute inset-0 bg-rose-500 blur-sm opacity-50 rounded-full" />
-            <div className="relative bg-rose-500 text-white text-[10px] font-black px-3 py-1.5 rounded-full shadow-lg flex items-center gap-1">
-              <TrendingUp size={10} className="text-white/80" />
-              {Math.round(((product.price - product.discountPrice) / product.price) * 100).toLocaleString("bn-BD")}% {t("off")}
-            </div>
-          </div>
+          <Badge tone="danger" size="sm">
+            {Math.round(((product.price - product.discountPrice) / product.price) * 100).toLocaleString("bn-BD")}% {t("off")}
+          </Badge>
         </div>
       )}
 
       {product.stock <= 5 && product.stock > 0 && (
-        <div className="absolute bottom-4 left-4 bg-amber-500/90 backdrop-blur-md text-white text-[9px] font-black px-3 py-1 rounded-full z-10 shadow-lg shadow-amber-500/20">
-          {t("low_stock")}
+        <div className="absolute bottom-4 left-4 z-10">
+          <Badge tone="warning" size="sm">{t("low_stock")}</Badge>
         </div>
       )}
       {product.stock === 0 && (
         <div className="absolute inset-0 bg-black/40 backdrop-blur-[2px] flex items-center justify-center z-10">
-          <span className="bg-white text-black text-xs font-black px-4 py-2 rounded-full shadow-xl transform -rotate-6">
+          <span className="bg-card text-foreground text-xs font-black px-4 py-2 rounded-full shadow-lg transform -rotate-6">
             {t("out_of_stock_label")}
           </span>
         </div>

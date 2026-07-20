@@ -17,7 +17,7 @@ export default function CheckoutPage() {
     totalPrice, cart, nextStep, prevStep, handleSubmit, couponCode, router, t,
   } = useCheckout();
 
-  if (status === "loading") return <div className="min-h-screen flex items-center justify-center"><div className="w-12 h-12 border-4 border-green-500/20 border-t-green-500 rounded-full animate-spin" /></div>;
+  if (status === "loading") return <div className="min-h-screen flex items-center justify-center"><div className="w-12 h-12 border-4 border-primary/20 border-t-primary rounded-full animate-spin" /></div>;
   if (orderSuccess) return <OrderSuccess />;
   if (cart.length === 0 && !orderSuccess) return null;
 
@@ -29,17 +29,17 @@ export default function CheckoutPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50/50 dark:bg-black relative overflow-hidden">
+    <div className="min-h-screen bg-background relative overflow-hidden">
       <div className="max-w-7xl mx-auto py-12 px-4 space-y-12 relative z-10">
         <div className="space-y-10">
           <div className="flex items-center gap-4">
             <button onClick={() => currentStep === 1 ? router.push("/cart") : prevStep()}
-              className="p-3 bg-white dark:bg-gray-900 rounded-2xl text-gray-400 hover:text-green-600 shadow-sm transition-all">
+              className="p-3 bg-card rounded-lg text-muted-foreground hover:text-primary shadow-sm transition-all">
               <ArrowLeft className="w-6 h-6" />
             </button>
             <div className="space-y-1">
-              <h1 className="text-4xl font-black text-gray-900 dark:text-white tracking-tight">{t("checkout_title")}</h1>
-              <p className="text-gray-500 dark:text-gray-400 font-bold">{t("step_text")} {currentStep}: {steps[currentStep - 1].name}</p>
+              <h1 className="text-4xl font-black text-foreground tracking-tight">{t("checkout_title")}</h1>
+              <p className="text-muted-foreground font-bold">{t("step_text")} {currentStep}: {steps[currentStep - 1].name}</p>
             </div>
           </div>
           <CheckoutStepper currentStep={currentStep} steps={steps} />

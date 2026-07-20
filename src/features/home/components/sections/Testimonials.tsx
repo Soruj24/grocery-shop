@@ -58,8 +58,8 @@ export default function Testimonials() {
   return (
     <section className="py-8 px-4 relative overflow-hidden">
       {/* Background Decorative Elements */}
-      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-green-500/5 blur-[120px] rounded-full -mr-64 -mt-64 pointer-events-none" />
-      <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-blue-500/5 blur-[120px] rounded-full -ml-64 -mb-64 pointer-events-none" />
+      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-primary/5 blur-[120px] rounded-full -mr-64 -mt-64 pointer-events-none" />
+      <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-info/5 blur-[120px] rounded-full -ml-64 -mb-64 pointer-events-none" />
 
       <div className="max-w-7xl mx-auto">
         <div className="text-center space-y-4 mb-20">
@@ -67,20 +67,20 @@ export default function Testimonials() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="inline-flex items-center gap-2 px-4 py-2 bg-rose-500/10 border border-rose-500/20 text-rose-600 dark:text-rose-400 rounded-full text-xs font-black uppercase tracking-[0.2em]"
-          >
-            <Quote size={14} className="animate-pulse" />
-            {t('testimonials_badge')}
-          </motion.div>
-          <motion.h2 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.1 }}
-            className="text-4xl md:text-6xl font-black text-gray-900 dark:text-white tracking-tight"
-          >
-            {t('testimonials_title_1')} <span className="text-transparent bg-clip-text bg-gradient-to-r from-rose-500 to-orange-500">{t('testimonials_title_2')}</span>
-          </motion.h2>
+            className="inline-flex items-center gap-2 px-4 py-2 bg-danger-subtle border border-danger/30 text-danger rounded-full text-xs font-black uppercase tracking-[0.2em]"
+            >
+              <Quote size={14} className="animate-pulse" />
+              {t('testimonials_badge')}
+            </motion.div>
+            <motion.h2
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.1 }}
+              className="text-4xl md:text-6xl font-black text-foreground tracking-tight"
+            >
+              {t('testimonials_title_1')} <span className="text-transparent bg-clip-text bg-gradient-to-r from-danger to-warning">{t('testimonials_title_2')}</span>
+            </motion.h2>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 auto-rows-[240px]">
@@ -92,8 +92,8 @@ export default function Testimonials() {
               viewport={{ once: true }}
               transition={{ delay: idx * 0.1 }}
               whileHover={{ y: -5 }}
-              className={`relative p-8 rounded-[40px] border border-gray-100 dark:border-white/5 bg-white dark:bg-[#0F172A] shadow-sm hover:shadow-2xl hover:shadow-gray-200/50 dark:hover:shadow-black/50 transition-all duration-500 flex flex-col justify-between group ${
-                testimonial.size === "large" ? "md:col-span-2 md:row-span-2" : 
+              className={`relative p-8 rounded-2xl border border-border bg-card shadow-sm hover:shadow-lg transition-all duration-500 flex flex-col justify-between group ${
+                testimonial.size === "large" ? "md:col-span-2 md:row-span-2" :
                 testimonial.size === "medium" ? "md:row-span-2" : ""
               }`}
             >
@@ -101,27 +101,27 @@ export default function Testimonials() {
                 <div className="flex items-center justify-between">
                   <div className="flex gap-1">
                     {[...Array(5)].map((_, i) => (
-                      <Star 
-                        key={i} 
-                        size={16} 
-                        className={`${i < testimonial.rating ? "text-orange-400 fill-orange-400" : "text-gray-200 dark:text-white/10"}`} 
+                      <Star
+                        key={i}
+                        size={16}
+                        className={`${i < testimonial.rating ? "text-warning fill-warning" : "text-border-strong"}`}
                       />
                     ))}
                   </div>
-                  <Quote size={40} className="text-gray-100 dark:text-white/5 absolute top-8 right-8" />
+                  <Quote size={40} className="text-border absolute top-8 right-8" />
                 </div>
-                <p className={`text-gray-600 dark:text-gray-300 font-medium leading-relaxed ${testimonial.size === "large" ? "text-xl" : "text-base"}`}>
+                <p className={`text-muted-foreground font-medium leading-relaxed ${testimonial.size === "large" ? "text-xl" : "text-base"}`}>
                   &ldquo;{testimonial.content}&rdquo;
                 </p>
               </div>
 
-              <div className="flex items-center gap-4 pt-6 border-t border-gray-50 dark:border-white/5">
-                <div className={`w-12 h-12 rounded-2xl ${testimonial.color} flex items-center justify-center text-white shadow-lg`}>
+              <div className="flex items-center gap-4 pt-6 border-t border-border">
+                <div className={`w-12 h-12 rounded-2xl ${testimonial.color} flex items-center justify-center text-white shadow-sm`}>
                   <User size={24} />
                 </div>
                 <div>
-                  <h4 className="font-black text-gray-900 dark:text-white">{testimonial.author}</h4>
-                  <p className="text-xs font-bold text-gray-400 uppercase tracking-widest">{testimonial.role}</p>
+                  <h4 className="font-black text-foreground">{testimonial.author}</h4>
+                  <p className="text-xs font-bold text-muted-foreground uppercase tracking-widest">{testimonial.role}</p>
                 </div>
               </div>
             </motion.div>

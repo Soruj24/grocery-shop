@@ -20,7 +20,7 @@ export default function SubCategoryCard({ id, name, image, count, index }: SubCa
   return (
     <Link
       href={`/category/${id}`}
-      className="group relative bg-white dark:bg-[#0F172A] rounded-[32px] overflow-hidden border border-gray-100 dark:border-white/5 hover:border-green-500/30 dark:hover:border-green-500/30 transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl hover:shadow-green-500/10"
+      className="group relative bg-card rounded-2xl overflow-hidden border border-border hover:border-primary/30 transition-all duration-500 hover:-translate-y-2 hover:shadow-lg"
     >
       {/* Background Image */}
       <div className="absolute inset-0">
@@ -40,16 +40,16 @@ export default function SubCategoryCard({ id, name, image, count, index }: SubCa
           {(index + 1).toLocaleString('bn-BD')}
         </div>
 
-        <h3 className="text-xl font-black text-white group-hover:text-green-400 transition-colors mb-1">
+        <h3 className="text-xl font-black text-white group-hover:text-primary transition-colors mb-1">
           {name}
         </h3>
-        
+
         <div className="flex items-center justify-between w-full mt-2">
           <p className="text-xs font-bold text-gray-300 uppercase tracking-widest bg-white/10 backdrop-blur-md px-3 py-1 rounded-full">
             {count.toLocaleString('bn-BD')}+ {t('products_suffix')}
           </p>
-          
-          <div className="w-10 h-10 rounded-full bg-white/10 backdrop-blur-md flex items-center justify-center text-white border border-white/20 group-hover:bg-green-500 group-hover:border-green-500 transition-all duration-300 transform group-hover:scale-110">
+
+          <div className="w-10 h-10 rounded-full bg-white/10 backdrop-blur-md flex items-center justify-center text-white border border-white/20 group-hover:bg-primary group-hover:border-primary transition-all duration-300 transform group-hover:scale-110">
             <ArrowRight className="w-5 h-5 -rotate-45 group-hover:rotate-0 transition-transform duration-500" />
           </div>
         </div>

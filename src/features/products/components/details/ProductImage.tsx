@@ -7,6 +7,7 @@ import { ChevronLeft, ChevronRight, Maximize2 } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { Product } from "@/types/product";
 import { getProductFallbackImage } from "@/constants/fallback-images";
+import { Badge } from "@/components/ui";
 
 interface ProductImageProps {
   image?: string;
@@ -46,15 +47,17 @@ export default function ProductImage({ image, name, id, product }: ProductImageP
     <div className="w-full lg:w-1/2 space-y-6">
       {/* Main Image with Zoom */}
       <div 
-        className="relative bg-white dark:bg-gray-900 rounded-[32px] overflow-hidden border border-gray-100 dark:border-gray-800 shadow-xl aspect-square group cursor-zoom-in"
+        className="relative bg-card rounded-2xl overflow-hidden border border-border shadow-lg aspect-square group cursor-zoom-in"
         onMouseEnter={() => setIsZoomed(true)}
         onMouseLeave={() => setIsZoomed(false)}
         onMouseMove={handleMouseMove}
       >
         {/* Discount Badge */}
         {discountPercent > 0 && (
-          <div className="absolute top-6 left-6 z-10 bg-orange-500 text-white px-4 py-2 rounded-xl font-black text-sm shadow-lg shadow-orange-500/20 animate-bounce-slow">
-            {discountPercent.toLocaleString('bn-BD')}% {t('off')}
+          <div className="absolute top-6 left-6 z-10">
+            <Badge tone="warning" size="lg" className="font-black animate-bounce-slow">
+              {discountPercent.toLocaleString('bn-BD')}% {t('off')}
+            </Badge>
           </div>
         )}
 
@@ -82,8 +85,8 @@ export default function ProductImage({ image, name, id, product }: ProductImageP
         </AnimatePresence>
 
         {/* Zoom Icon Overlay */}
-        <div className="absolute top-4 right-4 p-3 bg-white/80 dark:bg-gray-800/80 backdrop-blur-md rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 shadow-lg">
-          <Maximize2 className="w-5 h-5 text-gray-600 dark:text-gray-300" />
+        <div className="absolute top-4 right-4 p-3 bg-card backdrop-blur-md rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 shadow-lg">
+          <Maximize2 className="w-5 h-5 text-muted-foreground" />
         </div>
 
         {/* Navigation Arrows */}
@@ -94,18 +97,18 @@ export default function ProductImage({ image, name, id, product }: ProductImageP
                 e.stopPropagation();
                 setActiveIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
               }}
-              className="p-3 bg-white/90 dark:bg-gray-800/90 backdrop-blur-md rounded-2xl shadow-xl pointer-events-auto opacity-0 group-hover:opacity-100 transition-all duration-300 -translate-x-4 group-hover:translate-x-0"
+              className="p-3 bg-card backdrop-blur-md rounded-2xl shadow-lg pointer-events-auto opacity-0 group-hover:opacity-100 transition-all duration-300 -translate-x-4 group-hover:translate-x-0"
             >
-              <ChevronLeft className="w-6 h-6" />
+              <ChevronLeft className="w-6 h-6 text-foreground" />
             </button>
             <button
               onClick={(e) => {
                 e.stopPropagation();
                 setActiveIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1));
               }}
-              className="p-3 bg-white/90 dark:bg-gray-800/90 backdrop-blur-md rounded-2xl shadow-xl pointer-events-auto opacity-0 group-hover:opacity-100 transition-all duration-300 translate-x-4 group-hover:translate-x-0"
+              className="p-3 bg-card backdrop-blur-md rounded-2xl shadow-lg pointer-events-auto opacity-0 group-hover:opacity-100 transition-all duration-300 translate-x-4 group-hover:translate-x-0"
             >
-              <ChevronRight className="w-6 h-6" />
+              <ChevronRight className="w-6 h-6 text-foreground" />
             </button>
           </div>
         )}
@@ -119,8 +122,8 @@ export default function ProductImage({ image, name, id, product }: ProductImageP
             onClick={() => setActiveIndex(idx)}
             className={`relative w-24 aspect-square rounded-2xl overflow-hidden border-2 transition-all shrink-0 ${
               activeIndex === idx 
-                ? 'border-green-500 scale-95 shadow-lg shadow-green-500/20' 
-                : 'border-gray-100 dark:border-gray-800 opacity-60 hover:opacity-100'
+                ? 'border-primary scale-95 shadow-lg shadow-primary' 
+                : 'border-border opacity-60 hover:opacity-100'
             }`}
           >
             <Image

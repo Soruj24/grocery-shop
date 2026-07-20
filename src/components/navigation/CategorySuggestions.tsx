@@ -19,7 +19,7 @@ export default function CategorySuggestions({
 
   return (
     <div className="space-y-3">
-      <p className="text-[10px] font-black uppercase tracking-[0.2em] text-gray-400 px-2">
+      <p className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground px-2">
         {t("suggested_categories")}
       </p>
       <div className="grid grid-cols-2 gap-3 px-2">
@@ -33,15 +33,15 @@ export default function CategorySuggestions({
             <Link
               href={`/products?category=${cat.id}`}
               onClick={onCategoryClick}
-              className="flex items-center gap-4 p-4 bg-gray-50 dark:bg-white/5 hover:bg-green-50 dark:hover:bg-green-500/10 rounded-2xl transition-all border border-gray-100 dark:border-white/5 hover:border-green-200 dark:hover:border-green-500/30 group hover:shadow-lg hover:shadow-green-500/10"
+              className="flex items-center gap-4 p-4 bg-muted hover:bg-primary-subtle rounded-2xl transition-all border border-border hover:border-primary/30 group hover:shadow-lg hover:shadow-primary"
             >
               <span className="text-2xl group-hover:scale-110 transition-transform duration-300 filter grayscale group-hover:grayscale-0">
                 {cat.icon}
               </span>
-              <span className="text-sm font-bold text-gray-700 dark:text-gray-300 group-hover:text-green-700 dark:group-hover:text-green-400 transition-colors">
+              <span className="text-sm font-bold text-foreground group-hover:text-primary transition-colors">
                 {cat.name}
               </span>
-              <ArrowRight className="w-4 h-4 ml-auto text-gray-300 group-hover:text-green-500 group-hover:translate-x-1 transition-all" />
+              <ArrowRight className="w-4 h-4 ml-auto text-muted-foreground group-hover:text-primary group-hover:translate-x-1 transition-all" />
             </Link>
           </motion.div>
         ))}

@@ -52,7 +52,7 @@ export default function FeaturesSection() {
   ];
 
   return (
-    <section className="py-16 lg:py-20 bg-white dark:bg-[#0B1120] border-y border-gray-100 dark:border-white/5 relative overflow-hidden">
+    <section className="py-16 lg:py-20 bg-background border-y border-border relative overflow-hidden">
       {/* Decorative Background */}
       <div className="absolute top-0 left-0 w-full h-full opacity-[0.03] pointer-events-none" 
         style={{ 
@@ -72,17 +72,17 @@ export default function FeaturesSection() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: idx * 0.1, duration: 0.5 }}
-                className={`flex flex-col items-center text-center p-8 rounded-[32px] bg-gray-50/50 dark:bg-white/5 border border-transparent ${feature.border} transition-all duration-300 hover:shadow-2xl hover:shadow-gray-200/50 dark:hover:shadow-black/50 hover:-translate-y-2 group cursor-default`}
+                  className={`flex flex-col items-center text-center p-8 rounded-2xl bg-subtle border border-transparent ${feature.border} transition-all duration-300 hover:shadow-lg hover:-translate-y-2 group cursor-default`}
               >
                 <div className={`w-20 h-20 rounded-full ${feature.bg} flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-500 shadow-sm`}>
                   <Icon className={`w-10 h-10 ${feature.color}`} />
                 </div>
                 
-                <h3 className="font-black text-gray-900 dark:text-white text-lg mb-3 group-hover:text-green-600 dark:group-hover:text-green-400 transition-colors">
+                <h3 className="font-black text-foreground text-lg mb-3 group-hover:text-primary transition-colors">
                   {feature.title}
                 </h3>
-                
-                <p className="text-sm font-medium text-gray-500 dark:text-gray-400 leading-relaxed max-w-[200px]">
+
+                <p className="text-sm font-medium text-muted-foreground leading-relaxed max-w-[200px]">
                   {feature.desc}
                 </p>
               </motion.div>

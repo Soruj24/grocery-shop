@@ -3,29 +3,25 @@
 import { Package } from "lucide-react";
 import Link from "next/link";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { EmptyState, Button } from "@/components/ui";
 
 export default function EmptyOrdersState() {
   const { t } = useLanguage();
 
   return (
-    <div className="min-h-[60vh] flex flex-col items-center justify-center space-y-6">
-      <div className="bg-gray-100 dark:bg-gray-900 p-8 rounded-full">
-        <Package className="w-16 h-16 text-gray-400 dark:text-gray-600" />
-      </div>
-      <div className="text-center space-y-2">
-        <h2 className="text-2xl font-black text-gray-800 dark:text-gray-100">
-          {t('no_orders_found')}
-        </h2>
-        <p className="text-gray-500 dark:text-gray-400 max-w-xs mx-auto font-medium">
-          {t('no_orders_desc')}
-        </p>
-      </div>
-      <Link
-        href="/products"
-        className="bg-green-600 text-white px-10 py-4 rounded-2xl font-black hover:bg-green-700 transition-all shadow-xl shadow-green-900/20 active:scale-95"
-      >
-        {t('shop_now_btn')}
-      </Link>
+    <div className="min-h-[60vh] flex items-center justify-center">
+      <EmptyState
+        icon={<Package className="w-8 h-8" />}
+        title={t('no_orders_found')}
+        description={t('no_orders_desc')}
+        action={
+          <Link href="/products">
+            <Button variant="primary" size="lg">
+              {t('shop_now_btn')}
+            </Button>
+          </Link>
+        }
+      />
     </div>
   );
 }

@@ -27,16 +27,16 @@ export default function ProductSidebarFilters({
 
   return (
     <aside className="hidden lg:block w-1/4 space-y-8">
-      <div className="bg-white dark:bg-gray-900 p-8 rounded-[32px] border border-gray-100 dark:border-gray-800 shadow-sm sticky top-24">
-        <h3 className="text-xl font-black text-gray-800 dark:text-gray-100 mb-6 flex items-center gap-2">
-          <Filter className="w-5 h-5 text-green-600 dark:text-green-400" />
+      <div className="bg-card p-8 rounded-2xl border border-border shadow-sm sticky top-24">
+        <h3 className="text-xl font-black text-foreground mb-6 flex items-center gap-2">
+          <Filter className="w-5 h-5 text-primary" />
           {t('filter')}
         </h3>
 
         <div className="space-y-8">
           {/* Categories */}
           <div>
-            <h4 className="text-sm font-black text-gray-400 dark:text-gray-500 uppercase tracking-wider mb-4">
+            <h4 className="text-sm font-black text-muted-foreground uppercase tracking-wider mb-4">
               {t('categories')}
             </h4>
             <div className="space-y-2">
@@ -44,8 +44,8 @@ export default function ProductSidebarFilters({
                 href="/products"
                 className={`flex items-center justify-between w-full px-4 py-2.5 rounded-xl text-sm font-bold transition-all ${
                   !categoryId
-                    ? "bg-green-600 text-white shadow-lg shadow-green-900/20"
-                    : "text-gray-600 dark:text-gray-400 hover:bg-green-50 dark:hover:bg-green-900/10"
+                    ? "bg-primary text-white shadow-lg shadow-primary"
+                    : "text-muted-foreground hover:bg-primary-subtle"
                 }`}
               >
                 <span>{t('all_products')}</span>
@@ -58,8 +58,8 @@ export default function ProductSidebarFilters({
                     href={`/products?category=${cat._id}`}
                     className={`flex items-center justify-between w-full px-4 py-2.5 rounded-xl text-sm font-bold transition-all ${
                       categoryId === cat._id || parentCategory?._id === cat._id
-                        ? "bg-green-50 dark:bg-green-900/20 text-green-700 dark:text-green-400"
-                        : "text-gray-600 dark:text-gray-400 hover:bg-green-50 dark:hover:bg-green-900/10"
+                        ? "bg-primary-subtle text-primary"
+                        : "text-muted-foreground hover:bg-primary-subtle"
                     }`}
                   >
                     <span>{cat.name}</span>
@@ -76,7 +76,7 @@ export default function ProductSidebarFilters({
 
                   {/* Subcategories */}
                   {(categoryId === cat._id || parentCategory?._id === cat._id) && (
-                    <div className="ml-4 pl-4 border-l-2 border-green-100 dark:border-green-900/20 space-y-1 py-1">
+                    <div className="ml-4 pl-4 border-l-2 border-primary/30 space-y-1 py-1">
                       {categories
                         .filter((sub: Category) => sub.parentId === cat._id)
                         .map((sub: Category) => (
@@ -85,8 +85,8 @@ export default function ProductSidebarFilters({
                             href={`/products?category=${sub._id}`}
                             className={`block w-full px-4 py-2 rounded-lg text-xs font-bold transition-all ${
                               categoryId === sub._id
-                                ? "text-green-600 dark:text-green-400 bg-green-50 dark:bg-green-900/10"
-                                : "text-gray-500 dark:text-gray-400 hover:text-green-600 dark:hover:text-green-400"
+                                ? "text-primary bg-primary-subtle"
+                                : "text-muted-foreground hover:text-primary"
                             }`}
                           >
                             {sub.name}
@@ -101,7 +101,7 @@ export default function ProductSidebarFilters({
 
           {/* Price Range */}
           <div>
-            <h4 className="text-sm font-black text-gray-400 dark:text-gray-500 uppercase tracking-wider mb-4">
+            <h4 className="text-sm font-black text-muted-foreground uppercase tracking-wider mb-4">
               {t('price_range')}
             </h4>
             <PriceFilter initialMin={minPrice} initialMax={maxPrice} />

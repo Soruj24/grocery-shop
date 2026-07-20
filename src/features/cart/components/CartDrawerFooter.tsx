@@ -16,20 +16,20 @@ export default function CartDrawerFooter({
   const { t } = useLanguage();
 
   return (
-    <div className="p-8 border-t border-gray-100 dark:border-white/5 space-y-6 bg-gray-50/50 dark:bg-white/[0.02]">
+    <div className="p-8 border-t border-border space-y-6 bg-card">
       <div className="space-y-3">
-        <div className="flex justify-between text-gray-500 font-bold">
+        <div className="flex justify-between text-muted-foreground font-bold">
           <span>{t("subtotal")}</span>
           <span>
             {t("currency_symbol")}
             {totalPrice.toLocaleString("bn-BD")}
           </span>
         </div>
-        <div className="flex justify-between text-gray-500 font-bold">
+        <div className="flex justify-between text-muted-foreground font-bold">
           <span>{t("delivery_charge")}</span>
-          <span className="text-green-600">{t("free")}</span>
+          <span className="text-primary">{t("free")}</span>
         </div>
-        <div className="flex justify-between text-2xl font-black text-gray-900 dark:text-white pt-3 border-t border-gray-100 dark:border-white/10">
+        <div className="flex justify-between text-2xl font-black text-foreground pt-3 border-t border-border">
           <span>{t("total_label")}</span>
           <span>
             {t("currency_symbol")}
@@ -42,14 +42,14 @@ export default function CartDrawerFooter({
         <Link
           href="/cart"
           onClick={onClose}
-          className="flex items-center justify-center px-6 py-5 bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-3xl font-black text-gray-900 dark:text-white hover:bg-gray-50 transition-all"
+          className="flex items-center justify-center px-6 py-5 bg-card border border-border rounded-xl font-black text-foreground hover:bg-muted transition-all"
         >
           {t("view_cart")}
         </Link>
         <Link
           href="/checkout"
           onClick={onClose}
-          className="flex items-center justify-center gap-3 px-6 py-5 bg-green-600 text-white rounded-3xl font-black shadow-xl shadow-green-600/20 hover:bg-green-700 transition-all group"
+          className="flex items-center justify-center gap-3 px-6 py-5 bg-primary text-primary-foreground rounded-xl font-black shadow-primary hover:bg-primary-hover transition-all group"
         >
           {t("checkout")}
           <ArrowRight className="group-hover:translate-x-1 transition-transform" />

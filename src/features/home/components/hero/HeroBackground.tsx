@@ -18,8 +18,8 @@ export default function HeroBackground() {
         priority
       />
       {/* Modern Background Gradients */}
-      <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-green-500/10 blur-[150px] rounded-full -mr-64 -mt-64 z-0 pointer-events-none" />
-      <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-blue-500/10 blur-[150px] rounded-full -ml-64 -mb-64 z-0 pointer-events-none" />
+      <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-primary/10 blur-[150px] rounded-full -mr-64 -mt-64 z-0 pointer-events-none" />
+      <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-info/10 blur-[150px] rounded-full -ml-64 -mb-64 z-0 pointer-events-none" />
       {/* Bottom Gradient Overlay */}
       <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[#020617] to-transparent z-10" />
     </>

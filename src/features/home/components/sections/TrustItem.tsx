@@ -10,19 +10,19 @@ interface TrustItemProps {
 export default function TrustItem({ icon: Icon, title, desc, color }: TrustItemProps) {
   const styles = {
     green: {
-      bg: 'bg-green-500/20',
-      border: 'border-green-500/30',
-      text: 'text-green-400'
+      bg: 'bg-primary/20',
+      border: 'border-primary/30',
+      text: 'text-primary'
     },
     blue: {
-      bg: 'bg-blue-500/20',
-      border: 'border-blue-500/30',
-      text: 'text-blue-400'
+      bg: 'bg-info/20',
+      border: 'border-info/30',
+      text: 'text-info'
     },
     orange: {
-      bg: 'bg-orange-500/20',
-      border: 'border-orange-500/30',
-      text: 'text-orange-400'
+      bg: 'bg-warning/20',
+      border: 'border-warning/30',
+      text: 'text-warning'
     }
   };
 
@@ -33,8 +33,8 @@ export default function TrustItem({ icon: Icon, title, desc, color }: TrustItemP
       <div className={`w-20 h-20 ${style.bg} border ${style.border} rounded-[30px] flex items-center justify-center ${style.text} mb-2`}>
         <Icon className="w-10 h-10" />
       </div>
-      <h4 className="text-white text-xl font-black">{title}</h4>
-      <p className="text-gray-500 text-sm">{desc}</p>
+      <h4 className="text-foreground text-xl font-black">{title}</h4>
+      <p className="text-muted-foreground text-sm">{desc}</p>
     </div>
   );
 }

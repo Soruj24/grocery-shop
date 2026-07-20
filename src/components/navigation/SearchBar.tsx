@@ -1,9 +1,10 @@
 "use client";
 
-import { Search, Loader2, Mic, X } from "lucide-react";
+import { Search, Mic, X } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useSearch } from "@/features/search/hooks/useSearch";
 import SearchDropdownContent from "./SearchDropdownContent";
+import { Button } from "@/components/ui";
 
 export default function SearchBar() {
   const { t } = useLanguage();
@@ -12,9 +13,9 @@ export default function SearchBar() {
   return (
     <div className="hidden lg:flex flex-1 max-w-2xl px-8" ref={search.searchRef}>
       <form onSubmit={search.handleSubmit} className="relative w-full group z-50">
-        <div className="relative flex items-center bg-white dark:bg-white/5 rounded-full border border-gray-200 dark:border-white/10 transition-all duration-300 shadow-sm hover:shadow-md focus-within:shadow-[0_0_0_4px_rgba(34,197,94,0.1)] focus-within:border-green-500 overflow-hidden h-[56px]">
+        <div className="relative flex items-center bg-card dark:bg-card rounded-full border border-border transition-all duration-300 shadow-sm hover:shadow-md focus-within:shadow-focus focus-within:border-primary overflow-hidden h-[56px]">
           <div className="flex-1 relative flex items-center h-full">
-            <Search className="absolute left-4 w-5 h-5 text-gray-400 group-focus-within:text-green-500 transition-colors pointer-events-none" />
+            <Search className="absolute left-4 w-5 h-5 text-muted-foreground group-focus-within:text-primary transition-colors pointer-events-none" />
             <input
               ref={search.inputRef}
               type="text"
@@ -23,7 +24,7 @@ export default function SearchBar() {
               onKeyDown={search.handleKeyDown}
               onFocus={() => search.setIsOpen(true)}
               placeholder={t("search_placeholder")}
-              className="w-full h-full bg-transparent border-none pl-12 pr-12 text-gray-900 dark:text-white placeholder-gray-400 focus:ring-0 text-sm font-semibold"
+              className="w-full h-full bg-transparent border-none pl-12 pr-12 text-foreground placeholder-muted-foreground focus:ring-0 text-sm font-semibold"
             />
             {search.searchTerm && (
               <button
@@ -33,7 +34,7 @@ export default function SearchBar() {
                   search.setIsOpen(false);
                   search.inputRef.current?.focus();
                 }}
-                className="absolute right-12 p-1.5 rounded-full bg-gray-100 dark:bg-white/10 text-gray-400 hover:text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-500/10 transition-all"
+                className="absolute right-12 p-1.5 rounded-full bg-muted text-muted-foreground hover:text-danger hover:bg-danger-subtle transition-all"
               >
                 <X className="w-3 h-3" />
               </button>
@@ -43,8 +44,8 @@ export default function SearchBar() {
               onClick={search.startVoiceSearch}
               className={`absolute right-3 p-2 rounded-full transition-all ${
                 search.isListening
-                  ? "bg-red-50 text-red-500 animate-pulse ring-2 ring-red-100"
-                  : "text-gray-400 hover:text-green-600 hover:bg-green-50 dark:hover:bg-white/5"
+                  ? "bg-danger-subtle text-danger animate-pulse ring-2 ring-danger/20"
+                  : "text-muted-foreground hover:text-primary hover:bg-primary-subtle dark:hover:bg-primary-subtle"
               }`}
             >
               {search.isListening ? (
@@ -57,19 +58,15 @@ export default function SearchBar() {
               )}
             </button>
           </div>
-          <button
+          <Button
             type="submit"
-            className="h-[46px] mr-1.5 px-6 bg-green-600 hover:bg-green-500 text-white rounded-full font-bold text-sm transition-all duration-300 shadow-lg shadow-green-600/20 hover:shadow-green-500/30 flex items-center gap-2 transform hover:scale-105 active:scale-95"
+            variant="primary"
+            loading={search.isLoading}
+            leftIcon={!search.isLoading ? <Search className="w-4 h-4" /> : undefined}
+            className="h-[46px] mr-1.5 px-6 rounded-full font-bold text-sm shadow-lg shadow-primary/20 hover:shadow-primary/30 flex items-center gap-2 transform hover:scale-105 active:scale-95"
           >
-            {search.isLoading ? (
-              <Loader2 className="w-4 h-4 animate-spin" />
-            ) : (
-              <>
-                <Search className="w-4 h-4" />
-                <span className="hidden xl:inline">{t("search_button")}</span>
-              </>
-            )}
-          </button>
+            <span className="hidden xl:inline">{t("search_button")}</span>
+          </Button>
         </div>
         <SearchDropdownContent search={search} />
       </form>

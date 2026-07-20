@@ -1,9 +1,9 @@
 "use client";
 
-import { Star } from "lucide-react";
 import { motion } from "framer-motion";
 import { useLanguage } from "@/contexts/LanguageContext";
 import type { ReviewItem } from "@/types/review";
+import { Button, Rating } from "@/components/ui";
 
 interface ReviewListProps {
   items: ReviewItem[];
@@ -24,39 +24,34 @@ export default function ReviewList({
     <div className="space-y-10">
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
         <div>
-          <h2 className="text-3xl font-black text-gray-800 dark:text-white mb-2">
+          <h2 className="text-3xl font-black text-foreground mb-2">
             {t("customer_reviews_title")}
           </h2>
-          <p className="text-gray-500 font-bold">
+          <p className="text-muted-foreground font-bold">
             {count.toLocaleString("bn-BD")}
             {t("customer_experience_shared_suffix")}
           </p>
         </div>
 
-        <div className="flex items-center gap-6 bg-green-50 dark:bg-green-900/20 p-6 rounded-[32px] border border-green-100 dark:border-green-800">
+        <div className="flex items-center gap-6 bg-primary-subtle p-6 rounded-2xl border border-primary/20">
           <div className="text-center">
-            <p className="text-4xl font-black text-green-600 dark:text-green-500">
+            <p className="text-4xl font-black text-primary">
               {avg.toLocaleString("bn-BD", {
                 minimumFractionDigits: 1,
                 maximumFractionDigits: 1,
               })}
             </p>
-            <div className="flex items-center gap-0.5 text-amber-500 mt-1">
-              {[...Array(5)].map((_, i) => (
-                <Star
-                  key={i}
-                  className={`w-3 h-3 ${i < Math.round(avg) ? "fill-current" : ""}`}
-                />
-              ))}
-            </div>
+            <Rating value={avg} size="xs" className="mt-1" />
           </div>
-          <div className="h-10 w-px bg-green-200 dark:bg-green-800" />
-          <button
+          <div className="h-10 w-px bg-primary/20" />
+          <Button
+            variant="primary"
+            size="md"
             onClick={onWriteReview}
-            className="bg-green-600 text-white px-6 py-3 rounded-2xl font-bold text-sm hover:bg-green-700 transition-all active:scale-95"
+            className="rounded-2xl active:scale-95"
           >
             {t("write_review")}
-          </button>
+          </Button>
         </div>
       </div>
 
@@ -68,34 +63,27 @@ export default function ReviewList({
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: idx * 0.05 }}
-            className="bg-white dark:bg-gray-900/50 p-8 rounded-[40px] border border-gray-100 dark:border-gray-800 shadow-sm hover:shadow-xl transition-all duration-500"
+            className="bg-card p-8 rounded-2xl border border-border shadow-sm hover:shadow-lg transition-all duration-500"
           >
             <div className="flex justify-between items-start mb-4">
               <div className="flex items-center gap-4">
-                <div className="w-12 h-12 bg-gray-100 dark:bg-gray-800 rounded-2xl flex items-center justify-center font-black text-gray-400">
+                <div className="w-12 h-12 bg-muted rounded-2xl flex items-center justify-center font-black text-muted-foreground">
                   {review.name?.charAt(0) || "?"}
                 </div>
                 <div>
-                  <h4 className="font-black text-gray-800 dark:text-white">
+                  <h4 className="font-black text-foreground">
                     {review.name}
                   </h4>
-                  <p className="text-xs font-bold text-gray-400">
+                  <p className="text-xs font-bold text-muted-foreground">
                     {new Date(
                       review.createdAt || Date.now(),
                     ).toLocaleDateString("bn-BD")}
                   </p>
                 </div>
               </div>
-              <div className="flex items-center gap-0.5 text-amber-500">
-                {[...Array(5)].map((_, i) => (
-                  <Star
-                    key={i}
-                    className={`w-3 h-3 ${i < review.rating ? "fill-current" : "text-gray-200 dark:text-gray-700"}`}
-                  />
-                ))}
-              </div>
+              <Rating value={review.rating} size="xs" />
             </div>
-            <p className="text-gray-600 dark:text-gray-400 font-medium leading-relaxed">
+            <p className="text-muted-foreground font-medium leading-relaxed">
               {review.comment}
             </p>
           </motion.div>

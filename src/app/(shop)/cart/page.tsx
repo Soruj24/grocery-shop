@@ -44,12 +44,12 @@ export default function CartPage() {
         className="flex flex-col md:flex-row md:items-end justify-between gap-4 md:gap-6"
       >
         <div className="space-y-3">
-          <h1 className="text-3xl md:text-5xl font-black text-gray-900 dark:text-white tracking-tight">{t('your_shopping_bag')}</h1>
+          <h1 className="text-3xl md:text-5xl font-black text-foreground tracking-tight">{t('your_shopping_bag')}</h1>
           <div className="flex items-center gap-2">
-            <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 text-xs font-black">
+            <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-muted text-foreground text-xs font-black">
               {t('items_in_bag_count_prefix')} {cart.length.toLocaleString('bn-BD')} {t('items_in_bag_count_suffix')}
             </span>
-            <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-green-50 dark:bg-green-900/20 text-green-700 dark:text-green-400 text-xs font-black">
+            <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-primary-subtle text-primary text-xs font-black">
               {t('currency_symbol')}{totalPrice.toLocaleString('bn-BD')}
             </span>
           </div>
@@ -57,20 +57,20 @@ export default function CartPage() {
         <div className="flex items-center gap-3">
           <button
             onClick={handleClearCart}
-            className="px-4 py-2 rounded-xl text-rose-600 dark:text-rose-400 bg-rose-50 dark:bg-rose-500/10 font-black text-xs hover:bg-rose-100 dark:hover:bg-rose-500/20 transition-all"
+            className="px-4 py-2 rounded-xl text-danger bg-danger-subtle font-black text-xs hover:opacity-80 transition-all"
           >
             সব মুছুন
           </button>
           <Link 
             href="/products"
-            className="text-green-600 dark:text-green-500 font-black flex items-center gap-2 hover:gap-4 transition-all"
+            className="text-primary font-black flex items-center gap-2 hover:gap-4 transition-all"
           >
             {t('continue_shopping')} <ArrowRight className="w-5 h-5" />
           </Link>
         </div>
       </motion.div>
 
-      <div className="hidden lg:grid grid-cols-12 gap-6 px-2 text-[11px] font-black uppercase tracking-widest text-gray-400">
+      <div className="hidden lg:grid grid-cols-12 gap-6 px-2 text-[11px] font-black uppercase tracking-widest text-muted-foreground">
         <span className="col-span-6">পণ্য</span>
         <span className="col-span-2">দাম</span>
         <span className="col-span-2">পরিমাণ</span>
@@ -101,12 +101,12 @@ export default function CartPage() {
       </div>
 
       <div className="md:hidden fixed left-0 right-0 z-40" style={{ bottom: 'env(safe-area-inset-bottom)' }}>
-        <div className="mx-4 mb-4 bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 rounded-2xl shadow-2xl px-4 py-3 flex items-center justify-between">
+        <div className="mx-4 mb-4 bg-card border border-border rounded-xl shadow-2xl px-4 py-3 flex items-center justify-between">
           <div className="flex flex-col">
-            <span className="text-[10px] font-black uppercase tracking-widest text-gray-400">{t('grand_total')}</span>
-            <span className="text-2xl font-black text-gray-900 dark:text-white">{t('currency_symbol')}{totalPrice.toLocaleString('bn-BD')}</span>
+            <span className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">{t('grand_total')}</span>
+            <span className="text-2xl font-black text-foreground">{t('currency_symbol')}{totalPrice.toLocaleString('bn-BD')}</span>
           </div>
-          <Link href="/checkout" className="bg-green-600 hover:bg-green-700 text-white px-5 py-3 rounded-xl font-black active:scale-95 transition-all">
+          <Link href="/checkout" className="bg-primary hover:bg-primary-hover text-primary-foreground px-5 py-3 rounded-xl font-black active:scale-95 transition-all">
             {t('checkout_button')}
           </Link>
         </div>

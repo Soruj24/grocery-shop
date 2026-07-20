@@ -14,17 +14,17 @@ export default function WishlistSection() {
     <div className="space-y-8">
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-3xl font-black text-gray-900 dark:text-white flex items-center gap-3">
-            <Heart className="text-rose-500" fill="currentColor" />
+          <h2 className="text-3xl font-black text-foreground flex items-center gap-3">
+            <Heart className="text-danger" fill="currentColor" />
             {t('wishlist_title')}
           </h2>
-          <p className="text-gray-500 dark:text-gray-400 mt-1">{t('wishlist_desc')}</p>
+          <p className="text-muted-foreground mt-1">{t('wishlist_desc')}</p>
         </div>
         
         {wishlist.length > 0 && (
           <button
             onClick={clearWishlist}
-            className="flex items-center gap-2 px-4 py-2 text-sm font-bold text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-500/10 rounded-xl transition-all"
+            className="flex items-center gap-2 px-4 py-2 text-sm font-bold text-danger hover:bg-danger-subtle rounded-md transition-all"
           >
             <Trash2 size={16} />
             {t('clear_all')}

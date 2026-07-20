@@ -41,9 +41,9 @@ export default function RamadanOffers() {
         </div>
       </div>
 
-      <div className="flex flex-col md:flex-row items-center gap-8 bg-[#1a2e35] rounded-32px p-8 md:p-12 text-white relative border border-emerald-500/20 shadow-2xl shadow-emerald-950/20">
+      <div className="flex flex-col md:flex-row items-center gap-8 bg-primary text-primary-foreground rounded-2xl p-8 md:p-12 relative border border-primary-border shadow-lg">
         <div className="flex-1 space-y-6">
-          <div className="inline-flex items-center gap-2 bg-emerald-500/10 text-emerald-400 px-4 py-2 rounded-full border border-emerald-500/20">
+          <div className="inline-flex items-center gap-2 bg-primary-foreground/10 px-4 py-2 rounded-full border border-primary-border">
             <Moon className="w-4 h-4 fill-current" />
             <span className="text-xs font-black uppercase tracking-widest">
               {t('ramadan_badge')}
@@ -52,16 +52,16 @@ export default function RamadanOffers() {
 
           <h2 className="text-4xl md:text-5xl font-black tracking-tight leading-tight">
             {t('ramadan_title')} <br />
-            <span className="text-emerald-400">{t('ramadan_subtitle')}</span>
+            <span className="text-primary-foreground">{t('ramadan_subtitle')}</span>
           </h2>
 
-          <p className="text-gray-400 font-medium max-w-md">
+          <p className="text-primary-foreground/70 font-medium max-w-md">
             {t('ramadan_desc')}
           </p>
 
           <Link
             href="/products"
-            className="bg-emerald-500 hover:bg-emerald-600 text-white px-8 py-4 rounded-2xl font-black transition-all inline-flex items-center gap-3 shadow-lg shadow-emerald-500/20 active:scale-95"
+            className="bg-primary-foreground text-primary px-8 py-4 rounded-2xl font-black transition-all inline-flex items-center gap-3 shadow-sm active:scale-95"
           >
             {t('ramadan_view_all')}
             <ArrowRight className="w-5 h-5" />
@@ -85,7 +85,7 @@ export default function RamadanOffers() {
               </div>
               <div>
                 <h4 className="font-black text-lg">{offer.title}</h4>
-                <p className="text-emerald-400 font-bold text-sm">
+                <p className="text-primary-foreground font-bold text-sm">
                   {offer.discount}
                 </p>
               </div>
@@ -96,9 +96,9 @@ export default function RamadanOffers() {
             className="bg-white/5 border border-dashed border-white/10 rounded-2xl p-6 flex flex-col items-center justify-center gap-2 text-center group cursor-pointer hover:bg-white/10 transition-all"
           >
             <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center">
-              <Plus className="w-5 h-5 text-gray-400" />
+              <Plus className="w-5 h-5 text-primary-foreground/70" />
             </div>
-            <span className="text-sm font-black text-gray-400">{t('ramadan_more_offers')}</span>
+            <span className="text-sm font-black text-primary-foreground/70">{t('ramadan_more_offers')}</span>
           </Link>
         </div>
       </div>

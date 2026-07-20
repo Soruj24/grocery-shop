@@ -2,8 +2,8 @@
 
 import { MapPin, Plus, Trash2, Edit2, Home, Briefcase } from "lucide-react";
 import { useState } from "react";
-import { motion } from "framer-motion";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { Badge, Button } from "@/components/ui";
 
 export default function AddressManager() {
   const { t } = useLanguage();
@@ -28,17 +28,16 @@ export default function AddressManager() {
     <div className="space-y-8">
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-3xl font-black text-gray-900 dark:text-white flex items-center gap-3">
-            <MapPin className="text-green-600" />
+          <h2 className="text-3xl font-black text-foreground flex items-center gap-3">
+            <MapPin className="text-primary" />
             {t('my_addresses_title')}
           </h2>
-          <p className="text-gray-500 dark:text-gray-400 mt-1">{t('my_addresses_desc')}</p>
+          <p className="text-muted-foreground mt-1">{t('my_addresses_desc')}</p>
         </div>
         
-        <button className="flex items-center gap-2 px-6 py-3 bg-green-600 text-white rounded-2xl font-bold shadow-lg shadow-green-600/20 hover:bg-green-700 transition-all">
-          <Plus size={20} />
+        <Button variant="primary" leftIcon={<Plus size={20} />}>
           {t('add_new_address')}
-        </button>
+        </Button>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -47,24 +46,24 @@ export default function AddressManager() {
           return (
             <div 
               key={addr.id}
-              className={`p-6 rounded-[32px] border-2 transition-all ${
+              className={`p-6 rounded-2xl border-2 transition-all ${
                 addr.isDefault 
-                  ? "bg-green-500/5 border-green-500/20 shadow-lg shadow-green-500/5" 
-                  : "bg-white dark:bg-white/5 border-gray-100 dark:border-white/5"
+                  ? "bg-primary-subtle border-primary/20 shadow-lg" 
+                  : "bg-card border-border"
               }`}
             >
               <div className="flex justify-between items-start mb-4">
                 <div className={`p-3 rounded-2xl ${
-                  addr.isDefault ? "bg-green-500 text-white" : "bg-gray-100 dark:bg-white/10 text-gray-500"
+                  addr.isDefault ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground"
                 }`}>
                   <Icon size={20} />
                 </div>
                 <div className="flex gap-2">
-                  <button className="p-2 text-gray-400 hover:text-green-600 transition-colors">
+                  <button className="p-2 text-muted-foreground hover:text-primary transition-colors">
                     <Edit2 size={18} />
                   </button>
                   {!addr.isDefault && (
-                    <button className="p-2 text-gray-400 hover:text-rose-500 transition-colors">
+                    <button className="p-2 text-muted-foreground hover:text-danger transition-colors">
                       <Trash2 size={18} />
                     </button>
                   )}
@@ -73,14 +72,14 @@ export default function AddressManager() {
               
               <div className="space-y-1">
                 <div className="flex items-center gap-2">
-                  <h3 className="font-black text-gray-900 dark:text-white">{t(addr.typeKey as any)}</h3>
+                  <h3 className="font-black text-foreground">{t(addr.typeKey as any)}</h3>
                   {addr.isDefault && (
-                    <span className="px-2 py-0.5 bg-green-500 text-white text-[10px] font-black uppercase tracking-widest rounded-full">
+                    <Badge tone="primary" soft={false} size="xs" className="uppercase tracking-widest">
                       {t('default_label')}
-                    </span>
+                    </Badge>
                   )}
                 </div>
-                <p className="text-gray-500 dark:text-gray-400 text-sm leading-relaxed">
+                <p className="text-muted-foreground text-sm leading-relaxed">
                   {addr.address}
                 </p>
               </div>

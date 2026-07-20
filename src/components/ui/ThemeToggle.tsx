@@ -15,7 +15,7 @@ export default function ThemeToggle() {
 
   if (!mounted) {
     return (
-      <div className="p-2.5 sm:p-3 bg-gray-100 dark:bg-gray-800 rounded-2xl w-11 h-11 sm:w-12 sm:h-12" />
+      <div className="p-2.5 sm:p-3 bg-muted rounded-2xl w-11 h-11 sm:w-12 sm:h-12" />
     );
   }
 

@@ -40,11 +40,11 @@ export default function MobileBottomNav() {
               <motion.div
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="bg-green-600 text-white p-4 rounded-[24px] shadow-2xl shadow-green-600/40 flex items-center gap-3"
+                className="bg-primary text-primary-foreground p-4 rounded-2xl shadow-2xl shadow-primary/40 flex items-center gap-3"
               >
                 <div className="relative">
                   <ShoppingBag className="w-6 h-6" />
-                  <span className="absolute -top-2 -right-2 bg-rose-500 text-white text-[9px] font-black w-5 h-5 rounded-full flex items-center justify-center border-2 border-green-600">
+                   <span className="absolute -top-2 -right-2 bg-danger text-white text-[9px] font-black w-5 h-5 rounded-full flex items-center justify-center border-2 border-primary">
                     {totalItems.toLocaleString('bn-BD')}
                   </span>
                 </div>
@@ -59,7 +59,7 @@ export default function MobileBottomNav() {
       </AnimatePresence>
 
       <div className="md:hidden fixed left-4 right-4 z-50" style={{ bottom: 'calc(1.5rem + env(safe-area-inset-bottom))' }}>
-      <nav className="bg-white/80 dark:bg-black/80 backdrop-blur-2xl border border-gray-100/50 dark:border-white/10 rounded-[32px] px-6 py-4 shadow-[0_20px_50px_rgba(0,0,0,0.1)] dark:shadow-black/50" style={{ paddingBottom: 'calc(1rem + env(safe-area-inset-bottom))' }} aria-label="Bottom navigation">
+        <nav className="bg-card/80 dark:bg-card/80 backdrop-blur-2xl border border-border rounded-2xl px-6 py-4 shadow-lg" style={{ paddingBottom: 'calc(1rem + env(safe-area-inset-bottom))' }} aria-label="Bottom navigation">
         <div className="flex justify-between items-center relative gap-2">
           {navItems.map((item) => {
             const isActive = pathname === item.href || (item.href !== "/" && pathname.startsWith(item.href));
@@ -70,23 +70,23 @@ export default function MobileBottomNav() {
                 aria-label={item.label}
                 className={`relative flex flex-col items-center gap-1.5 px-2 py-2 rounded-2xl transition-all duration-500 ${
                   isActive 
-                    ? "text-green-700 dark:text-green-400 bg-green-50/70 dark:bg-green-500/10"
-                    : "text-gray-500 dark:text-gray-500 hover:text-gray-700 dark:hover:text-gray-300"
+                    ? "text-primary dark:text-primary bg-primary-subtle"
+                    : "text-muted-foreground hover:text-foreground"
                 }`}
               >
                 {isActive && (
                   <motion.div
                     layoutId="activeNav"
-                    className="absolute -top-1 w-1.5 h-1.5 bg-green-500 rounded-full"
+                    className="absolute -top-1 w-1.5 h-1.5 bg-primary rounded-full"
                     transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
                   />
                 )}
                 
                 <div className="relative">
                   <item.icon className={`w-7 h-7 transition-transform duration-500 ${isActive ? "scale-110" : ""}`} />
-                  
+                   
                   {item.badge !== undefined && item.badge > 0 && (
-                    <span className="absolute -top-2 -right-2 bg-green-600 text-white text-[9px] font-black min-w-[18px] h-[18px] px-1 rounded-full flex items-center justify-center border-2 border-white dark:border-black shadow-lg">
+                    <span className="absolute -top-2 -right-2 bg-primary text-primary-foreground text-[9px] font-black min-w-[18px] h-[18px] px-1 rounded-full flex items-center justify-center border-2 border-card dark:border-card shadow-lg">
                       {item.badge.toLocaleString('bn-BD')}
                     </span>
                   )}

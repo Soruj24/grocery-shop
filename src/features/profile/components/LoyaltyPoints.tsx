@@ -17,7 +17,7 @@ export default function LoyaltyPoints() {
 
   return (
     <div className="space-y-12">
-      <div className="flex flex-col md:flex-row items-center justify-between gap-8 bg-gradient-to-br from-green-600 to-emerald-700 p-8 md:p-12 rounded-[40px] text-white shadow-2xl shadow-green-600/20 relative overflow-hidden">
+      <div className="flex flex-col md:flex-row items-center justify-between gap-8 bg-primary p-8 md:p-12 rounded-2xl text-primary-foreground shadow-primary relative overflow-hidden">
         {/* Background Sparkles */}
         <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 blur-[100px] rounded-full -mr-32 -mt-32" />
         
@@ -27,15 +27,15 @@ export default function LoyaltyPoints() {
             <span className="font-black uppercase tracking-widest text-xs">{t('your_current_points')}</span>
           </div>
           <h2 className="text-6xl md:text-7xl font-black">{points.toLocaleString('bn-BD')}</h2>
-          <p className="text-green-100 font-medium">{t('points_earning_rule')}</p>
+          <p className="text-primary-foreground/80 font-medium">{t('points_earning_rule')}</p>
         </div>
 
         <div className="relative z-10 grid grid-cols-2 gap-4 w-full md:w-auto">
-          <div className="bg-white/10 backdrop-blur-md p-6 rounded-3xl border border-white/10 flex flex-col items-center gap-2">
+          <div className="bg-white/10 backdrop-blur-md p-6 rounded-2xl border border-white/10 flex flex-col items-center gap-2">
             <Gift className="w-6 h-6" />
             <span className="text-xs font-bold opacity-70">{t('gift_label')}</span>
           </div>
-          <div className="bg-white/10 backdrop-blur-md p-6 rounded-3xl border border-white/10 flex flex-col items-center gap-2">
+          <div className="bg-white/10 backdrop-blur-md p-6 rounded-2xl border border-white/10 flex flex-col items-center gap-2">
             <TrendingUp className="w-6 h-6" />
             <span className="text-xs font-bold opacity-70">{t('level_up_label')}</span>
           </div>
@@ -45,17 +45,17 @@ export default function LoyaltyPoints() {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
         <div className="md:col-span-2 space-y-6">
           <div className="flex items-center gap-3">
-            <History className="w-6 h-6 text-gray-400" />
-            <h3 className="text-xl font-black text-gray-800 dark:text-white">{t('point_history')}</h3>
+            <History className="w-6 h-6 text-muted-foreground" />
+            <h3 className="text-xl font-black text-foreground">{t('point_history')}</h3>
           </div>
-          <div className="bg-gray-50 dark:bg-white/5 rounded-[32px] overflow-hidden border border-gray-100 dark:border-white/5">
+          <div className="bg-muted rounded-2xl overflow-hidden border border-border">
             {history.map((item) => (
-              <div key={item.id} className="flex items-center justify-between p-6 border-b border-gray-100 dark:border-white/5 last:border-0">
+              <div key={item.id} className="flex items-center justify-between p-6 border-b border-border last:border-0">
                 <div className="space-y-1">
-                  <p className="font-black text-gray-800 dark:text-gray-200">{item.action}</p>
-                  <p className="text-xs text-gray-400 font-bold">{new Date(item.date).toLocaleDateString('bn-BD')}</p>
+                  <p className="font-black text-foreground">{item.action}</p>
+                  <p className="text-xs text-muted-foreground font-bold">{new Date(item.date).toLocaleDateString('bn-BD')}</p>
                 </div>
-                <span className={`font-black ${item.points > 0 ? 'text-green-600' : 'text-rose-500'}`}>
+                <span className={`font-black ${item.points > 0 ? 'text-primary' : 'text-danger'}`}>
                   {item.points > 0 ? `+${item.points.toLocaleString('bn-BD')}` : item.points.toLocaleString('bn-BD')}
                 </span>
               </div>
@@ -64,7 +64,7 @@ export default function LoyaltyPoints() {
         </div>
 
         <div className="space-y-6">
-          <h3 className="text-xl font-black text-gray-800 dark:text-white">{t('redeem_title')}</h3>
+          <h3 className="text-xl font-black text-foreground">{t('redeem_title')}</h3>
           <div className="space-y-4">
             {[
               { label: t('reward_50_off'), points: 500 },
@@ -74,14 +74,14 @@ export default function LoyaltyPoints() {
               <button
                 key={i}
                 disabled={points < reward.points}
-                className={`w-full p-6 rounded-3xl border-2 flex flex-col items-center gap-2 transition-all ${
+                className={`w-full p-6 rounded-2xl border-2 flex flex-col items-center gap-2 transition-all ${
                   points >= reward.points
-                    ? "border-green-100 dark:border-green-900/30 bg-green-50 dark:bg-green-900/10 hover:border-green-500"
-                    : "border-gray-100 dark:border-white/5 opacity-50 grayscale"
+                    ? "border-primary-border bg-primary-subtle hover:border-primary"
+                    : "border-border opacity-50 grayscale"
                 }`}
               >
-                <span className="font-black text-gray-800 dark:text-gray-200">{reward.label}</span>
-                <span className="text-xs font-bold text-green-600">{reward.points.toLocaleString('bn-BD')}{t('points_suffix')}</span>
+                <span className="font-black text-foreground">{reward.label}</span>
+                <span className="text-xs font-bold text-primary">{reward.points.toLocaleString('bn-BD')}{t('points_suffix')}</span>
               </button>
             ))}
           </div>

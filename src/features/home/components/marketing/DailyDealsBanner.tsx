@@ -15,7 +15,7 @@ export default function DailyDealsBanner({ data }: Props) {
 
   return (
     <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
-      className="relative overflow-hidden bg-gradient-to-r from-orange-600 to-rose-600 rounded-[32px] p-8 md:p-12 text-white shadow-2xl shadow-orange-900/20">
+      className="relative overflow-hidden bg-gradient-to-r from-warning to-danger rounded-2xl p-8 md:p-12 text-white shadow-lg">
       <div className="absolute top-0 right-0 w-96 h-96 bg-white/10 blur-[100px] rounded-full -mr-32 -mt-32 animate-pulse" />
       <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-12">
         <div className="space-y-8 max-w-xl text-center md:text-left">
@@ -36,7 +36,7 @@ export default function DailyDealsBanner({ data }: Props) {
           </motion.div>
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ delay: 0.5 }}>
             <Link href="/products"
-              className="group bg-white text-orange-600 px-8 py-4 rounded-full font-black text-lg inline-flex items-center gap-3 hover:bg-yellow-400 hover:text-gray-900 transition-all shadow-xl hover:shadow-yellow-400/30 active:scale-95 transform hover:-translate-y-1">
+              className="group bg-white text-warning px-8 py-4 rounded-full font-black text-lg inline-flex items-center gap-3 hover:bg-warning hover:text-warning-foreground transition-all shadow-sm active:scale-95 transform hover:-translate-y-1">
               {t("daily_deals_view_offers")}<ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
             </Link>
           </motion.div>

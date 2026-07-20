@@ -11,7 +11,7 @@ export default async function ShopLayout({
 }) {
   return (
     <div
-      className="min-h-screen bg-gray-50 dark:bg-black pb-20 md:pb-0 transition-colors duration-300"
+      className="min-h-screen bg-background pb-20 md:pb-0 transition-colors duration-300"
       style={{ paddingBottom: 'calc(5rem + env(safe-area-inset-bottom))' }}
     >
       {/* Header */}

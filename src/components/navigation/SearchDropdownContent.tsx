@@ -22,7 +22,7 @@ export default function SearchDropdownContent({
           animate={{ opacity: 1, y: 0, scale: 1 }}
           exit={{ opacity: 0, y: 10, scale: 0.98 }}
           transition={{ duration: 0.2, ease: "easeOut" }}
-          className="absolute top-full left-0 right-0 mt-4 bg-white dark:bg-gray-900 border border-gray-100 dark:border-white/10 rounded-[32px] shadow-2xl shadow-black/10 z-50 overflow-hidden backdrop-blur-xl"
+          className="absolute top-full left-0 right-0 mt-4 bg-card border border-border rounded-2xl shadow-2xl shadow-black/10 z-50 overflow-hidden backdrop-blur-xl"
         >
           <div className="p-6 max-h-[600px] overflow-y-auto custom-scrollbar">
             {!search.searchTerm && search.history.length > 0 && (

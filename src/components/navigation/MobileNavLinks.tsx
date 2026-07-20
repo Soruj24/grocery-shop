@@ -22,14 +22,14 @@ export default function MobileNavLinks({ onClose, totalWishlistItems }: MobileNa
 
   return (
     <div className="space-y-4">
-      <p className="text-[10px] font-black text-gray-400 dark:text-gray-500 uppercase tracking-[0.2em]">{t("navigation")}</p>
+      <p className="text-[10px] font-black text-muted-foreground uppercase tracking-[0.2em]">{t("navigation")}</p>
       <div className="space-y-2">
         {navItems.map((item, idx) => (
           <motion.div key={item.href} initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.1 + idx * 0.05 }}>
             <Link
               href={item.href}
               onClick={onClose}
-              className="flex items-center justify-between p-5 rounded-2xl text-gray-700 dark:text-gray-300 hover:bg-green-50 dark:hover:bg-green-500/10 hover:text-green-600 transition-all group border border-transparent hover:border-green-500/20"
+              className="flex items-center justify-between p-5 rounded-2xl text-foreground hover:bg-primary-subtle hover:text-primary transition-all group border border-transparent hover:border-primary/20"
               aria-label={t(item.labelKey)}
             >
               <div className="flex items-center gap-4">

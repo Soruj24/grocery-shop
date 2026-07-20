@@ -26,7 +26,7 @@ export default function AboutPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-[#0B1120]">
+    <div className="min-h-screen bg-background">
       {/* Hero Section */}
       <section className="relative h-[500px] flex items-center justify-center overflow-hidden">
         <Image 
@@ -44,13 +44,13 @@ export default function AboutPage() {
             animate={{ opacity: 1, y: 0 }}
             className="text-5xl md:text-7xl font-black text-white tracking-tight"
           >
-            We Are <span className="text-green-500">GrocerStore</span>
+            We Are <span className="text-primary">GrocerStore</span>
           </motion.h1>
           <motion.p 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
-            className="text-xl md:text-2xl text-gray-200 font-medium max-w-2xl mx-auto leading-relaxed"
+            className="text-xl md:text-2xl text-white/80 font-medium max-w-2xl mx-auto leading-relaxed"
           >
             Delivering freshness and quality to your doorstep since 2020.
           </motion.p>
@@ -66,10 +66,10 @@ export default function AboutPage() {
             viewport={{ once: true }}
             className="space-y-8"
           >
-            <h2 className="text-4xl font-black text-gray-900 dark:text-white leading-tight">
-              Our Mission is to Make <span className="text-green-600">Grocery Shopping</span> Easier.
+            <h2 className="text-4xl font-black text-foreground leading-tight">
+              Our Mission is to Make <span className="text-primary">Grocery Shopping</span> Easier.
             </h2>
-            <p className="text-lg text-gray-600 dark:text-gray-400 leading-relaxed">
+            <p className="text-lg text-muted-foreground leading-relaxed">
               We believe that everyone deserves access to fresh, high-quality food without the hassle. Our platform connects you with the best local suppliers and ensures that your groceries are delivered with care.
             </p>
             <div className="space-y-4">
@@ -79,8 +79,8 @@ export default function AboutPage() {
                 "Secure Payment & Easy Returns"
               ].map((item, idx) => (
                 <div key={idx} className="flex items-center gap-3">
-                  <CheckCircle2 className="w-6 h-6 text-green-600" />
-                  <span className="text-lg font-bold text-gray-800 dark:text-gray-200">{item}</span>
+                  <CheckCircle2 className="w-6 h-6 text-primary" />
+                  <span className="text-lg font-bold text-foreground">{item}</span>
                 </div>
               ))}
             </div>
@@ -90,7 +90,7 @@ export default function AboutPage() {
             initial={{ opacity: 0, scale: 0.9 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
-            className="relative h-[500px] rounded-[48px] overflow-hidden shadow-2xl"
+            className="relative h-[500px] rounded-2xl overflow-hidden shadow-2xl"
           >
             <Image 
               src={getProductFallbackImage("vegetable")} 
@@ -103,11 +103,11 @@ export default function AboutPage() {
       </section>
 
       {/* Features Grid */}
-      <section className="bg-white dark:bg-gray-900 py-24">
+      <section className="bg-card py-24">
         <div className="max-w-7xl mx-auto px-4">
           <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
-            <h2 className="text-4xl font-black text-gray-900 dark:text-white">Why Choose Us?</h2>
-            <p className="text-lg text-gray-500 font-medium">
+            <h2 className="text-4xl font-black text-foreground">Why Choose Us?</h2>
+            <p className="text-lg text-muted-foreground font-medium">
               We are committed to providing you with the best shopping experience possible.
             </p>
           </div>
@@ -120,15 +120,15 @@ export default function AboutPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: idx * 0.1 }}
-                className="bg-gray-50 dark:bg-gray-800 p-8 rounded-[32px] hover:bg-green-50 dark:hover:bg-gray-700/50 transition-colors group"
+                className="bg-muted p-8 rounded-2xl hover:bg-primary-subtle transition-colors group"
               >
-                <div className="w-16 h-16 bg-white dark:bg-gray-700 rounded-2xl flex items-center justify-center mb-6 shadow-sm group-hover:scale-110 transition-transform duration-300">
-                  <feature.icon className="w-8 h-8 text-green-600" />
+                <div className="w-16 h-16 bg-card rounded-2xl flex items-center justify-center mb-6 shadow-sm group-hover:scale-110 transition-transform duration-300">
+                  <feature.icon className="w-8 h-8 text-primary" />
                 </div>
-                <h3 className="text-2xl font-black text-gray-900 dark:text-white mb-3 group-hover:text-green-600 transition-colors">
+                <h3 className="text-2xl font-black text-foreground mb-3 group-hover:text-primary transition-colors">
                   {feature.title}
                 </h3>
-                <p className="text-gray-500 dark:text-gray-400 font-medium leading-relaxed">
+                <p className="text-muted-foreground font-medium leading-relaxed">
                   {feature.desc}
                 </p>
               </motion.div>

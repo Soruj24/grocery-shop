@@ -33,11 +33,11 @@ export default function FooterContact() {
   const getColorClasses = (color: string) => {
     switch (color) {
       case "green":
-        return "bg-green-50 dark:bg-green-500/10 text-green-600 dark:text-green-400 group-hover:bg-green-100 dark:group-hover:bg-green-500/20";
+        return "bg-success-subtle text-success-subtle-foreground group-hover:bg-success-subtle";
       case "blue":
-        return "bg-blue-50 dark:bg-blue-500/10 text-blue-600 dark:text-blue-400 group-hover:bg-blue-100 dark:group-hover:bg-blue-500/20";
+        return "bg-info-subtle text-info-subtle-foreground group-hover:bg-info-subtle";
       case "orange":
-        return "bg-orange-50 dark:bg-orange-500/10 text-orange-600 dark:text-orange-400 group-hover:bg-orange-100 dark:group-hover:bg-orange-500/20";
+        return "bg-warning-subtle text-warning-subtle-foreground group-hover:bg-warning-subtle";
       default:
         return "";
     }
@@ -49,7 +49,7 @@ export default function FooterContact() {
         initial={{ opacity: 0, y: 10 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        className="text-xs font-black text-gray-400 dark:text-gray-500 uppercase tracking-[0.3em]"
+        className="text-xs font-black text-muted-foreground uppercase tracking-[0.3em]"
       >
         {t('contact_us')}
       </motion.h4>
@@ -67,8 +67,8 @@ export default function FooterContact() {
               <info.icon className="w-5 h-5 group-hover:scale-110 transition-transform" />
             </div>
             <div>
-              <p className="text-[10px] font-black text-gray-400 dark:text-gray-500 uppercase tracking-widest mb-1">{info.label}</p>
-              <p className="text-gray-700 dark:text-gray-300 text-sm font-black leading-relaxed whitespace-pre-line group-hover:text-green-600 dark:group-hover:text-green-400 transition-colors">{info.value}</p>
+              <p className="text-[10px] font-black text-muted-foreground uppercase tracking-widest mb-1">{info.label}</p>
+              <p className="text-foreground text-sm font-black leading-relaxed whitespace-pre-line group-hover:text-primary transition-colors">{info.value}</p>
             </div>
           </motion.li>
         ))}

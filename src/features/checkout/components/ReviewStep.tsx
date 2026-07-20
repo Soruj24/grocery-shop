@@ -24,40 +24,40 @@ export default function ReviewStep({
   const { t } = useLanguage();
 
   return (
-    <div className="bg-white dark:bg-gray-900 p-8 rounded-[40px] shadow-sm border border-gray-100 dark:border-gray-800 space-y-8">
+    <div className="bg-card p-8 rounded-xl shadow-sm border border-border space-y-8">
       <div className="flex items-center gap-4">
-        <div className="w-12 h-12 bg-orange-50 dark:bg-orange-900/30 rounded-2xl flex items-center justify-center text-orange-600">
+        <div className="w-12 h-12 bg-warning-subtle rounded-lg flex items-center justify-center text-warning">
           <ClipboardList className="w-6 h-6" />
         </div>
-        <h2 className="text-2xl font-black text-gray-900 dark:text-white">
+        <h2 className="text-2xl font-black text-foreground">
           {t("order_review")}
         </h2>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div className="bg-gray-50 dark:bg-gray-800/50 p-6 rounded-[32px] border border-gray-100 dark:border-gray-800">
-          <h4 className="text-xs font-black text-gray-400 uppercase tracking-widest mb-4">
+        <div className="bg-muted p-6 rounded-xl border border-border">
+          <h4 className="text-xs font-black text-muted-foreground uppercase tracking-widest mb-4">
             {t("delivery_address_label")}
           </h4>
-          <p className="font-bold text-gray-800 dark:text-gray-200">
+          <p className="font-bold text-foreground">
             {formData.name}
           </p>
-          <p className="text-sm text-gray-500 font-medium">{formData.phone}</p>
-          <p className="text-sm text-gray-500 font-medium mt-2">
+          <p className="text-sm text-muted-foreground font-medium">{formData.phone}</p>
+          <p className="text-sm text-muted-foreground font-medium mt-2">
             {formData.address}
           </p>
         </div>
 
-        <div className="bg-gray-50 dark:bg-gray-800/50 p-6 rounded-[32px] border border-gray-100 dark:border-gray-800">
-          <h4 className="text-xs font-black text-gray-400 uppercase tracking-widest mb-4">
+        <div className="bg-muted p-6 rounded-xl border border-border">
+          <h4 className="text-xs font-black text-muted-foreground uppercase tracking-widest mb-4">
             {t("time_and_payment")}
           </h4>
           <div className="flex items-center gap-3 mb-2">
-            <Clock className="w-4 h-4 text-green-500" />
+            <Clock className="w-4 h-4 text-primary" />
             <span className="text-sm font-bold">{deliverySlot}</span>
           </div>
           <div className="flex items-center gap-3">
-            <CreditCard className="w-4 h-4 text-green-500" />
+            <CreditCard className="w-4 h-4 text-primary" />
             <span className="text-sm font-bold uppercase">
               {t(`${paymentMethod}_payment`)}
             </span>
@@ -70,7 +70,7 @@ export default function ReviewStep({
       <div className="flex gap-4">
         <button
           onClick={onPrev}
-          className="flex-1 bg-gray-100 dark:bg-gray-800 text-gray-600 py-6 rounded-[32px] font-black transition-all flex items-center justify-center gap-2"
+          className="flex-1 bg-muted text-muted-foreground py-6 rounded-lg font-black transition-all flex items-center justify-center gap-2"
         >
           <ArrowLeft className="w-6 h-6" />
           {t("back_to_prev")}
@@ -78,7 +78,7 @@ export default function ReviewStep({
         <button
           onClick={onSubmit}
           disabled={loading}
-          className="flex-[2] bg-green-600 hover:bg-green-700 text-white py-6 rounded-[32px] font-black text-xl transition-all flex items-center justify-center gap-4 shadow-xl shadow-green-600/20 active:scale-95 disabled:opacity-50"
+          className="flex-[2] bg-primary hover:bg-primary-hover text-primary-foreground py-6 rounded-lg font-black text-xl transition-all flex items-center justify-center gap-4 shadow-primary active:scale-95 disabled:opacity-50"
         >
           {loading ? t("ordering_status") : t("confirm_order")}
           <CheckCircle2 className="w-6 h-6" />

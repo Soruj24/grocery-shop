@@ -24,13 +24,13 @@ export default function OrderTimeline({ currentStatus }: OrderTimelineProps) {
     <div className="py-12 px-4">
       <div className="relative flex justify-between max-w-3xl mx-auto">
         {/* Progress Line Background */}
-        <div className="absolute top-1/2 left-0 w-full h-1 bg-gray-100 dark:bg-white/5 -translate-y-1/2 rounded-full" />
+        <div className="absolute top-1/2 left-0 w-full h-1 bg-muted -translate-y-1/2 rounded-full" />
         
         {/* Active Progress Line */}
         <motion.div 
           initial={{ width: 0 }}
           animate={{ width: `${(currentIndex / (STAGES.length - 1)) * 100}%` }}
-          className="absolute top-1/2 left-0 h-1 bg-green-500 -translate-y-1/2 rounded-full shadow-[0_0_15px_rgba(34,197,94,0.5)] transition-all duration-1000"
+          className="absolute top-1/2 left-0 h-1 bg-primary -translate-y-1/2 rounded-full shadow-primary transition-all duration-1000"
         />
 
         {STAGES.map((stage, idx) => {
@@ -48,24 +48,24 @@ export default function OrderTimeline({ currentStatus }: OrderTimelineProps) {
                   backgroundColor: isCompleted || isActive ? "rgb(34, 197, 94)" : "rgb(243, 244, 246)"
                 }}
                 className={`w-14 h-14 rounded-2xl flex items-center justify-center relative z-10 transition-all duration-500 shadow-xl ${
-                  isActive ? "ring-4 ring-green-500/20" : ""
-                } ${!isCompleted && !isActive ? "dark:bg-white/5" : ""}`}
+                  isActive ? "ring-4 ring-primary/20" : ""
+                } ${!isCompleted && !isActive ? "bg-muted" : ""}`}
               >
                 {isCompleted ? (
-                  <Check className="text-white w-6 h-6" />
+                  <Check className="text-primary-foreground w-6 h-6" />
                 ) : (
-                  <Icon className={`${isActive ? "text-white" : "text-gray-400"} w-6 h-6 transition-colors`} />
+                  <Icon className={`${isActive ? "text-primary-foreground" : "text-muted-foreground"} w-6 h-6 transition-colors`} />
                 )}
 
                 {isActive && (
-                  <span className="absolute -top-1 -right-1 w-4 h-4 bg-green-500 rounded-full animate-ping" />
+                  <span className="absolute -top-1 -right-1 w-4 h-4 bg-primary rounded-full animate-ping" />
                 )}
               </motion.div>
 
               {/* Label */}
               <div className="text-center">
                 <p className={`text-sm font-black transition-colors ${
-                  isCompleted || isActive ? "text-gray-900 dark:text-white" : "text-gray-400"
+                  isCompleted || isActive ? "text-foreground" : "text-muted-foreground"
                 }`}>
                   {stage.label}
                 </p>
@@ -73,7 +73,7 @@ export default function OrderTimeline({ currentStatus }: OrderTimelineProps) {
                   <motion.p 
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
-                    className="text-[10px] font-bold text-green-600 uppercase tracking-widest mt-1"
+                    className="text-[10px] font-bold text-primary uppercase tracking-widest mt-1"
                   >
                     {t('timeline_in_progress')}
                   </motion.p>
