@@ -1,6 +1,6 @@
 "use client";
 
-import { Search, Mic, X } from "lucide-react";
+import { Search, Mic, X, Sparkles } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useSearch } from "@/features/search/hooks/useSearch";
 import SearchDropdownContent from "./SearchDropdownContent";
@@ -13,6 +13,7 @@ export default function SearchBar() {
   return (
     <div className="hidden lg:flex flex-1 max-w-2xl px-8" ref={search.searchRef}>
       <form onSubmit={search.handleSubmit} className="relative w-full group z-50">
+        <div className="absolute -inset-0.5 rounded-full bg-gradient-to-r from-primary/30 via-accent/20 to-primary/30 opacity-0 blur transition-opacity duration-500 group-focus-within:opacity-100 pointer-events-none" />
         <div className="relative flex items-center bg-card dark:bg-card rounded-full border border-border transition-all duration-300 shadow-sm hover:shadow-md focus-within:shadow-focus focus-within:border-primary overflow-hidden h-[56px]">
           <div className="flex-1 relative flex items-center h-full">
             <Search className="absolute left-4 w-5 h-5 text-muted-foreground group-focus-within:text-primary transition-colors pointer-events-none" />
@@ -58,6 +59,10 @@ export default function SearchBar() {
               )}
             </button>
           </div>
+          <span className="hidden xl:flex items-center gap-1 mr-1.5 rounded-full bg-gradient-to-r from-primary/10 to-accent/10 px-3 py-1.5 text-[11px] font-black text-primary border border-primary/20">
+            <Sparkles className="w-3.5 h-3.5" />
+            {t("ai_search")}
+          </span>
           <Button
             type="submit"
             variant="primary"

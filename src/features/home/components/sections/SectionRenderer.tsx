@@ -12,6 +12,7 @@ import Testimonials from "@/features/home/components/sections/Testimonials";
 import Newsletter from "@/features/home/components/sections/Newsletter";
 import RecentlyViewedSection from "@/features/home/components/sections/RecentlyViewedSection";
 import AIRecommendations from "@/features/home/components/sections/AIRecommendations";
+import HomepageRedesign from "@/features/home/components/redesign/HomepageRedesign";
 
 const SubCategorySpotlight = nextDynamic(
   () => import("@/features/home/components/sections/SubCategorySpotlight"),
@@ -101,6 +102,13 @@ export default function SectionRenderer({
         return <RecentlyViewedSection />;
       case "AIRecommendations":
         return <AIRecommendations />;
+      case "HomepageRedesign":
+        return (
+          <HomepageRedesign
+            categories={categories}
+            products={products}
+          />
+        );
       case "DailyDealsBanner":
         return <DailyDealsBanner data={section.props} />;
       case "RamadanOffers":
