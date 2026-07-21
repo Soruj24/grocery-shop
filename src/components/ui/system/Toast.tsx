@@ -2,6 +2,7 @@
 
 import * as React from "react";
 import { createPortal } from "react-dom";
+import { motion, AnimatePresence } from "framer-motion";
 import {
   CheckCircle2,
   XCircle,
@@ -10,6 +11,7 @@ import {
   X,
 } from "lucide-react";
 import { cn, type Tone } from "./types";
+import { slideUpVariants, springSnappy } from "@/lib/motion";
 
 export interface ToastOptions {
   title: React.ReactNode;
@@ -79,35 +81,43 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
       {mounted &&
         createPortal(
           <div className="fixed bottom-4 right-4 z-[300] flex w-full max-w-sm flex-col gap-2.5">
-            {items.map((t) => {
-              const { ring, icon: Icon, color } = toneStyle[t.tone ?? "info"];
-              return (
-                <div
-                  key={t.id}
-                  role="status"
-                  className={cn(
-                    "flex items-start gap-3 rounded-lg border bg-card p-4 shadow-lg ds-animate-fade-in",
-                    ring,
-                  )}
-                >
-                  <Icon className={cn("h-5 w-5 shrink-0 mt-0.5", color)} aria-hidden />
-                  <div className="flex-1 min-w-0">
-                    <p className="text-sm font-bold text-foreground">{t.title}</p>
-                    {t.description && (
-                      <p className="text-xs text-muted-foreground mt-0.5">{t.description}</p>
+            <AnimatePresence mode="popLayout">
+              {items.map((t) => {
+                const { ring, icon: Icon, color } = toneStyle[t.tone ?? "info"];
+                return (
+                  <motion.div
+                    key={t.id}
+                    layout
+                    role="status"
+                    variants={slideUpVariants}
+                    initial="hidden"
+                    animate="visible"
+                    exit="exit"
+                    transition={springSnappy}
+                    className={cn(
+                      "flex items-start gap-3 rounded-lg border bg-card p-4 shadow-lg",
+                      ring,
                     )}
-                  </div>
-                  <button
-                    type="button"
-                    onClick={() => remove(t.id)}
-                    aria-label="Dismiss"
-                    className="rounded-xs p-1 text-muted-foreground hover:bg-muted transition-colors"
                   >
-                    <X className="h-4 w-4" />
-                  </button>
-                </div>
-              );
-            })}
+                    <Icon className={cn("h-5 w-5 shrink-0 mt-0.5", color)} aria-hidden />
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm font-bold text-foreground">{t.title}</p>
+                      {t.description && (
+                        <p className="text-xs text-muted-foreground mt-0.5">{t.description}</p>
+                      )}
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => remove(t.id)}
+                      aria-label="Dismiss"
+                      className="rounded-xs p-1 text-muted-foreground hover:bg-muted transition-colors"
+                    >
+                      <X className="h-4 w-4" />
+                    </button>
+                  </motion.div>
+                );
+              })}
+            </AnimatePresence>
           </div>,
           document.body,
         )}

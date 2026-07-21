@@ -1,84 +1,74 @@
 "use client";
 
-import AdminHeader from "@/features/admin/components/AdminHeader";
-import Pagination from "@/features/admin/components/Pagination";
-import CategoryModal from "@/features/admin/components/CategoryModal";
-import AdminTable from "@/features/admin/components/AdminTable";
-import CategoryTableRow from "@/features/admin/categories/components/CategoryTableRow";
-import { useAdminCategories } from "@/features/admin/categories/hooks/useAdminCategories";
+import { useState, useEffect } from "react";
+import { Plus, Edit2, Trash2, Eye, EyeOff, ListTree } from "lucide-react";
+import DataTable from "@/features/admin/shared/DataTable";
+import AdminPageHeader from "@/features/admin/shared/AdminPageHeader";
+import { AdminCategory } from "@/types/admin";
 
 export default function CategoriesPage() {
-  const {
-    categories,
-    mainCategories,
-    isModalOpen,
-    editingCategory,
-    formData,
-    setFormData,
-    currentPage,
-    totalPages,
-    totalCategories,
-    searchTerm,
-    itemsPerPage,
-    setCurrentPage,
-    openAddModal,
-    openEditModal,
-    closeModal,
-    handleSubmit,
-    handleDelete,
-    onSearchChange,
-  } = useAdminCategories();
+  const [categories, setCategories] = useState<AdminCategory[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetch("/api/categories")
+      .then((r) => r.json())
+      .then((d) => setCategories(Array.isArray(d) ? d : d.categories || []))
+      .catch(() => {})
+      .finally(() => setLoading(false));
+  }, []);
+
+  const columns = [
+    {
+      key: "image", label: "",
+      render: (item: AdminCategory) => (
+        <div className="h-10 w-10 rounded-xl bg-gray-100 dark:bg-gray-800 overflow-hidden">
+          {item.image ? <img src={item.image} alt={item.name} className="h-full w-full object-cover" /> : <div className="flex h-full w-full items-center justify-center"><ListTree className="h-4 w-4 text-gray-300" /></div>}
+        </div>
+      ),
+    },
+    {
+      key: "name", label: "Category", sortable: true,
+      render: (item: AdminCategory) => (
+        <div>
+          <p className="text-sm font-semibold text-gray-900 dark:text-white">{item.name}</p>
+          <p className="text-[10px] text-gray-400">/{item.slug}</p>
+        </div>
+      ),
+    },
+    {
+      key: "parentId", label: "Parent",
+      render: (item: AdminCategory) => (
+        <span className="text-xs text-gray-500 dark:text-gray-400">
+          {item.parentId ? (typeof item.parentId === "object" ? item.parentId.name : "Has parent") : "—"}
+        </span>
+      ),
+    },
+    {
+      key: "isActive", label: "Status",
+      render: (item: AdminCategory) => (
+        <span className={`inline-flex items-center gap-1 text-[10px] font-bold uppercase px-2 py-0.5 rounded-full ${item.isActive !== false ? "bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400" : "bg-gray-100 text-gray-500"}`}>
+          {item.isActive !== false ? <><Eye className="h-3 w-3" /> Active</> : <><EyeOff className="h-3 w-3" /> Inactive</>}
+        </span>
+      ),
+    },
+    {
+      key: "actions", label: "",
+      render: () => (
+        <div className="flex items-center gap-1">
+          <button className="p-1.5 rounded-lg text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-600 transition-colors"><Edit2 className="h-3.5 w-3.5" /></button>
+          <button className="p-1.5 rounded-lg text-gray-400 hover:bg-red-50 dark:hover:bg-red-900/20 hover:text-red-500 transition-colors"><Trash2 className="h-3.5 w-3.5" /></button>
+        </div>
+      ),
+    },
+  ];
 
   return (
-    <div className="max-w-[1600px] mx-auto space-y-10 animate-in fade-in duration-700">
-      <AdminHeader
-        title="ক্যাটাগরি ম্যানেজমেন্ট"
-        count={totalCategories}
-        countLabel="Categories"
-        onAddClick={openAddModal}
-        addButtonLabel="নতুন ক্যাটাগরি"
-        searchTerm={searchTerm}
-        onSearchChange={onSearchChange}
-        searchPlaceholder="ক্যাটাগরির নাম দিয়ে খুঁজুন..."
+    <div className="space-y-6">
+      <AdminPageHeader title="Categories" description="Organize your products into categories."
+        actions={<button className="flex items-center gap-2 rounded-xl bg-emerald-500 px-4 py-2.5 text-sm font-semibold text-white hover:bg-emerald-600 transition-colors"><Plus className="h-4 w-4" /> Add Category</button>}
       />
-
-      <AdminTable
-        columns={[
-          { header: "ক্যাটাগরি তথ্য" },
-          { header: "টাইপ" },
-          { header: "স্ট্যাটাস" },
-          { header: "অ্যাকশন", className: "text-right" },
-        ]}
-        emptyMessage="কোন ক্যাটাগরি পাওয়া যায়নি"
-      >
-        {categories.map((category) => (
-          <CategoryTableRow
-            key={category._id}
-            category={category}
-            onEdit={openEditModal}
-            onDelete={handleDelete}
-          />
-        ))}
-      </AdminTable>
-
-      <Pagination
-        currentPage={currentPage}
-        totalPages={totalPages}
-        onPageChange={setCurrentPage}
-        totalItems={totalCategories}
-        itemsPerPage={itemsPerPage}
-        label="Categories"
-      />
-
-      <CategoryModal
-        isOpen={isModalOpen}
-        onClose={closeModal}
-        editingCategory={editingCategory}
-        formData={formData}
-        setFormData={setFormData}
-        handleSubmit={handleSubmit}
-        mainCategories={mainCategories}
-      />
+      <DataTable columns={columns} data={categories} searchable searchKeys={["name"]} searchPlaceholder="Search categories..." />
     </div>
   );
 }

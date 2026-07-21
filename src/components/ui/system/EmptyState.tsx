@@ -1,5 +1,9 @@
+"use client";
+
 import * as React from "react";
+import { motion } from "framer-motion";
 import { cn } from "./types";
+import { fadeVariants, easeOut } from "@/lib/motion";
 
 export interface EmptyStateProps {
   icon?: React.ReactNode;
@@ -25,7 +29,11 @@ export function EmptyState({
   size = "md",
 }: EmptyStateProps) {
   return (
-    <div
+    <motion.div
+      variants={fadeVariants}
+      initial="hidden"
+      animate="visible"
+      transition={easeOut}
       className={cn(
         "flex flex-col items-center justify-center text-center px-6 py-16 rounded-xl border border-dashed border-border bg-subtle",
         className,
@@ -47,7 +55,7 @@ export function EmptyState({
         <p className="mt-2 max-w-sm text-body-sm text-muted-foreground">{description}</p>
       )}
       {action && <div className="mt-6">{action}</div>}
-    </div>
+    </motion.div>
   );
 }
 EmptyState.displayName = "EmptyState";

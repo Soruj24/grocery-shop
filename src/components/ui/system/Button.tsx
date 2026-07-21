@@ -1,3 +1,5 @@
+"use client";
+
 import * as React from "react";
 import { cn, controlHeight, disabledState, type Size, type Variant } from "./types";
 
@@ -40,10 +42,33 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       className,
       disabled,
       children,
+      onClick,
       ...props
     },
     ref,
   ) => {
+    const rippleRef = React.useRef<HTMLSpanElement>(null);
+
+    const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+      if (disabled || loading) return;
+
+      const button = e.currentTarget;
+      const rect = button.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+
+      if (rippleRef.current) {
+        const ripple = rippleRef.current;
+        ripple.style.left = `${x}px`;
+        ripple.style.top = `${y}px`;
+        ripple.classList.remove("ds-ripple-active");
+        void ripple.offsetWidth;
+        ripple.classList.add("ds-ripple-active");
+      }
+
+      onClick?.(e);
+    };
+
     return (
       <button
         ref={ref}
@@ -51,14 +76,22 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         className={cn(
           "inline-flex items-center justify-center font-semibold rounded-md font-sans",
           "transition-all duration-200 active:scale-[0.97] whitespace-nowrap",
+          "ds-ripple",
           controlHeight[size],
           variantClasses[variant],
           fullWidth && "w-full",
           disabledState(disabled || loading),
           className,
         )}
+        onClick={handleClick}
         {...props}
       >
+        <span
+          ref={rippleRef}
+          className="pointer-events-none absolute h-5 w-5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-white/30 opacity-0 scale-0"
+          aria-hidden
+          style={{ position: "absolute" }}
+        />
         {loading ? (
           <span
             className="ds-animate-spin h-4 w-4 rounded-full border-2 border-current border-r-transparent"

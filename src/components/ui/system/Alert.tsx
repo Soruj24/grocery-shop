@@ -1,3 +1,5 @@
+"use client";
+
 import * as React from "react";
 import {
   AlertCircle,
@@ -37,7 +39,7 @@ export const Alert = React.forwardRef<HTMLDivElement, AlertProps>(
         ref={ref}
         role="alert"
         className={cn(
-          "flex items-start gap-3 rounded-lg border p-4 ds-animate-fade-in",
+          "flex items-start gap-3 rounded-lg border p-4 ds-animate-slide-down",
           wrap,
           className,
         )}

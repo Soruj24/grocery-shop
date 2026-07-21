@@ -1,7 +1,9 @@
 "use client";
 
 import * as React from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "./types";
+import { slideUpVariants, springSnappy } from "@/lib/motion";
 
 export interface DropdownProps {
   trigger: React.ReactElement;
@@ -42,41 +44,48 @@ export function Dropdown({ trigger, items, align = "end", className }: DropdownP
         "aria-haspopup": true,
         "aria-expanded": open,
       })}
-      {open && (
-        <div
-          role="menu"
-          className={cn(
-            "absolute z-[120] mt-2 min-w-[12rem] rounded-lg border border-border bg-popover text-popover-foreground shadow-lg p-1.5 ds-animate-fade-in",
-            alignMap[align],
-            className,
-          )}
-        >
-          {items.map((it, i) => (
-            <React.Fragment key={i}>
-              {it.separatorBefore && <div className="my-1 h-px bg-border" aria-hidden />}
-              <button
-                role="menuitem"
-                disabled={it.disabled}
-                onClick={() => {
-                  if (it.disabled) return;
-                  it.onSelect?.();
-                  setOpen(false);
-                }}
-                className={cn(
-                  "w-full flex items-center gap-2.5 rounded-md px-3 py-2 text-left text-sm font-medium transition-colors",
-                  "disabled:opacity-40 disabled:cursor-not-allowed",
-                  it.danger
-                    ? "text-danger hover:bg-danger-subtle"
-                    : "text-foreground hover:bg-muted",
-                )}
-              >
-                {it.icon}
-                {it.label}
-              </button>
-            </React.Fragment>
-          ))}
-        </div>
-      )}
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            role="menu"
+            variants={slideUpVariants}
+            initial="hidden"
+            animate="visible"
+            exit="exit"
+            transition={springSnappy}
+            className={cn(
+              "absolute z-[120] mt-2 min-w-[12rem] rounded-lg border border-border bg-popover text-popover-foreground shadow-lg p-1.5",
+              alignMap[align],
+              className,
+            )}
+          >
+            {items.map((it, i) => (
+              <React.Fragment key={i}>
+                {it.separatorBefore && <div className="my-1 h-px bg-border" aria-hidden />}
+                <button
+                  role="menuitem"
+                  disabled={it.disabled}
+                  onClick={() => {
+                    if (it.disabled) return;
+                    it.onSelect?.();
+                    setOpen(false);
+                  }}
+                  className={cn(
+                    "w-full flex items-center gap-2.5 rounded-md px-3 py-2 text-left text-sm font-medium transition-colors",
+                    "disabled:opacity-40 disabled:cursor-not-allowed",
+                    it.danger
+                      ? "text-danger hover:bg-danger-subtle"
+                      : "text-foreground hover:bg-muted",
+                  )}
+                >
+                  {it.icon}
+                  {it.label}
+                </button>
+              </React.Fragment>
+            ))}
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

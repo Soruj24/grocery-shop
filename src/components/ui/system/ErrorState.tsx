@@ -1,7 +1,11 @@
+"use client";
+
 import * as React from "react";
+import { motion } from "framer-motion";
 import { AlertTriangle } from "lucide-react";
 import { cn } from "./types";
 import { Button } from "./Button";
+import { scaleInVariants, springGentle } from "@/lib/motion";
 
 export interface ErrorStateProps {
   title?: React.ReactNode;
@@ -23,8 +27,12 @@ export function ErrorState({
   compact,
 }: ErrorStateProps) {
   return (
-    <div
+    <motion.div
       role="alert"
+      variants={scaleInVariants}
+      initial="hidden"
+      animate="visible"
+      transition={springGentle}
       className={cn(
         "flex flex-col items-center justify-center text-center px-6",
         compact ? "py-10" : "py-16",
@@ -49,7 +57,7 @@ export function ErrorState({
           </Button>
         </div>
       )}
-    </div>
+    </motion.div>
   );
 }
 ErrorState.displayName = "ErrorState";

@@ -1,7 +1,9 @@
 "use client";
 
 import * as React from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "./types";
+import { slideUpVariants, springSnappy } from "@/lib/motion";
 
 export interface PopoverProps {
   trigger: React.ReactElement;
@@ -53,19 +55,26 @@ export function Popover({
         },
         "aria-expanded": open,
       })}
-      {open && (
-        <div
-          role="dialog"
-          className={cn(
-            "absolute z-[120] min-w-[12rem] rounded-lg border border-border bg-popover text-popover-foreground shadow-lg p-1.5 ds-animate-fade-in",
-            alignMap[align],
-            sideMap[side],
-            className,
-          )}
-        >
-          {children}
-        </div>
-      )}
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            role="dialog"
+            variants={slideUpVariants}
+            initial="hidden"
+            animate="visible"
+            exit="exit"
+            transition={springSnappy}
+            className={cn(
+              "absolute z-[120] min-w-[12rem] rounded-lg border border-border bg-popover text-popover-foreground shadow-lg p-1.5",
+              alignMap[align],
+              sideMap[side],
+              className,
+            )}
+          >
+            {children}
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
