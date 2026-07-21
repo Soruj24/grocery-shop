@@ -1,9 +1,14 @@
 import mongoose from 'mongoose';
 
 const OrderSchema = new mongoose.Schema({
-  user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+  user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+  guestInfo: {
+    name: String,
+    phone: String,
+    email: String,
+  },
   items: [{
-    product: { type: mongoose.Schema.Types.ObjectId, ref: 'Product', required: true },
+    product: { type: String, required: true },
     name: String,
     price: Number,
     quantity: { type: Number, required: true },
@@ -15,6 +20,7 @@ const OrderSchema = new mongoose.Schema({
     default: 'pending' 
   },
   deliveryMethod: { type: String, default: 'standard' },
+  deliverySlot: { type: String, default: 'morning' },
   deliveryStatus: { type: String, default: 'pending' },
   trackingId: { type: String },
   deliveryBoy: {
@@ -27,9 +33,10 @@ const OrderSchema = new mongoose.Schema({
   },
   address: { type: String, required: true },
   phone: { type: String, required: true },
+  name: { type: String },
   paymentMethod: { 
     type: String, 
-    enum: ['cod', 'bkash', 'nagad'], 
+    enum: ['cod', 'bkash', 'nagad', 'card'], 
     default: 'cod' 
   },
   paymentStatus: { 

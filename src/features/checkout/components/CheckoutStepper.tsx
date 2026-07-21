@@ -1,39 +1,86 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { CheckCircle2, LucideIcon } from "lucide-react";
+import { Check } from "lucide-react";
 
 interface Step {
-  id: number;
-  name: string;
-  icon: LucideIcon;
+  number: number;
+  label: string;
 }
 
 interface CheckoutStepperProps {
-  currentStep: number;
   steps: Step[];
+  currentStep: number;
+  onStepClick: (step: number) => void;
 }
 
-export default function CheckoutStepper({ currentStep, steps }: CheckoutStepperProps) {
+export default function CheckoutStepper({ steps, currentStep, onStepClick }: CheckoutStepperProps) {
   return (
-    <div className="flex items-center justify-between max-w-4xl mx-auto relative px-4">
-      <div className="absolute top-1/2 left-0 w-full h-1 bg-muted -translate-y-1/2 z-0 rounded-full" />
-      <motion.div className="absolute top-1/2 left-0 h-1 bg-primary -translate-y-1/2 z-0 rounded-full"
-        initial={{ width: "0%" }}
-        animate={{ width: `${((currentStep - 1) / (steps.length - 1)) * 100}%` }}
-        transition={{ duration: 0.5 }} />
-      {steps.map((step) => (
-        <div key={step.id} className="relative z-10 flex flex-col items-center gap-3">
-          <motion.div
-            animate={{ scale: currentStep === step.id ? 1.2 : 1, backgroundColor: currentStep >= step.id ? "#16a34a" : "#fff", color: currentStep >= step.id ? "#fff" : "#94a3b8" }}
-            className={`w-12 h-12 rounded-lg flex items-center justify-center shadow-lg transition-colors border-4 border-border ${currentStep >= step.id ? "border-primary-subtle" : "border-card"}`}>
-            {currentStep > step.id ? <CheckCircle2 className="w-6 h-6" /> : <step.icon className="w-5 h-5" />}
-          </motion.div>
-          <span className={`text-[10px] font-black uppercase tracking-widest hidden md:block ${currentStep >= step.id ? "text-primary" : "text-muted-foreground"}`}>
-            {step.name}
-          </span>
-        </div>
-      ))}
+    <div className="flex items-center justify-between">
+      {steps.map((step, index) => {
+        const isCompleted = currentStep > step.number;
+        const isCurrent = currentStep === step.number;
+        const isClickable = isCompleted || isCurrent;
+
+        return (
+          <div key={step.number} className="flex items-center flex-1 last:flex-initial">
+            <button
+              onClick={() => isClickable && onStepClick(step.number)}
+              disabled={!isClickable}
+              className={`flex items-center gap-2 transition-all ${
+                isClickable ? "cursor-pointer" : "cursor-not-allowed"
+              }`}
+            >
+              <motion.div
+                initial={false}
+                animate={{
+                  scale: isCurrent ? 1.1 : 1,
+                  backgroundColor: isCompleted
+                    ? "#10b981"
+                    : isCurrent
+                    ? "#10b981"
+                    : "#e5e7eb",
+                }}
+                className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-xs font-bold ${
+                  isCompleted || isCurrent ? "text-white" : "text-gray-400 dark:text-gray-500"
+                }`}
+              >
+                {isCompleted ? (
+                  <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }}>
+                    <Check className="h-4 w-4" />
+                  </motion.div>
+                ) : (
+                  step.number
+                )}
+              </motion.div>
+              <div className="hidden sm:block">
+                <p
+                  className={`text-xs font-semibold ${
+                    isCurrent
+                      ? "text-emerald-600 dark:text-emerald-400"
+                      : isCompleted
+                      ? "text-gray-900 dark:text-white"
+                      : "text-gray-400 dark:text-gray-500"
+                  }`}
+                >
+                  {step.label}
+                </p>
+              </div>
+            </button>
+
+            {index < steps.length - 1 && (
+              <div className="mx-2 h-0.5 flex-1 overflow-hidden rounded-full bg-gray-200 dark:bg-gray-700">
+                <motion.div
+                  initial={{ width: 0 }}
+                  animate={{ width: isCompleted ? "100%" : "0%" }}
+                  transition={{ duration: 0.5, ease: "easeInOut" }}
+                  className="h-full bg-emerald-500"
+                />
+              </div>
+            )}
+          </div>
+        );
+      })}
     </div>
   );
 }

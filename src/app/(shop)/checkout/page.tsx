@@ -1,71 +1,214 @@
 "use client";
 
-import { ArrowLeft, MapPin, Clock, CreditCard, ClipboardList } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
+import { ArrowLeft, Loader2 } from "lucide-react";
+import { AnimatePresence } from "framer-motion";
 import { useCheckout } from "@/features/checkout/hooks/useCheckout";
 import CheckoutStepper from "@/features/checkout/components/CheckoutStepper";
-import OrderSuccess from "@/features/checkout/components/OrderSuccess";
-import CheckoutForm from "@/features/checkout/components/CheckoutForm";
-import OrderSummary from "@/features/checkout/components/OrderSummary";
-import CouponInput from "@/features/checkout/components/CouponInput";
+import CheckoutSkeleton from "@/features/checkout/components/CheckoutSkeleton";
+import MobileCheckoutBar from "@/features/checkout/components/MobileCheckoutBar";
+import ShippingStep from "@/features/checkout/components/steps/ShippingStep";
+import DeliveryStep from "@/features/checkout/components/steps/DeliveryStep";
+import PaymentStep from "@/features/checkout/components/steps/PaymentStep";
+import ReviewStep from "@/features/checkout/components/steps/ReviewStep";
+import OrderSummary from "@/features/checkout/components/steps/OrderSummary";
+import OrderSuccess from "@/features/checkout/components/steps/OrderSuccess";
 
 export default function CheckoutPage() {
-  const {
-    status, currentStep, formData, updateFormData, deliverySlot, setDeliverySlot,
-    paymentMethod, setPaymentMethod, transactionId, setTransactionId,
-    loading, orderSuccess, couponDiscount, setCouponDiscount,
-    totalPrice, cart, nextStep, prevStep, handleSubmit, couponCode, router, t,
-  } = useCheckout();
+  const checkout = useCheckout();
 
-  if (status === "loading") return <div className="min-h-screen flex items-center justify-center"><div className="w-12 h-12 border-4 border-primary/20 border-t-primary rounded-full animate-spin" /></div>;
-  if (orderSuccess) return <OrderSuccess />;
-  if (cart.length === 0 && !orderSuccess) return null;
+  if (checkout.status === "loading") return <CheckoutSkeleton />;
+  if (checkout.isComplete && checkout.orderId) {
+    return (
+      <div className="min-h-screen bg-gray-50 dark:bg-gray-950 flex items-center justify-center p-4">
+        <div className="w-full max-w-md">
+          <OrderSuccess
+            orderId={checkout.orderId}
+            guestName={checkout.guestInfo.name || checkout.customName}
+            total={checkout.total}
+          />
+        </div>
+      </div>
+    );
+  }
+  if (checkout.cart.length === 0 && !checkout.isComplete) return null;
 
   const steps = [
-    { id: 1, name: t("checkout_step_1"), icon: MapPin },
-    { id: 2, name: t("checkout_step_2"), icon: Clock },
-    { id: 3, name: t("checkout_step_3"), icon: CreditCard },
-    { id: 4, name: t("checkout_step_4"), icon: ClipboardList },
+    { number: 1, label: checkout.t("step_information") },
+    { number: 2, label: checkout.t("step_delivery") },
+    { number: 3, label: checkout.t("step_payment") },
+    { number: 4, label: checkout.t("step_review") },
   ];
 
+  const getDeliveryAddress = () => {
+    if (checkout.useCustomAddress) {
+      return checkout.customAddress;
+    }
+    if (checkout.selectedAddress) {
+      return checkout.selectedAddress.address;
+    }
+    return "";
+  };
+
   return (
-    <div className="min-h-screen bg-background relative overflow-hidden">
-      <div className="max-w-7xl mx-auto py-12 px-4 space-y-12 relative z-10">
-        <div className="space-y-10">
-          <div className="flex items-center gap-4">
-            <button onClick={() => currentStep === 1 ? router.push("/cart") : prevStep()}
-              className="p-3 bg-card rounded-lg text-muted-foreground hover:text-primary shadow-sm transition-all">
-              <ArrowLeft className="w-6 h-6" />
-            </button>
-            <div className="space-y-1">
-              <h1 className="text-4xl font-black text-foreground tracking-tight">{t("checkout_title")}</h1>
-              <p className="text-muted-foreground font-bold">{t("step_text")} {currentStep}: {steps[currentStep - 1].name}</p>
-            </div>
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-950 pb-24 lg:pb-0">
+      <div className="mx-auto max-w-7xl px-4 py-6 sm:py-10">
+        {/* Header */}
+        <div className="mb-6 flex items-center gap-3">
+          <button
+            onClick={() =>
+              checkout.currentStep === 1
+                ? checkout.router.push("/cart")
+                : checkout.prevStep()
+            }
+            className="flex h-10 w-10 items-center justify-center rounded-xl bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-400 hover:text-emerald-600 hover:border-emerald-300 transition-colors"
+          >
+            <ArrowLeft className="h-5 w-5" />
+          </button>
+          <div>
+            <h1 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white">
+              {checkout.t("checkout")}
+            </h1>
+            <p className="text-xs text-gray-500 dark:text-gray-400">
+              {checkout.t("step_text")} {checkout.currentStep}:{" "}
+              {steps[checkout.currentStep - 1]?.label}
+            </p>
           </div>
-          <CheckoutStepper currentStep={currentStep} steps={steps} />
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 items-start">
+        {/* Stepper */}
+        <div className="mb-8 rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 p-4">
+          <CheckoutStepper
+            steps={steps}
+            currentStep={checkout.currentStep}
+            onStepClick={checkout.goToStep}
+          />
+        </div>
+
+        {/* Content */}
+        <div className="grid grid-cols-1 gap-6 lg:grid-cols-3 lg:gap-8 items-start">
+          {/* Left - Form Steps */}
           <div className="lg:col-span-2">
             <AnimatePresence mode="wait">
-              <motion.div key={currentStep} initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} transition={{ duration: 0.3 }}>
-                <CheckoutForm currentStep={currentStep} nextStep={nextStep} prevStep={prevStep}
-                  formData={formData} setFormData={updateFormData}
-                  deliverySlot={deliverySlot} setDeliverySlot={setDeliverySlot}
-                  paymentMethod={paymentMethod} setPaymentMethod={setPaymentMethod}
-                  transactionId={transactionId} setTransactionId={setTransactionId}
-                  handleSubmit={handleSubmit} loading={loading} totalPrice={totalPrice} cart={cart} />
-              </motion.div>
+              {checkout.currentStep === 1 && (
+                <ShippingStep
+                  key="shipping"
+                  isGuest={checkout.isGuest}
+                  guestInfo={checkout.guestInfo}
+                  onGuestInfoChange={(info) => checkout.updateField("guestInfo", info)}
+                  onToggleGuest={checkout.toggleGuest}
+                  addresses={checkout.addresses}
+                  selectedAddressId={checkout.selectedAddress?.id || null}
+                  onSelectAddress={checkout.selectAddress}
+                  onAddAddress={checkout.addAddress}
+                  onDeleteAddress={checkout.deleteAddress}
+                  customAddress={checkout.customAddress}
+                  customName={checkout.customName}
+                  customPhone={checkout.customPhone}
+                  onCustomChange={(field, value) => {
+                    if (field === "name") checkout.updateField("customName", value);
+                    else if (field === "phone") checkout.updateField("customPhone", value);
+                    else if (field === "address") checkout.updateField("customAddress", value);
+                  }}
+                  useCustomAddress={checkout.useCustomAddress}
+                  onToggleCustomAddress={() =>
+                    checkout.setUseCustomAddress(!checkout.useCustomAddress)
+                  }
+                  errors={checkout.validationErrors}
+                />
+              )}
+
+              {checkout.currentStep === 2 && (
+                <DeliveryStep
+                  key="delivery"
+                  selectedShipping={checkout.shippingMethod}
+                  onSelectShipping={(m) => checkout.updateField("shippingMethod", m)}
+                  selectedSlot={checkout.deliverySlot}
+                  onSelectSlot={(s) => checkout.updateField("deliverySlot", s)}
+                  cartTotal={checkout.totalPrice}
+                />
+              )}
+
+              {checkout.currentStep === 3 && (
+                <PaymentStep
+                  key="payment"
+                  selectedMethod={checkout.paymentMethod}
+                  onSelectMethod={(m) => checkout.updateField("paymentMethod", m)}
+                  transactionId={checkout.transactionId}
+                  onTransactionIdChange={(id) => checkout.updateField("transactionId", id)}
+                  error={checkout.validationErrors.transactionId}
+                />
+              )}
+
+              {checkout.currentStep === 4 && (
+                <ReviewStep
+                  key="review"
+                  guestInfo={
+                    checkout.useCustomAddress
+                      ? { name: checkout.customName, phone: checkout.customPhone, email: checkout.guestInfo.email }
+                      : checkout.selectedAddress
+                      ? { name: checkout.selectedAddress.name, phone: checkout.selectedAddress.phone, email: "" }
+                      : checkout.guestInfo
+                  }
+                  deliveryAddress={getDeliveryAddress()}
+                  shipping={checkout.shippingMethod}
+                  deliverySlot={checkout.deliverySlot}
+                  paymentMethod={checkout.paymentMethod}
+                  transactionId={checkout.transactionId}
+                  coupon={checkout.appliedCoupon}
+                  items={checkout.cart}
+                  subtotal={checkout.totalPrice}
+                />
+              )}
             </AnimatePresence>
+
+            {checkout.error && (
+              <div className="mt-4 rounded-xl border border-red-200 dark:border-red-800 bg-red-50 dark:bg-red-950/30 p-3 text-sm text-red-700 dark:text-red-400">
+                {checkout.error}
+              </div>
+            )}
           </div>
-          <div className="lg:col-span-1 sticky top-12 space-y-6">
-            <CouponInput total={totalPrice}
-              onApply={(coupon) => { setCouponDiscount(coupon.discount); router.replace(`/checkout?coupon=${coupon.code}`); }}
-              onRemove={() => { setCouponDiscount(0); router.replace("/checkout"); }} />
-            <OrderSummary cart={cart} totalPrice={totalPrice} couponDiscount={couponDiscount} />
+
+          {/* Right - Order Summary */}
+          <div className="lg:col-span-1">
+            <div className="sticky top-12">
+              <OrderSummary
+                items={checkout.cart}
+                subtotal={checkout.totalPrice}
+                shippingCost={checkout.shippingCost}
+                discount={checkout.discount}
+                coupon={checkout.appliedCoupon}
+                onCouponApply={checkout.applyCoupon}
+                onCouponRemove={checkout.removeCoupon}
+                total={checkout.total}
+                currentStep={checkout.currentStep}
+                isSubmitting={checkout.isSubmitting}
+                onNext={checkout.nextStep}
+                onPlaceOrder={checkout.handleSubmit}
+              />
+            </div>
           </div>
         </div>
       </div>
+
+      {/* Mobile Checkout Bar */}
+      <MobileCheckoutBar
+        total={checkout.totalPrice}
+        shippingCost={checkout.shippingCost}
+        discount={checkout.discount}
+        isSubmitting={checkout.isSubmitting}
+        onPlaceOrder={checkout.handleSubmit}
+        currentStep={checkout.currentStep}
+        onNext={checkout.nextStep}
+        nextLabel={
+          checkout.currentStep === 1
+            ? checkout.t("continue_to_shipping")
+            : checkout.currentStep === 2
+            ? checkout.t("continue_to_payment")
+            : checkout.currentStep === 3
+            ? checkout.t("continue_to_review")
+            : checkout.t("place_order")
+        }
+      />
     </div>
   );
 }
