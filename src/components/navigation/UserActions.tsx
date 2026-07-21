@@ -65,7 +65,7 @@ export default function UserActions() {
   const { t } = useLanguage();
 
   return (
-    <div className="flex items-center gap-2">
+    <div className="flex items-center gap-5">
       <Popover
         align="end"
         trigger={

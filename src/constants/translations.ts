@@ -950,10 +950,17 @@ export const translations = {
     results_count: "ফলাফল",
     compare_max: "সর্বোচ্চ ৪টি পণ্য তুলনা করা যাবে",
 
-
-
-    
-    
-    
+    // Cart actions
+    remove: "মুছুন",
+    decrease_quantity: "পরিমাণ কমান",
+    increase_quantity: "পরিমাণ বাড়ান",
+    save_for_later: "পরের জন্য রাখুন",
+    saved_for_later: "পরের জন্য রাখা হয়েছে",
+    in_wishlist: "উইশলিস্টে আছে",
+    add_to_wishlist: "উইশলিস্টে যোগ করুন",
+    wishlist_error: "উইশলিস্টে যোগ করা যায়নি",
+    move_to_cart: "কার্টে নিন",
+    saved: "সংরক্ষিত",
+    select: "নির্বাচন করুন",
   },
 };

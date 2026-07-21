@@ -1,18 +1,33 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import { useCart } from "@/contexts/CartContext";
 import { ArrowRight } from "lucide-react";
-import Link from "next/link"; 
+import Link from "next/link";
 import { motion } from "framer-motion";
 import EmptyCartState from "@/features/cart/components/EmptyCartState";
-import CartItemRow from "@/features/cart/components/CartItemRow";
+import CartItemEnhanced from "@/features/cart/components/CartItemEnhanced";
 import CartSummary from "@/features/cart/components/CartSummary";
+import SaveForLater from "@/features/cart/components/SaveForLater";
+import CrossSell from "@/features/cart/components/CrossSell";
+import CartSkeleton from "@/features/cart/components/CartSkeleton";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { confirmAlert, toast } from "@/utils/swal";
+import { useWishlist } from "@/contexts/WishlistContext";
 
 export default function CartPage() {
-  const { cart, removeFromCart, updateQuantity, totalPrice, clearCart } = useCart();
+  const { cart, addToCart, removeFromCart, updateQuantity, totalPrice, clearCart } = useCart();
+  const { addToWishlist } = useWishlist();
   const { t } = useLanguage();
+  const [isLoading, setIsLoading] = useState(true);
+  const [savedForLater, setSavedForLater] = useState<string[]>([]);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setIsLoading(false), 500);
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (isLoading) return <CartSkeleton />;
 
   if (cart.length === 0) {
     return <EmptyCartState />;
@@ -35,9 +50,34 @@ export default function CartPage() {
     }
   };
 
+  const handleSaveForLater = (id: string) => {
+    setSavedForLater((prev) => [...prev, id]);
+    removeFromCart(id);
+    toast.success("Saved for later");
+  };
+
+  const handleMoveToCart = (id: string) => {
+    setSavedForLater((prev) => prev.filter((i) => i !== id));
+    const item = cart.find((i) => i._id === id);
+    if (item) addToCart(item, 1);
+  };
+
+  const handleRemoveSaved = (id: string) => {
+    setSavedForLater((prev) => prev.filter((i) => i !== id));
+  };
+
+  const handleMoveToWishlist = (id: string) => {
+    const item = cart.find((i) => i._id === id);
+    if (item) addToWishlist(item as any);
+    toast.success("Added to wishlist");
+  };
+
+  const savedItems = cart.filter((item) => savedForLater.includes(item._id));
+  const activeItems = cart.filter((item) => !savedForLater.includes(item._id));
+
   return (
     <div className="max-w-7xl mx-auto py-6 md:py-12 px-4 space-y-8 md:space-y-12">
-      <motion.div 
+      <motion.div
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.3 }}
@@ -61,7 +101,7 @@ export default function CartPage() {
           >
             সব মুছুন
           </button>
-          <Link 
+          <Link
             href="/products"
             className="text-primary font-black flex items-center gap-2 hover:gap-4 transition-all"
           >
@@ -78,27 +118,40 @@ export default function CartPage() {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 md:gap-12 items-start">
-        {/* Cart Items */}
-        <motion.div 
+        <motion.div
           className="lg:col-span-2 space-y-6"
           initial="hidden"
           animate="show"
           variants={{ hidden: {}, show: { transition: { staggerChildren: 0.05 } } }}
         >
-          {cart.map((item, idx) => (
+          {activeItems.map((item, idx) => (
             <motion.div key={item._id || `cart-item-${idx}`} variants={{ hidden: { opacity: 0, y: 10 }, show: { opacity: 1, y: 0 } }}>
-              <CartItemRow
+              <CartItemEnhanced
                 item={item}
-                removeFromCart={removeFromCart}
-                updateQuantity={updateQuantity}
+                onRemove={removeFromCart}
+                onUpdateQuantity={updateQuantity}
+                onSaveForLater={handleSaveForLater}
+                onMoveToWishlist={handleMoveToWishlist}
               />
             </motion.div>
           ))}
         </motion.div>
 
-        {/* Order Summary */}
         <CartSummary totalPrice={totalPrice} />
       </div>
+
+      <SaveForLater
+        items={savedItems}
+        onMoveToCart={handleMoveToCart}
+        onRemove={handleRemoveSaved}
+        onMoveToWishlist={(id) => {
+          const item = savedItems.find((i) => i._id === id);
+          if (item) addToWishlist(item as any);
+          toast.success("Added to wishlist");
+        }}
+      />
+
+      <CrossSell />
 
       <div className="md:hidden fixed left-0 right-0 z-40" style={{ bottom: 'env(safe-area-inset-bottom)' }}>
         <div className="mx-4 mb-4 bg-card border border-border rounded-xl shadow-2xl px-4 py-3 flex items-center justify-between">

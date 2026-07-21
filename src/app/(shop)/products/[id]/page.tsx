@@ -10,6 +10,7 @@ import ProductDetailsTabs from "@/features/products/components/details/ProductDe
 import RelatedProducts from "@/features/products/components/details/RelatedProducts";
 import FrequentlyBoughtTogether from "@/features/products/components/details/FrequentlyBoughtTogether";
 import CustomerReviews from "@/features/products/components/details/CustomerReviews";
+import RecentlyViewed from "@/features/products/components/details/RecentlyViewed";
 import PageBackground from "@/components/ui/PageBackground";
 import { Product as ProductType } from "@/types/product";
 import StickyCheckoutBar from "@/features/products/components/details/StickyCheckoutBar";
@@ -119,6 +120,9 @@ export default async function ProductDetailsPage({
 
         {/* Frequently Bought Together */}
         <FrequentlyBoughtTogether currentProduct={product} relatedProducts={relatedProducts} />
+
+        {/* Recently Viewed */}
+        <RecentlyViewed />
 
         {/* Product Details Tabs & Reviews */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 lg:gap-16">

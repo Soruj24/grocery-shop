@@ -46,7 +46,7 @@ export default function Header() {
             <SearchBar />
           </div>
 
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-5">
             <div className="hidden lg:block">
               <UserActions />
             </div>

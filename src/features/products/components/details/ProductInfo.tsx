@@ -1,16 +1,22 @@
 "use client";
 
+import { useState } from "react";
 import { Zap, CheckCircle2, AlertCircle } from "lucide-react";
 import AddToCartButton from "@/app/(shop)/products/[id]/AddToCartButton";
 import WishlistButton from "@/app/(shop)/products/[id]/WishlistButton";
 import ShareButton from "@/app/(shop)/products/[id]/ShareButton";
 import ProductHighlights from "./ProductHighlights";
+import VariantSelector from "./VariantSelector";
+import ShippingInfo from "./ShippingInfo";
+import DeliveryEstimation from "./DeliveryEstimation";
+import CouponOffer from "./CouponOffer";
 import { Product } from "@/types/product";
 import { useRouter } from "next/navigation";
 import { useCart } from "@/contexts/CartContext";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { motion } from "framer-motion";
 import { Badge, Rating } from "@/components/ui";
+import type { TranslationKey } from "@/constants/translations";
 
 interface ProductInfoProps {
   product: Product;
@@ -20,6 +26,7 @@ export default function ProductInfo({ product }: ProductInfoProps) {
   const { t } = useLanguage();
   const router = useRouter();
   const { addToCart } = useCart();
+  const [selectedVariants, setSelectedVariants] = useState<Record<string, string>>({});
 
   const unitToKey: Record<string, string> = {
     pcs: 'unit_piece',
@@ -48,7 +55,6 @@ export default function ProductInfo({ product }: ProductInfoProps) {
   return (
     <div className="w-full lg:w-1/2 space-y-8">
       <div className="space-y-4">
-        {/* Category & Badge */}
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
             <Badge tone="primary" size="md" className="uppercase tracking-widest">
@@ -60,19 +66,18 @@ export default function ProductInfo({ product }: ProductInfoProps) {
             </div>
           </div>
           <div className={`flex items-center gap-1.5 font-bold text-sm ${
-            product.stock === 0 
-              ? "text-danger" 
-              : product.stock <= 5 
-                ? "text-warning" 
+            product.stock === 0
+              ? "text-danger"
+              : product.stock <= 5
+                ? "text-warning"
                 : "text-success"
           }`}>
             {product.stock === 0 ? <AlertCircle className="w-4 h-4" /> : <CheckCircle2 className="w-4 h-4" />}
             <span>
-              {product.stock === 0 
-                ? t('out_of_stock_label') 
-                : product.stock <= 5 
-                  // @ts-ignore
-                  ? `${t('low_stock')} - ${product.stock} ${t(unitToKey[product.unit || 'pcs'] || 'unit_piece')}`
+              {product.stock === 0
+                ? t('out_of_stock_label')
+                : product.stock <= 5
+                  ? `${t('low_stock')} - ${product.stock} ${t((unitToKey[product.unit || 'pcs'] || 'unit_piece') as TranslationKey)}`
                   : t('stock_available')}
             </span>
           </div>
@@ -82,14 +87,12 @@ export default function ProductInfo({ product }: ProductInfoProps) {
           {productName}
         </h1>
 
-        {/* Short Description */}
         {productDesc && (
           <p className="text-muted-foreground text-base leading-relaxed line-clamp-3">
             {productDesc}
           </p>
         )}
 
-        {/* Price Section */}
         <div className="flex items-center gap-6 bg-subtle p-6 rounded-2xl border border-border">
           <div className="space-y-1">
             <p className="text-xs font-bold text-muted-foreground uppercase tracking-widest">{t('current_price')}</p>
@@ -104,7 +107,7 @@ export default function ProductInfo({ product }: ProductInfoProps) {
               )}
             </div>
           </div>
-           
+
           {discountPercent > 0 && (
             <div className="ml-auto bg-danger text-danger-foreground px-4 py-2 rounded-2xl font-black text-xl shadow-lg shadow-danger/20 rotate-3">
               -{discountPercent.toLocaleString('bn-BD')}%
@@ -113,10 +116,28 @@ export default function ProductInfo({ product }: ProductInfoProps) {
         </div>
       </div>
 
+      {/* Variant Selector */}
+      {product.variants && product.variants.length > 0 && (
+        <VariantSelector
+          variants={product.variants}
+          selectedVariants={selectedVariants}
+          onSelect={(name, option) => setSelectedVariants((prev) => ({ ...prev, [name]: option }))}
+        />
+      )}
+
+      {/* Shipping Info */}
+      <ShippingInfo />
+
+      {/* Delivery Estimation */}
+      <DeliveryEstimation />
+
+      {/* Coupon Offers */}
+      <CouponOffer />
+
       <div className="flex flex-col gap-4 pt-4 border-t border-border">
         <div className="flex flex-col sm:flex-row gap-4">
           <AddToCartButton product={product} />
-          <motion.button 
+          <motion.button
             whileTap={{ scale: 0.98 }}
             onClick={handleBuyNow}
             disabled={product.stock === 0}
@@ -126,7 +147,7 @@ export default function ProductInfo({ product }: ProductInfoProps) {
             {t('buy_now')}
           </motion.button>
         </div>
-        
+
         <div className="flex items-center justify-between gap-4 pt-4">
           <WishlistButton product={product} />
           <ShareButton product={product} />
