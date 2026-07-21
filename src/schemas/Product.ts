@@ -1,8 +1,45 @@
 import mongoose from "mongoose";
 
+const VariantOptionSchema = new mongoose.Schema(
+  {
+    label: { type: String, required: true },
+    price: { type: Number },
+    stock: { type: Number },
+    image: { type: String },
+  },
+  { _id: false },
+);
+
+const VariantSchema = new mongoose.Schema(
+  {
+    name: { type: String, required: true },
+    options: { type: [VariantOptionSchema], default: [] },
+  },
+  { _id: false },
+);
+
+const SpecificationSchema = new mongoose.Schema(
+  {
+    label: { type: String, required: true },
+    value: { type: String, required: true },
+  },
+  { _id: false },
+);
+
+const QuestionSchema = new mongoose.Schema(
+  {
+    question: { type: String, required: true },
+    answer: { type: String, default: "" },
+    user: { type: String },
+    createdAt: { type: Date, default: Date.now },
+  },
+  { _id: false },
+);
+
 const ProductSchema = new mongoose.Schema(
   {
     name: { type: String, required: true },
+    brand: { type: String, index: true },
     price: { type: Number, required: true },
     stock: { type: Number, required: true },
     category: {
@@ -11,6 +48,9 @@ const ProductSchema = new mongoose.Schema(
       required: true,
     },
     image: { type: String },
+    images: { type: [String], default: [] },
+    video: { type: String },
+    view360: { type: [String], default: [] },
     description: { type: String },
     unit: { type: String, default: "pcs" },
     discount: { type: Number, default: 0 },
@@ -31,6 +71,10 @@ const ProductSchema = new mongoose.Schema(
       ],
       default: [],
     },
+    variants: { type: [VariantSchema], default: [] },
+    specifications: { type: [SpecificationSchema], default: [] },
+    questions: { type: [QuestionSchema], default: [] },
+    aiSummary: { type: String },
     isActive: { type: Boolean, default: true },
   },
   { timestamps: true },

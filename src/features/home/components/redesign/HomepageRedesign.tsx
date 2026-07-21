@@ -17,24 +17,22 @@ import TestimonialsRail from "./TestimonialsRail";
 import TrustSection from "./TrustSection";
 import InstagramGallery from "./InstagramGallery";
 
+import { SectionShell, Reveal } from "./SectionShell";
 import FeaturesSection from "@/features/home/components/sections/FeaturesSection";
 import Newsletter from "@/features/home/components/sections/Newsletter";
-import Footer from "@/components/navigation/Footer";
-import { Reveal } from "./SectionShell";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export interface HomepageRedesignProps {
   categories: Category[];
-  products: Product[];
 }
 
-export default function HomepageRedesign({
-  categories,
-  products,
-}: HomepageRedesignProps) {
+export default function HomepageRedesign({ categories }: HomepageRedesignProps) {
+  const { t } = useLanguage();
+
   return (
-    <div className="relative space-y-4 pb-10">
+    <div className="relative space-y-2 pb-10">
       {/* 1. Hero */}
-      <PremiumHero />
+      <PremiumHero categories={categories} />
 
       {/* 2. Brands (trust anchor below hero) */}
       <BrandsStrip />
@@ -45,30 +43,62 @@ export default function HomepageRedesign({
       {/* 4. Featured Products (tabbed: Trending / Best Sellers / New) */}
       <TrendingTabs />
 
-      {/* 5. Trending now */}
-      <ProductRow sort="rating" limit={8} columns={4} />
-
-      {/* 6. Today's Deals */}
+      {/* 5. Today's Deals */}
       <TodaysDeals />
 
-      {/* 7. Flash Sale */}
+      {/* 6. Flash Sale */}
       <FlashSaleSection />
+
+      {/* 7. Trending now */}
+      <SectionShell
+        eyebrow={t("trending_now") ?? t("featured_products_tab_trending")}
+        title={
+          <>
+            {t("trending_now_title_1") ?? t("featured_products_title_1")}{" "}
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-sky-500 to-cyan-500">
+              {t("trending_now_title_2") ?? t("featured_products_title_2")}
+            </span>
+          </>
+        }
+        subtitle={t("trending_now_desc") ?? t("featured_products_desc")}
+        viewAllHref="/products?sort=rating"
+        viewAllLabel={t("see_all")}
+      >
+        <ProductRow sort="rating" limit={5} columns={5} />
+      </SectionShell>
 
       {/* 8. Best Sellers */}
       <section className="mx-auto max-w-7xl px-4">
         <div className="rounded-[2rem] border border-border bg-subtle p-2">
-          <ProductRow sort="reviews" limit={8} columns={4} />
+          <SectionShell
+            eyebrow={t("best_sellers") ?? t("featured_products_tab_bestsellers")}
+            eyebrowTone="warning"
+            title={
+              <>
+                {t("best_sellers_title_1") ?? t("featured_products_title_1")}{" "}
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-500 to-orange-600">
+                  {t("best_sellers_title_2") ?? t("featured_products_title_2")}
+                </span>
+              </>
+            }
+            subtitle={t("best_sellers_desc") ?? t("featured_products_desc")}
+            viewAllHref="/products?sort=reviews"
+            viewAllLabel={t("see_all")}
+            className="!py-10"
+          >
+            <ProductRow sort="reviews" limit={8} columns={4} />
+          </SectionShell>
         </div>
       </section>
 
       {/* 9. Popular Collections */}
       <PopularCollections categories={categories} />
 
-      {/* 10. Recently Viewed */}
-      <RecentlyViewedRail />
-
-      {/* 11. Recommended for you */}
+      {/* 10. Recommended for you */}
       <RecommendedRail />
+
+      {/* 11. Recently Viewed */}
+      <RecentlyViewedRail />
 
       {/* 12. Testimonials */}
       <TestimonialsRail />
@@ -88,9 +118,6 @@ export default function HomepageRedesign({
 
       {/* 16. Instagram Gallery */}
       <InstagramGallery />
-
-      {/* 17. Footer */}
-      <Footer />
     </div>
   );
 }

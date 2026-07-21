@@ -1,19 +1,32 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
-import { ChevronLeft, ChevronRight, Sparkles, Truck, ShieldCheck, Leaf } from "lucide-react";
+import {
+  ChevronLeft,
+  ChevronRight,
+  Sparkles,
+  Truck,
+  ShieldCheck,
+  Leaf,
+  Search,
+  Flame,
+} from "lucide-react";
 import Image from "next/image";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useHeroSlides } from "@/features/home/hooks/useHeroSlides";
 import { getProductFallbackImage } from "@/constants/fallback-images";
+import { Category } from "@/types/category";
 
-export default function PremiumHero() {
+export default function PremiumHero({ categories = [] }: { categories?: Category[] }) {
   const { t } = useLanguage();
+  const router = useRouter();
   const { slides, current, setCurrent, nextSlide, prevSlide } = useHeroSlides();
   const reduceMotion = useReducedMotion();
   const [direction, setDirection] = useState(1);
+  const [query, setQuery] = useState("");
 
   const go = (fn: () => void, dir: number) => {
     setDirection(dir);
@@ -27,6 +40,14 @@ export default function PremiumHero() {
     { icon: ShieldCheck, label: t("feature_title_2") },
     { icon: Leaf, label: t("organic_100_label") ?? "১০০% অর্গানিক" },
   ];
+
+  const chips = (categories ?? []).slice(0, 6);
+
+  const onSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    const q = query.trim();
+    router.push(q ? `/products?q=${encodeURIComponent(q)}` : "/products");
+  };
 
   return (
     <section className="relative mx-auto max-w-7xl px-4 pt-6 lg:pt-8">
@@ -54,7 +75,6 @@ export default function PremiumHero() {
                 />
                 <div className="absolute inset-0 bg-gradient-to-tr from-black/85 via-black/45 to-transparent" />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
-                {/* Color wash */}
                 <div
                   className={`absolute inset-0 bg-gradient-to-br ${active.color} mix-blend-overlay opacity-30`}
                 />
@@ -99,7 +119,7 @@ export default function PremiumHero() {
                     <ChevronRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
                   </Link>
                   <Link
-                    href="/products?sort=price_asc"
+                    href="/products?tag=deals"
                     className="inline-flex items-center gap-2 rounded-full bg-white/10 px-7 py-3.5 text-sm font-black text-white ring-1 ring-white/25 backdrop-blur-md transition-all hover:bg-white/20 active:scale-95"
                   >
                     {t("todays_deals")}
@@ -210,18 +230,57 @@ export default function PremiumHero() {
         </div>
       </div>
 
-      {/* Trust pills */}
-      <div className="mt-4 grid grid-cols-1 gap-3 rounded-3xl border border-border bg-card p-4 shadow-sm sm:grid-cols-3 lg:mt-6">
-        {pills.map((pill) => (
-          <div
-            key={pill.label}
-            className="flex items-center justify-center gap-3 rounded-2xl bg-muted px-4 py-3 text-sm font-bold text-foreground transition-colors hover:bg-primary-subtle hover:text-primary"
+      {/* Search + trust band */}
+      <div className="mt-4 grid grid-cols-1 gap-3 rounded-3xl border border-border bg-card p-4 shadow-sm lg:mt-6 lg:grid-cols-[1.6fr_1fr] lg:gap-4">
+        <form
+          onSubmit={onSearch}
+          className="group relative flex items-center rounded-2xl bg-muted px-4 ring-1 ring-transparent transition-all focus-within:bg-background focus-within:ring-primary/40"
+        >
+          <Search className="h-5 w-5 shrink-0 text-muted-foreground group-focus-within:text-primary" />
+          <input
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            placeholder={t("search_placeholder")}
+            className="w-full bg-transparent px-3 py-4 text-sm font-semibold text-foreground placeholder:text-muted-foreground focus:outline-none"
+          />
+          <button
+            type="submit"
+            className="shrink-0 rounded-xl bg-primary px-5 py-2.5 text-sm font-black text-primary-foreground transition-all hover:bg-primary-hover active:scale-95"
           >
-            <pill.icon className="h-5 w-5 text-primary" />
-            {pill.label}
-          </div>
-        ))}
+            {t("search_button")}
+          </button>
+        </form>
+        <div className="grid grid-cols-3 gap-3">
+          {pills.map((pill) => (
+            <div
+              key={pill.label}
+              className="flex items-center justify-center gap-2 rounded-2xl bg-muted px-2 py-3 text-center text-xs font-bold text-foreground transition-colors hover:bg-primary-subtle hover:text-primary"
+            >
+              <pill.icon className="h-4 w-4 shrink-0 text-primary" />
+              <span className="hidden sm:inline">{pill.label}</span>
+            </div>
+          ))}
+        </div>
       </div>
+
+      {/* Quick category chips */}
+      {chips.length > 0 && (
+        <div className="mt-3 flex flex-wrap items-center gap-2 px-1">
+          <span className="flex items-center gap-1.5 text-xs font-black uppercase tracking-[0.18em] text-muted-foreground">
+            <Flame className="h-3.5 w-3.5 text-danger" />
+            {t("popular_now") ?? "আজকের হট"}
+          </span>
+          {chips.map((cat) => (
+            <Link
+              key={cat._id}
+              href={`/products?category=${cat._id}`}
+              className="rounded-full border border-border bg-subtle px-4 py-1.5 text-xs font-bold text-foreground transition-all hover:border-primary/40 hover:bg-primary-subtle hover:text-primary"
+            >
+              {cat.name}
+            </Link>
+          ))}
+        </div>
+      )}
     </section>
   );
 }

@@ -8,7 +8,6 @@ import WishlistIcon from "./WishlistIcon";
 import ProfileMenu from "./ProfileMenu";
 import CartPreview from "./CartPreview";
 import RecentlyViewedMenu from "./RecentlyViewedMenu";
-import { CurrencyTag, LanguageTag } from "./LanguageCurrencySelector";
 import { useCart } from "@/contexts/CartContext";
 import { useRecentlyViewed } from "@/contexts/RecentlyViewedContext";
 import { useWishlist } from "@/contexts/WishlistContext";
@@ -36,7 +35,13 @@ function RailButton({
   );
 }
 
-function BadgeDot({ count, tone = "primary" }: { count: number; tone?: "primary" | "rose" }) {
+function BadgeDot({
+  count,
+  tone = "primary",
+}: {
+  count: number;
+  tone?: "primary" | "rose";
+}) {
   if (count <= 0) return null;
   return (
     <motion.span
@@ -61,9 +66,6 @@ export default function UserActions() {
 
   return (
     <div className="flex items-center gap-2">
-      <LanguageTag />
-      <CurrencyTag />
-
       <Popover
         align="end"
         trigger={

@@ -16,13 +16,16 @@ import WhatsAppButton from "@/components/shared/WhatsAppButton";
 import { ToastProvider } from "@/components/ui/system/Toast";
 
 export function Providers({ children }: { children: React.ReactNode }) {
-  const [queryClient] = useState(() => new QueryClient({
-    defaultOptions: {
-      queries: {
-        staleTime: 60 * 1000,
-      },
-    },
-  }));
+  const [queryClient] = useState(
+    () =>
+      new QueryClient({
+        defaultOptions: {
+          queries: {
+            staleTime: 60 * 1000,
+          },
+        },
+      }),
+  );
 
   return (
     <SessionProvider refetchOnWindowFocus={false} refetchWhenOffline={false}>

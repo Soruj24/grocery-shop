@@ -21,7 +21,8 @@ export default function TodaysDeals() {
     queryFn: async () => {
       const res = await fetch("/api/products/list?tag=deals&sort=price_low&limit=8");
       if (!res.ok) throw new Error("Failed");
-      return (await res.json()) as Product[];
+      const json = await res.json();
+      return (json.products ?? []) as Product[];
     },
   });
 

@@ -8,6 +8,7 @@ export type ProductsSearchParams = {
 export interface ProductsPageData {
   products: Product[];
   categories: Category[];
+  brands: string[];
   totalPages: number;
   currentPage: number;
   totalCount: number;

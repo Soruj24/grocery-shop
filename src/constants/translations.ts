@@ -497,6 +497,19 @@ export const translations = {
     featured_products_tab_bestsellers: "বেস্ট সেলার",
     featured_products_tab_new: "নতুন পণ্য",
 
+    // Trending (Standalone Section)
+    trending_now_title_1: "এখন",
+    trending_now_title_2: "ট্রেন্ডিং",
+    trending_now_desc: "গ্রাহকদের কাছে সবচেয়ে বেশি রেটিং পাওয়া পণ্যগুলো এখানে।",
+
+    // Best Sellers (Standalone Section)
+    best_sellers_title_1: "সর্বাধিক",
+    best_sellers_title_2: "বিক্রিত পণ্য",
+    best_sellers_desc: "আমাদের সবচেয়ে বেশি বিক্রি হওয়া পণ্যগুলো এক নজরে দেখুন।",
+
+    // Popular now (Hero chips)
+    popular_now: "আজকের হট",
+
     // Newsletter
     newsletter_badge: "নিউজলেটার সাবস্ক্রিপশন",
     newsletter_title_1: "পাওয়ারফুল ডিল মিস",
@@ -910,8 +923,34 @@ export const translations = {
     happy_rate: "সন্তুষ্টি",
     delivery_time: "ডেলিভারি",
     claimed: "দাবিকৃত",
+    sort_rating: "রেটিং (বেশি থেকে কম)",
+    sort_reviews: "রিভিউ (বেশি থেকে কম)",
+    view_mode: "ভিউ মোড",
+    grid: "গ্রিড",
+    list: "তালিকা",
+    quick_view: "দ্রুত দেখুন",
+    compare: "তুলনা করুন",
+    availability: "পাওয়া যাচ্ছে",
+    in_stock: "স্টকে আছে",
+    showing_results: "ফলাফল দেখানো হচ্ছে",
+    load_more: "আরও লোড করুন",
+    add_compare: "তুলনায় যোগ করুন",
+    compare_added: "তুলনায় যোগ করা হয়েছে",
+    compare_remove: "তুলনা থেকে সরান",
+    compare_bar_title: "তুলনার জন্য নির্বাচিত",
+    compare_now: "এখন তুলনা করুন",
+    filter_brand: "ব্র্যান্ড",
+    filter_rating: "রেটিং",
+    filter_discount: "ডিসকাউন্ট",
+    brand: "ব্র্যান্ড",
+    min_rating: "সর্বনিম্ন রেটিং",
+    only_discount: "শুধুমাত্র ডিসকাউন্ট",
+    only_in_stock: "শুধুমাত্র স্টকে থাকা",
+    price_slider: "দামের রেঞ্জ",
+    results_count: "ফলাফল",
+    compare_max: "সর্বোচ্চ ৪টি পণ্য তুলনা করা যাবে",
 
-    
+
 
     
     

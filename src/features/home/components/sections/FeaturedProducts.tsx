@@ -29,7 +29,8 @@ export default function FeaturedProducts({ products }: { products: Product[] }) 
       
       const res = await fetch(`/api/products/list?sort=${sort}&limit=8`);
       if (!res.ok) throw new Error('Failed to fetch');
-      return res.json();
+      const data = await res.json();
+      return data.products as Product[];
     },
     // Use initial products for 'new' tab to avoid fetch if possible, 
     // but since we want to switch tabs dynamically, simple fetch is cleaner.

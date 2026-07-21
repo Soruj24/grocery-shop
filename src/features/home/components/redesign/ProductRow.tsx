@@ -40,7 +40,8 @@ export default function ProductRow({
       if (category) params.set("category", category);
       const res = await fetch(`/api/products/list?${params.toString()}`);
       if (!res.ok) throw new Error("Failed to load products");
-      return (await res.json()) as Product[];
+      const json = await res.json();
+      return (json.products ?? []) as Product[];
     },
   });
 

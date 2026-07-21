@@ -53,7 +53,8 @@ export default function TrendingTabs() {
         `/api/products/list?sort=${current.sort}&limit=8`
       );
       if (!res.ok) throw new Error("Failed");
-      return (await res.json()) as Product[];
+      const json = await res.json();
+      return (json.products ?? []) as Product[];
     },
   });
 

@@ -24,6 +24,21 @@ export async function getProducts(
     typeof searchParams.maxPrice === "string"
       ? parseInt(searchParams.maxPrice)
       : 10000;
+  const rating =
+    typeof searchParams.rating === "string" ? parseInt(searchParams.rating) : 0;
+  const inStock = searchParams.inStock === "true";
+  const discount = searchParams.discount === "true";
+  const brandParam = searchParams.brand;
+  const brandValue =
+    typeof brandParam === "string"
+      ? brandParam
+      : Array.isArray(brandParam)
+        ? brandParam.join(",")
+        : "";
+  const brands = brandValue
+    .split(",")
+    .map((b) => b.trim())
+    .filter(Boolean);
   const page =
     typeof searchParams.page === "string" ? parseInt(searchParams.page) : 1;
   const limit = 12;
@@ -41,6 +56,13 @@ export async function getProducts(
   } else if (filterTag === "new") {
     query.isNewArrival = true;
   }
+  if (rating > 0) query.rating = { $gte: rating };
+  if (discount) query.discountPrice = { $exists: true, $ne: null };
+  if (inStock) query.stock = { $gt: 0 };
+  if (brands.length) {
+    const escaped = brands.map((b) => b.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"));
+    query.brand = { $in: escaped.map((b) => new RegExp(b, "i")) };
+  }
   if (search) {
     query.$or = [
       { name: { $regex: search, $options: "i" } },
@@ -49,6 +71,10 @@ export async function getProducts(
   }
 
   const categories = await Category.find({ isActive: true }).lean();
+
+  const brandList = (await Product.distinct("brand", { isActive: true }))
+    .filter((b): b is string => typeof b === "string" && b.trim().length > 0)
+    .sort((a, b) => a.localeCompare(b));
 
   let actualCategoryId = categoryId;
   if (categoryId && categoryId !== "all") {
@@ -93,6 +119,7 @@ export async function getProducts(
   return {
     products: JSON.parse(JSON.stringify(products)),
     categories: JSON.parse(JSON.stringify(categories)),
+    brands: brandList,
     totalPages: Math.ceil(totalProducts / limit),
     currentPage: page,
     totalCount: totalProducts,
