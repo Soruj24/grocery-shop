@@ -5,7 +5,7 @@ import { useSession } from "next-auth/react";
 import { Menu, Search } from "lucide-react";
 import { motion } from "framer-motion";
 import { useWishlist } from "@/contexts/WishlistContext";
-import { useGetCategoriesQuery } from "@/redux/apiSlice";
+import { useGetAdminCategoriesQuery } from "@/redux/apiSlice";
 import { useScrollPosition } from "@/hooks/useScrollPosition";
 import SearchBar from "./SearchBar";
 import UserActions from "./UserActions";
@@ -21,7 +21,7 @@ export default function Header() {
 
   const { data: session } = useSession();
   const { totalWishlistItems } = useWishlist();
-  const { data: categories = [] } = useGetCategoriesQuery();
+  const { data: categories = [] } = useGetAdminCategoriesQuery();
 
   return (
     <>
@@ -71,7 +71,7 @@ export default function Header() {
 
         <div className="hidden border-t border-border/60 md:block">
           <DesktopNav
-            categories={categories}
+            categories={categories as any}
             isCategoryMenuOpen={isCategoryMenuOpen}
             setIsCategoryMenuOpen={setIsCategoryMenuOpen}
           />
@@ -86,7 +86,7 @@ export default function Header() {
       <MobileDrawer
         isOpen={isMobileMenuOpen}
         onClose={() => setIsMobileMenuOpen(false)}
-        categories={categories}
+        categories={categories as any}
         totalWishlistItems={totalWishlistItems}
         session={session}
       />

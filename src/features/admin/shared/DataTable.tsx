@@ -21,9 +21,10 @@ interface DataTableProps<T> {
   emptyMessage?: string;
   onRowClick?: (item: T) => void;
   actions?: ReactNode;
+  loading?: boolean;
 }
 
-export default function DataTable<T extends Record<string, any>>({
+export default function DataTable<T extends { [key: string]: any }>({
   columns,
   data,
   searchable = true,
@@ -33,6 +34,7 @@ export default function DataTable<T extends Record<string, any>>({
   emptyMessage = "No data found",
   onRowClick,
   actions,
+  loading = false,
 }: DataTableProps<T>) {
   const [search, setSearch] = useState("");
   const [page, setPage] = useState(1);
@@ -113,7 +115,13 @@ export default function DataTable<T extends Record<string, any>>({
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-50 dark:divide-gray-800/50">
-            {paged.length === 0 ? (
+            {loading ? (
+              <tr>
+                <td colSpan={columns.length} className="px-4 py-8">
+                  <div className="space-y-3">{[1, 2, 3, 4, 5].map((i) => <div key={i} className="h-10 rounded-lg bg-gray-100 dark:bg-gray-800 animate-pulse" />)}</div>
+                </td>
+              </tr>
+            ) : paged.length === 0 ? (
               <tr>
                 <td colSpan={columns.length} className="px-4 py-16 text-center">
                   <p className="text-sm text-gray-400">{emptyMessage}</p>

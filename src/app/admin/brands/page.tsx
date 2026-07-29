@@ -1,46 +1,65 @@
 "use client";
 
 import { useState } from "react";
-import { Plus, Edit2, Trash2, Tag } from "lucide-react";
+import { useGetAdminBrandsQuery, useCreateAdminBrandMutation, useUpdateAdminBrandMutation, useDeleteAdminBrandMutation } from "@/redux/apiSlice";
 import DataTable from "@/features/admin/shared/DataTable";
 import AdminPageHeader from "@/features/admin/shared/AdminPageHeader";
+import { Plus, Edit2, Trash2, Tag } from "lucide-react";
 
-const mockBrands = [
-  { id: "1", name: "Fresh Farm", slug: "fresh-farm", productCount: 45, isActive: true },
-  { id: "2", name: "Organic Valley", slug: "organic-valley", productCount: 32, isActive: true },
-  { id: "3", name: "Premium Select", slug: "premium-select", productCount: 28, isActive: true },
-  { id: "4", name: "Daily Fresh", slug: "daily-fresh", productCount: 18, isActive: false },
-  { id: "5", name: "Green Life", slug: "green-life", productCount: 52, isActive: true },
-];
+export default function AdminBrandsPage() {
+  const { data, isLoading } = useGetAdminBrandsQuery();
+  const [create] = useCreateAdminBrandMutation();
+  const [update] = useUpdateAdminBrandMutation();
+  const [del] = useDeleteAdminBrandMutation();
+  const [editing, setEditing] = useState<Record<string, unknown> | null>(null);
+  const [showForm, setShowForm] = useState(false);
+  const [name, setName] = useState("");
+  const [slug, setSlug] = useState("");
 
-export default function BrandsPage() {
-  const [brands] = useState(mockBrands);
+  const resetForm = () => { setName(""); setSlug(""); setEditing(null); setShowForm(false); };
+
+  const handleSave = async () => {
+    if (!name.trim()) return;
+    if (editing) await update({ id: editing._id as string, body: { name, slug, isActive: true } }).unwrap();
+    else await create({ name, slug: slug || name.toLowerCase().replace(/\s+/g, "-") }).unwrap();
+    resetForm();
+  };
+
+  const brands = data?.data || [];
 
   const columns = [
-    { key: "name", label: "Brand", sortable: true, render: (item: typeof brands[0]) => (
+    { key: "name", label: "Brand", sortable: true, render: (item: Record<string, unknown>) => (
       <div className="flex items-center gap-3">
-        <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-gray-100 dark:bg-gray-800"><Tag className="h-4 w-4 text-gray-400" /></div>
-        <div><p className="text-sm font-semibold text-gray-900 dark:text-white">{item.name}</p><p className="text-[10px] text-gray-400">/{item.slug}</p></div>
+        <div className="h-9 w-9 rounded-lg bg-gray-100 dark:bg-gray-800 flex items-center justify-center"><Tag className="h-4 w-4 text-gray-400" /></div>
+        <div><p className="text-sm font-semibold text-gray-900 dark:text-white">{item.name as string}</p><p className="text-[10px] text-gray-400">/{item.slug as string}</p></div>
       </div>
     )},
-    { key: "productCount", label: "Products", sortable: true, render: (item: typeof brands[0]) => <span className="text-sm text-gray-600 dark:text-gray-400">{item.productCount}</span> },
-    { key: "isActive", label: "Status", render: (item: typeof brands[0]) => (
-      <span className={`text-[10px] font-bold uppercase px-2 py-0.5 rounded-full ${item.isActive ? "bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400" : "bg-gray-100 text-gray-500"}`}>{item.isActive ? "Active" : "Inactive"}</span>
+    { key: "productCount", label: "Products", render: (item: Record<string, unknown>) => <span className="text-sm text-gray-600">{String(item.productCount)}</span> },
+    { key: "isActive", label: "Status", render: (item: Record<string, unknown>) => (
+      <span className={`text-[10px] font-bold uppercase px-2 py-0.5 rounded-full ${item.isActive ? "bg-emerald-100 text-emerald-700" : "bg-gray-100 text-gray-500"}`}>{item.isActive ? "Active" : "Inactive"}</span>
     )},
-    { key: "actions", label: "", render: () => (
+    { key: "actions", label: "", render: (_: Record<string, unknown>, i: number) => (
       <div className="flex items-center gap-1">
-        <button className="p-1.5 rounded-lg text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"><Edit2 className="h-3.5 w-3.5" /></button>
-        <button className="p-1.5 rounded-lg text-gray-400 hover:bg-red-50 dark:hover:bg-red-900/20 hover:text-red-500 transition-colors"><Trash2 className="h-3.5 w-3.5" /></button>
+        <button onClick={() => { const b = brands[i]; setEditing(b); setName(b.name as string); setSlug(b.slug as string); setShowForm(true); }} className="p-1.5 rounded-lg text-gray-400 hover:bg-blue-50 hover:text-blue-500"><Edit2 className="h-3.5 w-3.5" /></button>
+        <button onClick={() => { if (confirm("Delete brand?")) del(brands[i]._id as string); }} className="p-1.5 rounded-lg text-gray-400 hover:bg-red-50 hover:text-red-500"><Trash2 className="h-3.5 w-3.5" /></button>
       </div>
     )},
   ];
 
   return (
     <div className="space-y-6">
-      <AdminPageHeader title="Brands" description="Manage product brands and labels."
-        actions={<button className="flex items-center gap-2 rounded-xl bg-emerald-500 px-4 py-2.5 text-sm font-semibold text-white hover:bg-emerald-600 transition-colors"><Plus className="h-4 w-4" /> Add Brand</button>}
+      <AdminPageHeader title="Brands" description="Manage product brands"
+        actions={<button onClick={() => { resetForm(); setShowForm(true); }} className="flex items-center gap-2 rounded-xl bg-emerald-500 px-4 py-2.5 text-sm font-semibold text-white hover:bg-emerald-600"><Plus className="h-4 w-4" /> Add Brand</button>}
       />
-      <DataTable columns={columns} data={brands} searchable searchKeys={["name"]} searchPlaceholder="Search brands..." />
+      {showForm && (
+        <div className="rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-4 flex items-center gap-4">
+          <input value={name} onChange={(e) => setName(e.target.value)} placeholder="Brand name" className="flex-1 rounded-xl border border-gray-200 dark:border-gray-700 px-4 py-2 text-sm bg-gray-50 dark:bg-gray-800 outline-none focus:border-emerald-500" />
+          <input value={slug} onChange={(e) => setSlug(e.target.value)} placeholder="Slug (auto)" className="flex-1 rounded-xl border border-gray-200 dark:border-gray-700 px-4 py-2 text-sm bg-gray-50 dark:bg-gray-800 outline-none focus:border-emerald-500" />
+          <button onClick={handleSave} className="rounded-xl bg-emerald-500 px-4 py-2 text-sm font-semibold text-white hover:bg-emerald-600">{editing ? "Update" : "Create"}</button>
+          <button onClick={resetForm} className="rounded-xl border border-gray-200 px-4 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50">Cancel</button>
+        </div>
+      )}
+      <DataTable columns={columns} data={brands} searchable searchKeys={["name"]} searchPlaceholder="Search brands..." loading={isLoading} />
     </div>
   );
 }

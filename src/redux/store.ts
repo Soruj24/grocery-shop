@@ -1,38 +1,16 @@
-import { configureStore, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { apiSlice } from './apiSlice';
-
-interface UIState {
-  location: string;
-  isLocationModalOpen: boolean;
-}
-
-const initialState: UIState = {
-  location: 'loc_dhaka',
-  isLocationModalOpen: false,
-};
-
-const uiSlice = createSlice({
-  name: 'ui',
-  initialState,
-  reducers: {
-    setLocation: (state, action: PayloadAction<string>) => {
-      state.location = action.payload;
-    },
-    toggleLocationModal: (state) => {
-      state.isLocationModalOpen = !state.isLocationModalOpen;
-    },
-  },
-});
-
-export const { setLocation, toggleLocationModal } = uiSlice.actions;
+import { configureStore } from "@reduxjs/toolkit";
+import { apiSlice } from "./apiSlice";
+import adminUiReducer from "./slices/adminUiSlice";
+import notificationReducer from "./slices/notificationSlice";
 
 export const store = configureStore({
   reducer: {
-    ui: uiSlice.reducer,
+    adminUi: adminUiReducer,
+    notifications: notificationReducer,
     [apiSlice.reducerPath]: apiSlice.reducer,
   },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(apiSlice.middleware),
+    getDefaultMiddleware({ serializableCheck: false }).concat(apiSlice.middleware),
 });
 
 export type RootState = ReturnType<typeof store.getState>;

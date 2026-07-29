@@ -1,19 +1,19 @@
 "use client";
 
-import { useGetAdminStatsQuery, useGetAdminAnalyticsQuery } from "@/redux/apiSlice";
+import { useGetDashboardStatsQuery, useGetDashboardAnalyticsQuery } from "@/redux/apiSlice";
 
 export function useAdminDashboard() {
   const {
     data: stats,
     isLoading: statsLoading,
     isError: statsError,
-  } = useGetAdminStatsQuery();
+  } = useGetDashboardStatsQuery();
 
   const {
     data: analytics,
     isLoading: analyticsLoading,
     isError: analyticsError,
-  } = useGetAdminAnalyticsQuery();
+  } = useGetDashboardAnalyticsQuery();
 
   return {
     stats,

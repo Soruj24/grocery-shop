@@ -1,59 +1,65 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { Plus, Edit2, Trash2, Ticket, Percent, DollarSign } from "lucide-react";
+import { useState } from "react";
+import { useGetAdminCouponsQuery, useCreateAdminCouponMutation, useUpdateAdminCouponMutation, useDeleteAdminCouponMutation } from "@/redux/apiSlice";
 import DataTable from "@/features/admin/shared/DataTable";
 import AdminPageHeader from "@/features/admin/shared/AdminPageHeader";
-import { AdminCoupon } from "@/types/admin";
+import CouponFormModal from "@/features/admin/coupons/components/CouponFormModal";
+import { Plus, Tag, Trash2 } from "lucide-react";
 
-export default function CouponsPage() {
-  const [coupons, setCoupons] = useState<AdminCoupon[]>([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    fetch("/api/coupons")
-      .then((r) => r.json())
-      .then((d) => setCoupons(Array.isArray(d) ? d : d.coupons || []))
-      .catch(() => {})
-      .finally(() => setLoading(false));
-  }, []);
+export default function AdminCouponsPage() {
+  const { data, isLoading } = useGetAdminCouponsQuery();
+  const [create] = useCreateAdminCouponMutation();
+  const [update] = useUpdateAdminCouponMutation();
+  const [del] = useDeleteAdminCouponMutation();
+  const [modal, setModal] = useState<{ open: boolean; data?: any }>({ open: false });
+  const coupons = data?.data || [];
 
   const columns = [
-    { key: "code", label: "Code", sortable: true, render: (item: AdminCoupon) => (
-      <div className="flex items-center gap-2">
-        <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-emerald-50 dark:bg-emerald-950/30"><Ticket className="h-4 w-4 text-emerald-500" /></div>
-        <span className="font-mono text-sm font-bold text-gray-900 dark:text-white">{item.code}</span>
+    { key: "code", label: "Code", render: (item: any) => (
+      <div className="flex items-center gap-3">
+        <div className="h-8 w-8 rounded-lg bg-emerald-50 dark:bg-emerald-950/30 flex items-center justify-center"><Tag className="h-4 w-4 text-emerald-500" /></div>
+        <span className="text-sm font-mono font-bold text-gray-900">{item.code}</span>
       </div>
     )},
-    { key: "discountType", label: "Type", render: (item: AdminCoupon) => (
-      <span className="inline-flex items-center gap-1 text-xs text-gray-600 dark:text-gray-400">
-        {item.discountType === "percentage" ? <Percent className="h-3 w-3" /> : <DollarSign className="h-3 w-3" />}
-        {item.discountType === "percentage" ? `${item.discountValue}%` : `৳${item.discountValue}`}
-      </span>
+    { key: "discountValue", label: "Discount", render: (item: any) => (
+      <span className="text-sm font-semibold">{item.discountType === "percentage" ? `${item.discountValue}%` : `৳${item.discountValue}`}</span>
     )},
-    { key: "minOrderAmount", label: "Min. Order", sortable: true, render: (item: AdminCoupon) => <span className="text-xs text-gray-500">৳{item.minOrderAmount}</span> },
-    { key: "usedCount", label: "Used", sortable: true, render: (item: AdminCoupon) => <span className="text-sm font-semibold text-gray-900 dark:text-white">{item.usedCount}{item.usageLimit ? `/${item.usageLimit}` : ""}</span> },
-    { key: "expiryDate", label: "Expires", sortable: true, render: (item: AdminCoupon) => {
-      const expired = new Date(item.expiryDate) < new Date();
-      return <span className={`text-xs ${expired ? "text-red-500" : "text-gray-500"}`}>{new Date(item.expiryDate).toLocaleDateString()}</span>;
-    }},
-    { key: "isActive", label: "Status", render: (item: AdminCoupon) => (
-      <span className={`text-[10px] font-bold uppercase px-2 py-0.5 rounded-full ${item.isActive ? "bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400" : "bg-gray-100 text-gray-500"}`}>{item.isActive ? "Active" : "Inactive"}</span>
+    { key: "minOrderAmount", label: "Min Order", render: (item: any) => <span className="text-xs text-gray-500">৳{Number(item.minOrderAmount).toLocaleString()}</span> },
+    { key: "expiryDate", label: "Expires", render: (item: any) => <span className="text-xs text-gray-500">{new Date(item.expiryDate).toLocaleDateString()}</span> },
+    { key: "usedCount", label: "Used", render: (item: any) => <span className="text-sm font-semibold">{String(item.usedCount || 0)}/{item.usageLimit || "∞"}</span> },
+    { key: "isActive", label: "Status", render: (item: any) => (
+      <span className={`text-[10px] font-bold uppercase px-2 py-0.5 rounded-full ${item.isActive ? "bg-emerald-100 text-emerald-700" : "bg-gray-100 text-gray-500"}`}>{item.isActive ? "Active" : "Inactive"}</span>
     )},
-    { key: "actions", label: "", render: () => (
+    { key: "actions", label: "", render: (_: any, i: number) => (
       <div className="flex items-center gap-1">
-        <button className="p-1.5 rounded-lg text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"><Edit2 className="h-3.5 w-3.5" /></button>
-        <button className="p-1.5 rounded-lg text-gray-400 hover:bg-red-50 dark:hover:bg-red-900/20 hover:text-red-500 transition-colors"><Trash2 className="h-3.5 w-3.5" /></button>
+        <button onClick={() => setModal({ open: true, data: coupons[i] })} className="p-1.5 rounded-lg text-gray-400 hover:bg-blue-50 hover:text-blue-500"><svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" /></svg></button>
+        <button onClick={() => { if (confirm("Delete coupon?")) del(coupons[i]._id); }} className="p-1.5 rounded-lg text-gray-400 hover:bg-red-50 hover:text-red-500"><Trash2 className="h-3.5 w-3.5" /></button>
       </div>
     )},
   ];
 
   return (
     <div className="space-y-6">
-      <AdminPageHeader title="Coupons" description="Create and manage discount codes."
-        actions={<button className="flex items-center gap-2 rounded-xl bg-emerald-500 px-4 py-2.5 text-sm font-semibold text-white hover:bg-emerald-600 transition-colors"><Plus className="h-4 w-4" /> Add Coupon</button>}
+      <AdminPageHeader title="Coupons" description="Manage discount coupons"
+        actions={<button onClick={() => setModal({ open: true })} className="flex items-center gap-2 rounded-xl bg-emerald-500 px-4 py-2.5 text-sm font-semibold text-white hover:bg-emerald-600"><Plus className="h-4 w-4" /> Add Coupon</button>}
       />
-      <DataTable columns={columns} data={coupons} searchable searchKeys={["code"]} searchPlaceholder="Search coupons..." />
+      <DataTable columns={columns} data={coupons} searchable searchKeys={["code"]} searchPlaceholder="Search coupons..." loading={isLoading} />
+      {modal.open && (
+        <CouponFormModal
+          isOpen={true}
+          onClose={() => setModal({ open: false })}
+          editingCoupon={modal.data || null}
+          onSave={async (formData, editing) => {
+            try {
+              if (editing?._id) await update({ id: editing._id, body: formData }).unwrap();
+              else await create(formData).unwrap();
+              setModal({ open: false });
+              return true;
+            } catch { return false; }
+          }}
+        />
+      )}
     </div>
   );
 }

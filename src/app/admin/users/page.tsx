@@ -1,51 +1,49 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { UserPlus, Shield, Mail, MoreHorizontal, Trash2, Edit } from "lucide-react";
+import { useGetAdminUsersQuery, useUpdateAdminUserMutation } from "@/redux/apiSlice";
 import DataTable from "@/features/admin/shared/DataTable";
 import AdminPageHeader from "@/features/admin/shared/AdminPageHeader";
-
-const mockUsers = [
-  { id: "1", name: "Admin User", email: "admin@grocerybd.com", role: "admin", status: "active", lastLogin: "2 hours ago" },
-  { id: "2", name: "Manager Rahim", email: "rahim@grocerybd.com", role: "manager", status: "active", lastLogin: "1 day ago" },
-  { id: "3", name: "Support Agent", email: "support@grocerybd.com", role: "support", status: "active", lastLogin: "5 hours ago" },
-  { id: "4", name: "Content Editor", email: "content@grocerybd.com", role: "editor", status: "inactive", lastLogin: "2 weeks ago" },
-];
+import { UserCog, Shield, Trash2 } from "lucide-react";
 
 const roleColors: Record<string, string> = {
-  admin: "bg-violet-100 text-violet-700 dark:bg-violet-900/30 dark:text-violet-400",
-  manager: "bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400",
-  support: "bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400",
-  editor: "bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400",
+  admin: "bg-violet-100 text-violet-700", manager: "bg-blue-100 text-blue-700",
+  support: "bg-emerald-100 text-emerald-700", editor: "bg-amber-100 text-amber-700",
 };
 
-export default function UsersPage() {
-  const [users] = useState(mockUsers);
+export default function AdminUsersPage() {
+  const { data, isLoading } = useGetAdminUsersQuery();
+  const [update] = useUpdateAdminUserMutation();
+  const users = (data?.data || []) as Record<string, unknown>[];
 
   const columns = [
-    { key: "name", label: "User", sortable: true, render: (item: typeof users[0]) => (
+    { key: "name", label: "User", sortable: true, render: (item: Record<string, unknown>) => (
       <div className="flex items-center gap-3">
-        <div className="h-9 w-9 rounded-full bg-gradient-to-br from-gray-400 to-gray-600 flex items-center justify-center text-white text-xs font-bold">{item.name.charAt(0)}</div>
-        <div><p className="text-sm font-semibold text-gray-900 dark:text-white">{item.name}</p><p className="text-[10px] text-gray-400">{item.email}</p></div>
+        <div className="h-9 w-9 rounded-full bg-gradient-to-br from-gray-400 to-gray-600 flex items-center justify-center text-white text-xs font-bold">{(item.name as string)?.charAt(0)}</div>
+        <div><p className="text-sm font-semibold text-gray-900">{item.name as string}</p><p className="text-[10px] text-gray-400">{item.email as string}</p></div>
       </div>
     )},
-    { key: "role", label: "Role", render: (item: typeof users[0]) => <span className={`text-[10px] font-bold uppercase px-2 py-0.5 rounded-full ${roleColors[item.role]}`}>{item.role}</span> },
-    { key: "status", label: "Status", render: (item: typeof users[0]) => <span className={`text-[10px] font-bold uppercase px-2 py-0.5 rounded-full ${item.status === "active" ? "bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400" : "bg-gray-100 text-gray-500"}`}>{item.status}</span> },
-    { key: "lastLogin", label: "Last Login", render: (item: typeof users[0]) => <span className="text-xs text-gray-400">{item.lastLogin}</span> },
-    { key: "actions", label: "", render: () => (
+    { key: "role", label: "Role", render: (item: Record<string, unknown>) => (
+      <span className={`text-[10px] font-bold uppercase px-2 py-0.5 rounded-full ${roleColors[item.role as string] || ""}`}>{item.role as string}</span>
+    )},
+    { key: "status", label: "Status", render: (item: Record<string, unknown>) => (
+      <span className={`text-[10px] font-bold uppercase px-2 py-0.5 rounded-full ${item.status === "active" ? "bg-emerald-100 text-emerald-700" : "bg-gray-100 text-gray-500"}`}>{item.status as string}</span>
+    )},
+    { key: "lastLogin", label: "Last Login", render: (item: Record<string, unknown>) => <span className="text-xs text-gray-400">{item.lastLogin as string}</span> },
+    { key: "actions", label: "", render: (item: Record<string, unknown>) => (
       <div className="flex items-center gap-1">
-        <button className="p-1.5 rounded-lg text-gray-400 hover:bg-blue-50 dark:hover:bg-blue-900/20 hover:text-blue-500 transition-colors"><Edit className="h-3.5 w-3.5" /></button>
-        <button className="p-1.5 rounded-lg text-gray-400 hover:bg-red-50 dark:hover:bg-red-900/20 hover:text-red-500 transition-colors"><Trash2 className="h-3.5 w-3.5" /></button>
+        <select value={item.role as string} onChange={(e) => update({ id: item._id as string, body: { role: e.target.value } })}
+          className="text-[10px] font-bold uppercase px-1 py-0.5 rounded-lg border border-gray-200 outline-none cursor-pointer bg-white dark:bg-gray-800">
+          {Object.keys(roleColors).map((r) => <option key={r} value={r}>{r}</option>)}
+        </select>
+        <button onClick={() => { if (confirm("Delete this user?")) update({ id: item._id as string, body: {} }); }} className="p-1.5 rounded-lg text-gray-400 hover:bg-red-50 hover:text-red-500"><Trash2 className="h-3.5 w-3.5" /></button>
       </div>
     )},
   ];
 
   return (
     <div className="space-y-6">
-      <AdminPageHeader title="Users" description="Manage admin users and their roles."
-        actions={<button className="flex items-center gap-2 rounded-xl bg-emerald-500 px-4 py-2.5 text-sm font-semibold text-white hover:bg-emerald-600 transition-colors"><UserPlus className="h-4 w-4" /> Add User</button>}
-      />
-      <DataTable columns={columns} data={users} searchable searchKeys={["name", "email"]} searchPlaceholder="Search users..." />
+      <AdminPageHeader title="Admin Users" description="Manage admin users and their roles" />
+      <DataTable columns={columns} data={users} searchable searchKeys={["name", "email"]} searchPlaceholder="Search users..." loading={isLoading} />
     </div>
   );
 }
