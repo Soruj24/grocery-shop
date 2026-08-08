@@ -13,12 +13,12 @@ export default function ProductImageField({
   onChange,
 }: ProductImageFieldProps) {
   return (
-    <div className="space-y-2 md:col-span-2">
-      <label className="text-[11px] font-black text-gray-500 dark:text-gray-400 uppercase tracking-widest px-1">
+    <div className="space-y-1.5 md:col-span-2">
+      <label className="text-xs font-medium text-muted-foreground uppercase tracking-wider">
         প্রোডাক্ট ইমেজ প্রিভিউ
       </label>
-      <div className="flex items-center gap-6 p-6 bg-gray-50 dark:bg-gray-800 rounded-[2rem] border border-gray-100 dark:border-gray-700 group">
-        <div className="w-24 h-24 bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-700 overflow-hidden flex items-center justify-center relative shadow-sm">
+      <div className="flex items-center gap-5 p-5 bg-muted rounded-xl border border-border">
+        <div className="w-20 h-20 bg-card rounded-xl border border-border overflow-hidden flex items-center justify-center shrink-0">
           {value ? (
             <img
               src={value}
@@ -26,7 +26,7 @@ export default function ProductImageField({
               className="w-full h-full object-cover"
             />
           ) : (
-            <ImageIcon className="w-8 h-8 text-gray-200 dark:text-gray-700" />
+            <ImageIcon className="w-7 h-7 text-muted-foreground/50" />
           )}
         </div>
         <div className="flex-1 space-y-2">
@@ -37,7 +37,7 @@ export default function ProductImageField({
             className={ADMIN_INPUT_CLASSES}
             placeholder="ইমেজ URL দিন (যেমন: https://...)"
           />
-          <p className="text-[10px] font-bold text-gray-500 dark:text-gray-600 uppercase tracking-widest px-1">
+          <p className="text-[10px] font-medium text-muted-foreground px-0.5">
             সরাসরি ইমেজের লিংক এখানে পেস্ট করুন
           </p>
         </div>

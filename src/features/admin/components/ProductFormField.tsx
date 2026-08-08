@@ -18,7 +18,7 @@ interface ProductFormFieldProps {
 }
 
 export const ADMIN_INPUT_CLASSES =
-  "w-full px-6 py-4 bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-2xl focus:outline-none focus:ring-4 focus:ring-green-500/10 focus:border-green-600 dark:focus:border-green-500 focus:bg-white dark:focus:bg-gray-900 transition-all duration-300 text-base font-bold text-gray-900 dark:text-white placeholder:text-gray-500 dark:placeholder:text-gray-600";
+  "w-full px-4 py-3 bg-muted border border-border rounded-lg focus:outline-none focus:ring-1 focus:ring-ring focus:border-ring transition-all text-sm text-foreground placeholder:text-muted-foreground";
 
 export default function ProductFormField({
   label,
@@ -32,15 +32,15 @@ export default function ProductFormField({
   max,
 }: ProductFormFieldProps) {
   return (
-    <div className="space-y-2">
-      <label className="text-[11px] font-black text-gray-500 dark:text-gray-400 uppercase tracking-widest px-1">
+    <div className="space-y-1.5">
+      <label className="text-xs font-medium text-muted-foreground uppercase tracking-wider">
         {label}
       </label>
       {type === "textarea" ? (
         <textarea
           value={value}
           onChange={(e) => onChange(e.target.value)}
-          className={`${ADMIN_INPUT_CLASSES} min-h-[120px] resize-none`}
+          className={`${ADMIN_INPUT_CLASSES} min-h-[100px] resize-none`}
           placeholder={placeholder}
         />
       ) : type === "select" && options ? (

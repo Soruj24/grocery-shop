@@ -1,6 +1,7 @@
 "use client";
 
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import { cn } from "@/utils/utils";
 
 interface PaginationProps {
   currentPage: number;
@@ -46,43 +47,47 @@ export default function Pagination({
   };
 
   return (
-    <div className="px-10 py-8 border-t border-gray-100 dark:border-gray-800 flex flex-col md:flex-row items-center justify-between gap-8 bg-white dark:bg-gray-900">
-      <div className="flex flex-col">
-        <span className="text-[10px] font-black text-gray-400 dark:text-gray-500 uppercase tracking-[0.2em] mb-1">
+    <div className="px-6 py-5 border-t border-border flex flex-col md:flex-row items-center justify-between gap-6 bg-card">
+      <div className="flex flex-col gap-0.5">
+        <span className="text-[10px] font-medium text-muted-foreground uppercase tracking-wider">
           Showing
         </span>
         <div className="flex items-baseline gap-1.5">
-          <span className="text-sm font-black text-gray-900 dark:text-white">
+          <span className="text-sm font-semibold text-foreground">
             {(currentPage - 1) * itemsPerPage + 1} to{" "}
             {Math.min(currentPage * itemsPerPage, totalItems)}
           </span>
-          <span className="text-[10px] font-black text-gray-400 dark:text-gray-500 uppercase tracking-[0.2em]">
+          <span className="text-[10px] font-medium text-muted-foreground uppercase tracking-wider">
             of
           </span>
-          <span className="text-sm font-black text-gray-900 dark:text-white">
+          <span className="text-sm font-semibold text-foreground">
             {totalItems}
           </span>
         </div>
-        <span className="text-[10px] font-black text-gray-400 dark:text-gray-500 uppercase tracking-[0.2em] mt-1">
+        <span className="text-[10px] font-medium text-muted-foreground uppercase tracking-wider">
           {label}
         </span>
       </div>
 
-      <div className="flex items-center gap-3">
+      <div className="flex items-center gap-2">
         <button
           onClick={() => onPageChange(Math.max(currentPage - 1, 1))}
           disabled={currentPage === 1}
-          className="w-12 h-12 flex items-center justify-center bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 text-gray-300 dark:text-gray-600 hover:text-green-600 dark:hover:text-green-500 hover:border-green-100 dark:hover:border-green-900 disabled:opacity-30 disabled:cursor-not-allowed transition-all duration-300 shadow-sm group"
+          className={cn(
+            "w-9 h-9 flex items-center justify-center rounded-lg border border-border",
+            "text-muted-foreground hover:text-foreground hover:bg-muted",
+            "disabled:opacity-30 disabled:cursor-not-allowed transition-colors",
+          )}
         >
-          <ChevronLeft className="w-5 h-5 group-hover:-translate-x-0.5 transition-transform" />
+          <ChevronLeft className="w-4 h-4" />
         </button>
 
-        <div className="flex items-center gap-2 p-1.5 bg-gray-50/50 dark:bg-gray-800/50 rounded-[1.5rem] border border-gray-100/50 dark:border-gray-700/50">
+        <div className="flex items-center gap-1 p-1 bg-muted/50 rounded-lg">
           {getPageNumbers().map((page, idx) =>
             page === "..." ? (
               <span
                 key={`dots-${idx}`}
-                className="w-10 text-center text-gray-300 dark:text-gray-600 font-black tracking-widest"
+                className="w-8 text-center text-muted-foreground text-xs"
               >
                 ...
               </span>
@@ -90,11 +95,12 @@ export default function Pagination({
               <button
                 key={page}
                 onClick={() => onPageChange(page as number)}
-                className={`min-w-[44px] h-11 px-3 flex items-center justify-center rounded-xl text-xs font-black transition-all duration-300 ${
+                className={cn(
+                  "min-w-[32px] h-8 px-2 flex items-center justify-center rounded-md text-xs font-medium transition-colors",
                   currentPage === page
-                    ? "bg-green-500 text-white shadow-lg shadow-green-500/20 scale-105"
-                    : "bg-white dark:bg-gray-800 text-gray-400 dark:text-gray-500 border border-gray-100 dark:border-gray-700 hover:border-green-100 dark:hover:border-green-900 hover:text-green-600 dark:hover:text-green-500 hover:shadow-sm"
-                }`}
+                    ? "bg-primary text-primary-foreground"
+                    : "text-muted-foreground hover:bg-muted hover:text-foreground",
+                )}
               >
                 {page}
               </button>
@@ -105,9 +111,13 @@ export default function Pagination({
         <button
           onClick={() => onPageChange(Math.min(currentPage + 1, totalPages))}
           disabled={currentPage === totalPages || totalPages === 0}
-          className="w-12 h-12 flex items-center justify-center bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 text-gray-300 dark:text-gray-600 hover:text-green-600 dark:hover:text-green-500 hover:border-green-100 dark:hover:border-green-900 disabled:opacity-30 disabled:cursor-not-allowed transition-all duration-300 shadow-sm group"
+          className={cn(
+            "w-9 h-9 flex items-center justify-center rounded-lg border border-border",
+            "text-muted-foreground hover:text-foreground hover:bg-muted",
+            "disabled:opacity-30 disabled:cursor-not-allowed transition-colors",
+          )}
         >
-          <ChevronRight className="w-5 h-5 group-hover:translate-x-0.5 transition-transform" />
+          <ChevronRight className="w-4 h-4" />
         </button>
       </div>
     </div>

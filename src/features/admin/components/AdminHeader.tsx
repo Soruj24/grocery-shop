@@ -1,6 +1,7 @@
 "use client";
 
 import { Plus, Search } from "lucide-react";
+import { cn } from "@/utils/utils";
 
 interface AdminHeaderProps {
   title: string;
@@ -27,43 +28,46 @@ export default function AdminHeader({
 }: AdminHeaderProps) {
   const finalAddLabel = addLabel || addButtonLabel || "নতুন যোগ করুন";
   return (
-    <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-12">
-      <div className="space-y-2">
-        <h1 className="text-4xl font-black text-gray-900 dark:text-white tracking-tight">
+    <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-8">
+      <div className="space-y-1">
+        <h1 className="text-2xl font-bold text-foreground tracking-tight">
           {title}
         </h1>
         {count !== undefined && (
-          <div className="flex items-center gap-2">
-            <span className="w-8 h-[2px] bg-green-500 rounded-full"></span>
-            <p className="text-sm font-bold text-gray-500 dark:text-gray-400 uppercase tracking-widest">
-              Total {count} {countLabel}
-            </p>
-          </div>
+          <p className="text-sm text-muted-foreground">
+            মোট {count} {countLabel}
+          </p>
         )}
       </div>
 
-      <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
-        {/* Search Bar */}
+      <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
         {onSearchChange && (
           <div className="relative group min-w-[300px]">
-            <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-              <Search className="h-4 w-4 text-gray-400 group-focus-within:text-green-500 transition-colors" />
+            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+              <Search className="h-4 w-4 text-muted-foreground group-focus-within:text-foreground transition-colors" />
             </div>
             <input
               type="text"
               placeholder={searchPlaceholder}
-              className="block w-full pl-11 pr-4 py-3 bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 rounded-2xl text-sm font-medium focus:ring-2 focus:ring-green-500/20 focus:border-green-500 transition-all outline-none dark:text-white shadow-sm"
+              className={cn(
+                "block w-full pl-10 pr-4 py-2.5 bg-muted border border-border rounded-lg",
+                "text-sm text-foreground placeholder:text-muted-foreground",
+                "focus:ring-1 focus:ring-ring focus:border-ring transition-all outline-none",
+              )}
               value={searchTerm}
               onChange={(e) => onSearchChange(e.target.value)}
             />
           </div>
         )}
 
-        {/* Add Button - Only show if onAddClick is provided */}
         {onAddClick && (
           <button
             onClick={onAddClick}
-            className="flex items-center justify-center gap-2 px-6 py-3 bg-green-500 hover:bg-green-600 text-white rounded-2xl text-sm font-black uppercase tracking-wider shadow-lg shadow-green-500/20 transition-all active:scale-95"
+            className={cn(
+              "flex items-center justify-center gap-2 px-5 py-2.5",
+              "bg-primary text-primary-foreground rounded-lg text-sm font-medium",
+              "hover:bg-primary/90 transition-all active:scale-[0.98]",
+            )}
           >
             <Plus className="h-4 w-4" />
             {finalAddLabel}

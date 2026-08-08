@@ -14,13 +14,13 @@ export default function AdminCustomersPage() {
     { key: "name", label: "Customer", sortable: true, render: (item: any) => (
       <div className="flex items-center gap-3">
         <div className="h-8 w-8 rounded-full bg-gradient-to-br from-gray-400 to-gray-600 flex items-center justify-center text-white text-xs font-bold">{item.name?.charAt(0) || "?"}</div>
-        <div><p className="text-sm font-semibold text-gray-900 dark:text-white">{item.name}</p><p className="text-[10px] text-gray-400">{item.email}</p></div>
+        <div><p className="text-sm font-semibold text-foreground">{item.name}</p><p className="text-[10px] text-muted-foreground">{item.email}</p></div>
       </div>
     )},
-    { key: "phone", label: "Phone", render: (item: any) => <span className="text-xs text-gray-500">{item.phone || "---"}</span> },
+    { key: "phone", label: "Phone", render: (item: any) => <span className="text-xs text-muted-foreground">{item.phone || "---"}</span> },
     { key: "orderCount", label: "Orders", sortable: true, render: (item: any) => <span className="text-sm font-semibold">{String(item.orderCount || 0)}</span> },
     { key: "totalSpent", label: "Total Spent", sortable: true, render: (item: any) => <span className="text-sm font-bold">৳{Number(item.totalSpent || 0).toLocaleString()}</span> },
-    { key: "createdAt", label: "Joined", render: (item: any) => <span className="text-xs text-gray-500">{new Date(item.createdAt).toLocaleDateString()}</span> },
+    { key: "createdAt", label: "Joined", render: (item: any) => <span className="text-xs text-muted-foreground">{new Date(item.createdAt).toLocaleDateString()}</span> },
   ];
 
   return (

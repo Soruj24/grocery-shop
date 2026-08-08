@@ -2,6 +2,7 @@
 
 import { ReactNode, useState, useMemo } from "react";
 import { Search, ChevronLeft, ChevronRight, ArrowUpDown, ArrowUp, ArrowDown } from "lucide-react";
+import { cn } from "@/utils/utils";
 
 interface Column<T> {
   key: string;
@@ -74,18 +75,22 @@ export default function DataTable<T extends { [key: string]: any }>({
   };
 
   return (
-    <div className="rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 overflow-hidden">
+    <div className="rounded-xl border border-border bg-card overflow-hidden">
       {(searchable || actions) && (
-        <div className="flex items-center justify-between gap-4 border-b border-gray-100 dark:border-gray-800 p-4">
+        <div className="flex items-center justify-between gap-4 border-b border-border p-4">
           {searchable && searchKeys && (
             <div className="relative flex-1 max-w-sm">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
               <input
                 type="text"
                 placeholder={searchPlaceholder}
                 value={search}
                 onChange={(e) => { setSearch(e.target.value); setPage(1); }}
-                className="w-full rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 pl-10 pr-4 py-2 text-sm text-gray-900 dark:text-white placeholder:text-gray-400 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 outline-none"
+                className={cn(
+                  "w-full rounded-lg border border-border bg-muted pl-10 pr-4 py-2",
+                  "text-sm text-foreground placeholder:text-muted-foreground",
+                  "focus:border-ring focus:ring-1 focus:ring-ring outline-none",
+                )}
               />
             </div>
           )}
@@ -96,11 +101,15 @@ export default function DataTable<T extends { [key: string]: any }>({
       <div className="overflow-x-auto">
         <table className="w-full text-left">
           <thead>
-            <tr className="border-b border-gray-100 dark:border-gray-800">
+            <tr className="border-b border-border">
               {columns.map((col) => (
                 <th
                   key={col.key}
-                  className={`px-4 py-3 text-[10px] font-bold uppercase tracking-wider text-gray-400 dark:text-gray-500 ${col.sortable ? "cursor-pointer select-none hover:text-gray-600 dark:hover:text-gray-300" : ""} ${col.className || ""}`}
+                  className={cn(
+                    "px-4 py-3 text-[10px] font-bold uppercase tracking-wider text-muted-foreground",
+                    col.sortable && "cursor-pointer select-none hover:text-foreground",
+                    col.className,
+                  )}
                   onClick={() => col.sortable && handleSort(col.key)}
                 >
                   <div className="flex items-center gap-1.5">
@@ -114,17 +123,17 @@ export default function DataTable<T extends { [key: string]: any }>({
               ))}
             </tr>
           </thead>
-          <tbody className="divide-y divide-gray-50 dark:divide-gray-800/50">
+          <tbody className="divide-y divide-border/50">
             {loading ? (
               <tr>
                 <td colSpan={columns.length} className="px-4 py-8">
-                  <div className="space-y-3">{[1, 2, 3, 4, 5].map((i) => <div key={i} className="h-10 rounded-lg bg-gray-100 dark:bg-gray-800 animate-pulse" />)}</div>
+                  <div className="space-y-3">{[1, 2, 3, 4, 5].map((i) => <div key={i} className="h-10 rounded-lg bg-muted animate-pulse" />)}</div>
                 </td>
               </tr>
             ) : paged.length === 0 ? (
               <tr>
                 <td colSpan={columns.length} className="px-4 py-16 text-center">
-                  <p className="text-sm text-gray-400">{emptyMessage}</p>
+                  <p className="text-sm text-muted-foreground">{emptyMessage}</p>
                 </td>
               </tr>
             ) : (
@@ -132,10 +141,13 @@ export default function DataTable<T extends { [key: string]: any }>({
                 <tr
                   key={i}
                   onClick={() => onRowClick?.(item)}
-                  className={`transition-colors hover:bg-gray-50 dark:hover:bg-gray-800/30 ${onRowClick ? "cursor-pointer" : ""}`}
+                  className={cn(
+                    "transition-colors hover:bg-muted/50",
+                    onRowClick && "cursor-pointer",
+                  )}
                 >
                   {columns.map((col) => (
-                    <td key={col.key} className={`px-4 py-3.5 text-sm ${col.className || ""}`}>
+                    <td key={col.key} className={cn("px-4 py-3.5 text-sm", col.className)}>
                       {col.render ? col.render(item, (page - 1) * pageSize + i) : String(item[col.key] ?? "")}
                     </td>
                   ))}
@@ -147,12 +159,12 @@ export default function DataTable<T extends { [key: string]: any }>({
       </div>
 
       {totalPages > 1 && (
-        <div className="flex items-center justify-between border-t border-gray-100 dark:border-gray-800 px-4 py-3">
-          <p className="text-xs text-gray-500 dark:text-gray-400">
+        <div className="flex items-center justify-between border-t border-border px-4 py-3">
+          <p className="text-xs text-muted-foreground">
             Showing {(page - 1) * pageSize + 1} to {Math.min(page * pageSize, filtered.length)} of {filtered.length}
           </p>
           <div className="flex items-center gap-1">
-            <button onClick={() => setPage((p) => Math.max(1, p - 1))} disabled={page === 1} className="p-1.5 rounded-lg text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 disabled:opacity-30">
+            <button onClick={() => setPage((p) => Math.max(1, p - 1))} disabled={page === 1} className="p-1.5 rounded-lg text-muted-foreground hover:bg-muted disabled:opacity-30">
               <ChevronLeft className="h-4 w-4" />
             </button>
             {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
@@ -163,13 +175,18 @@ export default function DataTable<T extends { [key: string]: any }>({
                 <button
                   key={p}
                   onClick={() => setPage(p)}
-                  className={`h-8 w-8 rounded-lg text-xs font-semibold ${p === page ? "bg-emerald-500 text-white" : "text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800"}`}
+                  className={cn(
+                    "h-8 w-8 rounded-lg text-xs font-semibold",
+                    p === page
+                      ? "bg-primary text-primary-foreground"
+                      : "text-muted-foreground hover:bg-muted",
+                  )}
                 >
                   {p}
                 </button>
               );
             })}
-            <button onClick={() => setPage((p) => Math.min(totalPages, p + 1))} disabled={page === totalPages} className="p-1.5 rounded-lg text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 disabled:opacity-30">
+            <button onClick={() => setPage((p) => Math.min(totalPages, p + 1))} disabled={page === totalPages} className="p-1.5 rounded-lg text-muted-foreground hover:bg-muted disabled:opacity-30">
               <ChevronRight className="h-4 w-4" />
             </button>
           </div>

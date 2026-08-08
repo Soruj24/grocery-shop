@@ -18,21 +18,21 @@ export default function AdminTable({
   columns,
   children,
   loading = false,
-  emptyMessage = "কোন তথ্য পাওয়া যায়নি",
+  emptyMessage = "কোন তথ্য পাওয়া যায়নি",
   loadingMessage = "লোড হচ্ছে...",
 }: AdminTableProps) {
   return (
-    <div className="bg-white dark:bg-gray-900 rounded-[2.5rem] shadow-xl shadow-gray-100/50 dark:shadow-none border border-gray-100 dark:border-gray-800 overflow-hidden">
+    <div className="bg-card rounded-xl shadow-sm border border-border overflow-hidden">
       <div className="overflow-x-auto">
         <table className="w-full text-left border-collapse">
           <thead>
-            <tr className="bg-gray-50/50 dark:bg-gray-800/50 border-b border-gray-100 dark:border-gray-800">
+            <tr className="bg-muted/50 border-b border-border">
               {columns.map((col, index) => (
                 <th
                   key={index}
                   className={cn(
-                    "px-8 py-6 text-[11px] font-black text-gray-400 dark:text-gray-500 uppercase tracking-[0.2em]",
-                    col.className
+                    "px-6 py-4 text-[11px] font-semibold text-muted-foreground uppercase tracking-wider",
+                    col.className,
                   )}
                 >
                   {col.header}
@@ -40,15 +40,15 @@ export default function AdminTable({
               ))}
             </tr>
           </thead>
-          <tbody className="divide-y divide-gray-50 dark:divide-gray-800">
+          <tbody className="divide-y divide-border/50">
             {loading ? (
               <tr>
                 <td
                   colSpan={columns.length}
-                  className="px-8 py-12 text-center text-gray-400 dark:text-gray-500 font-bold"
+                  className="px-6 py-12 text-center text-muted-foreground"
                 >
-                  <div className="flex flex-col items-center gap-4">
-                    <div className="w-8 h-8 border-4 border-green-500/20 border-t-green-500 rounded-full animate-spin" />
+                  <div className="flex flex-col items-center gap-3">
+                    <div className="w-6 h-6 border-2 border-primary/20 border-t-primary rounded-full animate-spin" />
                     {loadingMessage}
                   </div>
                 </td>
@@ -57,7 +57,7 @@ export default function AdminTable({
               <tr>
                 <td
                   colSpan={columns.length}
-                  className="px-8 py-12 text-center text-gray-400 dark:text-gray-500 font-bold"
+                  className="px-6 py-12 text-center text-muted-foreground"
                 >
                   {emptyMessage}
                 </td>

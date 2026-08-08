@@ -2,6 +2,7 @@
 
 import { X } from "lucide-react";
 import { AdminCategory, AdminCategoryFormData } from "@/types/admin";
+import { cn } from "@/utils/utils";
 
 interface CategoryModalProps {
   isOpen: boolean;
@@ -25,105 +26,81 @@ export default function CategoryModal({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-gray-900/40 dark:bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 z-[100] animate-in fade-in duration-300">
-      <div className="bg-white dark:bg-gray-900 rounded-[3rem] max-w-lg w-full p-10 shadow-2xl border dark:border-gray-800 animate-in zoom-in-95 duration-300">
-        <div className="flex justify-between items-center mb-10">
+    <div className="fixed inset-0 bg-black/40 backdrop-blur-md z-[100] flex items-center justify-center p-4 animate-in fade-in duration-300">
+      <div className="bg-card rounded-xl max-w-lg w-full p-8 shadow-xl border border-border animate-in zoom-in-95 duration-300">
+        <div className="flex justify-between items-center mb-8">
           <div>
-            <h3 className="text-2xl font-black text-gray-900 dark:text-white tracking-tight">
+            <h3 className="text-lg font-semibold text-foreground">
               {editingCategory ? "ক্যাটাগরি এডিট" : "নতুন ক্যাটাগরি"}
             </h3>
-            <p className="text-gray-500 dark:text-gray-400 text-xs font-bold uppercase tracking-widest mt-1">
+            <p className="text-muted-foreground text-xs font-medium uppercase tracking-wider mt-1">
               ক্যাটাগরি তথ্য পূরণ করুন
             </p>
           </div>
           <button
             onClick={onClose}
-            className="p-3 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-2xl transition-colors group"
+            className="p-2 hover:bg-muted rounded-lg transition-colors"
           >
-            <X className="w-6 h-6 text-gray-400 dark:text-gray-500 group-hover:rotate-90 transition-transform duration-300" />
+            <X className="w-5 h-5 text-muted-foreground" />
           </button>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-8">
-          <div className="space-y-6">
-            <div className="group">
-              <label className="block text-[11px] font-black text-gray-500 dark:text-gray-400 uppercase tracking-[0.2em] mb-2 ml-1">
+        <form onSubmit={handleSubmit} className="space-y-6">
+          <div className="space-y-5">
+            <div>
+              <label className="block text-xs font-medium text-muted-foreground uppercase tracking-wider mb-1.5">
                 ক্যাটাগরির নাম
               </label>
               <input
                 type="text"
                 required
-                className="w-full px-6 py-4 bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-[1.5rem] focus:bg-white dark:focus:bg-gray-900 focus:border-green-500 dark:focus:border-green-500 focus:ring-4 focus:ring-green-500/10 outline-none transition-all duration-300 font-bold text-gray-900 dark:text-white text-base placeholder:text-gray-500 dark:placeholder:text-gray-600"
+                className="w-full px-4 py-3 bg-muted border border-border rounded-lg focus:bg-card focus:border-ring focus:ring-1 focus:ring-ring outline-none transition-all text-sm text-foreground placeholder:text-muted-foreground"
                 placeholder="যেমন: চাল, ডাল, শাকসবজি..."
                 value={formData.name}
-                onChange={(e) =>
-                  setFormData({ ...formData, name: e.target.value })
-                }
+                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
               />
             </div>
 
-            <div className="group">
-              <label className="block text-[11px] font-black text-gray-500 dark:text-gray-400 uppercase tracking-[0.2em] mb-2 ml-1">
+            <div>
+              <label className="block text-xs font-medium text-muted-foreground uppercase tracking-wider mb-1.5">
                 প্যারেন্ট ক্যাটাগরি (ঐচ্ছিক)
               </label>
               <select
-                className="w-full px-6 py-4 bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-[1.5rem] focus:bg-white dark:focus:bg-gray-900 focus:border-green-500 dark:focus:border-green-500 focus:ring-4 focus:ring-green-500/10 outline-none transition-all duration-300 font-bold text-gray-900 dark:text-white appearance-none"
+                className="w-full px-4 py-3 bg-muted border border-border rounded-lg focus:bg-card focus:border-ring focus:ring-1 focus:ring-ring outline-none transition-all text-sm text-foreground appearance-none"
                 value={formData.parentId}
-                onChange={(e) =>
-                  setFormData({ ...formData, parentId: e.target.value })
-                }
+                onChange={(e) => setFormData({ ...formData, parentId: e.target.value })}
               >
-                <option value="" className="dark:bg-gray-900">
-                  কোনোটিই নয় (মেইন ক্যাটাগরি)
-                </option>
+                <option value="">কোনোটিই নয় (মেইন ক্যাটাগরি)</option>
                 {mainCategories
                   .filter((cat: AdminCategory) => cat._id !== editingCategory?._id)
                   .map((cat: AdminCategory) => (
-                    <option
-                      key={cat._id}
-                      value={cat._id}
-                      className="dark:bg-gray-900"
-                    >
-                      {cat.name}
-                    </option>
+                    <option key={cat._id} value={cat._id}>{cat.name}</option>
                   ))}
               </select>
             </div>
 
-            <div className="group">
-              <label className="block text-[11px] font-black text-gray-500 dark:text-gray-400 uppercase tracking-[0.2em] mb-2 ml-1">
+            <div>
+              <label className="block text-xs font-medium text-muted-foreground uppercase tracking-wider mb-1.5">
                 ইমেজ ইউআরএল (ঐচ্ছিক)
               </label>
               <input
                 type="text"
-                className="w-full px-6 py-4 bg-gray-50 dark:bg-gray-800 border-2 border-transparent dark:border-gray-700 rounded-[1.5rem] focus:bg-white dark:focus:bg-gray-900 focus:border-green-500 dark:focus:border-green-500 focus:ring-4 focus:ring-green-500/10 outline-none transition-all duration-300 font-bold text-gray-900 dark:text-white placeholder:text-gray-400 dark:placeholder:text-gray-600"
+                className="w-full px-4 py-3 bg-muted border border-border rounded-lg focus:bg-card focus:border-ring focus:ring-1 focus:ring-ring outline-none transition-all text-sm text-foreground placeholder:text-muted-foreground"
                 placeholder="https://example.com/image.jpg"
                 value={formData.image}
-                onChange={(e) =>
-                  setFormData({ ...formData, image: e.target.value })
-                }
+                onChange={(e) => setFormData({ ...formData, image: e.target.value })}
               />
             </div>
 
-            <div className="flex items-center gap-4 bg-gray-50 dark:bg-gray-800 p-6 rounded-[1.5rem] group hover:bg-green-50 dark:hover:bg-green-900/20 transition-colors duration-300 border dark:border-gray-700">
-              <div className="relative flex items-center">
-                <input
-                  type="checkbox"
-                  id="isActive"
-                  className="peer w-6 h-6 opacity-0 absolute cursor-pointer"
-                  checked={formData.isActive}
-                  onChange={(e) =>
-                    setFormData({ ...formData, isActive: e.target.checked })
-                  }
-                />
-                <div className="w-6 h-6 border-2 border-gray-300 dark:border-gray-600 rounded-lg peer-checked:bg-green-500 peer-checked:border-green-500 transition-all duration-300 flex items-center justify-center bg-white dark:bg-gray-900">
-                  <div className="w-2 h-4 border-r-2 border-b-2 border-white rotate-45 mb-1 scale-0 peer-checked:scale-100 transition-transform duration-300" />
-                </div>
-              </div>
-              <label
-                htmlFor="isActive"
-                className="text-sm font-black text-gray-700 dark:text-gray-300 cursor-pointer select-none"
-              >
+            <div className="flex items-center gap-3 bg-muted p-4 rounded-lg">
+              <input
+                type="checkbox"
+                id="isActive"
+                checked={formData.isActive}
+                onChange={(e) => setFormData({ ...formData, isActive: e.target.checked })}
+                className="w-4 h-4 rounded border-border text-primary focus:ring-ring"
+              />
+              <label htmlFor="isActive" className="text-sm font-medium text-foreground cursor-pointer select-none">
                 শপে প্রদর্শন করুন
               </label>
             </div>
@@ -131,7 +108,11 @@ export default function CategoryModal({
 
           <button
             type="submit"
-            className="w-full bg-gradient-to-br from-green-500 to-green-600 text-white py-5 rounded-[2rem] font-black text-sm uppercase tracking-[0.2em] shadow-lg shadow-green-100 dark:shadow-none hover:shadow-green-200 hover:scale-[1.01] transition-all duration-300"
+            className={cn(
+              "w-full bg-primary text-primary-foreground py-3 rounded-lg",
+              "font-medium text-sm transition-all active:scale-[0.98]",
+              "hover:bg-primary/90",
+            )}
           >
             {editingCategory ? "পরিবর্তন সেভ করুন" : "ক্যাটাগরি যোগ করুন"}
           </button>

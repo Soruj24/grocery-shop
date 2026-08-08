@@ -12,11 +12,11 @@ export default function SectionsPage() {
     <div className="max-w-[1000px] mx-auto space-y-8">
       <AdminHeader title="হোম পেজ সেকশন ম্যানেজমেন্ট" count={sections.length} countLabel="Total Sections" />
 
-      <div className="bg-white dark:bg-gray-900 rounded-3xl border border-gray-100 dark:border-gray-800 overflow-hidden shadow-sm">
+      <div className="bg-card rounded-xl border border-border overflow-hidden shadow-sm">
         {isLoading ? (
-          <div className="p-12 text-center text-gray-500">লোডিং...</div>
+          <div className="p-12 text-center text-muted-foreground">লোডিং...</div>
         ) : (
-          <div className="divide-y divide-gray-100 dark:divide-gray-800">
+          <div className="divide-y divide-border/50">
             {sections.map((section, index) => (
               <SectionListItem key={section._id} section={section} index={index} total={sections.length}
                 onToggle={handleToggle} onMove={handleMove} onEdit={setEditingSection} />

@@ -5,6 +5,7 @@ import StatCard from "@/features/admin/shared/StatCard";
 import AdminPageHeader from "@/features/admin/shared/AdminPageHeader";
 import { DollarSign, ShoppingCart, Users, TrendingUp, Package } from "lucide-react";
 import { AreaChart, Area, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from "recharts";
+import { cn } from "@/utils/utils";
 
 const COLORS = ["#10b981", "#3b82f6", "#f59e0b", "#ef4444", "#8b5cf6"];
 
@@ -29,10 +30,10 @@ export default function AdminDashboard() {
         {statCards.map((s) => <StatCard key={s.title} {...s} />)}
       </div>
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <div className="lg:col-span-2 rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-5">
-          <h3 className="text-sm font-semibold text-gray-900 dark:text-white mb-4">Daily Sales (7 Days)</h3>
+        <div className="lg:col-span-2 rounded-xl border border-border bg-card p-5">
+          <h3 className="text-sm font-semibold text-foreground mb-4">Daily Sales (7 Days)</h3>
           {analyticsLoading ? (
-            <div className="h-[280px] rounded-xl bg-gray-100 dark:bg-gray-800 animate-pulse" />
+            <div className="h-[280px] rounded-lg bg-muted animate-pulse" />
           ) : (
             <ResponsiveContainer width="100%" height={280}>
               <AreaChart data={dailySales}>
@@ -46,11 +47,11 @@ export default function AdminDashboard() {
             </ResponsiveContainer>
           )}
         </div>
-        <div className="rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-5">
-          <h3 className="text-sm font-semibold text-gray-900 dark:text-white mb-1">Order Status</h3>
-          <p className="text-xs text-gray-500 dark:text-gray-400 mb-4">Distribution</p>
+        <div className="rounded-xl border border-border bg-card p-5">
+          <h3 className="text-sm font-semibold text-foreground mb-1">Order Status</h3>
+          <p className="text-xs text-muted-foreground mb-4">Distribution</p>
           {analyticsLoading ? (
-            <div className="h-[200px] rounded-xl bg-gray-100 dark:bg-gray-800 animate-pulse" />
+            <div className="h-[200px] rounded-lg bg-muted animate-pulse" />
           ) : (
             <ResponsiveContainer width="100%" height={200}>
               <PieChart>
@@ -66,33 +67,34 @@ export default function AdminDashboard() {
               <div key={String(entry._id)} className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
                   <span className="h-2.5 w-2.5 rounded-full" style={{ backgroundColor: COLORS[i % COLORS.length] }} />
-                  <span className="text-xs text-gray-600 dark:text-gray-400 capitalize">{String(entry._id)}</span>
+                  <span className="text-xs text-muted-foreground capitalize">{String(entry._id)}</span>
                 </div>
-                <span className="text-xs font-semibold text-gray-900 dark:text-white">{String(entry.count)}</span>
+                <span className="text-xs font-semibold text-foreground">{String(entry.count)}</span>
               </div>
             ))}
           </div>
         </div>
       </div>
-      <div className="rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-5">
-        <h3 className="text-sm font-semibold text-gray-900 dark:text-white mb-4">Recent Orders</h3>
+      <div className="rounded-xl border border-border bg-card p-5">
+        <h3 className="text-sm font-semibold text-foreground mb-4">Recent Orders</h3>
         {statsLoading ? (
-          Array.from({ length: 5 }).map((_, i) => <div key={i} className="h-10 rounded-lg bg-gray-100 dark:bg-gray-800 animate-pulse mb-2" />)
+          Array.from({ length: 5 }).map((_, i) => <div key={i} className="h-10 rounded-lg bg-muted animate-pulse mb-2" />)
         ) : (
-          <div className="divide-y divide-gray-100 dark:divide-gray-800">
+          <div className="divide-y divide-border/50">
             {(stats?.recentOrders || []).slice(0, 5).map((order: any) => (
               <div key={order._id} className="flex items-center justify-between py-3">
                 <div>
-                  <p className="text-sm font-medium text-gray-900 dark:text-white">#{order._id.slice(-6).toUpperCase()}</p>
-                  <p className="text-xs text-gray-500">{order.phone}</p>
+                  <p className="text-sm font-medium text-foreground">#{order._id.slice(-6).toUpperCase()}</p>
+                  <p className="text-xs text-muted-foreground">{order.phone}</p>
                 </div>
                 <div className="flex items-center gap-3">
-                  <span className={`text-[10px] font-bold uppercase px-2 py-0.5 rounded-full ${
-                    order.status === "delivered" ? "bg-emerald-100 text-emerald-700" :
-                    order.status === "cancelled" ? "bg-red-100 text-red-700" :
-                    "bg-amber-100 text-amber-700"
-                  }`}>{order.status}</span>
-                  <span className="text-sm font-bold text-gray-900 dark:text-white">৳{order.total.toLocaleString()}</span>
+                  <span className={cn(
+                    "text-[10px] font-bold uppercase px-2 py-0.5 rounded-full",
+                    order.status === "delivered" && "bg-success-subtle text-success",
+                    order.status === "cancelled" && "bg-danger-subtle text-danger",
+                    order.status !== "delivered" && order.status !== "cancelled" && "bg-warning-subtle text-warning"
+                  )}>{order.status}</span>
+                  <span className="text-sm font-bold text-foreground">৳{order.total.toLocaleString()}</span>
                 </div>
               </div>
             ))}

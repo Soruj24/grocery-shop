@@ -5,6 +5,7 @@ import { useGetAdminBrandsQuery, useCreateAdminBrandMutation, useUpdateAdminBran
 import DataTable from "@/features/admin/shared/DataTable";
 import AdminPageHeader from "@/features/admin/shared/AdminPageHeader";
 import { Plus, Edit2, Trash2, Tag } from "lucide-react";
+import { cn } from "@/utils/utils";
 
 export default function AdminBrandsPage() {
   const { data, isLoading } = useGetAdminBrandsQuery();
@@ -30,18 +31,21 @@ export default function AdminBrandsPage() {
   const columns = [
     { key: "name", label: "Brand", sortable: true, render: (item: Record<string, unknown>) => (
       <div className="flex items-center gap-3">
-        <div className="h-9 w-9 rounded-lg bg-gray-100 dark:bg-gray-800 flex items-center justify-center"><Tag className="h-4 w-4 text-gray-400" /></div>
-        <div><p className="text-sm font-semibold text-gray-900 dark:text-white">{item.name as string}</p><p className="text-[10px] text-gray-400">/{item.slug as string}</p></div>
+        <div className="h-9 w-9 rounded-lg bg-muted flex items-center justify-center"><Tag className="h-4 w-4 text-muted-foreground" /></div>
+        <div><p className="text-sm font-semibold text-foreground">{item.name as string}</p><p className="text-[10px] text-muted-foreground">/{item.slug as string}</p></div>
       </div>
     )},
-    { key: "productCount", label: "Products", render: (item: Record<string, unknown>) => <span className="text-sm text-gray-600">{String(item.productCount)}</span> },
+    { key: "productCount", label: "Products", render: (item: Record<string, unknown>) => <span className="text-sm text-muted-foreground">{String(item.productCount)}</span> },
     { key: "isActive", label: "Status", render: (item: Record<string, unknown>) => (
-      <span className={`text-[10px] font-bold uppercase px-2 py-0.5 rounded-full ${item.isActive ? "bg-emerald-100 text-emerald-700" : "bg-gray-100 text-gray-500"}`}>{item.isActive ? "Active" : "Inactive"}</span>
+      <span className={cn(
+        "text-[10px] font-bold uppercase px-2 py-0.5 rounded-full",
+        item.isActive ? "bg-success-subtle text-success" : "bg-muted text-muted-foreground"
+      )}>{item.isActive ? "Active" : "Inactive"}</span>
     )},
     { key: "actions", label: "", render: (_: Record<string, unknown>, i: number) => (
       <div className="flex items-center gap-1">
-        <button onClick={() => { const b = brands[i]; setEditing(b); setName(b.name as string); setSlug(b.slug as string); setShowForm(true); }} className="p-1.5 rounded-lg text-gray-400 hover:bg-blue-50 hover:text-blue-500"><Edit2 className="h-3.5 w-3.5" /></button>
-        <button onClick={() => { if (confirm("Delete brand?")) del(brands[i]._id as string); }} className="p-1.5 rounded-lg text-gray-400 hover:bg-red-50 hover:text-red-500"><Trash2 className="h-3.5 w-3.5" /></button>
+        <button onClick={() => { const b = brands[i]; setEditing(b); setName(b.name as string); setSlug(b.slug as string); setShowForm(true); }} className="p-1.5 rounded-lg text-muted-foreground hover:bg-muted hover:text-foreground"><Edit2 className="h-3.5 w-3.5" /></button>
+        <button onClick={() => { if (confirm("Delete brand?")) del(brands[i]._id as string); }} className="p-1.5 rounded-lg text-muted-foreground hover:bg-danger-subtle hover:text-danger"><Trash2 className="h-3.5 w-3.5" /></button>
       </div>
     )},
   ];
@@ -49,14 +53,14 @@ export default function AdminBrandsPage() {
   return (
     <div className="space-y-6">
       <AdminPageHeader title="Brands" description="Manage product brands"
-        actions={<button onClick={() => { resetForm(); setShowForm(true); }} className="flex items-center gap-2 rounded-xl bg-emerald-500 px-4 py-2.5 text-sm font-semibold text-white hover:bg-emerald-600"><Plus className="h-4 w-4" /> Add Brand</button>}
+        actions={<button onClick={() => { resetForm(); setShowForm(true); }} className="flex items-center gap-2 rounded-xl bg-primary px-4 py-2.5 text-sm font-semibold text-white hover:bg-primary/90"><Plus className="h-4 w-4" /> Add Brand</button>}
       />
       {showForm && (
-        <div className="rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-4 flex items-center gap-4">
-          <input value={name} onChange={(e) => setName(e.target.value)} placeholder="Brand name" className="flex-1 rounded-xl border border-gray-200 dark:border-gray-700 px-4 py-2 text-sm bg-gray-50 dark:bg-gray-800 outline-none focus:border-emerald-500" />
-          <input value={slug} onChange={(e) => setSlug(e.target.value)} placeholder="Slug (auto)" className="flex-1 rounded-xl border border-gray-200 dark:border-gray-700 px-4 py-2 text-sm bg-gray-50 dark:bg-gray-800 outline-none focus:border-emerald-500" />
-          <button onClick={handleSave} className="rounded-xl bg-emerald-500 px-4 py-2 text-sm font-semibold text-white hover:bg-emerald-600">{editing ? "Update" : "Create"}</button>
-          <button onClick={resetForm} className="rounded-xl border border-gray-200 px-4 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50">Cancel</button>
+        <div className="rounded-xl border border-border bg-card p-4 flex items-center gap-4">
+          <input value={name} onChange={(e) => setName(e.target.value)} placeholder="Brand name" className="flex-1 rounded-xl border border-border px-4 py-2 text-sm bg-muted outline-none focus:border-primary" />
+          <input value={slug} onChange={(e) => setSlug(e.target.value)} placeholder="Slug (auto)" className="flex-1 rounded-xl border border-border px-4 py-2 text-sm bg-muted outline-none focus:border-primary" />
+          <button onClick={handleSave} className="rounded-xl bg-primary px-4 py-2 text-sm font-semibold text-white hover:bg-primary/90">{editing ? "Update" : "Create"}</button>
+          <button onClick={resetForm} className="rounded-xl border border-border px-4 py-2 text-sm font-medium text-muted-foreground hover:bg-muted">Cancel</button>
         </div>
       )}
       <DataTable columns={columns} data={brands} searchable searchKeys={["name"]} searchPlaceholder="Search brands..." loading={isLoading} />

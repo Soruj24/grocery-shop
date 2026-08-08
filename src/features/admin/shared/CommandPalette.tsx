@@ -3,6 +3,7 @@
 import { ReactNode, useState, useEffect, useRef, KeyboardEvent } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Search, Command, ArrowRight, Hash, Package, ShoppingCart, Users, Settings, FileText } from "lucide-react";
+import { cn } from "@/utils/utils";
 
 interface CommandItem {
   id: string;
@@ -87,11 +88,14 @@ export default function AdminCommandPalette({ items = defaultItems, onSelect }: 
     <>
       <button
         onClick={() => setOpen(true)}
-        className="flex items-center gap-2 rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 px-3 py-2 text-sm text-gray-400 hover:border-gray-300 dark:hover:border-gray-700 transition-colors w-full max-w-xs"
+        className={cn(
+          "flex items-center gap-2 rounded-lg border border-border bg-card px-3 py-2",
+          "text-sm text-muted-foreground hover:border-border/80 transition-colors w-full max-w-xs",
+        )}
       >
         <Search className="h-4 w-4" />
         <span className="flex-1 text-left">Search...</span>
-        <kbd className="hidden sm:inline-flex items-center gap-0.5 rounded-md bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 text-[10px] font-medium text-gray-500">
+        <kbd className="hidden sm:inline-flex items-center gap-0.5 rounded-md bg-muted px-1.5 py-0.5 text-[10px] font-medium text-muted-foreground">
           <Command className="h-2.5 w-2.5" />K
         </kbd>
       </button>
@@ -106,10 +110,10 @@ export default function AdminCommandPalette({ items = defaultItems, onSelect }: 
                 animate={{ opacity: 1, scale: 1, y: 0 }}
                 exit={{ opacity: 0, scale: 0.95, y: -10 }}
                 transition={{ duration: 0.15 }}
-                className="rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 shadow-2xl overflow-hidden"
+                className="rounded-xl border border-border bg-card shadow-xl overflow-hidden"
               >
-                <div className="flex items-center gap-3 border-b border-gray-100 dark:border-gray-800 px-4">
-                  <Search className="h-4 w-4 text-gray-400" />
+                <div className="flex items-center gap-3 border-b border-border px-4">
+                  <Search className="h-4 w-4 text-muted-foreground" />
                   <input
                     ref={inputRef}
                     type="text"
@@ -117,13 +121,13 @@ export default function AdminCommandPalette({ items = defaultItems, onSelect }: 
                     value={query}
                     onChange={(e) => setQuery(e.target.value)}
                     onKeyDown={handleKeyDown}
-                    className="flex-1 bg-transparent py-3.5 text-sm text-gray-900 dark:text-white placeholder:text-gray-400 outline-none"
+                    className="flex-1 bg-transparent py-3.5 text-sm text-foreground placeholder:text-muted-foreground outline-none"
                   />
-                  <kbd className="rounded-md bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 text-[10px] font-medium text-gray-500">ESC</kbd>
+                  <kbd className="rounded-md bg-muted px-1.5 py-0.5 text-[10px] font-medium text-muted-foreground">ESC</kbd>
                 </div>
                 <div className="max-h-80 overflow-y-auto p-2">
                   {filtered.length === 0 ? (
-                    <div className="py-8 text-center text-sm text-gray-400">No results found</div>
+                    <div className="py-8 text-center text-sm text-muted-foreground">No results found</div>
                   ) : (
                     filtered.map((item, i) => (
                       <button
@@ -133,15 +137,16 @@ export default function AdminCommandPalette({ items = defaultItems, onSelect }: 
                           else window.location.href = item.href;
                           setOpen(false);
                         }}
-                        className={`flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-sm transition-colors ${
+                        className={cn(
+                          "flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm transition-colors",
                           i === selectedIndex
-                            ? "bg-emerald-50 dark:bg-emerald-950/30 text-emerald-700 dark:text-emerald-400"
-                            : "text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800"
-                        }`}
+                            ? "bg-accent/10 text-accent"
+                            : "text-foreground hover:bg-muted",
+                        )}
                       >
                         <item.icon className="h-4 w-4 shrink-0" />
                         <span className="flex-1 text-left font-medium">{item.label}</span>
-                        <ArrowRight className="h-3 w-3 text-gray-400 opacity-0 group-hover:opacity-100" />
+                        <ArrowRight className="h-3 w-3 text-muted-foreground opacity-0 group-hover:opacity-100" />
                       </button>
                     ))
                   )}

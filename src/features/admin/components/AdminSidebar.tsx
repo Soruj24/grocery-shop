@@ -11,6 +11,7 @@ import {
   FileText, Settings, Shield, UserCog, Activity, Bell, LogOut,
   ChevronDown, Menu, X, Layers,
 } from "lucide-react";
+import { cn } from "@/utils/utils";
 
 const navItems = [
   { label: "Overview", items: [
@@ -67,7 +68,7 @@ export default function AdminSidebar({ session }: AdminSidebarProps) {
 
   const SidebarContent = () => (
     <div className="flex flex-col h-full">
-      <div className={`p-4 border-b border-border ${collapsed ? "px-3" : ""}`}>
+      <div className={cn("p-4 border-b border-border", collapsed ? "px-3" : "")}>
         <Link href="/admin/dashboard" className="flex items-center gap-3">
           <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-foreground shrink-0">
             <ShoppingCart className="h-5 w-5 text-background" />
@@ -92,10 +93,10 @@ export default function AdminSidebar({ session }: AdminSidebarProps) {
                   className="flex w-full items-center justify-between px-3 py-1.5"
                 >
                   <span className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">{section.label}</span>
-                  <ChevronDown className={`h-3 w-3 text-muted-foreground transition-transform ${expanded ? "" : "-rotate-90"}`} />
+                  <ChevronDown className={cn("h-3 w-3 text-muted-foreground transition-transform", !expanded && "-rotate-90")} />
                 </button>
               )}
-              <div className={`space-y-0.5 ${!collapsed && !expanded ? "hidden" : ""}`}>
+              <div className={cn("space-y-0.5", !collapsed && !expanded ? "hidden" : "")}>
                 {section.items.map((item) => {
                   const active = isActive(item.href);
                   return (
@@ -103,13 +104,13 @@ export default function AdminSidebar({ session }: AdminSidebarProps) {
                       key={item.href}
                       href={item.href}
                       onClick={() => setMobileOpen(false)}
-                      className={`relative flex items-center gap-2.5 rounded-lg text-sm font-medium transition-colors ${
-                        collapsed ? "justify-center px-2 py-2" : "px-3 py-2"
-                      } ${
+                      className={cn(
+                        "relative flex items-center gap-2.5 rounded-lg text-sm font-medium transition-colors",
+                        collapsed ? "justify-center px-2 py-2" : "px-3 py-2",
                         active
                           ? "bg-muted text-foreground"
-                          : "text-muted-foreground hover:bg-muted hover:text-foreground"
-                      }`}
+                          : "text-muted-foreground hover:bg-muted hover:text-foreground",
+                      )}
                       title={collapsed ? item.label : undefined}
                     >
                       {active && (
@@ -119,7 +120,7 @@ export default function AdminSidebar({ session }: AdminSidebarProps) {
                           transition={{ type: "spring", stiffness: 350, damping: 30 }}
                         />
                       )}
-                      <item.icon className={`relative h-4 w-4 shrink-0 ${active ? "text-foreground" : ""}`} />
+                      <item.icon className={cn("relative h-4 w-4 shrink-0", active && "text-foreground")} />
                       {!collapsed && <span className="relative">{item.label}</span>}
                     </Link>
                   );
@@ -130,7 +131,7 @@ export default function AdminSidebar({ session }: AdminSidebarProps) {
         })}
       </nav>
 
-      <div className={`p-3 border-t border-border ${collapsed ? "px-2" : ""}`}>
+      <div className={cn("p-3 border-t border-border", collapsed ? "px-2" : "")}>
         {!collapsed ? (
           <div className="rounded-lg bg-muted p-3">
             <div className="flex items-center gap-3">
@@ -176,7 +177,7 @@ export default function AdminSidebar({ session }: AdminSidebarProps) {
         </div>
       )}
 
-      <aside className={`hidden lg:block shrink-0 transition-all duration-300 ${collapsed ? "w-[68px]" : "w-[240px]"}`}>
+      <aside className={cn("hidden lg:block shrink-0 transition-all duration-300", collapsed ? "w-[68px]" : "w-[240px]")}>
         <div className="sticky top-0 h-screen">
           <div className="h-full border-r border-border bg-card overflow-hidden">
             <SidebarContent />
@@ -186,10 +187,14 @@ export default function AdminSidebar({ session }: AdminSidebarProps) {
 
       <button
         onClick={() => setCollapsed(!collapsed)}
-        className="hidden lg:flex fixed top-6 z-40 items-center justify-center h-6 w-6 rounded-full border border-border bg-card text-muted-foreground hover:text-foreground shadow-sm transition-all"
+        className={cn(
+          "hidden lg:flex fixed top-6 z-40 items-center justify-center",
+          "h-6 w-6 rounded-full border border-border bg-card",
+          "text-muted-foreground hover:text-foreground shadow-sm transition-all",
+        )}
         style={{ left: collapsed ? "52px" : "224px" }}
       >
-        <ChevronDown className={`h-3 w-3 transition-transform ${collapsed ? "-rotate-90" : "rotate-90"}`} />
+        <ChevronDown className={cn("h-3 w-3 transition-transform", collapsed ? "-rotate-90" : "rotate-90")} />
       </button>
     </>
   );

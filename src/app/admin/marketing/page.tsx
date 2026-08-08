@@ -4,32 +4,33 @@ import { useGetAdminCampaignsQuery } from "@/redux/apiSlice";
 import DataTable from "@/features/admin/shared/DataTable";
 import AdminPageHeader from "@/features/admin/shared/AdminPageHeader";
 import { Megaphone } from "lucide-react";
+import { cn } from "@/utils/utils";
 
 export default function AdminMarketingPage() {
   const { data, isLoading } = useGetAdminCampaignsQuery();
   const campaigns = (data?.data || []) as Record<string, unknown>[];
 
   const statusColors: Record<string, string> = {
-    draft: "bg-gray-100 text-gray-500", active: "bg-emerald-100 text-emerald-700",
-    completed: "bg-blue-100 text-blue-700", scheduled: "bg-amber-100 text-amber-700",
+    draft: "bg-muted text-muted-foreground", active: "bg-success-subtle text-success",
+    completed: "bg-primary/10 text-primary", scheduled: "bg-warning-subtle text-warning",
   };
 
   const columns = [
     { key: "name", label: "Campaign", sortable: true, render: (item: Record<string, unknown>) => (
       <div className="flex items-center gap-3">
-        <div className="h-8 w-8 rounded-lg bg-rose-50 flex items-center justify-center"><Megaphone className="h-4 w-4 text-rose-500" /></div>
-        <span className="text-sm font-semibold text-gray-900">{item.name as string}</span>
+        <div className="h-8 w-8 rounded-lg bg-danger-subtle flex items-center justify-center"><Megaphone className="h-4 w-4 text-danger" /></div>
+        <span className="text-sm font-semibold text-foreground">{item.name as string}</span>
       </div>
     )},
-    { key: "type", label: "Type", render: (item: Record<string, unknown>) => <span className="text-xs uppercase font-semibold text-gray-500">{item.type as string}</span> },
+    { key: "type", label: "Type", render: (item: Record<string, unknown>) => <span className="text-xs uppercase font-semibold text-muted-foreground">{item.type as string}</span> },
     { key: "status", label: "Status", render: (item: Record<string, unknown>) => (
-      <span className={`text-[10px] font-bold uppercase px-2 py-0.5 rounded-full ${statusColors[item.status as string] || ""}`}>{item.status as string}</span>
+      <span className={cn("text-[10px] font-bold uppercase px-2 py-0.5 rounded-full", statusColors[item.status as string] || "")}>{item.status as string}</span>
     )},
     { key: "stats.sent", label: "Sent", render: (item: Record<string, unknown>) => {
       const stats = item.stats as Record<string, unknown> || {};
       return <span className="text-sm font-semibold">{String(stats.sent || 0)}</span>;
     }},
-    { key: "createdAt", label: "Created", render: (item: Record<string, unknown>) => <span className="text-xs text-gray-500">{new Date(item.createdAt as string).toLocaleDateString()}</span> },
+    { key: "createdAt", label: "Created", render: (item: Record<string, unknown>) => <span className="text-xs text-muted-foreground">{new Date(item.createdAt as string).toLocaleDateString()}</span> },
   ];
 
   return (

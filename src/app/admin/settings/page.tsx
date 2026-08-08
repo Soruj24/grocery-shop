@@ -44,22 +44,22 @@ export default function AdminSettingsPage() {
   return (
     <div className="space-y-6">
       <AdminPageHeader title="Settings" description="Manage store configuration"
-        actions={<button onClick={handleSave} disabled={saving} className="flex items-center gap-2 rounded-xl bg-emerald-500 px-4 py-2.5 text-sm font-semibold text-white hover:bg-emerald-600 disabled:opacity-50"><Save className="h-4 w-4" /> {saving ? "Saving..." : "Save Settings"}</button>}
+        actions={<button onClick={handleSave} disabled={saving} className="flex items-center gap-2 rounded-xl bg-primary px-4 py-2.5 text-sm font-semibold text-white hover:bg-primary/90 disabled:opacity-50"><Save className="h-4 w-4" /> {saving ? "Saving..." : "Save Settings"}</button>}
       />
-      <div className="rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-6">
+      <div className="rounded-xl border border-border bg-card p-6">
         {isLoading ? (
-          <div className="space-y-4">{[1, 2, 3, 4].map((i) => <div key={i} className="h-12 rounded-xl bg-gray-100 dark:bg-gray-800 animate-pulse" />)}</div>
+          <div className="space-y-4">{[1, 2, 3, 4].map((i) => <div key={i} className="h-12 rounded-lg bg-muted animate-pulse" />)}</div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {fields.map((f) => (
               <div key={f.key} className="space-y-1.5">
-                <label className="text-xs font-semibold text-gray-500 uppercase tracking-wider">{f.label}</label>
+                <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">{f.label}</label>
                 {f.type === "textarea" ? (
                   <textarea value={form[f.key] || ""} onChange={(e) => setForm((p) => ({ ...p, [f.key]: e.target.value }))}
-                    className="w-full rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 px-4 py-2.5 text-sm outline-none focus:border-emerald-500 resize-none" rows={3} placeholder={f.placeholder} />
+                    className="w-full rounded-xl border border-border bg-muted px-4 py-2.5 text-sm outline-none focus:border-primary resize-none" rows={3} placeholder={f.placeholder} />
                 ) : (
                   <input type={f.type} value={form[f.key] || ""} onChange={(e) => setForm((p) => ({ ...p, [f.key]: e.target.value }))}
-                    className="w-full rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 px-4 py-2.5 text-sm outline-none focus:border-emerald-500" placeholder={f.placeholder} />
+                    className="w-full rounded-xl border border-border bg-muted px-4 py-2.5 text-sm outline-none focus:border-primary" placeholder={f.placeholder} />
                 )}
               </div>
             ))}
