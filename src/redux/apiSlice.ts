@@ -33,8 +33,8 @@ export const apiSlice = createApi({
       query: () => "/admin/stats",
       providesTags: ["Dashboard"],
     }),
-    getDashboardAnalytics: builder.query<AdminAnalytics, void>({
-      query: () => "/admin/analytics",
+    getDashboardAnalytics: builder.query<AdminAnalytics, Record<string, string | undefined>>({
+      query: (params) => ({ url: "/admin/analytics", params }),
       providesTags: ["Analytics"],
     }),
 
@@ -247,6 +247,22 @@ export const apiSlice = createApi({
       query: () => "/admin/inventory",
       providesTags: ["Inventory"],
     }),
+    getInventoryData: builder.query<Record<string, unknown>, Record<string, string | number | undefined>>({
+      query: (params) => ({ url: "/admin/inventory", params }),
+      providesTags: ["Inventory"],
+    }),
+    adjustStock: builder.mutation<{ message: string }, { productId: string; newStock: number; type?: string; reason?: string; note?: string }>({
+      query: (body) => ({ url: "/admin/inventory", method: "PATCH", body: { action: "adjust", ...body } }),
+      invalidatesTags: ["Inventory"],
+    }),
+    bulkAdjustStock: builder.mutation<{ updated: number }, { updates: Array<{ productId: string; stock: number }>; reason?: string }>({
+      query: (body) => ({ url: "/admin/inventory", method: "PATCH", body: { action: "bulkUpdate", ...body } }),
+      invalidatesTags: ["Inventory"],
+    }),
+    getStockHistory: builder.query<{ data: Record<string, unknown>[]; totalCount: number }, Record<string, string | number | undefined>>({
+      query: (params) => ({ url: "/admin/inventory/history", params }),
+      providesTags: ["Inventory"],
+    }),
 
     // ─── Settings ───
     getAdminSettings: builder.query<Record<string, unknown>, void>({
@@ -289,7 +305,7 @@ export const {
   useGetAdminRolesQuery, useUpdateAdminRoleMutation,
   useGetAdminUsersQuery, useUpdateAdminUserMutation,
   useGetSalesReportQuery,
-  useGetInventoryAlertsQuery,
+  useGetInventoryAlertsQuery, useGetInventoryDataQuery, useAdjustStockMutation, useBulkAdjustStockMutation, useGetStockHistoryQuery,
   useGetAdminSettingsQuery, useUpdateAdminSettingsMutation,
   useGetCombosQuery,
 } = apiSlice;

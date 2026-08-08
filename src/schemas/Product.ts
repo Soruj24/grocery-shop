@@ -39,6 +39,7 @@ const QuestionSchema = new mongoose.Schema(
 const ProductSchema = new mongoose.Schema(
   {
     name: { type: String, required: true },
+    sku: { type: String, unique: true, sparse: true },
     brand: { type: String, index: true },
     price: { type: Number, required: true },
     stock: { type: Number, required: true },
