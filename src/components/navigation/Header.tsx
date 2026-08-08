@@ -12,10 +12,13 @@ import UserActions from "./UserActions";
 import NavbarLogo from "./NavbarLogo";
 import DesktopNav from "./DesktopNav";
 import MobileDrawer from "./MobileDrawer";
+import MobileSearchOverlay from "./MobileSearchOverlay";
 import TopBar from "./TopBar";
 
 export default function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] =
+    useState(false);
+  const [isMobileSearchOpen, setIsMobileSearchOpen] =
     useState(false);
   const [isCategoryMenuOpen, setIsCategoryMenuOpen] =
     useState(false);
@@ -64,7 +67,9 @@ export default function Header() {
             </div>
 
             <button
-              onClick={() => setIsMobileMenuOpen(true)}
+              onClick={() =>
+                setIsMobileSearchOpen(true)
+              }
               className="rounded-xl p-2.5 text-muted-foreground transition-colors duration-300 hover:bg-black/[0.04] hover:text-foreground md:hidden dark:hover:bg-white/[0.06]"
               aria-label="Search"
             >
@@ -72,7 +77,9 @@ export default function Header() {
             </button>
 
             <button
-              onClick={() => setIsMobileMenuOpen(true)}
+              onClick={() =>
+                setIsMobileMenuOpen(true)
+              }
               className="rounded-xl p-2.5 text-muted-foreground transition-colors duration-300 hover:bg-black/[0.04] hover:text-foreground lg:hidden dark:hover:bg-white/[0.06]"
               aria-label="Menu"
             >
@@ -96,6 +103,11 @@ export default function Header() {
           height:
             "calc(3.75rem + env(safe-area-inset-top))",
         }}
+      />
+
+      <MobileSearchOverlay
+        isOpen={isMobileSearchOpen}
+        onClose={() => setIsMobileSearchOpen(false)}
       />
 
       <MobileDrawer

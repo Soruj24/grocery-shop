@@ -21,7 +21,7 @@ export default function CheckoutStepper({
   onStepClick,
 }: CheckoutStepperProps) {
   return (
-    <div className="flex items-center justify-between gap-1">
+    <div className="flex items-center justify-between gap-1 sm:gap-2">
       {steps.map((step, index) => {
         const isCompleted =
           currentStep > step.number;
@@ -41,7 +41,7 @@ export default function CheckoutStepper({
                 onStepClick(step.number)
               }
               disabled={!isClickable}
-              className={`flex items-center gap-3 transition-all ${
+              className={`flex items-center gap-2 sm:gap-3 transition-all min-h-[44px] ${
                 isClickable
                   ? "cursor-pointer"
                   : "cursor-not-allowed"
@@ -53,7 +53,7 @@ export default function CheckoutStepper({
                 animate={{
                   scale: isCurrent ? 1 : 1,
                 }}
-                className={`relative flex h-10 w-10 shrink-0 items-center justify-center rounded-xl text-xs font-bold transition-all duration-300 ${
+                className={`relative flex h-9 w-9 sm:h-10 sm:w-10 shrink-0 items-center justify-center rounded-xl text-xs font-bold transition-all duration-300 ${
                   isCompleted
                     ? "bg-foreground text-background"
                     : isCurrent
@@ -93,7 +93,7 @@ export default function CheckoutStepper({
                 )}
               </motion.div>
 
-              {/* Step Label */}
+              {/* Step Label - hidden on very small screens */}
               <div className="hidden sm:block">
                 <p
                   className={`text-xs font-semibold transition-colors ${
@@ -122,7 +122,7 @@ export default function CheckoutStepper({
 
             {/* Connector */}
             {index < steps.length - 1 && (
-              <div className="mx-3 h-0.5 flex-1 overflow-hidden rounded-full bg-black/[0.04] dark:bg-white/[0.06]">
+              <div className="mx-1.5 sm:mx-3 h-0.5 flex-1 overflow-hidden rounded-full bg-black/[0.04] dark:bg-white/[0.06]">
                 <motion.div
                   initial={{ width: 0 }}
                   animate={{

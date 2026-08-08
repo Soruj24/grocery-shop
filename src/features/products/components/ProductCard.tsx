@@ -1,6 +1,6 @@
 "use client";
 
-import { Plus } from "lucide-react";
+import { Plus, Minus } from "lucide-react";
 import { useCart } from "@/contexts/CartContext";
 import { useWishlist } from "@/contexts/WishlistContext";
 import { Toast } from "@/utils/toast";
@@ -11,7 +11,6 @@ import { handleShare } from "@/utils/product-utils";
 import { useProductSwipe } from "@/features/products/hooks/useProductSwipe";
 import ProductImageSection from "@/features/home/components/sections/ProductImageSection";
 import ProductInfo from "@/features/home/components/sections/ProductInfo";
-import QuantityControls from "@/features/home/components/sections/QuantityControls";
 
 interface ProductCardProps {
   product: Product;
@@ -73,9 +72,7 @@ export default function ProductCard({
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       whileHover={
-        reduceMotion
-          ? undefined
-          : { y: -6 }
+        reduceMotion ? undefined : { y: -6 }
       }
       className="group bg-white dark:bg-[#09090b] rounded-2xl shadow-[0_1px_3px_rgba(0,0,0,0.04)] hover:shadow-[0_12px_40px_rgba(0,0,0,0.08)] transition-all duration-500 flex flex-col h-full border border-black/[0.04] dark:border-white/[0.04] relative overflow-hidden"
     >
@@ -105,9 +102,10 @@ export default function ProductCard({
 
       <ProductInfo product={product} t={t} />
 
-      <div className="px-5 pb-5 -mt-2 relative z-10 bg-white dark:bg-[#09090b]">
+      <div className="px-4 sm:px-5 pb-4 sm:pb-5 -mt-2 relative z-10 bg-white dark:bg-[#09090b]">
         {!cartItem ? (
-          <button
+          <motion.button
+            whileTap={{ scale: 0.97 }}
             disabled={product.stock === 0}
             onClick={() => {
               addToCart(product, 1);
@@ -116,40 +114,64 @@ export default function ProductCard({
                 title: t("added_to_cart"),
               });
             }}
-            className="w-full flex items-center justify-center gap-2 rounded-xl bg-foreground text-background py-2.5 text-sm font-semibold transition-all duration-300 hover:bg-primary active:scale-[0.98] disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:bg-foreground"
+            className="w-full flex items-center justify-center gap-2 rounded-xl bg-foreground text-background py-3 sm:py-2.5 text-sm font-semibold transition-all duration-300 hover:bg-primary active:scale-[0.98] disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:bg-foreground min-h-[44px]"
             aria-label={t("add_to_cart")}
           >
             <Plus size={16} strokeWidth={2.5} />
             {t("add_to_cart")}
-          </button>
+          </motion.button>
         ) : (
-          <QuantityControls
-            quantity={cartItem.quantity}
-            stock={product.stock}
-            onIncrement={() => {
-              if (
-                cartItem.quantity < product.stock
-              ) {
-                updateQuantity(
-                  product._id,
-                  cartItem.quantity + 1
-                );
-              } else {
-                Toast.fire({
-                  icon: "error",
-                  title: t("out_of_stock_label"),
-                });
+          <div className="flex items-center bg-black/[0.04] dark:bg-white/[0.06] rounded-xl p-1 gap-0.5">
+            <motion.button
+              whileTap={{ scale: 0.9 }}
+              onClick={() => {
+                if (cartItem.quantity > 1) {
+                  updateQuantity(
+                    product._id,
+                    cartItem.quantity - 1
+                  );
+                }
+              }}
+              disabled={cartItem.quantity <= 1}
+              className="w-10 h-10 flex items-center justify-center bg-white dark:bg-[#09090b] hover:bg-rose-50 dark:hover:bg-rose-500/[0.08] hover:text-rose-500 rounded-lg transition-all duration-200 text-foreground shadow-[0_1px_2px_rgba(0,0,0,0.04)] disabled:opacity-30 disabled:cursor-not-allowed active:scale-95"
+              aria-label={t("decrease_quantity")}
+            >
+              <Minus size={14} strokeWidth={2.5} />
+            </motion.button>
+            <motion.span
+              key={cartItem.quantity}
+              initial={{ scale: 0.8 }}
+              animate={{ scale: 1 }}
+              className="w-10 text-center text-sm font-bold text-foreground select-none tabular-nums"
+            >
+              {cartItem.quantity}
+            </motion.span>
+            <motion.button
+              whileTap={{ scale: 0.9 }}
+              onClick={() => {
+                if (
+                  cartItem.quantity < product.stock
+                ) {
+                  updateQuantity(
+                    product._id,
+                    cartItem.quantity + 1
+                  );
+                } else {
+                  Toast.fire({
+                    icon: "error",
+                    title: t("out_of_stock_label"),
+                  });
+                }
+              }}
+              disabled={
+                cartItem.quantity >= product.stock
               }
-            }}
-            onDecrement={() => {
-              if (cartItem.quantity > 1) {
-                updateQuantity(
-                  product._id,
-                  cartItem.quantity - 1
-                );
-              }
-            }}
-          />
+              className="w-10 h-10 flex items-center justify-center bg-foreground hover:bg-primary text-background rounded-lg transition-all duration-200 disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:bg-foreground shadow-[0_1px_2px_rgba(0,0,0,0.04)] active:scale-95"
+              aria-label={t("increase_quantity")}
+            >
+              <Plus size={14} strokeWidth={2.5} />
+            </motion.button>
+          </div>
         )}
       </div>
     </motion.div>

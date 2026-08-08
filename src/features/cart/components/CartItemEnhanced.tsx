@@ -236,25 +236,31 @@ export default function CartItemEnhanced({
       </div>
 
       {/* Mobile Action Bar */}
-      <div className="sm:hidden border-t border-black/[0.04] dark:border-white/[0.04] px-4 py-2.5 flex items-center justify-end gap-2">
-        <button
+      <div className="sm:hidden border-t border-black/[0.04] dark:border-white/[0.04] px-4 py-3 flex items-center gap-2">
+        <motion.button
+          whileTap={{ scale: 0.95 }}
           onClick={handleSaveForLater}
-          className="text-[10px] font-medium text-muted-foreground/50 hover:text-foreground px-2 py-1 rounded transition-colors"
+          className="flex items-center gap-1.5 text-[11px] font-medium text-muted-foreground/50 hover:text-foreground px-3 py-2 rounded-lg hover:bg-black/[0.04] dark:hover:bg-white/[0.06] transition-all min-h-[36px]"
         >
+          <Bookmark className="w-3.5 h-3.5" />
           {t("save_for_later")}
-        </button>
-        <button
+        </motion.button>
+        <motion.button
+          whileTap={{ scale: 0.95 }}
           onClick={handleMoveToWishlist}
-          className="text-[10px] font-medium text-muted-foreground/50 hover:text-rose-500 px-2 py-1 rounded transition-colors"
+          className="flex items-center gap-1.5 text-[11px] font-medium text-muted-foreground/50 hover:text-rose-500 px-3 py-2 rounded-lg hover:bg-rose-500/[0.06] transition-all min-h-[36px]"
         >
+          <Heart className="w-3.5 h-3.5" />
           {t("wishlist_button")}
-        </button>
-        <button
+        </motion.button>
+        <motion.button
+          whileTap={{ scale: 0.95 }}
           onClick={() => onRemove(item._id)}
-          className="text-[10px] font-medium text-rose-500/70 hover:text-rose-500 px-2 py-1 rounded transition-colors"
+          className="flex items-center gap-1.5 text-[11px] font-medium text-rose-500/70 hover:text-rose-500 px-3 py-2 rounded-lg hover:bg-rose-500/[0.06] transition-all ml-auto min-h-[36px]"
         >
+          <Trash2 className="w-3.5 h-3.5" />
           {t("remove")}
-        </button>
+        </motion.button>
       </div>
     </motion.div>
   );
