@@ -2,14 +2,21 @@
 
 import {
   ArrowRight,
+  Truck,
   ShieldCheck,
+  CreditCard,
+  Clock,
+  CheckCircle2,
+  Lock,
 } from "lucide-react";
-import Link from "next/link";
+import { motion } from "framer-motion";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { useCouponValidation } from "@/features/home/hooks/useCouponValidation";
-import DeliveryProgress from "./DeliveryProgress";
-import PriceBreakdown from "./PriceBreakdown";
+import { useMemo } from "react";
 import CouponSection from "./CouponSection";
+import PriceBreakdown from "./PriceBreakdown";
+import DeliveryProgress from "./DeliveryProgress";
+import Link from "next/link";
+import { useSession } from "next-auth/react";
 
 interface CartSummaryProps {
   totalPrice: number;
@@ -19,78 +26,135 @@ export default function CartSummary({
   totalPrice,
 }: CartSummaryProps) {
   const { t } = useLanguage();
-  const {
-    promoCode,
-    setPromoCode,
-    appliedCoupon,
-    loading,
-    applyCoupon,
-    removeCoupon,
-  } = useCouponValidation(totalPrice);
+  const { data: session } = useSession();
 
-  const freeDeliveryThreshold = 500;
-  const deliveryFee =
-    totalPrice > freeDeliveryThreshold ? 0 : 50;
-  const vat = Math.round(totalPrice * 0.05);
-  const discount = appliedCoupon
-    ? appliedCoupon.discount
-    : 0;
+  const shippingFee = totalPrice >= 500 ? 0 : 60;
+  const serviceCharge = 0;
+  const estimatedTax = 0;
+  const grandTotal =
+    totalPrice + shippingFee + serviceCharge + estimatedTax;
+
+  const estimatedDelivery = useMemo(() => {
+    const date = new Date();
+    date.setDate(date.getDate() + 2);
+    return date.toLocaleDateString("bn-BD", {
+      weekday: "long",
+      month: "long",
+      day: "numeric",
+    });
+  }, []);
 
   return (
-    <div className="lg:col-span-1">
-      <div className="bg-white dark:bg-[#09090b] p-6 md:p-7 rounded-xl border border-black/[0.04] dark:border-white/[0.04] space-y-7 md:sticky md:top-24 shadow-[0_1px_3px_rgba(0,0,0,0.04)]">
-        <h3 className="text-lg font-bold text-foreground tracking-tight">
-          {t("order_summary")}
-        </h3>
+    <motion.div
+      initial={{ opacity: 0, y: 12 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: 0.15 }}
+      className="lg:sticky lg:top-32 space-y-4"
+    >
+      {/* Main Summary Card */}
+      <div className="bg-white dark:bg-[#09090b] rounded-xl border border-black/[0.04] dark:border-white/[0.04] overflow-hidden shadow-[0_1px_3px_rgba(0,0,0,0.04)]">
+        {/* Header */}
+        <div className="p-5 pb-4 border-b border-black/[0.04] dark:border-white/[0.04]">
+          <h2 className="text-sm font-bold text-foreground tracking-tight">
+            {t("order_summary_title")}
+          </h2>
+        </div>
 
-        <DeliveryProgress
-          totalPrice={totalPrice}
-          freeDeliveryThreshold={
-            freeDeliveryThreshold
-          }
-        />
+        <div className="p-5 space-y-5">
+          {/* Delivery Progress */}
+          <DeliveryProgress
+            currentAmount={totalPrice}
+            freeShippingThreshold={500}
+          />
 
-        <CouponSection
-          promoCode={promoCode}
-          onPromoCodeChange={setPromoCode}
-          appliedCoupon={appliedCoupon}
-          loading={loading}
-          onApply={applyCoupon}
-          onRemove={removeCoupon}
-        />
+          {/* Coupon Section */}
+          <CouponSection />
 
-        <PriceBreakdown
-          totalPrice={totalPrice}
-          deliveryFee={deliveryFee}
-          vat={vat}
-          discount={discount}
-          freeDeliveryThreshold={
-            freeDeliveryThreshold
-          }
-        />
+          {/* Estimated Delivery */}
+          <div className="flex items-center justify-between p-3 bg-black/[0.02] dark:bg-white/[0.03] rounded-lg">
+            <div className="flex items-center gap-2">
+              <div className="w-7 h-7 bg-black/[0.04] dark:bg-white/[0.06] rounded-md flex items-center justify-center">
+                <Clock className="w-3.5 h-3.5 text-muted-foreground/60" />
+              </div>
+              <span className="text-xs font-medium text-muted-foreground/60">
+                {t("estimated_delivery_date")}
+              </span>
+            </div>
+            <span className="text-xs font-bold text-foreground">
+              {estimatedDelivery}
+            </span>
+          </div>
 
-        <div className="space-y-3 pt-2">
+          {/* Shipping Info */}
+          <div className="flex items-center gap-2 text-xs text-muted-foreground/50">
+            <Truck className="w-3.5 h-3.5" />
+            <span>
+              {shippingFee === 0
+                ? t("free_delivery_unlocked")
+                : t("standard_delivery")}{" "}
+              {shippingFee === 0
+                ? ""
+                : `${t("currency_symbol")}${shippingFee.toLocaleString("bn-BD")}`}
+            </span>
+          </div>
+
+          {/* Price Breakdown */}
+          <div className="border-t border-black/[0.04] dark:border-white/[0.04] pt-4">
+            <PriceBreakdown
+              subtotal={totalPrice}
+              shipping={shippingFee}
+              serviceCharge={serviceCharge}
+              tax={estimatedTax}
+              total={grandTotal}
+            />
+          </div>
+
+          {/* Checkout Button */}
           <Link
-            href={{
-              pathname: "/checkout",
-              query: appliedCoupon
-                ? { coupon: appliedCoupon.code }
-                : {},
-            }}
-            className="w-full bg-foreground text-background py-3.5 md:py-4 rounded-lg font-semibold text-sm transition-all flex items-center justify-center gap-2 active:scale-[0.98] hover:opacity-90"
+            href={
+              session?.user
+                ? "/checkout"
+                : "/auth/login?redirect=/checkout"
+            }
+            className="w-full group/btn bg-foreground text-background rounded-xl py-3.5 px-4 font-semibold text-sm flex items-center justify-center gap-2.5 active:scale-[0.98] transition-all shadow-[0_2px_8px_rgba(0,0,0,0.12)] hover:shadow-[0_4px_16px_rgba(0,0,0,0.18)]"
           >
-            {t("checkout_button")}
-            <ArrowRight className="w-4 h-4" />
+            <Lock className="w-3.5 h-3.5" />
+            {session?.user
+              ? t("checkout_button")
+              : t("login_to_checkout_button")}
+            <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-0.5 transition-transform" />
           </Link>
 
-          <div className="flex items-center justify-center gap-2 pt-1">
-            <ShieldCheck className="w-3.5 h-3.5 text-muted-foreground/40" />
-            <span className="text-[9px] font-semibold uppercase tracking-wider text-muted-foreground/40">
-              {t("secure_payment_guarantee")}
-            </span>
+          {/* Trust Badges */}
+          <div className="flex items-center justify-center gap-4 pt-1">
+            <div className="flex items-center gap-1.5 text-muted-foreground/40">
+              <ShieldCheck className="w-3 h-3" />
+              <span className="text-[10px] font-medium">
+                SSL
+              </span>
+            </div>
+            <div className="flex items-center gap-1.5 text-muted-foreground/40">
+              <CreditCard className="w-3 h-3" />
+              <span className="text-[10px] font-medium">
+                bKash / Nagad
+              </span>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+
+      {/* Guarantee Banner */}
+      <div className="bg-black/[0.02] dark:bg-white/[0.03] rounded-xl p-4 text-center border border-black/[0.04] dark:border-white/[0.04]">
+        <div className="flex items-center justify-center gap-2 mb-1.5">
+          <CheckCircle2 className="w-4 h-4 text-emerald-500" />
+          <span className="text-xs font-semibold text-foreground">
+            {t("guarantee_title")}
+          </span>
+        </div>
+        <p className="text-[10px] text-muted-foreground/50 leading-relaxed">
+          {t("guarantee_description")}
+        </p>
+      </div>
+    </motion.div>
   );
 }

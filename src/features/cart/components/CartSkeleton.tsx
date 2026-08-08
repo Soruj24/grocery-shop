@@ -1,44 +1,68 @@
 "use client";
 
-import { Skeleton } from "@/components/ui";
+import { motion } from "framer-motion";
 
 export default function CartSkeleton() {
   return (
-    <div className="max-w-7xl mx-auto py-6 md:py-12 px-4 space-y-8 md:space-y-12">
-      <div className="space-y-2">
-        <Skeleton className="h-10 w-64" />
-        <Skeleton className="h-5 w-48" />
+    <div className="max-w-7xl mx-auto px-4 py-8 md:py-12 space-y-8">
+      {/* Header Skeleton */}
+      <div className="space-y-3">
+        <div className="flex items-center gap-3">
+          <div className="w-10 h-10 bg-black/[0.04] dark:bg-white/[0.06] rounded-xl animate-pulse" />
+          <div className="h-8 w-48 bg-black/[0.04] dark:bg-white/[0.06] rounded-lg animate-pulse" />
+        </div>
+        <div className="ml-[52px] h-4 w-32 bg-black/[0.04] dark:bg-white/[0.06] rounded animate-pulse" />
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 md:gap-12">
-        <div className="lg:col-span-2 space-y-5">
-          {[1, 2, 3].map((i) => (
-            <div
+      {/* Banner Skeleton */}
+      <div className="h-14 bg-black/[0.04] dark:bg-white/[0.06] rounded-xl animate-pulse" />
+
+      {/* Headers Skeleton */}
+      <div className="hidden lg:grid grid-cols-12 gap-6 px-1">
+        <div className="col-span-7 h-3 bg-black/[0.04] dark:bg-white/[0.06] rounded animate-pulse" />
+        <div className="col-span-2 h-3 bg-black/[0.04] dark:bg-white/[0.06] rounded animate-pulse" />
+        <div className="col-span-2 h-3 bg-black/[0.04] dark:bg-white/[0.06] rounded animate-pulse" />
+        <div className="col-span-1 h-3 bg-black/[0.04] dark:bg-white/[0.06] rounded animate-pulse" />
+      </div>
+
+      {/* Grid Skeleton */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
+        <div className="lg:col-span-2 space-y-3">
+          {[...Array(3)].map((_, i) => (
+            <motion.div
               key={i}
-              className="bg-white dark:bg-[#09090b] p-5 rounded-xl border border-black/[0.04] dark:border-white/[0.04]"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: i * 0.1 }}
+              className="bg-white dark:bg-[#09090b] rounded-xl border border-black/[0.04] dark:border-white/[0.04] p-5"
             >
-              <div className="flex items-center gap-5">
-                <Skeleton className="w-20 h-20 rounded-lg" />
-                <div className="flex-1 space-y-2.5">
-                  <Skeleton className="h-5 w-48" />
-                  <Skeleton className="h-4 w-24" />
-                  <div className="flex items-center gap-3">
-                    <Skeleton className="h-8 w-28 rounded-lg" />
-                    <Skeleton className="h-5 w-20" />
+              <div className="flex gap-5">
+                <div className="w-24 h-24 bg-black/[0.04] dark:bg-white/[0.06] rounded-xl animate-pulse" />
+                <div className="flex-1 space-y-3">
+                  <div className="h-4 w-3/4 bg-black/[0.04] dark:bg-white/[0.06] rounded animate-pulse" />
+                  <div className="h-3 w-1/4 bg-black/[0.04] dark:bg-white/[0.06] rounded animate-pulse" />
+                  <div className="flex justify-between items-center pt-2">
+                    <div className="h-5 w-20 bg-black/[0.04] dark:bg-white/[0.06] rounded animate-pulse" />
+                    <div className="h-8 w-28 bg-black/[0.04] dark:bg-white/[0.06] rounded-lg animate-pulse" />
                   </div>
                 </div>
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
-        <div className="lg:col-span-1">
-          <div className="bg-white dark:bg-[#09090b] p-6 rounded-xl border border-black/[0.04] dark:border-white/[0.04] space-y-5">
-            <Skeleton className="h-5 w-32" />
-            <Skeleton className="h-3.5 w-full" />
-            <Skeleton className="h-3.5 w-full" />
-            <Skeleton className="h-3.5 w-3/4" />
-            <Skeleton className="h-10 w-full rounded-lg" />
+
+        <div className="bg-white dark:bg-[#09090b] rounded-xl border border-black/[0.04] dark:border-white/[0.04] p-5 space-y-5">
+          <div className="h-4 w-32 bg-black/[0.04] dark:bg-white/[0.06] rounded animate-pulse" />
+          <div className="space-y-3">
+            <div className="h-3 w-full bg-black/[0.04] dark:bg-white/[0.06] rounded animate-pulse" />
+            <div className="h-3 w-2/3 bg-black/[0.04] dark:bg-white/[0.06] rounded animate-pulse" />
           </div>
+          <div className="space-y-2">
+            <div className="h-3 w-full bg-black/[0.04] dark:bg-white/[0.06] rounded animate-pulse" />
+            <div className="h-3 w-full bg-black/[0.04] dark:bg-white/[0.06] rounded animate-pulse" />
+            <div className="h-3 w-full bg-black/[0.04] dark:bg-white/[0.06] rounded animate-pulse" />
+          </div>
+          <div className="h-12 w-full bg-black/[0.04] dark:bg-white/[0.06] rounded-xl animate-pulse" />
         </div>
       </div>
     </div>

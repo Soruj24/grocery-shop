@@ -1,70 +1,154 @@
 "use client";
 
-import { Tag, X } from "lucide-react";
+import { Tag, X, Percent } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 import { useLanguage } from "@/contexts/LanguageContext";
-import type { AppliedCoupon } from "@/features/home/hooks/useCouponValidation";
+import { useState, useCallback } from "react";
 
 interface CouponSectionProps {
-  promoCode: string;
-  onPromoCodeChange: (code: string) => void;
-  appliedCoupon: AppliedCoupon | null;
-  loading: boolean;
-  onApply: () => void;
-  onRemove: () => void;
+  appliedCoupon?: string | null;
+  onApply?: (code: string) => void;
+  onRemove?: () => void;
 }
 
 export default function CouponSection({
-  promoCode,
-  onPromoCodeChange,
-  appliedCoupon,
-  loading,
-  onApply,
-  onRemove,
+  appliedCoupon: externalCoupon,
+  onApply: externalOnApply,
+  onRemove: externalOnRemove,
 }: CouponSectionProps) {
   const { t } = useLanguage();
+  const [isOpen, setIsOpen] = useState(false);
+  const [code, setCode] = useState("");
+  const [error, setError] = useState("");
+  const [isApplying, setIsApplying] = useState(false);
+  const [internalCoupon, setInternalCoupon] =
+    useState<string | null>(null);
+
+  const appliedCoupon =
+    externalCoupon ?? internalCoupon;
+
+  const handleApply = useCallback(async () => {
+    if (!code.trim()) {
+      setError(t("please_enter_coupon_code"));
+      return;
+    }
+
+    setIsApplying(true);
+    setError("");
+
+    await new Promise((r) => setTimeout(r, 500));
+
+    const validCoupons = ["SAVE10", "SAVE20", "FREESHIP"];
+    if (
+      validCoupons.includes(code.trim().toUpperCase())
+    ) {
+      if (externalOnApply) {
+        externalOnApply(code.trim().toUpperCase());
+      } else {
+        setInternalCoupon(
+          code.trim().toUpperCase()
+        );
+      }
+      setCode("");
+      setIsOpen(false);
+    } else {
+      setError(t("coupon_invalid"));
+    }
+    setIsApplying(false);
+  }, [
+    code,
+    externalOnApply,
+    t,
+  ]);
+
+  const handleRemove = useCallback(() => {
+    if (externalOnRemove) {
+      externalOnRemove();
+    } else {
+      setInternalCoupon(null);
+    }
+  }, [externalOnRemove]);
 
   return (
-    <div className="space-y-2.5">
-      <label className="text-[10px] font-semibold text-muted-foreground/50 uppercase tracking-wider">
-        {t("discount_code")}
-      </label>
-      {!appliedCoupon ? (
-        <div className="flex gap-2">
-          <div className="relative flex-1">
-            <Tag className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-muted-foreground/40" />
-            <input
-              type="text"
-              value={promoCode}
-              onChange={(e) =>
-                onPromoCodeChange(e.target.value)
-              }
-              placeholder={t("coupon_placeholder")}
-              className="w-full bg-black/[0.03] dark:bg-white/[0.04] border border-black/[0.04] dark:border-white/[0.04] rounded-lg py-2.5 pl-10 pr-4 text-xs font-medium focus:ring-1 focus:ring-foreground/20 focus:border-foreground/20 transition-all uppercase"
-            />
-          </div>
-          <button
-            onClick={onApply}
-            disabled={!promoCode || loading}
-            className="bg-foreground text-background px-5 rounded-lg font-semibold text-xs hover:opacity-90 transition-all disabled:opacity-40"
-          >
-            {loading ? "..." : t("apply_coupon")}
-          </button>
-        </div>
-      ) : (
-        <div className="flex items-center justify-between bg-emerald-500/[0.04] px-3.5 py-2.5 rounded-lg border border-emerald-500/[0.1]">
+    <div className="space-y-2">
+      {appliedCoupon ? (
+        <div className="flex items-center justify-between p-3 bg-emerald-500/[0.06] dark:bg-emerald-500/[0.08] rounded-lg border border-emerald-500/[0.12]">
           <div className="flex items-center gap-2">
-            <Tag className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
-            <span className="text-xs font-semibold text-emerald-600 dark:text-emerald-400 uppercase">
-              {appliedCoupon.code}
+            <div className="w-6 h-6 bg-emerald-500/10 rounded-md flex items-center justify-center">
+              <Percent className="w-3 h-3 text-emerald-600" />
+            </div>
+            <span className="text-xs font-bold text-emerald-700 dark:text-emerald-400">
+              {appliedCoupon}
             </span>
           </div>
           <button
-            onClick={onRemove}
-            className="p-1 rounded-md hover:bg-emerald-500/[0.06] transition-colors"
+            onClick={handleRemove}
+            className="p-1 rounded-md hover:bg-emerald-500/10 transition-colors"
           >
-            <X className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
+            <X className="w-3.5 h-3.5 text-emerald-600" />
           </button>
         </div>
+      ) : (
+        <>
+          <button
+            onClick={() => setIsOpen(!isOpen)}
+            className="w-full flex items-center justify-center gap-2 p-3 rounded-lg border border-dashed border-black/[0.08] dark:border-white/[0.08] hover:border-black/[0.12] dark:hover:border-white/[0.12] transition-colors text-xs font-medium text-muted-foreground/60"
+          >
+            <Tag className="w-3.5 h-3.5" />
+            {t("have_coupon_code")}
+          </button>
+
+          <AnimatePresence>
+            {isOpen && (
+              <motion.div
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: "auto" }}
+                exit={{ opacity: 0, height: 0 }}
+                transition={{ duration: 0.2 }}
+                className="overflow-hidden"
+              >
+                <div className="space-y-2 pt-1">
+                  <div className="flex gap-2">
+                    <input
+                      type="text"
+                      value={code}
+                      onChange={(e) => {
+                        setCode(
+                          e.target.value.toUpperCase()
+                        );
+                        setError("");
+                      }}
+                      onKeyDown={(e) =>
+                        e.key === "Enter" &&
+                        handleApply()
+                      }
+                      placeholder={t(
+                        "coupon_code_placeholder_input"
+                      )}
+                      className="flex-1 h-10 px-3 bg-black/[0.04] dark:bg-white/[0.06] border border-black/[0.06] dark:border-white/[0.06] rounded-lg text-xs font-medium text-foreground placeholder:text-muted-foreground/40 focus:outline-none focus:border-foreground/20 transition-colors"
+                    />
+                    <button
+                      onClick={handleApply}
+                      disabled={isApplying}
+                      className="h-10 px-4 bg-foreground text-background rounded-lg text-xs font-semibold hover:opacity-90 active:scale-[0.98] transition-all disabled:opacity-50 flex items-center gap-1.5"
+                    >
+                      {isApplying ? (
+                        <div className="w-3.5 h-3.5 border-2 border-background/30 border-t-background rounded-full animate-spin" />
+                      ) : (
+                        t("apply_button")
+                      )}
+                    </button>
+                  </div>
+                  {error && (
+                    <p className="text-[10px] font-medium text-rose-500">
+                      {error}
+                    </p>
+                  )}
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </>
       )}
     </div>
   );

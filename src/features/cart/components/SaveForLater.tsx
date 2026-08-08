@@ -1,32 +1,29 @@
 "use client";
 
-import { motion, AnimatePresence } from "framer-motion";
 import {
-  RotateCcw,
+  Bookmark,
+  ShoppingCart,
   Trash2,
-  ShoppingBag,
   Heart,
-  X,
 } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { useCart } from "@/contexts/CartContext";
 import Image from "next/image";
+import { getProductFallbackImage } from "@/constants/fallback-images";
 
-interface SaveForLaterItem {
+interface SavedItem {
   _id: string;
   name: string;
   price: number;
   image?: string;
-  discountPrice?: number;
-  discount?: number;
-  variant?: string;
+  quantity: number;
 }
 
 interface SaveForLaterProps {
-  items: SaveForLaterItem[];
+  items: SavedItem[];
   onMoveToCart: (id: string) => void;
   onRemove: (id: string) => void;
-  onMoveToWishlist?: (id: string) => void;
+  onMoveToWishlist: (id: string) => void;
 }
 
 export default function SaveForLater({
@@ -36,145 +33,93 @@ export default function SaveForLater({
   onMoveToWishlist,
 }: SaveForLaterProps) {
   const { t } = useLanguage();
-  const { addToCart } = useCart();
 
   if (items.length === 0) return null;
 
-  const handleMoveToCart = (
-    item: SaveForLaterItem
-  ) => {
-    addToCart(
-      { ...item, _id: item._id } as any,
-      1
-    );
-    onMoveToCart(item._id);
-  };
-
   return (
-    <AnimatePresence>
-      <motion.div
-        initial={{ opacity: 0, height: 0 }}
-        animate={{ opacity: 1, height: "auto" }}
-        exit={{ opacity: 0, height: 0 }}
-        className="mt-8"
-      >
-        <div className="flex items-center justify-between mb-6">
-          <motion.h2
-            initial={{ opacity: 0, x: -10 }}
-            animate={{ opacity: 1, x: 0 }}
-            className="flex items-center gap-3 text-lg font-bold text-foreground"
-          >
-            <RotateCcw className="w-4 h-4 text-muted-foreground/50" />
-            <span>{t("saved_for_later")}</span>
-            <span className="text-[10px] font-semibold text-muted-foreground/50 bg-black/[0.04] dark:bg-white/[0.06] px-2 py-0.5 rounded">
-              {items.length}
-            </span>
-          </motion.h2>
-          <button
-            onClick={() =>
-              items.forEach((i) => onRemove(i._id))
-            }
-            className="p-1.5 rounded-lg text-muted-foreground/50 hover:text-rose-500 hover:bg-rose-500/[0.06] transition-all"
-            title={t("clear_all")}
-          >
-            <X className="w-4 h-4" />
-          </button>
+    <motion.div
+      initial={{ opacity: 0, y: 12 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: 0.2 }}
+      className="bg-white dark:bg-[#09090b] rounded-xl border border-black/[0.04] dark:border-white/[0.04] overflow-hidden shadow-[0_1px_3px_rgba(0,0,0,0.04)]"
+    >
+      <div className="p-5 border-b border-black/[0.04] dark:border-white/[0.04]">
+        <div className="flex items-center gap-2.5">
+          <div className="w-8 h-8 bg-black/[0.04] dark:bg-white/[0.06] rounded-lg flex items-center justify-center">
+            <Bookmark className="w-4 h-4 text-muted-foreground/60" />
+          </div>
+          <div>
+            <h3 className="text-sm font-bold text-foreground">
+              {t("saved_for_later_title")}
+            </h3>
+            <p className="text-[10px] text-muted-foreground/50">
+              {items.length} {t("items_saved_count_suffix")}
+            </p>
+          </div>
         </div>
+      </div>
 
-        <motion.div
-          layout
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"
-        >
-          {items.map((item, index) => (
+      <div className="divide-y divide-black/[0.04] dark:divide-white/[0.04]">
+        <AnimatePresence mode="popLayout">
+          {items.map((item) => (
             <motion.div
               key={item._id}
-              initial={{ opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{
-                delay: index * 0.04,
-                ease: [0.21, 0.47, 0.32, 0.98],
-              }}
-              className="bg-white dark:bg-[#09090b] rounded-xl border border-black/[0.04] dark:border-white/[0.04] p-4 shadow-[0_1px_3px_rgba(0,0,0,0.04)]"
+              layout
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: "auto" }}
+              exit={{ opacity: 0, height: 0 }}
+              className="p-4 flex items-center gap-4"
             >
-              <div className="flex items-start gap-4">
-                <div className="relative w-16 aspect-square bg-black/[0.02] dark:bg-white/[0.02] rounded-lg overflow-hidden border border-black/[0.04] dark:border-white/[0.04] shrink-0">
-                  <Image
-                    src={
-                      item.image ||
-                      `https://picsum.photos/seed/${encodeURIComponent(item.name)}/200/200`
-                    }
-                    alt={item.name}
-                    fill
-                    sizes="64px"
-                    className="object-cover"
-                  />
-                </div>
-
-                <div className="flex-1 min-w-0 space-y-1.5">
-                  <h3 className="text-xs font-semibold text-foreground leading-tight line-clamp-2">
-                    {item.name}
-                  </h3>
-                  {item.variant && (
-                    <span className="text-[9px] font-medium text-muted-foreground/50">
-                      {item.variant}
-                    </span>
-                  )}
-                  <div className="flex items-center gap-2">
-                    <span className="text-sm font-bold text-foreground">
-                      {t("currency_symbol")}
-                      {(
-                        item.discountPrice ??
-                        item.price
-                      ).toLocaleString("bn-BD")}
-                    </span>
-                    {item.discountPrice && (
-                      <span className="text-[9px] font-medium text-muted-foreground/40 line-through">
-                        {t("currency_symbol")}
-                        {item.price.toLocaleString(
-                          "bn-BD"
-                        )}
-                      </span>
-                    )}
-                  </div>
-                </div>
+              <div className="relative w-14 h-14 bg-black/[0.02] dark:bg-white/[0.02] rounded-lg overflow-hidden border border-black/[0.04] dark:border-white/[0.04] shrink-0">
+                <Image
+                  src={
+                    item.image ||
+                    getProductFallbackImage(item.name)
+                  }
+                  alt={item.name}
+                  fill
+                  sizes="56px"
+                  className="object-cover"
+                />
               </div>
 
-              <div className="mt-3 pt-3 border-t border-black/[0.04] dark:border-white/[0.04] flex items-center gap-2">
-                <motion.button
-                  whileTap={{ scale: 0.98 }}
-                  onClick={() =>
-                    handleMoveToCart(item)
-                  }
-                  className="flex-1 flex items-center justify-center gap-1.5 px-3 py-2 rounded-lg bg-foreground text-background font-semibold text-[11px] transition-all active:scale-[0.98]"
-                >
-                  <ShoppingBag className="w-3.5 h-3.5" />
-                  {t("move_to_cart")}
-                </motion.button>
+              <div className="flex-1 min-w-0">
+                <h4 className="text-xs font-semibold text-foreground line-clamp-1">
+                  {item.name}
+                </h4>
+                <p className="text-xs font-bold text-foreground mt-0.5">
+                  {t("currency_symbol")}
+                  {item.price.toLocaleString("bn-BD")}
+                </p>
+              </div>
 
-                <motion.button
-                  whileTap={{ scale: 0.98 }}
-                  onClick={() =>
-                    onMoveToWishlist?.(item._id)
-                  }
-                  className="p-2 rounded-lg border border-black/[0.04] dark:border-white/[0.04] text-muted-foreground/50 hover:text-foreground hover:bg-black/[0.04] dark:hover:bg-white/[0.06] transition-all"
+              <div className="flex items-center gap-1.5">
+                <button
+                  onClick={() => onMoveToCart(item._id)}
+                  className="flex items-center gap-1.5 px-3 py-1.5 bg-foreground text-background rounded-lg text-[10px] font-semibold hover:opacity-90 active:scale-[0.98] transition-all"
+                >
+                  <ShoppingCart className="w-3 h-3" />
+                  {t("move_to_cart_button")}
+                </button>
+                <button
+                  onClick={() => onMoveToWishlist(item._id)}
+                  className="p-1.5 rounded-lg text-muted-foreground/40 hover:text-rose-500 hover:bg-rose-500/[0.06] transition-all"
+                  title={t("wishlist_button")}
                 >
                   <Heart className="w-3.5 h-3.5" />
-                </motion.button>
-
-                <motion.button
-                  whileTap={{ scale: 0.98 }}
-                  onClick={() =>
-                    onRemove(item._id)
-                  }
-                  className="p-2 rounded-lg text-muted-foreground/50 hover:text-rose-500 hover:bg-rose-500/[0.06] transition-all"
+                </button>
+                <button
+                  onClick={() => onRemove(item._id)}
+                  className="p-1.5 rounded-lg text-muted-foreground/40 hover:text-rose-500 hover:bg-rose-500/[0.06] transition-all"
+                  title={t("remove")}
                 >
                   <Trash2 className="w-3.5 h-3.5" />
-                </motion.button>
+                </button>
               </div>
             </motion.div>
           ))}
-        </motion.div>
-      </motion.div>
-    </AnimatePresence>
+        </AnimatePresence>
+      </div>
+    </motion.div>
   );
 }

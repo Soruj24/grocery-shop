@@ -1,84 +1,95 @@
 "use client";
 
 import { useLanguage } from "@/contexts/LanguageContext";
+import { motion } from "framer-motion";
 
 interface PriceBreakdownProps {
-  totalPrice: number;
-  deliveryFee: number;
-  vat: number;
-  discount: number;
-  freeDeliveryThreshold: number;
+  subtotal: number;
+  shipping: number;
+  serviceCharge: number;
+  tax: number;
+  discount?: number;
+  total: number;
 }
 
 export default function PriceBreakdown({
-  totalPrice,
-  deliveryFee,
-  vat,
-  discount,
-  freeDeliveryThreshold,
+  subtotal,
+  shipping,
+  serviceCharge,
+  tax,
+  discount = 0,
+  total,
 }: PriceBreakdownProps) {
   const { t } = useLanguage();
-  const finalTotal =
-    totalPrice + deliveryFee + vat - discount;
 
   return (
-    <div className="space-y-3 pt-2">
-      <div className="flex justify-between items-center text-sm font-medium text-muted-foreground/60">
-        <span>{t("subtotal")}</span>
-        <span className="text-foreground">
+    <div className="space-y-3">
+      <div className="flex items-center justify-between">
+        <span className="text-xs text-muted-foreground/60">
+          {t("subtotal")}
+        </span>
+        <span className="text-xs font-semibold text-foreground">
           {t("currency_symbol")}
-          {totalPrice.toLocaleString("bn-BD")}
+          {subtotal.toLocaleString("bn-BD")}
         </span>
       </div>
 
-      <div className="flex justify-between items-center text-sm font-medium text-muted-foreground/60">
-        <div className="flex items-center gap-2">
-          <span>{t("delivery_charge")}</span>
-          {totalPrice > freeDeliveryThreshold && (
-            <span className="text-[9px] font-semibold bg-emerald-500/[0.06] text-emerald-600 dark:text-emerald-400 px-1.5 py-0.5 rounded">
-              {t("free")}
-            </span>
-          )}
-        </div>
-        <span className="text-foreground">
-          {deliveryFee === 0
-            ? `${t("currency_symbol")}${(0).toLocaleString("bn-BD")}`
-            : `${t("currency_symbol")}${deliveryFee.toLocaleString("bn-BD")}`}
+      <div className="flex items-center justify-between">
+        <span className="text-xs text-muted-foreground/60">
+          {t("delivery_charge")}
+        </span>
+        <span className="text-xs font-semibold text-foreground">
+          {shipping === 0
+            ? t("free")
+            : `${t("currency_symbol")}${shipping.toLocaleString("bn-BD")}`}
         </span>
       </div>
 
-      <div className="flex justify-between items-center text-sm font-medium text-muted-foreground/60">
-        <span>
-          {t("vat")} {t("vat_percentage")}
+      <div className="flex items-center justify-between">
+        <span className="text-xs text-muted-foreground/60">
+          {t("service_charge")}
         </span>
-        <span className="text-foreground">
+        <span className="text-xs font-semibold text-foreground">
+          {serviceCharge === 0
+            ? t("free")
+            : `${t("currency_symbol")}${serviceCharge.toLocaleString("bn-BD")}`}
+        </span>
+      </div>
+
+      <div className="flex items-center justify-between">
+        <span className="text-xs text-muted-foreground/60">
+          {t("tax_included")}
+        </span>
+        <span className="text-xs font-semibold text-foreground">
           {t("currency_symbol")}
-          {vat.toLocaleString("bn-BD")}
+          {tax.toLocaleString("bn-BD")}
         </span>
       </div>
 
       {discount > 0 && (
-        <div className="flex justify-between items-center text-sm font-medium text-emerald-600 dark:text-emerald-400">
-          <span>{t("discount")}</span>
-          <span>
+        <motion.div
+          initial={{ opacity: 0, height: 0 }}
+          animate={{ opacity: 1, height: "auto" }}
+          className="flex items-center justify-between"
+        >
+          <span className="text-xs text-emerald-600">
+            {t("discount")}
+          </span>
+          <span className="text-xs font-semibold text-emerald-600">
             -{t("currency_symbol")}
             {discount.toLocaleString("bn-BD")}
           </span>
-        </div>
+        </motion.div>
       )}
 
-      <div className="h-px bg-black/[0.04] dark:bg-white/[0.04] my-3" />
-
-      <div className="flex justify-between items-end">
-        <div className="space-y-1">
-          <span className="text-[9px] font-semibold uppercase tracking-wider text-muted-foreground/50">
-            {t("grand_total")}
-          </span>
-          <div className="text-2xl font-bold text-foreground tracking-tight">
-            {t("currency_symbol")}
-            {finalTotal.toLocaleString("bn-BD")}
-          </div>
-        </div>
+      <div className="border-t border-black/[0.06] dark:border-white/[0.06] pt-3 flex items-center justify-between">
+        <span className="text-sm font-bold text-foreground">
+          {t("grand_total")}
+        </span>
+        <span className="text-lg font-bold text-foreground tracking-tight">
+          {t("currency_symbol")}
+          {total.toLocaleString("bn-BD")}
+        </span>
       </div>
     </div>
   );

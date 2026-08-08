@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useCart } from "@/contexts/CartContext";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, ShoppingBag } from "lucide-react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import EmptyCartState from "@/features/cart/components/EmptyCartState";
@@ -95,33 +95,46 @@ export default function CartPage() {
     (item) => !savedForLater.includes(item._id)
   );
 
+  // Estimated delivery: 2 days from now
+  const deliveryDate = new Date();
+  deliveryDate.setDate(deliveryDate.getDate() + 2);
+  const formattedDelivery = deliveryDate.toLocaleDateString("en-US", {
+    weekday: "long",
+    month: "long",
+    day: "numeric",
+  });
+
   return (
-    <div className="max-w-7xl mx-auto py-6 md:py-12 px-4 space-y-8 md:space-y-12">
+    <div className="max-w-7xl mx-auto px-4 py-8 md:py-12 space-y-8">
+      {/* Page Header */}
       <motion.div
-        initial={{ opacity: 0, y: 10 }}
+        initial={{ opacity: 0, y: 12 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{
-          duration: 0.3,
+          duration: 0.4,
           ease: [0.21, 0.47, 0.32, 0.98],
         }}
-        className="flex flex-col md:flex-row md:items-end justify-between gap-4 md:gap-6"
+        className="flex flex-col md:flex-row md:items-end justify-between gap-5"
       >
-        <div className="space-y-2">
-          <h1 className="text-3xl md:text-4xl font-bold text-foreground tracking-tight">
-            {t("your_shopping_bag")}
-          </h1>
+        <div className="space-y-1.5">
           <div className="flex items-center gap-3">
-            <span className="text-sm font-medium text-muted-foreground/60">
-              {cart.length.toLocaleString("bn-BD")}{" "}
-              {t("items_in_bag_count_suffix")}
-            </span>
-            <span className="text-sm font-semibold text-foreground">
+            <div className="w-10 h-10 bg-foreground text-background rounded-xl flex items-center justify-center">
+              <ShoppingBag className="w-5 h-5" />
+            </div>
+            <h1 className="text-3xl md:text-4xl font-bold text-foreground tracking-tight">
+              {t("your_shopping_bag")}
+            </h1>
+          </div>
+          <p className="text-sm font-medium text-muted-foreground/60 ml-[52px]">
+            {cart.length.toLocaleString("bn-BD")}{" "}
+            {t("items_in_bag_count_suffix")} ·{" "}
+            <span className="text-foreground font-semibold">
               {t("currency_symbol")}
               {totalPrice.toLocaleString("bn-BD")}
             </span>
-          </div>
+          </p>
         </div>
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-3 ml-[52px] md:ml-0">
           <button
             onClick={handleClearCart}
             className="px-4 py-2 rounded-lg text-rose-500 bg-rose-500/[0.06] font-medium text-xs hover:bg-rose-500/[0.1] transition-all"
@@ -130,26 +143,47 @@ export default function CartPage() {
           </button>
           <Link
             href="/products"
-            className="text-sm font-medium text-foreground flex items-center gap-2 hover:gap-3 transition-all"
+            className="text-sm font-medium text-muted-foreground/60 flex items-center gap-1.5 hover:text-foreground transition-colors"
           >
             {t("continue_shopping")}{" "}
-            <ArrowRight className="w-4 h-4" />
+            <ArrowRight className="w-3.5 h-3.5" />
           </Link>
         </div>
       </motion.div>
 
-      <div className="hidden lg:grid grid-cols-12 gap-6 px-2 text-[10px] font-semibold uppercase tracking-wider text-muted-foreground/50">
-        <span className="col-span-6">পণ্য</span>
+      {/* Estimated Delivery Banner */}
+      <motion.div
+        initial={{ opacity: 0, y: 8 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.1 }}
+        className="bg-black/[0.02] dark:bg-white/[0.03] border border-black/[0.04] dark:border-white/[0.04] rounded-xl p-4 flex flex-col sm:flex-row items-start sm:items-center gap-3"
+      >
+        <div className="flex items-center gap-2.5">
+          <div className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse" />
+          <span className="text-xs font-semibold text-foreground">
+            Estimated Delivery
+          </span>
+        </div>
+        <span className="text-sm font-bold text-foreground sm:ml-auto">
+          {formattedDelivery}
+        </span>
+      </motion.div>
+
+      {/* Column Headers (Desktop) */}
+      <div className="hidden lg:grid grid-cols-12 gap-6 px-1 text-[10px] font-semibold uppercase tracking-wider text-muted-foreground/40">
+        <span className="col-span-7">পণ্য</span>
         <span className="col-span-2">দাম</span>
         <span className="col-span-2">পরিমাণ</span>
-        <span className="col-span-2 text-right">
-          সাব-টোটাল
+        <span className="col-span-1 text-right">
+          মোট
         </span>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 md:gap-12 items-start">
+      {/* Main Grid */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8 items-start">
+        {/* Product List */}
         <motion.div
-          className="lg:col-span-2 space-y-5"
+          className="lg:col-span-2 space-y-3"
           initial="hidden"
           animate="show"
           variants={{
@@ -169,7 +203,7 @@ export default function CartPage() {
               variants={{
                 hidden: {
                   opacity: 0,
-                  y: 10,
+                  y: 12,
                 },
                 show: {
                   opacity: 1,
@@ -190,9 +224,11 @@ export default function CartPage() {
           ))}
         </motion.div>
 
+        {/* Order Summary */}
         <CartSummary totalPrice={totalPrice} />
       </div>
 
+      {/* Save for Later */}
       <SaveForLater
         items={savedItems}
         onMoveToCart={handleMoveToCart}
@@ -206,15 +242,17 @@ export default function CartPage() {
         }}
       />
 
+      {/* Cross Sell */}
       <CrossSell />
 
+      {/* Mobile Checkout Bar */}
       <div
         className="md:hidden fixed left-0 right-0 z-40"
         style={{
           bottom: "env(safe-area-inset-bottom)",
         }}
       >
-        <div className="mx-4 mb-4 bg-white dark:bg-[#09090b] border border-black/[0.06] dark:border-white/[0.06] rounded-xl shadow-[0_8px_30px_rgba(0,0,0,0.12)] px-4 py-3 flex items-center justify-between">
+        <div className="mx-4 mb-4 bg-white dark:bg-[#09090b] border border-black/[0.06] dark:border-white/[0.06] rounded-xl shadow-[0_8px_40px_rgba(0,0,0,0.16)] px-4 py-3 flex items-center justify-between backdrop-blur-xl bg-white/95 dark:bg-[#09090b]/95">
           <div className="flex flex-col">
             <span className="text-[9px] font-semibold uppercase tracking-wider text-muted-foreground/50">
               {t("grand_total")}
@@ -226,9 +264,10 @@ export default function CartPage() {
           </div>
           <Link
             href="/checkout"
-            className="bg-foreground text-background px-5 py-3 rounded-lg font-semibold text-sm active:scale-[0.98] transition-all"
+            className="bg-foreground text-background px-6 py-3 rounded-lg font-semibold text-sm active:scale-[0.98] transition-all flex items-center gap-2"
           >
             {t("checkout_button")}
+            <ArrowRight className="w-4 h-4" />
           </Link>
         </div>
       </div>

@@ -1,142 +1,123 @@
 "use client";
 
-import { useState } from "react";
+import {
+  Sparkles,
+  ArrowRight,
+  Plus,
+} from "lucide-react";
 import { motion } from "framer-motion";
-import { Plus } from "lucide-react";
-import Image from "next/image";
-import { useCart } from "@/contexts/CartContext";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useQuery } from "@tanstack/react-query";
+import { useCart } from "@/contexts/CartContext";
+import { toast } from "@/utils/swal";
+import Image from "next/image";
 import { getProductFallbackImage } from "@/constants/fallback-images";
-import { toast } from "react-hot-toast";
+import Link from "next/link";
 
-interface CrossSellItem {
-  _id: string;
-  name: string;
-  price: number;
-  discountPrice?: number;
-  image?: string;
-  unit?: string;
+async function fetchProducts() {
+  const res = await fetch("/api/products/list?limit=6&sort=newest");
+  if (!res.ok) throw new Error("Failed to fetch");
+  const data = await res.json();
+  return data.products || [];
 }
-
-interface CrossSellProps {
-  items?: CrossSellItem[];
-}
-
-const defaultItems: CrossSellItem[] = [
-  {
-    _id: "cs1",
-    name: "Organic Honey",
-    price: 450,
-    discountPrice: 399,
-    image: "https://picsum.photos/seed/honey/200/200",
-  },
-  {
-    _id: "cs2",
-    name: "Mixed Nuts",
-    price: 350,
-    discountPrice: 299,
-    image: "https://picsum.photos/seed/nuts/200/200",
-  },
-  {
-    _id: "cs3",
-    name: "Green Tea",
-    price: 250,
-    discountPrice: 199,
-    image: "https://picsum.photos/seed/greentea/200/200",
-  },
-  {
-    _id: "cs4",
-    name: "Olive Oil",
-    price: 550,
-    discountPrice: 499,
-    image: "https://picsum.photos/seed/oliveoil/200/200",
-  },
-];
 
 export default function CrossSell() {
   const { t } = useLanguage();
-  const { addToCart } = useCart();
-  const [addedIds, setAddedIds] = useState<
-    Set<string>
-  >(new Set());
+  const { addToCart, cart } = useCart();
 
-  const handleAdd = (
-    item: (typeof defaultItems)[0]
-  ) => {
-    addToCart(item, 1);
-    setAddedIds(
-      (prev) => new Set(prev).add(item._id)
-    );
-    toast.success(`${item.name} added to cart`);
-    setTimeout(() => {
-      setAddedIds((prev) => {
-        const next = new Set(prev);
-        next.delete(item._id);
-        return next;
-      });
-    }, 2000);
+  const { data: products } = useQuery({
+    queryKey: ["cross-sell-products"],
+    queryFn: fetchProducts,
+  });
+
+  const recommendations =
+    products?.filter(
+      (p: any) =>
+        p.stock > 0 &&
+        !cart.some((c: any) => c._id === p._id)
+    ) || [];
+
+  if (recommendations.length === 0) return null;
+
+  const handleQuickAdd = (product: any) => {
+    try {
+      addToCart(product, 1);
+      toast.success(
+        `${product.name} - ${t("added_to_cart")}`
+      );
+    } catch {
+      toast.error(t("failed_to_add_to_cart"));
+    }
   };
 
   return (
-    <div className="mt-12 space-y-6">
-      <h2 className="text-lg font-bold text-foreground tracking-tight">
-        You Might Also Like
-      </h2>
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        {defaultItems.map((item, idx) => (
-          <motion.div
-            key={item._id}
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{
-              delay: idx * 0.04,
-              ease: [0.21, 0.47, 0.32, 0.98],
-            }}
-            className="bg-white dark:bg-[#09090b] rounded-xl border border-black/[0.04] dark:border-white/[0.04] p-3 shadow-[0_1px_3px_rgba(0,0,0,0.04)]"
-          >
-            <div className="relative w-full aspect-square bg-black/[0.02] dark:bg-white/[0.02] rounded-lg overflow-hidden mb-2.5">
-              <Image
-                src={
-                  item.image ||
-                  getProductFallbackImage(
-                    item.name
-                  )
-                }
-                alt={item.name}
-                fill
-                sizes="(max-width: 768px) 50vw, 25vw"
-                className="object-cover"
-              />
+    <motion.div
+      initial={{ opacity: 0, y: 12 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: 0.25 }}
+      className="bg-white dark:bg-[#09090b] rounded-xl border border-black/[0.04] dark:border-white/[0.04] overflow-hidden shadow-[0_1px_3px_rgba(0,0,0,0.04)]"
+    >
+      <div className="p-5 border-b border-black/[0.04] dark:border-white/[0.04]">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2.5">
+            <div className="w-8 h-8 bg-black/[0.04] dark:bg-white/[0.06] rounded-lg flex items-center justify-center">
+              <Sparkles className="w-4 h-4 text-muted-foreground/60" />
             </div>
-            <h3 className="text-xs font-semibold text-foreground line-clamp-2 mb-1.5">
-              {item.name}
+            <h3 className="text-sm font-bold text-foreground">
+              {t("you_may_also_like")}
             </h3>
-            <div className="flex items-center gap-1.5 mb-2.5">
-              <span className="text-sm font-bold text-foreground">
-                {t("currency_symbol")}
-                {(
-                  item.discountPrice || item.price
-                ).toLocaleString("bn-BD")}
-              </span>
-              {item.discountPrice && (
-                <span className="text-[9px] font-medium text-muted-foreground/40 line-through">
-                  {t("currency_symbol")}
-                  {item.price.toLocaleString(
-                    "bn-BD"
-                  )}
-                </span>
-              )}
-            </div>
-            <button
-              onClick={() => handleAdd(item)}
-              className="w-full flex items-center justify-center gap-1.5 bg-foreground text-background py-2 rounded-lg font-semibold text-[11px] transition-all active:scale-[0.98] hover:opacity-90"
-            >
-              <Plus className="w-3.5 h-3.5" />
-              Add
-            </button>
-          </motion.div>
-        ))}
+          </div>
+          <Link
+            href="/products"
+            className="text-[10px] font-medium text-muted-foreground/50 hover:text-foreground transition-colors flex items-center gap-1"
+          >
+            {t("see_all")}
+            <ArrowRight className="w-3 h-3" />
+          </Link>
+        </div>
       </div>
-    </div>
+
+      <div className="p-5">
+        <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+          {recommendations.slice(0, 6).map((product: any) => (
+            <motion.div
+              key={product._id}
+              whileHover={{ y: -2 }}
+              className="group relative bg-black/[0.02] dark:bg-white/[0.03] rounded-xl border border-black/[0.04] dark:border-white/[0.04] overflow-hidden hover:shadow-[0_4px_16px_rgba(0,0,0,0.06)] transition-all duration-300"
+            >
+              <div className="relative aspect-square bg-black/[0.03] dark:bg-white/[0.03]">
+                <Image
+                  src={
+                    product.images?.[0] ||
+                    product.image ||
+                    getProductFallbackImage(product.name)
+                  }
+                  alt={product.name}
+                  fill
+                  sizes="(max-width: 640px) 50vw, 33vw"
+                  className="object-cover group-hover:scale-105 transition-transform duration-500"
+                />
+                <button
+                  onClick={() => handleQuickAdd(product)}
+                  className="absolute bottom-2 right-2 w-7 h-7 bg-foreground text-background rounded-lg flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-200 shadow-lg active:scale-90"
+                >
+                  <Plus className="w-3.5 h-3.5" />
+                </button>
+              </div>
+
+              <div className="p-3 space-y-1">
+                <h4 className="text-[11px] font-semibold text-foreground line-clamp-2 leading-tight">
+                  {product.name}
+                </h4>
+                <p className="text-xs font-bold text-foreground">
+                  {t("currency_symbol")}
+                  {(product.discountPrice || product.price).toLocaleString("bn-BD")}
+                </p>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    </motion.div>
   );
 }
