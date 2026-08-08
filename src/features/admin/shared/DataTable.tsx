@@ -193,7 +193,7 @@ export default function DataTable<T extends { [key: string]: any }>({
                   className={cn(
                     "h-8 w-8 rounded-lg text-xs font-medium transition-colors",
                     p === page
-                      ? "bg-primary text-primary-foreground"
+                      ? "bg-foreground text-background"
                       : "text-muted-foreground hover:bg-muted",
                   )}
                 >

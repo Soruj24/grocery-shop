@@ -100,16 +100,18 @@ function StockAdjustmentModal({
 
           {/* New Stock */}
           <div className="space-y-1.5">
-            <label className="text-xs font-semibold text-foreground">New Stock Quantity</label>
+            <label htmlFor="new-stock" className="text-xs font-semibold text-foreground">New Stock Quantity</label>
             <div className="flex items-center gap-2">
               <button type="button" onClick={() => setNewStock(Math.max(0, newStock - 1))}
-                className="h-10 w-10 rounded-lg border border-border bg-muted flex items-center justify-center text-muted-foreground hover:text-foreground hover:bg-muted/80 transition-colors">
+                className="h-10 w-10 rounded-lg border border-border bg-muted flex items-center justify-center text-muted-foreground hover:text-foreground hover:bg-muted/80 transition-colors"
+                aria-label="Decrease stock">
                 <Minus className="h-4 w-4" />
               </button>
-              <input type="number" value={newStock} onChange={(e) => setNewStock(Math.max(0, parseInt(e.target.value) || 0))}
+              <input id="new-stock" type="number" value={newStock} onChange={(e) => setNewStock(Math.max(0, parseInt(e.target.value) || 0))}
                 className="flex-1 h-10 px-4 rounded-lg border border-border bg-muted text-center text-lg font-bold text-foreground focus:ring-1 focus:ring-ring outline-none tabular-nums" min={0} />
               <button type="button" onClick={() => setNewStock(newStock + 1)}
-                className="h-10 w-10 rounded-lg border border-border bg-muted flex items-center justify-center text-muted-foreground hover:text-foreground hover:bg-muted/80 transition-colors">
+                className="h-10 w-10 rounded-lg border border-border bg-muted flex items-center justify-center text-muted-foreground hover:text-foreground hover:bg-muted/80 transition-colors"
+                aria-label="Increase stock">
                 <Plus className="h-4 w-4" />
               </button>
             </div>
@@ -140,8 +142,8 @@ function StockAdjustmentModal({
 
           {/* Type */}
           <div className="space-y-1.5">
-            <label className="text-xs font-semibold text-foreground">Adjustment Type</label>
-            <select value={type} onChange={(e) => setType(e.target.value)}
+            <label htmlFor="adjustment-type" className="text-xs font-semibold text-foreground">Adjustment Type</label>
+            <select id="adjustment-type" value={type} onChange={(e) => setType(e.target.value)}
               className="w-full px-3 py-2.5 rounded-lg border border-border bg-muted text-sm text-foreground focus:ring-1 focus:ring-ring outline-none appearance-none cursor-pointer">
               <option value="adjustment">Adjustment</option>
               <option value="restock">Restock</option>
@@ -152,16 +154,16 @@ function StockAdjustmentModal({
 
           {/* Reason */}
           <div className="space-y-1.5">
-            <label className="text-xs font-semibold text-foreground">Reason</label>
-            <input type="text" value={reason} onChange={(e) => setReason(e.target.value)}
+            <label htmlFor="adjustment-reason" className="text-xs font-semibold text-foreground">Reason</label>
+            <input id="adjustment-reason" type="text" value={reason} onChange={(e) => setReason(e.target.value)}
               placeholder="e.g. Physical count correction"
               className="w-full px-3 py-2.5 rounded-lg border border-border bg-muted text-sm text-foreground placeholder:text-muted-foreground focus:ring-1 focus:ring-ring outline-none" />
           </div>
 
           {/* Note */}
           <div className="space-y-1.5">
-            <label className="text-xs font-semibold text-foreground">Note (optional)</label>
-            <textarea value={note} onChange={(e) => setNote(e.target.value)} rows={2}
+            <label htmlFor="adjustment-note" className="text-xs font-semibold text-foreground">Note (optional)</label>
+            <textarea id="adjustment-note" value={note} onChange={(e) => setNote(e.target.value)} rows={2}
               placeholder="Additional details..."
               className="w-full px-3 py-2.5 rounded-lg border border-border bg-muted text-sm text-foreground placeholder:text-muted-foreground focus:ring-1 focus:ring-ring outline-none resize-none" />
           </div>
@@ -374,7 +376,7 @@ export default function AdminInventoryPage() {
         <AdminPageHeader title="Inventory" description="Monitor stock levels and manage inventory" />
         <div className="rounded-xl border border-border bg-card flex flex-col items-center justify-center py-20">
           <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-danger-subtle mb-4">
-            <span className="text-danger text-2xl">!</span>
+            <AlertTriangle className="h-6 w-6 text-danger" />
           </div>
           <p className="text-base font-semibold text-foreground">Failed to load inventory</p>
           <p className="text-sm text-muted-foreground mt-1">Check your connection and try again.</p>

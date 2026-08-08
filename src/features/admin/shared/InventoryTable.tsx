@@ -98,15 +98,17 @@ function FilterPill({ label, value, options, onChange }: {
         <ChevronDown className="h-3 w-3" />
       </button>
       {open && (
-        <div className="absolute left-0 top-full mt-1 w-44 rounded-xl border border-border bg-card shadow-lg z-50 py-1 animate-in fade-in slide-in-from-top-2">
+        <div className="absolute left-0 top-full mt-1 w-44 rounded-xl border border-border bg-card shadow-lg z-50 py-1 animate-in fade-in slide-in-from-top-2" role="listbox" aria-label={`${label} options`}>
           <button
             onClick={() => { onChange(""); setOpen(false); }}
             className={cn("flex w-full items-center justify-between px-3 py-2 text-[13px] transition-colors", !value ? "bg-muted text-foreground font-medium" : "text-muted-foreground hover:bg-muted hover:text-foreground")}
+            role="option" aria-selected={!value}
           >
             All {label}
           </button>
           {options.map((opt) => (
             <button key={opt.value} onClick={() => { onChange(opt.value); setOpen(false); }}
+              role="option" aria-selected={value === opt.value}
               className={cn("flex w-full items-center justify-between px-3 py-2 text-[13px] transition-colors", value === opt.value ? "bg-muted text-foreground font-medium" : "text-muted-foreground hover:bg-muted hover:text-foreground")}>
               <span>{opt.label}</span>
               <div className="flex items-center gap-2">
@@ -148,10 +150,10 @@ export default function InventoryTable({
         <div className="flex flex-wrap items-center gap-3 px-5 py-3">
           <div className="relative flex-1 min-w-[200px] max-w-sm">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-            <input type="text" placeholder="Search inventory..." value={search} onChange={(e) => onSearchChange(e.target.value)}
+            <input type="text" placeholder="Search inventory..." value={search} onChange={(e) => onSearchChange(e.target.value)} aria-label="Search inventory"
               className={cn("w-full rounded-lg border border-border bg-muted pl-10 pr-4 py-2 text-sm text-foreground placeholder:text-muted-foreground focus:border-ring focus:ring-1 focus:ring-ring outline-none transition-all")} />
             {search && (
-              <button onClick={() => onSearchChange("")} className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground" aria-label="Clear">
+              <button onClick={() => onSearchChange("")} className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground" aria-label="Clear search">
                 <X className="h-3.5 w-3.5" />
               </button>
             )}
@@ -290,8 +292,8 @@ export default function InventoryTable({
 
       {/* ─── Pagination ─── */}
       {!loading && totalPages > 0 && (
-        <div className="flex flex-wrap items-center justify-between gap-4 border-t border-border px-5 py-3.5">
-          <p className="text-xs text-muted-foreground">
+        <div className="flex flex-wrap items-center justify-between gap-4 border-t border-border px-5 py-3.5" role="navigation" aria-label="Pagination">
+          <p className="text-xs text-muted-foreground" aria-live="polite">
             {totalCount > 0 ? `Showing ${(currentPage - 1) * 50 + 1} to ${Math.min(currentPage * 50, totalCount)} of ${totalCount}` : "No products"}
           </p>
           <div className="flex items-center gap-1">

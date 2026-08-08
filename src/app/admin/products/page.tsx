@@ -13,7 +13,7 @@ import AdminPageHeader from "@/features/admin/shared/AdminPageHeader";
 import ProductsTable from "@/features/admin/shared/ProductsTable";
 import ConfirmDialog from "@/components/ui/system/ConfirmDialog";
 import { useToast } from "@/components/ui/system/Toast";
-import { Plus } from "lucide-react";
+import { Plus, AlertTriangle } from "lucide-react";
 import ProductModalWrapper from "@/features/admin/components/ProductModalWrapper";
 import type { AdminProduct, AdminProductFormData } from "@/types/admin";
 
@@ -204,7 +204,7 @@ export default function AdminProductsPage() {
         />
         <div className="rounded-xl border border-border bg-card flex flex-col items-center justify-center py-20">
           <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-danger-subtle mb-4">
-            <span className="text-danger text-2xl">!</span>
+            <AlertTriangle className="h-6 w-6 text-danger" />
           </div>
           <p className="text-base font-semibold text-foreground">Failed to load products</p>
           <p className="text-sm text-muted-foreground mt-1">Check your connection and try again.</p>

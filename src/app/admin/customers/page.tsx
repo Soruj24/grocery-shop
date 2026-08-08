@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useGetAdminCustomersQuery } from "@/redux/apiSlice";
 import AdminPageHeader from "@/features/admin/shared/AdminPageHeader";
 import CustomersTable from "@/features/admin/shared/CustomersTable";
+import { AlertTriangle } from "lucide-react";
 import type { AdminCustomer } from "@/types/admin";
 
 export default function AdminCustomersPage() {
@@ -55,7 +56,7 @@ export default function AdminCustomersPage() {
         <AdminPageHeader title="Customers" description="View and manage your customers" />
         <div className="rounded-xl border border-border bg-card flex flex-col items-center justify-center py-20">
           <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-danger-subtle mb-4">
-            <span className="text-danger text-2xl">!</span>
+            <AlertTriangle className="h-6 w-6 text-danger" />
           </div>
           <p className="text-base font-semibold text-foreground">Failed to load customers</p>
           <p className="text-sm text-muted-foreground mt-1">Check your connection and try again.</p>

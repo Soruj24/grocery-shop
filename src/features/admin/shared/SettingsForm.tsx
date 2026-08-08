@@ -51,7 +51,7 @@ export function SettingsShell({ title, description, children, onSave, saving, di
           <h2 className="text-lg font-semibold text-foreground">{title}</h2>
           <p className="text-sm text-muted-foreground mt-0.5">{description}</p>
         </div>
-        <button onClick={onSave} disabled={saving || !dirty}
+        <button onClick={onSave} disabled={saving || !dirty} aria-disabled={saving || !dirty}
           className={cn(
             "flex items-center gap-2 rounded-lg px-4 py-2.5 text-sm font-medium transition-all shrink-0",
             dirty ? "bg-foreground text-background hover:bg-foreground/90 active:scale-[0.98]" : "bg-muted text-muted-foreground cursor-not-allowed"
@@ -124,7 +124,7 @@ export function Toggle({ checked, onChange, label }: {
 }) {
   return (
     <button type="button" onClick={() => onChange(!checked)}
-      className="flex items-center gap-3 group" role="switch" aria-checked={checked}>
+      className="flex items-center gap-3 group focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 rounded-lg" role="switch" aria-checked={checked}>
       <div className={cn("relative h-5 w-9 rounded-full transition-colors", checked ? "bg-foreground" : "bg-muted border border-border")}>
         <div className={cn("absolute top-0.5 left-0.5 h-4 w-4 rounded-full bg-background transition-transform",
           checked ? "translate-x-4" : "translate-x-0")} />

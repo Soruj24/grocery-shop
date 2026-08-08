@@ -6,7 +6,7 @@ import { useGetAdminCustomerDetailsQuery } from "@/redux/apiSlice";
 import {
   ArrowLeft, User, Mail, Phone, MapPin, Calendar, ShoppingCart,
   DollarSign, Star, Clock, TrendingUp, Package, Loader2, CreditCard,
-  Award, Activity,
+  Award, Activity, AlertTriangle,
 } from "lucide-react";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
 import { cn } from "@/utils/utils";
@@ -51,7 +51,7 @@ function ErrorState() {
   return (
     <div className="flex flex-col items-center justify-center py-20">
       <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-danger-subtle mb-4">
-        <span className="text-danger text-2xl">!</span>
+        <AlertTriangle className="h-6 w-6 text-danger" />
       </div>
       <p className="text-base font-semibold text-foreground">Customer not found</p>
       <p className="text-sm text-muted-foreground mt-1">This customer may have been removed.</p>

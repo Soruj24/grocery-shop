@@ -14,18 +14,20 @@ export default function AdminPageHeader({ title, description, actions, breadcrum
   return (
     <div className="mb-8">
       {breadcrumbs && breadcrumbs.length > 0 && (
-        <div className="flex items-center gap-2 mb-3">
-          {breadcrumbs.map((crumb, i) => (
-            <span key={i} className="flex items-center gap-2">
-              {i > 0 && <span className="text-border">/</span>}
-              {crumb.href ? (
-                <a href={crumb.href} className="text-xs font-medium text-muted-foreground hover:text-foreground">{crumb.label}</a>
-              ) : (
-                <span className="text-xs font-medium text-foreground">{crumb.label}</span>
-              )}
-            </span>
-          ))}
-        </div>
+        <nav aria-label="Breadcrumb" className="mb-3">
+          <ol className="flex items-center gap-2">
+            {breadcrumbs.map((crumb, i) => (
+              <li key={i} className="flex items-center gap-2">
+                {i > 0 && <span className="text-border" aria-hidden="true">/</span>}
+                {crumb.href ? (
+                  <a href={crumb.href} className="text-xs font-medium text-muted-foreground hover:text-foreground">{crumb.label}</a>
+                ) : (
+                  <span className="text-xs font-medium text-foreground" aria-current="page">{crumb.label}</span>
+                )}
+              </li>
+            ))}
+          </ol>
+        </nav>
       )}
       <div className="flex items-start justify-between">
         <div>

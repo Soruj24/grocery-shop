@@ -10,6 +10,7 @@ import AdminPageHeader from "@/features/admin/shared/AdminPageHeader";
 import OrdersTable from "@/features/admin/shared/OrdersTable";
 import OrderDetailsDrawer from "@/features/admin/components/OrderDetailsDrawer";
 import { useToast } from "@/components/ui/system/Toast";
+import { AlertTriangle } from "lucide-react";
 import type { AdminOrder } from "@/types/admin";
 
 export default function AdminOrdersPage() {
@@ -176,7 +177,7 @@ export default function AdminOrdersPage() {
         <AdminPageHeader title="Orders" description="Manage customer orders" />
         <div className="rounded-xl border border-border bg-card flex flex-col items-center justify-center py-20">
           <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-danger-subtle mb-4">
-            <span className="text-danger text-2xl">!</span>
+            <AlertTriangle className="h-6 w-6 text-danger" />
           </div>
           <p className="text-base font-semibold text-foreground">Failed to load orders</p>
           <p className="text-sm text-muted-foreground mt-1">Check your connection and try again.</p>

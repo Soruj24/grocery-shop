@@ -34,12 +34,13 @@ export default function SettingsLayout({ children }: { children: React.ReactNode
 
       <div className="flex flex-col lg:flex-row gap-6">
         {/* Sidebar */}
-        <nav className="w-full lg:w-56 shrink-0">
+        <nav className="w-full lg:w-56 shrink-0" aria-label="Settings navigation">
           <div className="flex lg:flex-col gap-1 overflow-x-auto lg:overflow-x-visible pb-1 lg:pb-0">
             {sections.map((s) => {
               const active = pathname === s.href;
               return (
                 <Link key={s.href} href={s.href}
+                  aria-current={active ? "page" : undefined}
                   className={cn(
                     "flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm font-medium whitespace-nowrap transition-all",
                     active

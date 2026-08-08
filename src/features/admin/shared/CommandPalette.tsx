@@ -1,8 +1,8 @@
 "use client";
 
-import { ReactNode, useState, useEffect, useRef, KeyboardEvent } from "react";
+import { useState, useEffect, useRef, KeyboardEvent } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Search, Command, ArrowRight, Hash, Package, ShoppingCart, Users, Settings, FileText } from "lucide-react";
+import { Search, Command, Hash, Package, ShoppingCart, Users, Settings, FileText } from "lucide-react";
 import { cn } from "@/utils/utils";
 
 interface CommandItem {
@@ -102,15 +102,15 @@ export default function AdminCommandPalette({ items = defaultItems, onSelect }: 
 
       <AnimatePresence>
         {open && (
-          <div className="fixed inset-0 z-[100]">
-            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="absolute inset-0 bg-black/50 backdrop-blur-sm" onClick={() => setOpen(false)} />
+          <div className="fixed inset-0 z-[100]" role="dialog" aria-modal="true" aria-label="Command palette">
+            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="absolute inset-0 bg-black/50 backdrop-blur-sm" onClick={() => setOpen(false)} aria-hidden="true" />
             <div className="fixed inset-x-0 top-[20%] mx-auto max-w-lg px-4">
               <motion.div
                 initial={{ opacity: 0, scale: 0.95, y: -10 }}
                 animate={{ opacity: 1, scale: 1, y: 0 }}
                 exit={{ opacity: 0, scale: 0.95, y: -10 }}
                 transition={{ duration: 0.15 }}
-                className="rounded-xl border border-border bg-card shadow-xl overflow-hidden"
+                className="rounded-xl border border-border bg-card shadow-lg overflow-hidden"
               >
                 <div className="flex items-center gap-3 border-b border-border px-4">
                   <Search className="h-4 w-4 text-muted-foreground" />
@@ -125,7 +125,7 @@ export default function AdminCommandPalette({ items = defaultItems, onSelect }: 
                   />
                   <kbd className="rounded-md bg-muted px-1.5 py-0.5 text-[10px] font-medium text-muted-foreground">ESC</kbd>
                 </div>
-                <div className="max-h-80 overflow-y-auto p-2">
+                <div className="max-h-80 overflow-y-auto p-2" role="listbox" aria-label="Results">
                   {filtered.length === 0 ? (
                     <div className="py-8 text-center text-sm text-muted-foreground">No results found</div>
                   ) : (
@@ -137,6 +137,8 @@ export default function AdminCommandPalette({ items = defaultItems, onSelect }: 
                           else window.location.href = item.href;
                           setOpen(false);
                         }}
+                        role="option"
+                        aria-selected={i === selectedIndex}
                         className={cn(
                           "flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm transition-colors",
                           i === selectedIndex
@@ -146,7 +148,6 @@ export default function AdminCommandPalette({ items = defaultItems, onSelect }: 
                       >
                         <item.icon className="h-4 w-4 shrink-0" />
                         <span className="flex-1 text-left font-medium">{item.label}</span>
-                        <ArrowRight className="h-3 w-3 text-muted-foreground opacity-0 group-hover:opacity-100" />
                       </button>
                     ))
                   )}

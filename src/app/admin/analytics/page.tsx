@@ -14,16 +14,17 @@ import {
   Loader2, ChevronDown,
 } from "lucide-react";
 
-/* ─── Color Palette ─── */
+/* ─── Color Palette (dark-mode safe via CSS vars) ─── */
 const COLORS = {
-  primary: "#18181b",
+  primary: "hsl(var(--foreground))",
   success: "#22c55e",
   info: "#3b82f6",
   warning: "#f59e0b",
   danger: "#ef4444",
-  muted: "#a1a1aa",
+  muted: "hsl(var(--muted-foreground))",
   accent: "#8b5cf6",
-  palette: ["#18181b", "#3b82f6", "#22c55e", "#f59e0b", "#ef4444", "#8b5cf6", "#06b6d4", "#ec4899", "#14b8a6", "#f97316"],
+  grid: "hsl(var(--border))",
+  palette: ["hsl(var(--foreground))", "#3b82f6", "#22c55e", "#f59e0b", "#ef4444", "#8b5cf6", "#06b6d4", "#ec4899", "#14b8a6", "#f97316"],
 };
 
 /* ─── Date Range Options ─── */
@@ -137,7 +138,7 @@ export default function AdminAnalyticsPage() {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <AdminPageHeader title="Analytics" description="Detailed store performance insights" />
         <div className="relative">
-          <button onClick={() => setRangeOpen(!rangeOpen)}
+          <button onClick={() => setRangeOpen(!rangeOpen)} aria-haspopup="listbox" aria-expanded={rangeOpen}
             className="flex items-center gap-2 rounded-lg border border-border bg-card px-4 py-2.5 text-sm font-medium text-foreground hover:bg-muted transition-colors">
             <Calendar className="h-4 w-4 text-muted-foreground" />
             {currentRangeLabel}
@@ -146,10 +147,11 @@ export default function AdminAnalyticsPage() {
           {rangeOpen && (
             <>
               <div className="fixed inset-0 z-40" onClick={() => setRangeOpen(false)} />
-              <div className="absolute right-0 top-full mt-1 z-50 w-52 rounded-xl border border-border bg-card shadow-xl overflow-hidden">
+              <div className="absolute right-0 top-full mt-1 z-50 w-52 rounded-xl border border-border bg-card shadow-lg overflow-hidden" role="listbox" aria-label="Date range">
                 <div className="p-1.5">
                   {RANGES.map((r) => (
                     <button key={r.value} onClick={() => { setRange(r.value); setRangeOpen(false); }}
+                      role="option" aria-selected={range === r.value}
                       className={cn("w-full text-left px-3 py-2 rounded-lg text-sm transition-colors",
                         range === r.value ? "bg-foreground text-background font-medium" : "text-foreground hover:bg-muted")}>
                       {r.label}
@@ -213,10 +215,10 @@ export default function AdminAnalyticsPage() {
                       <stop offset="100%" stopColor={COLORS.primary} stopOpacity={0} />
                     </linearGradient>
                   </defs>
-                  <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" vertical={false} />
-                  <XAxis dataKey="_id" tick={{ fontSize: 10, fill: COLORS.muted }} axisLine={false} tickLine={false}
+                  <CartesianGrid strokeDasharray="3 3" stroke={COLORS.grid} vertical={false} />
+                  <XAxis dataKey="_id" tick={{ fontSize: 10, fill: "hsl(var(--muted-foreground))" }} axisLine={false} tickLine={false}
                     tickFormatter={(v) => { const d = new Date(v); return `${d.getDate()}/${d.getMonth() + 1}`; }} />
-                  <YAxis tick={{ fontSize: 10, fill: COLORS.muted }} axisLine={false} tickLine={false}
+                  <YAxis tick={{ fontSize: 10, fill: "hsl(var(--muted-foreground))" }} axisLine={false} tickLine={false}
                     tickFormatter={(v) => v >= 1000 ? `${(v / 1000).toFixed(0)}k` : v} />
                   <Tooltip content={<ChartTooltip prefix="৳" />} />
                   <Area type="monotone" dataKey="revenue" stroke={COLORS.primary} strokeWidth={2} fill="url(#gradRevenue)" />
@@ -255,10 +257,10 @@ export default function AdminAnalyticsPage() {
             <ChartCard title="Orders Over Time">
               <ResponsiveContainer width="100%" height={260}>
                 <BarChart data={orderTrend}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" vertical={false} />
-                  <XAxis dataKey="_id" tick={{ fontSize: 10, fill: COLORS.muted }} axisLine={false} tickLine={false}
+                  <CartesianGrid strokeDasharray="3 3" stroke={COLORS.grid} vertical={false} />
+                  <XAxis dataKey="_id" tick={{ fontSize: 10, fill: "hsl(var(--muted-foreground))" }} axisLine={false} tickLine={false}
                     tickFormatter={(v) => { const d = new Date(v); return `${d.getDate()}/${d.getMonth() + 1}`; }} />
-                  <YAxis tick={{ fontSize: 10, fill: COLORS.muted }} axisLine={false} tickLine={false} />
+                  <YAxis tick={{ fontSize: 10, fill: "hsl(var(--muted-foreground))" }} axisLine={false} tickLine={false} />
                   <Tooltip content={<ChartTooltip />} />
                   <Bar dataKey="count" fill={COLORS.primary} radius={[3, 3, 0, 0]} barSize={20} />
                 </BarChart>
@@ -268,10 +270,10 @@ export default function AdminAnalyticsPage() {
             <ChartCard title="Customer Growth">
               <ResponsiveContainer width="100%" height={260}>
                 <BarChart data={customerGrowth}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" vertical={false} />
-                  <XAxis dataKey="_id" tick={{ fontSize: 10, fill: COLORS.muted }} axisLine={false} tickLine={false}
+                  <CartesianGrid strokeDasharray="3 3" stroke={COLORS.grid} vertical={false} />
+                  <XAxis dataKey="_id" tick={{ fontSize: 10, fill: "hsl(var(--muted-foreground))" }} axisLine={false} tickLine={false}
                     tickFormatter={(v) => { const d = new Date(v); return `${d.getDate()}/${d.getMonth() + 1}`; }} />
-                  <YAxis tick={{ fontSize: 10, fill: COLORS.muted }} axisLine={false} tickLine={false} />
+                  <YAxis tick={{ fontSize: 10, fill: "hsl(var(--muted-foreground))" }} axisLine={false} tickLine={false} />
                   <Tooltip content={<ChartTooltip />} />
                   <Bar dataKey="count" fill={COLORS.info} radius={[3, 3, 0, 0]} barSize={20} />
                 </BarChart>

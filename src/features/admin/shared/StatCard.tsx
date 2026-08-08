@@ -71,7 +71,7 @@ export default function StatCard({ title, value, change, changeLabel, icon: Icon
           <Icon className={cn("h-5 w-5", colors.icon)} />
         </div>
       </div>
-      <div className="absolute -bottom-8 -right-8 h-28 w-28 rounded-full bg-gradient-to-br from-muted to-transparent opacity-30 group-hover:scale-150 transition-transform duration-500" />
+      <div className="absolute -bottom-8 -right-8 h-28 w-28 rounded-full bg-gradient-to-br from-muted to-transparent opacity-30 group-hover:scale-150 transition-transform duration-500" aria-hidden="true" />
     </motion.div>
   );
 }
