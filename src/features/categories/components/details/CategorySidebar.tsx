@@ -1,75 +1,613 @@
 "use client";
 
+import { useState, useCallback, useEffect } from "react";
 import Link from "next/link";
-import { ListFilter, ChevronRight } from "lucide-react";
+import { usePathname, useSearchParams, useRouter } from "next/navigation";
+import {
+  ListFilter,
+  ChevronRight,
+  ChevronDown,
+  Search,
+  X,
+  Star,
+  SlidersHorizontal,
+} from "lucide-react";
 import { Category as ICategory } from "@/types/category";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { motion, AnimatePresence } from "framer-motion";
 
 interface CategorySidebarProps {
   allCategories: ICategory[];
   currentId: string;
+  brands: string[];
+  colors: string[];
+  minPrice: number;
+  maxPrice: number;
 }
 
-export default function CategorySidebar({ allCategories, currentId }: CategorySidebarProps) {
+export default function CategorySidebar({
+  allCategories,
+  currentId,
+  brands,
+  colors,
+  minPrice,
+  maxPrice,
+}: CategorySidebarProps) {
   const { t } = useLanguage();
-  return (
-    <aside className="lg:w-1/4 space-y-8">
-      <div className="bg-card backdrop-blur-xl p-6 rounded-2xl border border-border shadow-xl sticky top-24">
-        <h3 className="text-xl font-black text-foreground mb-6 flex items-center gap-3 pb-4 border-b border-border">
-          <div className="w-8 h-8 bg-primary-subtle rounded-xl flex items-center justify-center">
-            <ListFilter className="w-4 h-4 text-primary" />
-          </div>
-          {t('categories')}
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const router = useRouter();
+
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const [expandedCats, setExpandedCats] = useState<
+    Set<string>
+  >(new Set());
+
+  // Filter state from URL
+  const search = searchParams.get("search") || "";
+  const sort = searchParams.get("sort") || "newest";
+  const priceMin = searchParams.get("priceMin") || "";
+  const priceMax = searchParams.get("priceMax") || "";
+  const rating = searchParams.get("rating") || "";
+  const brand = searchParams.get("brand") || "";
+  const color = searchParams.get("color") || "";
+  const inStock = searchParams.get("inStock") || "";
+
+  // Local state for price inputs
+  const [localPriceMin, setLocalPriceMin] =
+    useState(priceMin);
+  const [localPriceMax, setLocalPriceMax] =
+    useState(priceMax);
+
+  useEffect(() => {
+    setLocalPriceMin(priceMin);
+    setLocalPriceMax(priceMax);
+  }, [priceMin, priceMax]);
+
+  // Expand active category by default
+  useEffect(() => {
+    const active = allCategories.find(
+      (c) =>
+        c._id.toString() === currentId ||
+        allCategories.find(
+          (sc) =>
+            sc._id.toString() === currentId &&
+            sc.parentId?.toString() ===
+              c._id.toString()
+        )
+    );
+    if (active && active.parentId) {
+      setExpandedCats(
+        new Set([active.parentId.toString()])
+      );
+    } else if (active) {
+      setExpandedCats(
+        new Set([active._id.toString()])
+      );
+    }
+  }, [currentId, allCategories]);
+
+  const createQueryString = useCallback(
+    (updates: Record<string, string>) => {
+      const params = new URLSearchParams(
+        searchParams.toString()
+      );
+      Object.entries(updates).forEach(
+        ([key, value]) => {
+          if (value) {
+            params.set(key, value);
+          } else {
+            params.delete(key);
+          }
+        }
+      );
+      // Reset to page 1 when filters change
+      params.delete("page");
+      return params.toString();
+    },
+    [searchParams]
+  );
+
+  const updateFilter = (
+    key: string,
+    value: string
+  ) => {
+    router.push(
+      `${pathname}?${createQueryString({
+        [key]: value,
+      })}`
+    );
+  };
+
+  const clearAllFilters = () => {
+    router.push(pathname);
+  };
+
+  const hasActiveFilters =
+    search ||
+    priceMin ||
+    priceMax ||
+    rating ||
+    brand ||
+    color ||
+    inStock;
+
+  const toggleCatExpand = (id: string) => {
+    setExpandedCats((prev) => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      return next;
+    });
+  };
+
+  // Build category tree
+  const rootCategories = allCategories.filter(
+    (c) => !c.parentId
+  );
+  const getSubCategories = (parentId: string) =>
+    allCategories.filter(
+      (c) =>
+        c.parentId &&
+        c.parentId.toString() === parentId
+    );
+
+  const sidebarContent = (
+    <div className="space-y-6">
+      {/* Header */}
+      <div className="flex items-center justify-between">
+        <h3 className="text-sm font-bold text-foreground flex items-center gap-2">
+          <SlidersHorizontal className="w-4 h-4 text-muted-foreground/50" />
+          {t("categories")}
         </h3>
-        
-        <div className="space-y-1 max-h-[calc(100vh-200px)] overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-gray-200 dark:scrollbar-thumb-gray-800">
-          {allCategories
-            .filter((c: ICategory) => !c.parentId)
-            .map((cat: ICategory) => {
-              const isActive = cat._id.toString() === currentId || 
-                             allCategories.find((c: ICategory) => c._id.toString() === currentId)?.parentId?.toString() === cat._id.toString();
-              
-              return (
-                <div key={cat._id} className="space-y-1">
+        {hasActiveFilters && (
+          <button
+            onClick={clearAllFilters}
+            className="text-[10px] font-semibold text-muted-foreground/50 hover:text-foreground transition-colors"
+          >
+            Clear all
+          </button>
+        )}
+      </div>
+
+      {/* Search */}
+      <div className="relative">
+        <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-muted-foreground/40" />
+        <input
+          type="text"
+          placeholder="Search products..."
+          value={search}
+          onChange={(e) =>
+            updateFilter("search", e.target.value)
+          }
+          className="w-full bg-black/[0.03] dark:bg-white/[0.04] border border-black/[0.06] dark:border-white/[0.06] rounded-lg py-2.5 pl-9 pr-8 text-xs font-medium text-foreground placeholder:text-muted-foreground/40 focus:ring-1 focus:ring-foreground/20 focus:border-foreground/20 outline-none transition-all"
+        />
+        {search && (
+          <button
+            onClick={() => updateFilter("search", "")}
+            className="absolute right-2.5 top-1/2 -translate-y-1/2 text-muted-foreground/40 hover:text-foreground"
+          >
+            <X className="w-3.5 h-3.5" />
+          </button>
+        )}
+      </div>
+
+      {/* Sort */}
+      <div className="space-y-2.5">
+        <label className="text-[10px] font-semibold text-muted-foreground/50 uppercase tracking-wider">
+          Sort by
+        </label>
+        <div className="space-y-1">
+          {[
+            { id: "newest", label: "Newest" },
+            {
+              id: "price_low",
+              label: "Price: Low to High",
+            },
+            {
+              id: "price_high",
+              label: "Price: High to Low",
+            },
+            { id: "rating", label: "Top Rated" },
+          ].map((opt) => (
+            <button
+              key={opt.id}
+              onClick={() =>
+                updateFilter("sort", opt.id)
+              }
+              className={`w-full text-left px-3 py-2 rounded-lg text-xs font-medium transition-all ${
+                sort === opt.id
+                  ? "bg-foreground text-background"
+                  : "text-muted-foreground/60 hover:bg-black/[0.04] dark:hover:bg-white/[0.06] hover:text-foreground"
+              }`}
+            >
+              {opt.label}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* Price Range */}
+      <div className="space-y-3">
+        <label className="text-[10px] font-semibold text-muted-foreground/50 uppercase tracking-wider">
+          Price Range
+        </label>
+        <div className="flex items-center gap-2">
+          <div className="relative flex-1">
+            <span className="absolute left-2.5 top-1/2 -translate-y-1/2 text-[10px] font-medium text-muted-foreground/40">
+              ৳
+            </span>
+            <input
+              type="number"
+              placeholder="Min"
+              value={localPriceMin}
+              onChange={(e) =>
+                setLocalPriceMin(e.target.value)
+              }
+              onBlur={() =>
+                updateFilter(
+                  "priceMin",
+                  localPriceMin
+                )
+              }
+              className="w-full bg-black/[0.03] dark:bg-white/[0.04] border border-black/[0.06] dark:border-white/[0.06] rounded-lg py-2 pl-7 pr-2 text-xs font-medium text-foreground placeholder:text-muted-foreground/40 focus:ring-1 focus:ring-foreground/20 outline-none transition-all"
+            />
+          </div>
+          <span className="text-muted-foreground/30 text-xs">
+            –
+          </span>
+          <div className="relative flex-1">
+            <span className="absolute left-2.5 top-1/2 -translate-y-1/2 text-[10px] font-medium text-muted-foreground/40">
+              ৳
+            </span>
+            <input
+              type="number"
+              placeholder="Max"
+              value={localPriceMax}
+              onChange={(e) =>
+                setLocalPriceMax(e.target.value)
+              }
+              onBlur={() =>
+                updateFilter(
+                  "priceMax",
+                  localPriceMax
+                )
+              }
+              className="w-full bg-black/[0.03] dark:bg-white/[0.04] border border-black/[0.06] dark:border-white/[0.06] rounded-lg py-2 pl-7 pr-2 text-xs font-medium text-foreground placeholder:text-muted-foreground/40 focus:ring-1 focus:ring-foreground/20 outline-none transition-all"
+            />
+          </div>
+        </div>
+        {/* Price range visual bar */}
+        <div className="space-y-1.5">
+          <div className="h-1 bg-black/[0.04] dark:bg-white/[0.06] rounded-full overflow-hidden">
+            <div
+              className="h-full bg-foreground/30 rounded-full transition-all"
+              style={{
+                width: `${
+                  maxPrice > 0
+                    ? ((parseFloat(priceMax) || maxPrice) /
+                        maxPrice) *
+                      100
+                    : 0
+                }%`,
+              }}
+            />
+          </div>
+          <div className="flex justify-between text-[9px] font-medium text-muted-foreground/40">
+            <span>
+              ৳{minPrice.toLocaleString("bn-BD")}
+            </span>
+            <span>
+              ৳{maxPrice.toLocaleString("bn-BD")}
+            </span>
+          </div>
+        </div>
+      </div>
+
+      {/* Rating Filter */}
+      <div className="space-y-2.5">
+        <label className="text-[10px] font-semibold text-muted-foreground/50 uppercase tracking-wider">
+          Rating
+        </label>
+        <div className="space-y-1">
+          {[4, 3, 2, 1].map((r) => (
+            <button
+              key={r}
+              onClick={() =>
+                updateFilter(
+                  "rating",
+                  rating === String(r) ? "" : String(r)
+                )
+              }
+              className={`w-full flex items-center gap-2 px-3 py-2 rounded-lg text-xs font-medium transition-all ${
+                rating === String(r)
+                  ? "bg-foreground text-background"
+                  : "text-muted-foreground/60 hover:bg-black/[0.04] dark:hover:bg-white/[0.06] hover:text-foreground"
+              }`}
+            >
+              <div className="flex items-center gap-0.5">
+                {Array.from({ length: 5 }).map(
+                  (_, i) => (
+                    <Star
+                      key={i}
+                      className={`w-3 h-3 ${
+                        i < r
+                          ? "fill-amber-400 text-amber-400"
+                          : "fill-black/[0.08] text-black/[0.08] dark:fill-white/[0.1] dark:text-white/[0.1]"
+                      }`}
+                    />
+                  )
+                )}
+              </div>
+              <span>& Up</span>
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* Brand Filter */}
+      {brands.length > 0 && (
+        <div className="space-y-2.5">
+          <label className="text-[10px] font-semibold text-muted-foreground/50 uppercase tracking-wider">
+            Brand
+          </label>
+          <div className="space-y-1 max-h-40 overflow-y-auto scrollbar-hide">
+            {brands.map((b) => (
+              <button
+                key={b}
+                onClick={() =>
+                  updateFilter(
+                    "brand",
+                    brand === b ? "" : b
+                  )
+                }
+                className={`w-full text-left px-3 py-2 rounded-lg text-xs font-medium transition-all flex items-center justify-between ${
+                  brand === b
+                    ? "bg-foreground text-background"
+                    : "text-muted-foreground/60 hover:bg-black/[0.04] dark:hover:bg-white/[0.06] hover:text-foreground"
+                }`}
+              >
+                <span className="truncate">{b}</span>
+                {brand === b && (
+                  <X className="w-3 h-3 shrink-0 ml-2" />
+                )}
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Color Filter */}
+      {colors.length > 0 && (
+        <div className="space-y-2.5">
+          <label className="text-[10px] font-semibold text-muted-foreground/50 uppercase tracking-wider">
+            Color
+          </label>
+          <div className="flex flex-wrap gap-1.5">
+            {colors.map((c) => (
+              <button
+                key={c}
+                onClick={() =>
+                  updateFilter(
+                    "color",
+                    color === c ? "" : c
+                  )
+                }
+                className={`px-3 py-1.5 rounded-lg text-[11px] font-medium transition-all border ${
+                  color === c
+                    ? "bg-foreground text-background border-foreground"
+                    : "text-muted-foreground/60 border-black/[0.06] dark:border-white/[0.06] hover:border-black/[0.12] dark:hover:border-white/[0.12]"
+                }`}
+              >
+                {c}
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Availability */}
+      <div className="space-y-2.5">
+        <label className="text-[10px] font-semibold text-muted-foreground/50 uppercase tracking-wider">
+          Availability
+        </label>
+        <button
+          onClick={() =>
+            updateFilter(
+              "inStock",
+              inStock === "true" ? "" : "true"
+            )
+          }
+          className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-xs font-medium transition-all border ${
+            inStock === "true"
+              ? "bg-foreground text-background border-foreground"
+              : "text-muted-foreground/60 border-black/[0.06] dark:border-white/[0.06] hover:bg-black/[0.04] dark:hover:bg-white/[0.06]"
+          }`}
+        >
+          <div
+            className={`w-4 h-4 rounded border flex items-center justify-center transition-all ${
+              inStock === "true"
+                ? "bg-background border-background"
+                : "border-black/[0.12] dark:border-white/[0.15]"
+            }`}
+          >
+            {inStock === "true" && (
+              <svg
+                className="w-3 h-3 text-foreground"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                strokeWidth={3}
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M5 13l4 4L19 7"
+                />
+              </svg>
+            )}
+          </div>
+          In Stock Only
+        </button>
+      </div>
+
+      {/* Category Tree */}
+      <div className="space-y-2.5 pt-2 border-t border-black/[0.04] dark:border-white/[0.04]">
+        <label className="text-[10px] font-semibold text-muted-foreground/50 uppercase tracking-wider">
+          Categories
+        </label>
+        <div className="space-y-0.5 max-h-[300px] overflow-y-auto scrollbar-hide">
+          {rootCategories.map((cat) => {
+            const subs = getSubCategories(
+              cat._id.toString()
+            );
+            const isActive =
+              cat._id.toString() === currentId ||
+              subs.some(
+                (s) =>
+                  s._id.toString() === currentId
+              );
+            const isExpanded = expandedCats.has(
+              cat._id.toString()
+            );
+
+            return (
+              <div key={cat._id}>
+                <div className="flex items-center">
                   <Link
                     href={`/category/${cat._id}`}
-                    className={`flex items-center justify-between px-4 py-3 rounded-xl transition-all font-bold text-sm group ${
+                    className={`flex-1 flex items-center justify-between px-3 py-2 rounded-lg transition-all text-xs font-medium ${
                       isActive
-                        ? "bg-primary-subtle text-primary"
-                        : "text-muted-foreground hover:bg-muted hover:text-foreground"
+                        ? "bg-foreground text-background"
+                        : "text-muted-foreground/60 hover:bg-black/[0.04] dark:hover:bg-white/[0.06] hover:text-foreground"
                     }`}
                   >
-                    <div className="flex items-center gap-3">
-                      <div className={`w-1.5 h-1.5 rounded-full transition-colors ${isActive ? "bg-primary" : "bg-border-strong group-hover:bg-primary"}`} />
-                      <span>{cat.name}</span>
-                    </div>
-                    {isActive && <ChevronRight className="w-3.5 h-3.5" />}
+                    <span className="truncate">
+                      {cat.name}
+                    </span>
+                    {isActive && (
+                      <ChevronRight className="w-3 h-3 shrink-0" />
+                    )}
                   </Link>
-
-                  {isActive && (
-                    <div className="ml-5 pl-4 border-l border-primary/30 space-y-0.5 py-1">
-                      {allCategories
-                        .filter((sub: ICategory) => sub.parentId && sub.parentId.toString() === cat._id.toString())
-                        .map((sub: ICategory) => (
+                  {subs.length > 0 && (
+                    <button
+                      onClick={() =>
+                        toggleCatExpand(
+                          cat._id.toString()
+                        )
+                      }
+                      className="p-1.5 text-muted-foreground/40 hover:text-foreground"
+                    >
+                      <ChevronDown
+                        className={`w-3 h-3 transition-transform ${
+                          isExpanded
+                            ? "rotate-180"
+                            : ""
+                        }`}
+                      />
+                    </button>
+                  )}
+                </div>
+                <AnimatePresence>
+                  {isExpanded &&
+                    subs.length > 0 && (
+                      <motion.div
+                        initial={{
+                          height: 0,
+                          opacity: 0,
+                        }}
+                        animate={{
+                          height: "auto",
+                          opacity: 1,
+                        }}
+                        exit={{
+                          height: 0,
+                          opacity: 0,
+                        }}
+                        className="ml-3 pl-3 border-l border-black/[0.06] dark:border-white/[0.06] space-y-0.5 overflow-hidden"
+                      >
+                        {subs.map((sub) => (
                           <Link
                             key={sub._id}
                             href={`/category/${sub._id}`}
-                            className={`block px-3 py-2 text-xs font-medium transition-all rounded-lg ${
-                              sub._id.toString() === currentId
-                                ? "text-primary bg-primary-subtle"
-                                : "text-muted-foreground hover:text-primary hover:bg-muted"
+                            className={`block px-3 py-1.5 text-[11px] font-medium rounded-md transition-all ${
+                              sub._id.toString() ===
+                              currentId
+                                ? "text-foreground bg-black/[0.04] dark:bg-white/[0.06]"
+                                : "text-muted-foreground/50 hover:text-foreground hover:bg-black/[0.02] dark:hover:bg-white/[0.03]"
                             }`}
                           >
                             {sub.name}
                           </Link>
                         ))}
-                    </div>
-                  )}
-                </div>
-              );
-            })}
+                      </motion.div>
+                    )}
+                </AnimatePresence>
+              </div>
+            );
+          })}
         </div>
       </div>
-    </aside>
+    </div>
+  );
+
+  return (
+    <>
+      {/* Mobile filter toggle */}
+      <button
+        onClick={() => setMobileOpen(true)}
+        className="lg:hidden fixed bottom-20 right-4 z-40 bg-foreground text-background p-3.5 rounded-full shadow-[0_4px_20px_rgba(0,0,0,0.2)] active:scale-95 transition-transform"
+      >
+        <ListFilter className="w-5 h-5" />
+      </button>
+
+      {/* Mobile drawer */}
+      <AnimatePresence>
+        {mobileOpen && (
+          <>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setMobileOpen(false)}
+              className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[200] lg:hidden"
+            />
+            <motion.div
+              initial={{ x: "-100%" }}
+              animate={{ x: 0 }}
+              exit={{ x: "-100%" }}
+              transition={{
+                type: "spring",
+                damping: 25,
+                stiffness: 200,
+              }}
+              className="fixed left-0 top-0 h-full w-[320px] max-w-[85vw] bg-white dark:bg-[#09090b] z-[201] overflow-y-auto p-5 lg:hidden"
+            >
+              <div className="flex items-center justify-between mb-6">
+                <h3 className="text-base font-bold text-foreground">
+                  Filters
+                </h3>
+                <button
+                  onClick={() =>
+                    setMobileOpen(false)
+                  }
+                  className="p-1.5 rounded-lg bg-black/[0.04] dark:bg-white/[0.06] text-muted-foreground/50 hover:text-foreground"
+                >
+                  <X className="w-4 h-4" />
+                </button>
+              </div>
+              {sidebarContent}
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
+
+      {/* Desktop sidebar */}
+      <aside className="hidden lg:block w-64 shrink-0">
+        <div className="sticky top-24 bg-white dark:bg-[#09090b] rounded-xl border border-black/[0.04] dark:border-white/[0.04] p-5 shadow-[0_1px_3px_rgba(0,0,0,0.04)] max-h-[calc(100vh-120px)] overflow-y-auto scrollbar-hide">
+          {sidebarContent}
+        </div>
+      </aside>
+    </>
   );
 }

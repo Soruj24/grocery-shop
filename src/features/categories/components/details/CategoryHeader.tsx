@@ -12,49 +12,55 @@ interface CategoryHeaderProps {
   totalCount: number;
 }
 
-export default function CategoryHeader({ category, totalCount }: CategoryHeaderProps) {
+export default function CategoryHeader({
+  category,
+  totalCount,
+}: CategoryHeaderProps) {
   const { t } = useLanguage();
   return (
-    <section className="relative h-[300px] md:h-[400px] rounded-2xl overflow-hidden flex items-center group">
+    <section className="relative h-[260px] md:h-[340px] rounded-xl overflow-hidden flex items-end">
       <div className="absolute inset-0">
         <Image
-          src={category.image || getCategoryFallbackImage(category.name)}
+          src={
+            category.image ||
+            getCategoryFallbackImage(category.name)
+          }
           alt={category.name}
           fill
           sizes="100vw"
-          className="object-cover brightness-50 group-hover:scale-105 transition-transform duration-1000"
+          className="object-cover brightness-[0.35] group-hover:scale-105 transition-transform duration-1000"
           priority
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/50 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
       </div>
-      
-      <div className="relative z-20 px-8 md:px-20 space-y-6 md:space-y-8 w-full">
+
+      <div className="relative z-20 px-6 md:px-10 pb-8 md:pb-10 w-full space-y-4">
         <Link
           href="/categories"
-          className="inline-flex items-center gap-2 px-5 py-2.5 bg-white/10 backdrop-blur-xl border border-white/10 rounded-full text-white text-xs font-bold hover:bg-white/20 transition-all hover:-translate-x-1"
+          className="inline-flex items-center gap-1.5 text-[11px] font-semibold text-white/60 hover:text-white transition-colors"
         >
-          <ArrowLeft className="w-4 h-4" /> {t('all_categories_back')}
+          <ArrowLeft className="w-3.5 h-3.5" />{" "}
+          {t("all_categories_back")}
         </Link>
-        
-        <div className="space-y-4">
-          <h1 className="text-4xl md:text-7xl font-black text-white tracking-tight leading-tight">
+
+        <div className="space-y-2">
+          <h1 className="text-3xl md:text-5xl font-bold text-white tracking-tight">
             {category.name}
-            <span className="text-primary">.</span>
           </h1>
-          <p className="text-white/80 max-w-xl font-medium text-base md:text-lg leading-relaxed border-l-4 border-primary pl-6">
-            {category.name}{t('category_header_desc_suffix')}
+          <p className="text-white/50 max-w-lg font-medium text-sm leading-relaxed">
+            {category.name}
+            {t("category_header_desc_suffix")}
           </p>
         </div>
 
-        <div className="flex flex-wrap items-center gap-4 pt-2">
-          <div className="px-6 py-3 bg-primary backdrop-blur-md rounded-2xl text-white font-bold text-sm shadow-xl shadow-primary flex items-center gap-2">
-            <ShoppingBag className="w-4 h-4" />
-            {totalCount.toLocaleString('bn-BD')} {t('items')}
+        <div className="flex items-center gap-3 pt-1">
+          <div className="px-3.5 py-1.5 bg-white/10 backdrop-blur-md rounded-lg text-white/80 text-[11px] font-semibold flex items-center gap-1.5">
+            <ShoppingBag className="w-3.5 h-3.5" />
+            {totalCount.toLocaleString("bn-BD")}{" "}
+            {t("items")}
           </div>
-           
-          {/* Decorative pill */}
-          <div className="px-4 py-3 bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl text-white/80 text-xs font-bold uppercase tracking-wider">
-            {t('fresh_organic')}
+          <div className="px-3.5 py-1.5 bg-white/5 backdrop-blur-md border border-white/10 rounded-lg text-white/50 text-[11px] font-semibold uppercase tracking-wider">
+            {t("fresh_organic")}
           </div>
         </div>
       </div>

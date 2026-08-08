@@ -17,21 +17,30 @@ async function findCategory(id: string) {
     return CategoryModel.findById(id).lean();
   }
   return CategoryModel.findOne({
-    name: { $regex: new RegExp(`^${escapeRegex(id)}$`, "i") },
+    name: {
+      $regex: new RegExp(`^${escapeRegex(id)}$`, "i"),
+    },
   }).lean();
 }
 
 function escapeRegex(str: string) {
-  return str.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  return str.replace(
+    /[.*+?^${}()|[\]\\]/g,
+    "\\$&"
+  );
 }
 
 async function getCategoryData(
   id: string,
-  searchParams: { [key: string]: string | string[] | undefined },
+  searchParams: {
+    [key: string]: string | string[] | undefined;
+  }
 ) {
   await dbConnect();
   const page =
-    typeof searchParams.page === "string" ? parseInt(searchParams.page) : 1;
+    typeof searchParams.page === "string"
+      ? parseInt(searchParams.page)
+      : 1;
   const limit = 12;
   const skip = (page - 1) * limit;
 
@@ -45,35 +54,158 @@ async function getCategoryData(
       allCategories: [],
     };
 
-  const categoryId = (category as unknown as ICategory)._id.toString();
+  const categoryId = (
+    category as unknown as ICategory
+  )._id.toString();
 
   // Fetch all active categories for the sidebar
-  const allCategories = await CategoryModel.find({ isActive: true }).lean();
+  const allCategories = await CategoryModel.find({
+    isActive: true,
+  }).lean();
 
-  const subCategoryIds = (allCategories as unknown as ICategory[])
-    .filter((c: ICategory) => c.parentId && c.parentId.toString() === categoryId)
+  const subCategoryIds = (
+    allCategories as unknown as ICategory[]
+  )
+    .filter(
+      (c: ICategory) =>
+        c.parentId &&
+        c.parentId.toString() === categoryId
+    )
     .map((c: ICategory) => c._id);
 
-  const query = {
-    category: { $in: [categoryId, ...subCategoryIds] },
+  const query: Record<string, any> = {
+    category: {
+      $in: [categoryId, ...subCategoryIds],
+    },
     isActive: true,
   };
 
-  const totalProducts = await Product.countDocuments(query);
+  // Apply filters from searchParams
+  const brand = searchParams.brand;
+  if (typeof brand === "string" && brand) {
+    query.brand = brand;
+  }
+
+  const priceMin = searchParams.priceMin;
+  const priceMax = searchParams.priceMax;
+  if (typeof priceMin === "string" || typeof priceMax === "string") {
+    query.price = {};
+    if (typeof priceMin === "string" && priceMin)
+      query.price.$gte = parseFloat(priceMin);
+    if (typeof priceMax === "string" && priceMax)
+      query.price.$lte = parseFloat(priceMax);
+  }
+
+  const inStock = searchParams.inStock;
+  if (inStock === "true") {
+    query.stock = { $gt: 0 };
+  }
+
+  // Sort
+  const sort = searchParams.sort || "newest";
+  let sortQuery: Record<string, 1 | -1> = {
+    createdAt: -1,
+  };
+  if (sort === "price_low")
+    sortQuery = { price: 1 };
+  else if (sort === "price_high")
+    sortQuery = { price: -1 };
+  else if (sort === "rating")
+    sortQuery = { rating: -1 };
+
+  const totalProducts = await Product.countDocuments(
+    query
+  );
   const products = await Product.find(query)
     .populate("category")
-    .sort({ createdAt: -1 })
+    .sort(sortQuery)
     .skip(skip)
     .limit(limit)
     .lean();
 
+  // Extract unique brands and colors from all products in this category
+  const allCategoryProducts = await Product.find({
+    category: {
+      $in: [categoryId, ...subCategoryIds],
+    },
+    isActive: true,
+  })
+    .select("brand")
+    .lean();
+
+  const uniqueBrands = [
+    ...new Set(
+      allCategoryProducts
+        .map((p: any) => p.brand)
+        .filter(
+          (b: any) =>
+            b && typeof b === "string" && b.trim()
+        )
+    ),
+  ].sort() as string[];
+
+  // Price range
+  const priceStats = await Product.aggregate([
+    {
+      $match: {
+        category: {
+          $in: subCategoryIds.length > 0
+            ? [
+                new mongoose.Types.ObjectId(
+                  categoryId
+                ),
+                ...subCategoryIds.map(
+                  (id) =>
+                    new mongoose.Types.ObjectId(
+                      id.toString()
+                    )
+                ),
+              ]
+            : [
+                new mongoose.Types.ObjectId(
+                  categoryId
+                ),
+              ],
+        },
+        isActive: true,
+      },
+    },
+    {
+      $group: {
+        _id: null,
+        minPrice: { $min: "$price" },
+        maxPrice: { $max: "$price" },
+      },
+    },
+  ]);
+
+  const minPrice =
+    priceStats.length > 0
+      ? priceStats[0].minPrice
+      : 0;
+  const maxPrice =
+    priceStats.length > 0
+      ? priceStats[0].maxPrice
+      : 10000;
+
   return {
-    category: JSON.parse(JSON.stringify(category)),
-    products: JSON.parse(JSON.stringify(products)),
-    totalPages: Math.ceil(totalProducts / limit),
+    category: JSON.parse(
+      JSON.stringify(category)
+    ),
+    products: JSON.parse(
+      JSON.stringify(products)
+    ),
+    totalPages: Math.ceil(
+      totalProducts / limit
+    ),
     currentPage: page,
-    allCategories: JSON.parse(JSON.stringify(allCategories)),
+    allCategories: JSON.parse(
+      JSON.stringify(allCategories)
+    ),
     totalCount: totalProducts,
+    brands: uniqueBrands,
+    minPrice,
+    maxPrice,
   };
 }
 
@@ -82,7 +214,9 @@ export default async function CategoryPage({
   searchParams,
 }: {
   params: Promise<{ id: string }>;
-  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+  searchParams: Promise<{
+    [key: string]: string | string[] | undefined;
+  }>;
 }) {
   const { id } = await params;
   const resolvedSearchParams = await searchParams;
@@ -93,29 +227,47 @@ export default async function CategoryPage({
     currentPage,
     allCategories,
     totalCount,
+    brands,
+    minPrice,
+    maxPrice,
   } = await getCategoryData(id, resolvedSearchParams);
 
   if (!category) {
     return <CategoryNotFound />;
   }
 
-  const subCategories = (allCategories as unknown as ICategory[]).filter(
+  const subCategories = (
+    allCategories as unknown as ICategory[]
+  ).filter(
     (c: ICategory) =>
       c.parentId &&
-      c.parentId.toString() === (category.parentId || category._id).toString(),
+      c.parentId.toString() ===
+        (
+          category.parentId || category._id
+        ).toString()
   );
 
   return (
-    <div className="max-w-7xl mx-auto space-y-12 pb-24 relative">
-      {/* Decorative Blobs */}
-      <div className="absolute top-0 left-0 -translate-y-1/2 -translate-x-1/2 w-96 h-96 bg-green-100/30 dark:bg-green-900/10 rounded-full blur-[100px] pointer-events-none" />
+    <div className="max-w-7xl mx-auto px-4 py-6 space-y-6 pb-24">
+      <CategoryHeader
+        category={category}
+        totalCount={totalCount as number}
+      />
 
-      <CategoryHeader category={category} totalCount={totalCount as number} />
+      <SubCategoryNav
+        subCategories={subCategories}
+        currentId={id}
+      />
 
-      <SubCategoryNav subCategories={subCategories} currentId={id} />
-
-      <div className="flex flex-col lg:flex-row gap-12">
-        <CategorySidebar allCategories={allCategories} currentId={id} />
+      <div className="flex gap-8 items-start">
+        <CategorySidebar
+          allCategories={allCategories}
+          currentId={id}
+          brands={brands || []}
+          colors={[]}
+          minPrice={minPrice || 0}
+          maxPrice={maxPrice || 10000}
+        />
 
         <CategoryProductGrid
           products={products}
