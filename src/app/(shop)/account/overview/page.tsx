@@ -5,19 +5,24 @@ import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import {
-  Package, Heart, Star, Wallet, ShoppingBag, TrendingUp,
-  ArrowRight, Clock, MapPin, CreditCard, Truck, CheckCircle2,
+  Package,
+  Heart,
+  Wallet,
+  ShoppingBag,
+  ArrowRight,
+  Truck,
+  Clock,
+  CreditCard,
+  TrendingUp,
 } from "lucide-react";
 import { AdminOrder as Order } from "@/types/admin";
 import { useWishlist } from "@/contexts/WishlistContext";
-import { useRecentlyViewed } from "@/contexts/RecentlyViewedContext";
 import { useNotifications } from "@/contexts/NotificationContext";
 
 export default function OverviewPage() {
   const { data: session } = useSession();
   const { wishlist } = useWishlist();
-  const { recentlyViewed } = useRecentlyViewed();
-  const { notifications, unreadCount } = useNotifications();
+  const { notifications } = useNotifications();
   const [orders, setOrders] = useState<Order[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -29,145 +34,263 @@ export default function OverviewPage() {
       .finally(() => setLoading(false));
   }, []);
 
-  const recentOrders = orders.slice(0, 3);
-  const totalSpent = orders.reduce((sum, o) => sum + o.total, 0);
-  const pendingOrders = orders.filter((o) => o.status === "pending" || o.status === "processing").length;
+  const recentOrders = orders.slice(0, 4);
+  const totalSpent = orders.reduce(
+    (sum, o) => sum + o.total,
+    0
+  );
+  const pendingOrders = orders.filter(
+    (o) =>
+      o.status === "pending" ||
+      o.status === "processing"
+  ).length;
 
   const stats = [
-    { label: "Total Orders", value: orders.length, icon: Package, color: "from-blue-500 to-blue-600", bg: "bg-blue-50 dark:bg-blue-950/30" },
-    { label: "Total Spent", value: `৳${totalSpent.toLocaleString()}`, icon: Wallet, color: "from-emerald-500 to-emerald-600", bg: "bg-emerald-50 dark:bg-emerald-950/30" },
-    { label: "Wishlist Items", value: wishlist.length, icon: Heart, color: "from-pink-500 to-pink-600", bg: "bg-pink-50 dark:bg-pink-950/30" },
-    { label: "Pending Orders", value: pendingOrders, icon: Truck, color: "from-amber-500 to-amber-600", bg: "bg-amber-50 dark:bg-amber-950/30" },
+    {
+      label: "Total Orders",
+      value: orders.length,
+      icon: Package,
+      trend: "+2 this month",
+    },
+    {
+      label: "Total Spent",
+      value: `৳${totalSpent.toLocaleString()}`,
+      icon: Wallet,
+      trend: "Lifetime",
+    },
+    {
+      label: "Wishlist",
+      value: wishlist.length,
+      icon: Heart,
+      trend: "Saved items",
+    },
+    {
+      label: "Pending",
+      value: pendingOrders,
+      icon: Truck,
+      trend: "In progress",
+    },
   ];
 
   const quickActions = [
-    { label: "Browse Products", href: "/products", icon: ShoppingBag, color: "bg-emerald-500" },
-    { label: "Track Order", href: "/track", icon: Truck, color: "bg-blue-500" },
-    { label: "My Wishlist", href: "/account/wishlist", icon: Heart, color: "bg-pink-500" },
-    { label: "Support", href: "/account/support", icon: Star, color: "bg-violet-500" },
+    {
+      label: "Browse Products",
+      href: "/products",
+      icon: ShoppingBag,
+    },
+    {
+      label: "Track Order",
+      href: "/track",
+      icon: Truck,
+    },
+    {
+      label: "My Wishlist",
+      href: "/account/wishlist",
+      icon: Heart,
+    },
+    {
+      label: "Support",
+      href: "/account/support",
+      icon: CreditCard,
+    },
   ];
 
   const statusColors: Record<string, string> = {
-    pending: "bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400",
-    confirmed: "bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400",
-    processing: "bg-violet-100 text-violet-700 dark:bg-violet-900/30 dark:text-violet-400",
-    shipped: "bg-cyan-100 text-cyan-700 dark:bg-cyan-900/30 dark:text-cyan-400",
-    delivered: "bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400",
-    cancelled: "bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400",
+    pending:
+      "bg-amber-500/[0.08] text-amber-600 dark:text-amber-400",
+    confirmed:
+      "bg-blue-500/[0.08] text-blue-600 dark:text-blue-400",
+    processing:
+      "bg-violet-500/[0.08] text-violet-600 dark:text-violet-400",
+    shipped:
+      "bg-cyan-500/[0.08] text-cyan-600 dark:text-cyan-400",
+    delivered:
+      "bg-emerald-500/[0.08] text-emerald-600 dark:text-emerald-400",
+    cancelled:
+      "bg-rose-500/[0.08] text-rose-600 dark:text-rose-400",
   };
 
   return (
     <div className="space-y-8">
       {/* Header */}
-      <div>
-        <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
-          Welcome back, {session?.user?.name?.split(" ")[0] || "there"}
+      <motion.div
+        initial={{ opacity: 0, y: -8 }}
+        animate={{ opacity: 1, y: 0 }}
+      >
+        <h1 className="text-2xl sm:text-3xl font-bold text-foreground tracking-tight">
+          Welcome back,{" "}
+          {session?.user?.name?.split(" ")[0] ||
+            "there"}
         </h1>
-        <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
-          Here&apos;s what&apos;s happening with your account
+        <p className="text-sm text-muted-foreground/50 mt-1">
+          Here&apos;s what&apos;s happening with your
+          account
         </p>
-      </div>
+      </motion.div>
 
       {/* Stats Grid */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
         {stats.map((stat, i) => (
           <motion.div
             key={stat.label}
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: i * 0.1 }}
-            className="rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-4"
+            transition={{
+              delay: i * 0.06,
+              ease: [0.21, 0.47, 0.32, 0.98],
+            }}
+            className="rounded-2xl border border-black/[0.04] dark:border-white/[0.04] bg-white dark:bg-[#09090b] p-4 shadow-[0_1px_3px_rgba(0,0,0,0.04)] hover:shadow-[0_4px_16px_rgba(0,0,0,0.06)] transition-shadow"
           >
             <div className="flex items-center justify-between mb-3">
-              <div className={`flex h-10 w-10 items-center justify-center rounded-xl ${stat.bg}`}>
-                <stat.icon className="h-5 w-5 text-gray-700 dark:text-gray-300" />
+              <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-black/[0.04] dark:bg-white/[0.06]">
+                <stat.icon className="h-4 w-4 text-muted-foreground/60" />
               </div>
             </div>
-            <p className="text-2xl font-bold text-gray-900 dark:text-white">{stat.value}</p>
-            <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">{stat.label}</p>
+            <p className="text-2xl font-bold text-foreground">
+              {stat.value}
+            </p>
+            <p className="text-[11px] text-muted-foreground/50 mt-0.5">
+              {stat.label}
+            </p>
           </motion.div>
         ))}
       </div>
 
       {/* Quick Actions */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
-        {quickActions.map((action) => (
-          <Link
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-2">
+        {quickActions.map((action, i) => (
+          <motion.div
             key={action.href}
-            href={action.href}
-            className="flex items-center gap-3 rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-3 hover:shadow-md transition-all group"
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.25 + i * 0.05 }}
           >
-            <div className={`flex h-9 w-9 items-center justify-center rounded-lg ${action.color} text-white`}>
-              <action.icon className="h-4 w-4" />
-            </div>
-            <span className="text-sm font-medium text-gray-700 dark:text-gray-300 group-hover:text-gray-900 dark:group-hover:text-white">
-              {action.label}
-            </span>
-          </Link>
+            <Link
+              href={action.href}
+              className="flex items-center gap-3 rounded-xl border border-black/[0.04] dark:border-white/[0.04] bg-white dark:bg-[#09090b] p-3.5 hover:shadow-[0_4px_16px_rgba(0,0,0,0.06)] transition-all group"
+            >
+              <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-black/[0.04] dark:bg-white/[0.06] group-hover:bg-foreground group-hover:text-background transition-all">
+                <action.icon className="h-4 w-4" />
+              </div>
+              <span className="text-[13px] font-medium text-foreground">
+                {action.label}
+              </span>
+            </Link>
+          </motion.div>
         ))}
       </div>
 
+      {/* Two Column Layout */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Recent Orders */}
-        <div className="rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 overflow-hidden">
-          <div className="flex items-center justify-between p-4 border-b border-gray-100 dark:border-gray-800">
-            <h2 className="text-sm font-semibold text-gray-900 dark:text-white">Recent Orders</h2>
-            <Link href="/account/orders" className="text-xs font-medium text-emerald-600 dark:text-emerald-400 hover:underline flex items-center gap-1">
-              View All <ArrowRight className="h-3 w-3" />
+        <motion.div
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.35 }}
+          className="rounded-2xl border border-black/[0.04] dark:border-white/[0.04] bg-white dark:bg-[#09090b] overflow-hidden shadow-[0_1px_3px_rgba(0,0,0,0.04)]"
+        >
+          <div className="flex items-center justify-between p-5 pb-4 border-b border-black/[0.04] dark:border-white/[0.04]">
+            <h2 className="text-sm font-bold text-foreground">
+              Recent Orders
+            </h2>
+            <Link
+              href="/account/orders"
+              className="text-[11px] font-medium text-muted-foreground/50 hover:text-foreground transition-colors flex items-center gap-1"
+            >
+              View All
+              <ArrowRight className="h-3 w-3" />
             </Link>
           </div>
-          <div className="divide-y divide-gray-100 dark:divide-gray-800">
+          <div className="divide-y divide-black/[0.04] dark:divide-white/[0.04]">
             {loading ? (
-              <div className="p-8 text-center text-sm text-gray-400">Loading...</div>
+              <div className="p-8 text-center">
+                <div className="h-4 w-20 mx-auto rounded bg-black/[0.04] dark:bg-white/[0.06] animate-pulse" />
+              </div>
             ) : recentOrders.length === 0 ? (
-              <div className="p-8 text-center text-sm text-gray-400">No orders yet</div>
+              <div className="p-8 text-center text-sm text-muted-foreground/50">
+                No orders yet
+              </div>
             ) : (
               recentOrders.map((order) => (
-                <div key={order._id} className="p-4 hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors">
-                  <div className="flex items-center justify-between mb-1">
-                    <p className="text-sm font-mono font-semibold text-gray-900 dark:text-white">
+                <div
+                  key={order._id}
+                  className="p-4 hover:bg-black/[0.02] dark:hover:bg-white/[0.02] transition-colors"
+                >
+                  <div className="flex items-center justify-between mb-1.5">
+                    <p className="text-sm font-mono font-semibold text-foreground">
                       #{order._id.slice(-8).toUpperCase()}
                     </p>
-                    <span className={`text-[10px] font-bold uppercase px-2 py-0.5 rounded-full ${statusColors[order.status] || ""}`}>
+                    <span
+                      className={`text-[10px] font-bold uppercase px-2.5 py-0.5 rounded-full ${statusColors[order.status] || ""}`}
+                    >
                       {order.status}
                     </span>
                   </div>
                   <div className="flex items-center justify-between">
-                    <p className="text-xs text-gray-500 dark:text-gray-400">
-                      {new Date(order.createdAt).toLocaleDateString()}
+                    <p className="text-[11px] text-muted-foreground/50">
+                      {new Date(
+                        order.createdAt
+                      ).toLocaleDateString("en-US", {
+                        month: "short",
+                        day: "numeric",
+                      })}
                     </p>
-                    <p className="text-sm font-bold text-gray-900 dark:text-white">৳{order.total.toLocaleString()}</p>
+                    <p className="text-sm font-bold text-foreground">
+                      ৳{order.total.toLocaleString()}
+                    </p>
                   </div>
                 </div>
               ))
             )}
           </div>
-        </div>
+        </motion.div>
 
         {/* Recent Notifications */}
-        <div className="rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 overflow-hidden">
-          <div className="flex items-center justify-between p-4 border-b border-gray-100 dark:border-gray-800">
-            <h2 className="text-sm font-semibold text-gray-900 dark:text-white">Notifications</h2>
-            <Link href="/account/notifications" className="text-xs font-medium text-emerald-600 dark:text-emerald-400 hover:underline flex items-center gap-1">
-              View All <ArrowRight className="h-3 w-3" />
+        <motion.div
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.4 }}
+          className="rounded-2xl border border-black/[0.04] dark:border-white/[0.04] bg-white dark:bg-[#09090b] overflow-hidden shadow-[0_1px_3px_rgba(0,0,0,0.04)]"
+        >
+          <div className="flex items-center justify-between p-5 pb-4 border-b border-black/[0.04] dark:border-white/[0.04]">
+            <h2 className="text-sm font-bold text-foreground">
+              Notifications
+            </h2>
+            <Link
+              href="/account/notifications"
+              className="text-[11px] font-medium text-muted-foreground/50 hover:text-foreground transition-colors flex items-center gap-1"
+            >
+              View All
+              <ArrowRight className="h-3 w-3" />
             </Link>
           </div>
-          <div className="divide-y divide-gray-100 dark:divide-gray-800">
+          <div className="divide-y divide-black/[0.04] dark:divide-white/[0.04]">
             {notifications.length === 0 ? (
-              <div className="p-8 text-center text-sm text-gray-400">No notifications</div>
+              <div className="p-8 text-center text-sm text-muted-foreground/50">
+                No notifications
+              </div>
             ) : (
               notifications.slice(0, 4).map((n) => (
-                <div key={n.id} className={`p-4 ${!n.read ? "bg-emerald-50/50 dark:bg-emerald-950/10" : ""}`}>
-                  <p className="text-sm font-medium text-gray-900 dark:text-white">{n.title}</p>
-                  <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5 line-clamp-1">{n.message}</p>
-                  <p className="text-[10px] text-gray-400 dark:text-gray-500 mt-1">
-                    {new Date(n.timestamp).toLocaleDateString()}
+                <div
+                  key={n.id}
+                  className="p-4"
+                >
+                  <p className="text-sm font-medium text-foreground">
+                    {n.title}
+                  </p>
+                  <p className="text-[11px] text-muted-foreground/50 mt-0.5 line-clamp-1">
+                    {n.message}
+                  </p>
+                  <p className="text-[10px] text-muted-foreground/40 mt-1.5">
+                    {new Date(
+                      n.timestamp
+                    ).toLocaleDateString()}
                   </p>
                 </div>
               ))
             )}
           </div>
-        </div>
+        </motion.div>
       </div>
     </div>
   );
