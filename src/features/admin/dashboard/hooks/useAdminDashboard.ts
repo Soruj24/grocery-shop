@@ -13,7 +13,7 @@ export function useAdminDashboard() {
     data: analytics,
     isLoading: analyticsLoading,
     isError: analyticsError,
-  } = useGetDashboardAnalyticsQuery();
+  } = useGetDashboardAnalyticsQuery({ range: "30d" });
 
   return {
     stats,

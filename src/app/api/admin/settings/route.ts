@@ -9,6 +9,7 @@ async function checkAdmin() {
   if ((session?.user as { role?: string })?.role !== "admin") {
     throw new Error("Unauthorized");
   }
+  return session;
 }
 
 export async function GET() {
@@ -23,7 +24,7 @@ export async function GET() {
   } catch (error: unknown) {
     return NextResponse.json(
       { message: error instanceof Error ? error.message : "Unknown error" },
-      { status: 500 },
+      { status: error instanceof Error && error.message === "Unauthorized" ? 401 : 500 }
     );
   }
 }
@@ -31,14 +32,44 @@ export async function GET() {
 export async function PUT(req: Request) {
   try {
     await checkAdmin();
-    const data = await req.json();
+    const body = await req.json();
     await dbConnect();
-    const settings = await Settings.findOneAndUpdate({}, data, { new: true, upsert: true });
+
+    const allowedGroups = [
+      "general", "store", "profile", "security", "notifications",
+      "payments", "shipping", "tax", "email", "integrations", "appearance",
+    ];
+
+    const setOps: Record<string, unknown> = {};
+    let hasGroups = false;
+
+    for (const key of allowedGroups) {
+      if (body[key] && typeof body[key] === "object") {
+        hasGroups = true;
+        for (const [field, value] of Object.entries(body[key])) {
+          const path = key + "." + field;
+          setOps[path] = value;
+        }
+      }
+    }
+
+    // Backward compatibility: flat updates
+    if (!hasGroups) {
+      for (const [key, value] of Object.entries(body)) {
+        setOps[key] = value;
+      }
+    }
+
+    const settings = await Settings.findOneAndUpdate(
+      {},
+      { $set: setOps },
+      { new: true, upsert: true }
+    );
     return NextResponse.json(settings);
   } catch (error: unknown) {
     return NextResponse.json(
       { message: error instanceof Error ? error.message : "Unknown error" },
-      { status: error instanceof Error && error.message === "Unauthorized" ? 401 : 500 },
+      { status: error instanceof Error && error.message === "Unauthorized" ? 401 : 500 }
     );
   }
 }

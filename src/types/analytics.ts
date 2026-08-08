@@ -4,6 +4,7 @@ export interface DailySale {
   revenue: number;
   orderCount: number;
   orders: number;
+  count: number;
 }
 
 export interface UserGrowth {

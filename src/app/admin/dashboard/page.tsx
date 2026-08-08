@@ -145,7 +145,7 @@ export default function AdminDashboard() {
   const [dateRange, setDateRange] = useState<"7d" | "30d" | "90d">("7d");
 
   const { data: stats, isLoading: statsLoading, isError: statsError, refetch: refetchStats } = useGetDashboardStatsQuery();
-  const { data: analytics, isLoading: analyticsLoading, isError: analyticsError, refetch: refetchAnalytics } = useGetDashboardAnalyticsQuery();
+  const { data: analytics, isLoading: analyticsLoading, isError: analyticsError, refetch: refetchAnalytics } = useGetDashboardAnalyticsQuery({ range: "7d" });
   const { data: salesReport, isLoading: salesLoading } = useGetSalesReportQuery({ period: dateRange === "7d" ? "weekly" : dateRange === "30d" ? "monthly" : "yearly" });
   const { data: inventoryData, isLoading: inventoryLoading } = useGetInventoryAlertsQuery();
   const { data: customersData, isLoading: customersLoading } = useGetAdminCustomersQuery({ page: 1, limit: 5 });
