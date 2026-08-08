@@ -35,7 +35,7 @@ export async function generateMetadata({
 
   return {
     title: `${product.name} | EMRAN SHOP`,
-    description: `${product.name} কিনুন সবচেয়ে কম দামে EMRAN SHOP থেকে। ${product.description?.slice(0, 100)}...`,
+    description: `${product.name} কিনুন সবচেয়ে কম দামে EMRAN SHOP থেকে। ${product.description?.slice(0, 100)}...`,
     openGraph: {
       title: `${product.name} | EMRAN SHOP`,
       description: product.description,
@@ -46,12 +46,15 @@ export async function generateMetadata({
 
 async function getProductData(id: string) {
   await dbConnect();
-  const product = await Product.findById(id).populate("category").lean();
+  const product = await Product.findById(id)
+    .populate("category")
+    .lean();
 
   if (!product) return null;
 
   const relatedProducts = await Product.find({
-    category: (product.category as { _id: string })._id,
+    category: (product.category as { _id: string })
+      ._id,
     _id: { $ne: id },
     isActive: true,
   })
@@ -60,8 +63,12 @@ async function getProductData(id: string) {
     .lean();
 
   return {
-    product: JSON.parse(JSON.stringify(product)) as ProductType,
-    relatedProducts: JSON.parse(JSON.stringify(relatedProducts)) as ProductType[],
+    product: JSON.parse(
+      JSON.stringify(product)
+    ) as ProductType,
+    relatedProducts: JSON.parse(
+      JSON.stringify(relatedProducts)
+    ) as ProductType[],
   };
 }
 
@@ -80,58 +87,78 @@ export default async function ProductDetailsPage({
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "Product",
-    "name": product.name,
-    "image": product.image,
-    "description": product.description,
-    "brand": {
+    name: product.name,
+    image: product.image,
+    description: product.description,
+    brand: {
       "@type": "Brand",
-      "name": "EMRAN SHOP"
+      name: "EMRAN SHOP",
     },
-    "offers": {
+    offers: {
       "@type": "Offer",
-      "url": `https://emranshop.com/products/${product._id}`,
-      "priceCurrency": "BDT",
-      "price": product.discount ? product.price - (product.price * product.discount / 100) : product.price,
-      "availability": product.stock > 0 ? "https://schema.org/InStock" : "https://schema.org/OutOfStock"
-    }
+      url: `https://emranshop.com/products/${product._id}`,
+      priceCurrency: "BDT",
+      price: product.discount
+        ? product.price -
+          (product.price * product.discount) / 100
+        : product.price,
+      availability:
+        product.stock > 0
+          ? "https://schema.org/InStock"
+          : "https://schema.org/OutOfStock",
+    },
   };
 
   return (
-    <div className="min-h-screen bg-white dark:bg-black relative overflow-hidden">
+    <div className="min-h-screen bg-white dark:bg-[#09090b] relative overflow-hidden">
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(jsonLd),
+        }}
       />
       <PageBackground
-        color1="bg-green-500/5"
-        color2="bg-blue-500/5"
-        color3="bg-yellow-500/5"
+        color1="bg-green-500/[0.03]"
+        color2="bg-blue-500/[0.03]"
+        color3="bg-yellow-500/[0.03]"
       />
 
-      <div className="max-w-7xl mx-auto px-4 py-8 lg:py-12 relative z-10 space-y-16 lg:space-y-24">
+      <div className="max-w-7xl mx-auto px-4 lg:px-6 py-8 lg:py-12 relative z-10">
         {/* Breadcrumb */}
         <ProductBreadcrumb product={product} />
 
         {/* Main Product Section */}
-        <div className="flex flex-col lg:flex-row gap-12 lg:gap-20 items-start">
-          <ProductImage image={product.image} name={product.name} id={product._id} />
+        <div className="mt-10 flex flex-col lg:flex-row gap-10 lg:gap-16 items-start">
+          <ProductImage
+            image={product.image}
+            name={product.name}
+            id={product._id}
+            product={product}
+          />
           <ProductInfo product={product} />
         </div>
 
         {/* Frequently Bought Together */}
-        <FrequentlyBoughtTogether currentProduct={product} relatedProducts={relatedProducts} />
+        <div className="mt-20 lg:mt-28">
+          <FrequentlyBoughtTogether
+            currentProduct={product}
+            relatedProducts={relatedProducts}
+          />
+        </div>
 
         {/* Recently Viewed */}
-        <RecentlyViewed />
+        <div className="mt-20 lg:mt-28">
+          <RecentlyViewed />
+        </div>
 
         {/* Product Details Tabs & Reviews */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 lg:gap-16">
+        <div className="mt-20 lg:mt-28 grid grid-cols-1 lg:grid-cols-3 gap-12 lg:gap-16">
           <div className="lg:col-span-2 space-y-16">
             <ProductDetailsTabs product={product} />
             <CustomerReviews productId={product._id} />
           </div>
-          
-          <div className="space-y-12 pb-24 md:pb-0">
+
+          <div className="space-y-12 pb-28 md:pb-0">
             <RelatedProducts products={relatedProducts} />
           </div>
         </div>

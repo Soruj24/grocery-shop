@@ -9,29 +9,32 @@ interface ProductBreadcrumbProps {
   product: Product;
 }
 
-export default function ProductBreadcrumb({ product }: ProductBreadcrumbProps) {
+export default function ProductBreadcrumb({
+  product,
+}: ProductBreadcrumbProps) {
   const { t } = useLanguage();
 
-  const productName = product.name;
-
   return (
-    <nav className="flex items-center gap-2 text-sm font-bold text-muted-foreground">
+    <nav
+      className="flex items-center gap-1.5 text-sm text-muted-foreground/60"
+      aria-label="Breadcrumb"
+    >
       <Link
         href="/"
-        className="hover:text-primary transition-colors"
+        className="hover:text-foreground transition-colors duration-200"
       >
-        {t('home_breadcrumb')}
+        {t("home_breadcrumb")}
       </Link>
-      <ChevronRight className="w-4 h-4" />
+      <ChevronRight className="w-3.5 h-3.5" />
       <Link
         href="/products"
-        className="hover:text-primary transition-colors"
+        className="hover:text-foreground transition-colors duration-200"
       >
-        {t('products_breadcrumb')}
+        {t("products_breadcrumb")}
       </Link>
-      <ChevronRight className="w-4 h-4" />
-      <span className="text-foreground line-clamp-1">
-        {productName}
+      <ChevronRight className="w-3.5 h-3.5" />
+      <span className="text-foreground font-medium line-clamp-1">
+        {product.name}
       </span>
     </nav>
   );

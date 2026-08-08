@@ -3,11 +3,17 @@
 import Image from "next/image";
 import { useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ChevronLeft, ChevronRight, Maximize2, Play, RotateCw, X } from "lucide-react";
+import {
+  ChevronLeft,
+  ChevronRight,
+  Maximize2,
+  Play,
+  RotateCw,
+  X,
+} from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { Product } from "@/types/product";
 import { getProductFallbackImage } from "@/constants/fallback-images";
-import { Badge } from "@/components/ui";
 
 interface ProductImageProps {
   image?: string;
@@ -18,44 +24,86 @@ interface ProductImageProps {
 
 type ViewMode = "image" | "video" | "360";
 
-export default function ProductImage({ image, name, id, product }: ProductImageProps) {
+export default function ProductImage({
+  image,
+  name,
+  id,
+  product,
+}: ProductImageProps) {
   const { t } = useLanguage();
 
   const productName = product?.name || name;
-  const primaryImage = image || getProductFallbackImage(productName);
+  const primaryImage =
+    image || getProductFallbackImage(productName);
 
-  const images = product?.images?.length ? product.images : [primaryImage];
+  const images = product?.images?.length
+    ? product.images
+    : [primaryImage];
   const videoUrl = product?.video;
   const view360Images = product?.view360 || [];
 
   const [activeIndex, setActiveIndex] = useState(0);
   const [isZoomed, setIsZoomed] = useState(false);
-  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
-  const [viewMode, setViewMode] = useState<ViewMode>("image");
-  const [isFullscreen, setIsFullscreen] = useState(false);
+  const [mousePos, setMousePos] = useState({
+    x: 0,
+    y: 0,
+  });
+  const [viewMode, setViewMode] =
+    useState<ViewMode>("image");
+  const [isFullscreen, setIsFullscreen] =
+    useState(false);
   const [dragOffset, setDragOffset] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
-  const dragStartRef = useRef<{ x: number } | null>(null);
+  const dragStartRef = useRef<{ x: number } | null>(
+    null
+  );
 
-  const discountPercent = product?.discount || (product?.discountPrice ? Math.round(((product.price - product.discountPrice) / product.price) * 100) : 0);
+  const discountPercent =
+    product?.discount ||
+    (product?.discountPrice
+      ? Math.round(
+          ((product.price - product.discountPrice) /
+            product.price) *
+            100
+        )
+      : 0);
 
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+  const handleMouseMove = (
+    e: React.MouseEvent<HTMLDivElement>
+  ) => {
     if (viewMode !== "image") return;
-    const { left, top, width, height } = e.currentTarget.getBoundingClientRect();
-    const x = ((e.clientX - left) / width) * 100;
-    const y = ((e.clientY - top) / height) * 100;
+    const {
+      left,
+      top,
+      width,
+      height,
+    } = e.currentTarget.getBoundingClientRect();
+    const x =
+      ((e.clientX - left) / width) * 100;
+    const y =
+      ((e.clientY - top) / height) * 100;
     setMousePos({ x, y });
   };
 
-  const handle360MouseDown = (e: React.MouseEvent) => {
+  const handle360MouseDown = (
+    e: React.MouseEvent
+  ) => {
     if (viewMode !== "360") return;
     setIsDragging(true);
     dragStartRef.current = { x: e.clientX };
   };
 
-  const handle360MouseMove = (e: React.MouseEvent) => {
-    if (!isDragging || !dragStartRef.current || viewMode !== "360") return;
-    const diff = e.clientX - dragStartRef.current.x;
+  const handle360MouseMove = (
+    e: React.MouseEvent
+  ) => {
+    if (
+      !isDragging ||
+      !dragStartRef.current ||
+      viewMode !== "360"
+    )
+      return;
+    const diff =
+      e.clientX - dragStartRef.current.x;
     setDragOffset((prev) => prev + diff);
     dragStartRef.current = { x: e.clientX };
   };
@@ -66,13 +114,15 @@ export default function ProductImage({ image, name, id, product }: ProductImageP
   };
 
   return (
-    <div className="w-full lg:w-1/2 space-y-6">
+    <div className="w-full lg:w-1/2 space-y-5">
       {/* View Mode Tabs */}
-      <div className="flex gap-2">
+      <div className="flex gap-1.5 p-1 bg-black/[0.03] dark:bg-white/[0.04] rounded-xl w-fit">
         <button
           onClick={() => setViewMode("image")}
-          className={`px-4 py-2 rounded-xl text-xs font-black transition-all ${
-            viewMode === "image" ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground"
+          className={`px-4 py-2 rounded-lg text-xs font-semibold transition-all duration-200 ${
+            viewMode === "image"
+              ? "bg-white dark:bg-[#09090b] text-foreground shadow-[0_1px_3px_rgba(0,0,0,0.06)]"
+              : "text-muted-foreground hover:text-foreground"
           }`}
         >
           Photos
@@ -80,40 +130,56 @@ export default function ProductImage({ image, name, id, product }: ProductImageP
         {videoUrl && (
           <button
             onClick={() => setViewMode("video")}
-            className={`px-4 py-2 rounded-xl text-xs font-black transition-all ${
-              viewMode === "video" ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground"
+            className={`px-4 py-2 rounded-lg text-xs font-semibold transition-all duration-200 flex items-center gap-1.5 ${
+              viewMode === "video"
+                ? "bg-white dark:bg-[#09090b] text-foreground shadow-[0_1px_3px_rgba(0,0,0,0.06)]"
+                : "text-muted-foreground hover:text-foreground"
             }`}
           >
-            <Play className="w-3 h-3 inline mr-1" /> Video
+            <Play className="w-3 h-3" /> Video
           </button>
         )}
         {view360Images.length > 0 && (
           <button
             onClick={() => setViewMode("360")}
-            className={`px-4 py-2 rounded-xl text-xs font-black transition-all ${
-              viewMode === "360" ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground"
+            className={`px-4 py-2 rounded-lg text-xs font-semibold transition-all duration-200 flex items-center gap-1.5 ${
+              viewMode === "360"
+                ? "bg-white dark:bg-[#09090b] text-foreground shadow-[0_1px_3px_rgba(0,0,0,0.06)]"
+                : "text-muted-foreground hover:text-foreground"
             }`}
           >
-            <RotateCw className="w-3 h-3 inline mr-1" /> 360°
+            <RotateCw className="w-3 h-3" /> 360°
           </button>
         )}
       </div>
 
+      {/* Main Image */}
       <div
-        className="relative bg-card rounded-2xl overflow-hidden border border-border shadow-lg aspect-square group cursor-zoom-in"
-        onMouseEnter={() => viewMode === "image" && setIsZoomed(true)}
-        onMouseLeave={() => { setIsZoomed(false); handle360MouseUp(); }}
-        onMouseMove={viewMode === "image" ? handleMouseMove : handle360MouseMove}
+        className="relative bg-black/[0.02] dark:bg-white/[0.02] rounded-2xl overflow-hidden border border-black/[0.04] dark:border-white/[0.04] aspect-square group cursor-zoom-in"
+        onMouseEnter={() =>
+          viewMode === "image" && setIsZoomed(true)
+        }
+        onMouseLeave={() => {
+          setIsZoomed(false);
+          handle360MouseUp();
+        }}
+        onMouseMove={
+          viewMode === "image"
+            ? handleMouseMove
+            : handle360MouseMove
+        }
         onMouseDown={handle360MouseDown}
         onMouseUp={handle360MouseUp}
       >
-        {discountPercent > 0 && viewMode === "image" && (
-          <div className="absolute top-6 left-6 z-10">
-            <Badge tone="warning" size="lg" className="font-black animate-bounce-slow">
-              {discountPercent.toLocaleString('bn-BD')}% {t('off')}
-            </Badge>
-          </div>
-        )}
+        {/* Discount badge */}
+        {discountPercent > 0 &&
+          viewMode === "image" && (
+            <div className="absolute top-4 left-4 z-10">
+              <span className="inline-flex items-center rounded-lg bg-rose-500 px-3 py-1.5 text-[11px] font-bold text-white shadow-[0_2px_12px_rgba(244,63,94,0.35)]">
+                -{discountPercent}%
+              </span>
+            </div>
+          )}
 
         <AnimatePresence mode="wait">
           {viewMode === "video" && videoUrl ? (
@@ -142,25 +208,34 @@ export default function ProductImage({ image, name, id, product }: ProductImageP
               className="w-full h-full flex items-center justify-center cursor-grab active:cursor-grabbing select-none"
             >
               <Image
-                src={view360Images[Math.abs(Math.round(dragOffset / 100)) % view360Images.length]}
+                src={
+                  view360Images[
+                    Math.abs(
+                      Math.round(dragOffset / 100)
+                    ) % view360Images.length
+                  ]
+                }
                 alt={`${name} 360° view`}
                 fill
                 className="object-contain p-8 pointer-events-none"
                 draggable={false}
                 sizes="(max-width: 768px) 100vw, 50vw"
               />
-              <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-card/80 backdrop-blur-sm px-4 py-2 rounded-full text-xs font-bold text-muted-foreground flex items-center gap-2">
-                <RotateCw className="w-3 h-3" />
+              <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-white/80 dark:bg-[#09090b]/80 backdrop-blur-md px-4 py-2 rounded-xl text-xs font-semibold text-muted-foreground flex items-center gap-2 border border-black/[0.04] dark:border-white/[0.04]">
+                <RotateCw className="w-3.5 h-3.5" />
                 Drag to rotate 360°
               </div>
             </motion.div>
           ) : (
             <motion.div
               key={`image-${activeIndex}`}
-              initial={{ opacity: 0, scale: 0.9 }}
+              initial={{ opacity: 0, scale: 0.98 }}
               animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 1.1 }}
-              transition={{ duration: 0.4, ease: "easeOut" }}
+              exit={{ opacity: 0, scale: 1.02 }}
+              transition={{
+                duration: 0.4,
+                ease: [0.21, 0.47, 0.32, 0.98],
+              }}
               className="w-full h-full"
             >
               <Image
@@ -168,70 +243,91 @@ export default function ProductImage({ image, name, id, product }: ProductImageP
                 alt={name}
                 fill
                 priority
-                className={`object-contain p-8 transition-transform duration-500 ease-out ${isZoomed ? 'scale-150' : 'scale-100'}`}
-                style={isZoomed ? {
-                  transformOrigin: `${mousePos.x}% ${mousePos.y}%`
-                } : {}}
+                className={`object-contain p-8 transition-transform duration-500 ease-out ${
+                  isZoomed
+                    ? "scale-[1.5]"
+                    : "scale-100"
+                }`}
+                style={
+                  isZoomed
+                    ? {
+                        transformOrigin: `${mousePos.x}% ${mousePos.y}%`,
+                      }
+                    : {}
+                }
                 sizes="(max-width: 768px) 100vw, 50vw"
               />
             </motion.div>
           )}
         </AnimatePresence>
 
+        {/* Zoom indicator */}
         {viewMode === "image" && (
-          <div className="absolute top-4 right-4 p-3 bg-card backdrop-blur-md rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 shadow-lg">
-            <Maximize2 className="w-5 h-5 text-muted-foreground" />
+          <div className="absolute top-4 right-4 p-2.5 bg-white/80 dark:bg-[#09090b]/80 backdrop-blur-md rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 border border-black/[0.04] dark:border-white/[0.04]">
+            <Maximize2 className="w-4 h-4 text-muted-foreground" />
           </div>
         )}
 
-        {viewMode === "image" && images.length > 1 && (
-          <div className="absolute inset-x-4 top-1/2 -translate-y-1/2 flex justify-between pointer-events-none">
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                setActiveIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
-              }}
-              className="p-3 bg-card backdrop-blur-md rounded-2xl shadow-lg pointer-events-auto opacity-0 group-hover:opacity-100 transition-all duration-300 -translate-x-4 group-hover:translate-x-0"
-            >
-              <ChevronLeft className="w-6 h-6 text-foreground" />
-            </button>
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                setActiveIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1));
-              }}
-              className="p-3 bg-card backdrop-blur-md rounded-2xl shadow-lg pointer-events-auto opacity-0 group-hover:opacity-100 transition-all duration-300 translate-x-4 group-hover:translate-x-0"
-            >
-              <ChevronRight className="w-6 h-6 text-foreground" />
-            </button>
-          </div>
-        )}
+        {/* Navigation arrows */}
+        {viewMode === "image" &&
+          images.length > 1 && (
+            <div className="absolute inset-x-4 top-1/2 -translate-y-1/2 flex justify-between pointer-events-none">
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setActiveIndex((prev) =>
+                    prev === 0
+                      ? images.length - 1
+                      : prev - 1
+                  );
+                }}
+                className="p-2.5 bg-white/80 dark:bg-[#09090b]/80 backdrop-blur-md rounded-xl shadow-[0_2px_8px_rgba(0,0,0,0.08)] pointer-events-auto opacity-0 group-hover:opacity-100 transition-all duration-300 -translate-x-3 group-hover:translate-x-0 border border-black/[0.04] dark:border-white/[0.04]"
+              >
+                <ChevronLeft className="w-5 h-5 text-foreground" />
+              </button>
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setActiveIndex((prev) =>
+                    prev === images.length - 1
+                      ? 0
+                      : prev + 1
+                  );
+                }}
+                className="p-2.5 bg-white/80 dark:bg-[#09090b]/80 backdrop-blur-md rounded-xl shadow-[0_2px_8px_rgba(0,0,0,0.08)] pointer-events-auto opacity-0 group-hover:opacity-100 transition-all duration-300 translate-x-3 group-hover:translate-x-0 border border-black/[0.04] dark:border-white/[0.04]"
+              >
+                <ChevronRight className="w-5 h-5 text-foreground" />
+              </button>
+            </div>
+          )}
       </div>
 
+      {/* Thumbnail slider */}
       {viewMode === "image" && images.length > 1 && (
-        <div className="flex gap-4 overflow-x-auto pb-2 scrollbar-hide">
+        <div className="flex gap-3 overflow-x-auto pb-2 scrollbar-hide">
           {images.map((img, idx) => (
             <button
               key={idx}
               onClick={() => setActiveIndex(idx)}
-              className={`relative w-24 aspect-square rounded-2xl overflow-hidden border-2 transition-all shrink-0 ${
+              className={`relative w-20 aspect-square rounded-xl overflow-hidden border-2 transition-all duration-300 shrink-0 ${
                 activeIndex === idx
-                  ? 'border-primary scale-95 shadow-lg shadow-primary'
-                  : 'border-border opacity-60 hover:opacity-100'
+                  ? "border-foreground shadow-[0_2px_12px_rgba(0,0,0,0.12)]"
+                  : "border-transparent opacity-50 hover:opacity-100 hover:border-black/[0.1] dark:hover:border-white/[0.1]"
               }`}
             >
               <Image
                 src={img}
-                alt={`${productName} ${t('thumbnail')} ${(idx + 1).toLocaleString('bn-BD')}`}
+                alt={`${productName} ${t("thumbnail")} ${idx + 1}`}
                 fill
-                sizes="96px"
-                className="object-cover p-2"
+                sizes="80px"
+                className="object-cover p-1.5"
               />
             </button>
           ))}
         </div>
       )}
 
+      {/* Fullscreen modal */}
       <AnimatePresence>
         {isFullscreen && (
           <motion.div
@@ -243,13 +339,13 @@ export default function ProductImage({ image, name, id, product }: ProductImageP
           >
             <button
               onClick={() => setIsFullscreen(false)}
-              className="absolute top-4 right-4 p-3 bg-white/10 rounded-full text-white hover:bg-white/20 transition-all z-10"
+              className="absolute top-4 right-4 p-3 bg-white/10 rounded-xl text-white hover:bg-white/20 transition-all z-10"
             >
               <X className="w-6 h-6" />
             </button>
             <motion.div
               key={activeIndex}
-              initial={{ scale: 0.8, opacity: 0 }}
+              initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               className="relative w-full max-w-3xl aspect-square"
               onClick={(e) => e.stopPropagation()}
