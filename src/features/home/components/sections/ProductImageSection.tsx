@@ -2,12 +2,15 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { Heart, Share2 } from "lucide-react";
+import {
+  Heart,
+  Share2,
+  Eye,
+} from "lucide-react";
 import { motion } from "framer-motion";
 import { Product } from "@/types/product";
 import { TranslationKey } from "@/constants/translations";
 import { getProductFallbackImage } from "@/constants/fallback-images";
-import { Badge } from "@/components/ui";
 
 interface ProductImageSectionProps {
   product: Product;
@@ -28,61 +31,114 @@ export default function ProductImageSection({
   onShare,
   t,
 }: ProductImageSectionProps) {
+  const discount = product.discountPrice
+    ? Math.round(
+        ((product.price - product.discountPrice) /
+          product.price) *
+          100
+      )
+    : 0;
+
   return (
-    <div className="relative aspect-[4/5] overflow-hidden bg-subtle rounded-t-xl">
+    <div className="relative aspect-[4/5] overflow-hidden bg-black/[0.02] dark:bg-white/[0.02] rounded-t-2xl">
+      {/* Swipe overlay */}
       <motion.div
-        style={{ backgroundColor: overlayColor, opacity: overlayOpacity }}
+        style={{
+          backgroundColor: overlayColor,
+          opacity: overlayOpacity,
+        }}
         className="absolute inset-0 z-30 pointer-events-none mix-blend-multiply dark:mix-blend-overlay"
       />
 
-      <Link href={`/products/${product._id}`} className="block w-full h-full">
+      {/* Product image */}
+      <Link
+        href={`/products/${product._id}`}
+        className="block w-full h-full"
+      >
         <Image
-          src={product.image || getProductFallbackImage(product.name)}
+          src={
+            product.image ||
+            getProductFallbackImage(product.name)
+          }
           alt={product.name}
           fill
           sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, (max-width: 1280px) 33vw, 25vw"
-          className="object-cover group-hover:scale-110 transition-transform duration-700 ease-in-out"
+          className="object-cover group-hover:scale-110 transition-transform duration-700 ease-out"
         />
       </Link>
 
-      <div className="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition-colors duration-500 pointer-events-none" />
+      {/* Hover dim */}
+      <div className="absolute inset-0 bg-black/0 group-hover:bg-black/[0.03] transition-colors duration-500 pointer-events-none" />
 
-      <div className="absolute top-4 right-4 flex flex-col gap-2 translate-x-12 group-hover:translate-x-0 transition-transform duration-300 ease-out z-20">
+      {/* Discount badge - top left */}
+      {discount > 0 && (
+        <div className="absolute top-3 left-3 z-10">
+          <span className="inline-flex items-center rounded-lg bg-rose-500 px-2.5 py-1 text-[11px] font-bold text-white shadow-[0_2px_8px_rgba(244,63,94,0.3)]">
+            -{discount}%
+          </span>
+        </div>
+      )}
+
+      {/* New / Deal badges */}
+      {product.isNewArrival && discount === 0 && (
+        <div className="absolute top-3 left-3 z-10">
+          <span className="inline-flex items-center rounded-lg bg-emerald-500 px-2.5 py-1 text-[11px] font-bold text-white shadow-[0_2px_8px_rgba(34,197,94,0.3)]">
+            {t("new_arrival_badge") ?? "নিউ"}
+          </span>
+        </div>
+      )}
+
+      {/* Action buttons - slide in from right on hover */}
+      <div className="absolute top-3 right-3 flex flex-col gap-2 translate-x-14 group-hover:translate-x-0 transition-transform duration-300 ease-out z-20">
         <button
-          onClick={(e) => { e.preventDefault(); onToggleWishlist(); }}
-          className={`w-10 h-10 rounded-full flex items-center justify-center backdrop-blur-md shadow-lg transition-all duration-300 hover:scale-110 active:scale-95 ${
+          onClick={(e) => {
+            e.preventDefault();
+            onToggleWishlist();
+          }}
+          className={`w-9 h-9 rounded-xl flex items-center justify-center backdrop-blur-md shadow-[0_2px_8px_rgba(0,0,0,0.1)] transition-all duration-300 hover:scale-110 active:scale-95 ${
             isWishlistActive
-              ? "bg-rose-500 text-white shadow-rose-500/40"
-              : "bg-card text-muted-foreground hover:bg-rose-500 hover:text-white"
+              ? "bg-rose-500 text-white shadow-rose-500/30"
+              : "bg-white/90 dark:bg-[#09090b]/90 text-muted-foreground hover:bg-rose-500 hover:text-white"
           }`}
         >
-          <Heart className={`w-5 h-5 ${isWishlistActive ? "fill-current" : ""}`} />
+          <Heart
+            className={`w-4 h-4 ${
+              isWishlistActive ? "fill-current" : ""
+            }`}
+          />
         </button>
 
         <button
-          onClick={(e) => { e.preventDefault(); onShare(e); }}
-          className="w-10 h-10 rounded-full bg-card text-muted-foreground flex items-center justify-center backdrop-blur-md shadow-lg transition-all duration-300 hover:bg-blue-500 hover:text-white hover:scale-110 active:scale-95 delay-75"
+          onClick={(e) => {
+            e.preventDefault();
+            onShare(e);
+          }}
+          className="w-9 h-9 rounded-xl bg-white/90 dark:bg-[#09090b]/90 text-muted-foreground flex items-center justify-center backdrop-blur-md shadow-[0_2px_8px_rgba(0,0,0,0.1)] transition-all duration-300 hover:bg-sky-500 hover:text-white hover:scale-110 active:scale-95 delay-75"
         >
-          <Share2 className="w-5 h-5" />
+          <Share2 className="w-4 h-4" />
         </button>
+
+        <Link
+          href={`/products/${product._id}`}
+          className="w-9 h-9 rounded-xl bg-white/90 dark:bg-[#09090b]/90 text-muted-foreground flex items-center justify-center backdrop-blur-md shadow-[0_2px_8px_rgba(0,0,0,0.1)] transition-all duration-300 hover:bg-foreground hover:text-background hover:scale-110 active:scale-95 delay-100"
+        >
+          <Eye className="w-4 h-4" />
+        </Link>
       </div>
 
-      {product.discountPrice && (
-        <div className="absolute top-4 left-4 z-10">
-          <Badge tone="danger" size="sm">
-            {Math.round(((product.price - product.discountPrice) / product.price) * 100).toLocaleString("bn-BD")}% {t("off")}
-          </Badge>
+      {/* Low stock warning */}
+      {product.stock <= 5 && product.stock > 0 && (
+        <div className="absolute bottom-3 left-3 z-10">
+          <span className="inline-flex items-center rounded-lg bg-amber-500/[0.9] px-2.5 py-1 text-[10px] font-bold text-white shadow-[0_2px_8px_rgba(245,158,11,0.3)]">
+            {t("low_stock")}
+          </span>
         </div>
       )}
 
-      {product.stock <= 5 && product.stock > 0 && (
-        <div className="absolute bottom-4 left-4 z-10">
-          <Badge tone="warning" size="sm">{t("low_stock")}</Badge>
-        </div>
-      )}
+      {/* Out of stock overlay */}
       {product.stock === 0 && (
-        <div className="absolute inset-0 bg-black/40 backdrop-blur-[2px] flex items-center justify-center z-10">
-          <span className="bg-card text-foreground text-xs font-black px-4 py-2 rounded-full shadow-lg transform -rotate-6">
+        <div className="absolute inset-0 bg-black/50 backdrop-blur-[2px] flex items-center justify-center z-10 rounded-t-2xl">
+          <span className="bg-white dark:bg-[#09090b] text-foreground text-xs font-bold px-5 py-2.5 rounded-xl shadow-[0_4px_20px_rgba(0,0,0,0.15)] transform -rotate-3">
             {t("out_of_stock_label")}
           </span>
         </div>

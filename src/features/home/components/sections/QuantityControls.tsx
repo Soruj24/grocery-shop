@@ -18,22 +18,24 @@ export default function QuantityControls({
   locale = "bn-BD",
 }: QuantityControlsProps) {
   return (
-    <div className="flex items-center bg-muted rounded-2xl p-1 border border-border shadow-inner">
+    <div className="flex items-center bg-black/[0.04] dark:bg-white/[0.06] rounded-xl p-1 gap-0.5">
       <button
         onClick={onDecrement}
-        className="w-10 h-10 flex items-center justify-center bg-card hover:bg-rose-100 dark:hover:bg-rose-900/30 hover:text-rose-600 rounded-xl transition-all text-foreground shadow-sm"
+        className="w-9 h-9 flex items-center justify-center bg-white dark:bg-[#09090b] hover:bg-rose-50 dark:hover:bg-rose-500/[0.08] hover:text-rose-500 rounded-lg transition-all duration-200 text-foreground shadow-[0_1px_2px_rgba(0,0,0,0.04)] active:scale-95"
+        aria-label="Decrease quantity"
       >
-        <Minus size={18} strokeWidth={3} />
+        <Minus size={14} strokeWidth={2.5} />
       </button>
-      <span className="w-8 text-center text-sm font-black text-foreground select-none tabular-nums">
+      <span className="w-8 text-center text-sm font-bold text-foreground select-none tabular-nums">
         {quantity.toLocaleString(locale)}
       </span>
       <button
         onClick={onIncrement}
         disabled={quantity >= stock}
-        className="w-10 h-10 flex items-center justify-center bg-card hover:bg-primary-subtle dark:hover:bg-primary-subtle hover:text-primary rounded-xl transition-all text-foreground disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:bg-card disabled:hover:text-foreground shadow-sm"
+        className="w-9 h-9 flex items-center justify-center bg-foreground hover:bg-primary text-background rounded-lg transition-all duration-200 disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:bg-foreground active:scale-95 shadow-[0_1px_2px_rgba(0,0,0,0.04)]"
+        aria-label="Increase quantity"
       >
-        <Plus size={18} strokeWidth={3} />
+        <Plus size={14} strokeWidth={2.5} />
       </button>
     </div>
   );
