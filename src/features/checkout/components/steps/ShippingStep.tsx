@@ -11,6 +11,8 @@ import {
   ShoppingBag,
   ChevronDown,
   ChevronUp,
+  Plus,
+  Check,
 } from "lucide-react";
 import {
   type GuestInfo,
@@ -68,13 +70,18 @@ export default function ShippingStep({
       initial={{ opacity: 0, x: 20 }}
       animate={{ opacity: 1, x: 0 }}
       exit={{ opacity: 0, x: -20 }}
-      className="space-y-5"
+      transition={{
+        duration: 0.3,
+        ease: [0.21, 0.47, 0.32, 0.98],
+      }}
+      className="space-y-4"
     >
-      <div className="rounded-xl border border-black/[0.04] dark:border-white/[0.04] bg-white dark:bg-[#09090b] p-4 shadow-[0_1px_3px_rgba(0,0,0,0.04)]">
-        <div className="flex items-center justify-between">
+      {/* Guest / Login Toggle */}
+      <div className="rounded-2xl border border-black/[0.04] dark:border-white/[0.04] bg-white dark:bg-[#09090b] overflow-hidden shadow-[0_1px_3px_rgba(0,0,0,0.04)]">
+        <div className="p-5 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-black/[0.04] dark:bg-white/[0.06]">
-              <ShoppingBag className="h-4 w-4 text-muted-foreground/60" />
+            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-black/[0.04] dark:bg-white/[0.06]">
+              <ShoppingBag className="h-4.5 w-4.5 text-muted-foreground/60" />
             </div>
             <div>
               <p className="text-sm font-semibold text-foreground">
@@ -82,23 +89,21 @@ export default function ShippingStep({
                   ? t("guest_checkout")
                   : t("login_to_checkout")}
               </p>
-              <p className="text-[10px] text-muted-foreground/50">
+              <p className="text-[10px] text-muted-foreground/50 mt-0.5">
                 {isGuest
                   ? t("guest_checkout_desc")
-                  : t(
-                      "or_continue_as_guest"
-                    )}
+                  : t("or_continue_as_guest")}
               </p>
             </div>
           </div>
           <button
             onClick={onToggleGuest}
-            className="flex items-center gap-1.5 rounded-lg border border-black/[0.04] dark:border-white/[0.04] px-3 py-1.5 text-[11px] font-medium text-muted-foreground/60 hover:bg-black/[0.04] dark:hover:bg-white/[0.06] transition-colors"
+            className="flex items-center gap-1.5 rounded-xl border border-black/[0.06] dark:border-white/[0.06] px-3.5 py-2 text-[11px] font-medium text-muted-foreground/60 hover:bg-black/[0.04] dark:hover:bg-white/[0.06] hover:text-foreground transition-all"
           >
             {isGuest ? (
-              <LogIn className="h-3 w-3" />
+              <LogIn className="h-3.5 w-3.5" />
             ) : (
-              <User className="h-3 w-3" />
+              <User className="h-3.5 w-3.5" />
             )}
             {isGuest
               ? t("login_to_checkout")
@@ -109,88 +114,97 @@ export default function ShippingStep({
         <AnimatePresence>
           {isGuest && showGuestForm && (
             <motion.div
-              initial={{
-                height: 0,
-                opacity: 0,
-              }}
-              animate={{
-                height: "auto",
-                opacity: 1,
-              }}
-              exit={{
-                height: 0,
-                opacity: 0,
-              }}
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: "auto", opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              transition={{ duration: 0.25 }}
               className="overflow-hidden"
             >
-              <div className="mt-4 space-y-3 border-t border-black/[0.04] dark:border-white/[0.04] pt-4">
-                <div className="relative">
-                  <User className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground/40" />
-                  <input
-                    type="text"
-                    placeholder={`${t("name_required")} *`}
-                    value={guestInfo.name}
-                    onChange={(e) =>
-                      onGuestInfoChange({
-                        ...guestInfo,
-                        name: e.target.value,
-                      })
-                    }
-                    className={`w-full rounded-lg border ${
-                      errors.name
-                        ? "border-rose-500"
-                        : "border-black/[0.04] dark:border-white/[0.04]"
-                    } bg-black/[0.02] dark:bg-white/[0.03] py-2.5 pl-10 pr-3 text-sm text-foreground placeholder:text-muted-foreground/40 focus:border-foreground/20 focus:ring-1 focus:ring-foreground/20 outline-none transition-colors`}
-                  />
+              <div className="px-5 pb-5 space-y-3 border-t border-black/[0.04] dark:border-white/[0.04] pt-4">
+                {/* Name */}
+                <div className="space-y-1.5">
+                  <label className="text-[10px] font-semibold text-muted-foreground/50 uppercase tracking-wider">
+                    {t("name_required")} *
+                  </label>
+                  <div className="relative">
+                    <User className="absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground/40" />
+                    <input
+                      type="text"
+                      placeholder="Full name"
+                      value={guestInfo.name}
+                      onChange={(e) =>
+                        onGuestInfoChange({
+                          ...guestInfo,
+                          name: e.target.value,
+                        })
+                      }
+                      className={`w-full rounded-xl border ${
+                        errors.name
+                          ? "border-rose-500 focus:border-rose-500"
+                          : "border-black/[0.06] dark:border-white/[0.06] focus:border-foreground/20"
+                      } bg-black/[0.02] dark:bg-white/[0.03] py-3 pl-11 pr-3 text-sm text-foreground placeholder:text-muted-foreground/30 focus:ring-2 focus:ring-foreground/10 outline-none transition-all`}
+                    />
+                  </div>
                   {errors.name && (
-                    <p className="mt-1 text-xs text-rose-500">
+                    <p className="text-[11px] font-medium text-rose-500 flex items-center gap-1">
+                      <span className="w-1 h-1 rounded-full bg-rose-500" />
                       {errors.name}
                     </p>
                   )}
                 </div>
-                <div className="relative">
-                  <Phone className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground/40" />
-                  <input
-                    type="tel"
-                    placeholder={`${t("phone_required")} *`}
-                    value={guestInfo.phone}
-                    onChange={(e) =>
-                      onGuestInfoChange({
-                        ...guestInfo,
-                        phone: e.target.value,
-                      })
-                    }
-                    className={`w-full rounded-lg border ${
-                      errors.phone
-                        ? "border-rose-500"
-                        : "border-black/[0.04] dark:border-white/[0.04]"
-                    } bg-black/[0.02] dark:bg-white/[0.03] py-2.5 pl-10 pr-3 text-sm text-foreground placeholder:text-muted-foreground/40 focus:border-foreground/20 focus:ring-1 focus:ring-foreground/20 outline-none transition-colors`}
-                  />
+
+                {/* Phone */}
+                <div className="space-y-1.5">
+                  <label className="text-[10px] font-semibold text-muted-foreground/50 uppercase tracking-wider">
+                    {t("phone_required")} *
+                  </label>
+                  <div className="relative">
+                    <Phone className="absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground/40" />
+                    <input
+                      type="tel"
+                      placeholder="01XXXXXXXXX"
+                      value={guestInfo.phone}
+                      onChange={(e) =>
+                        onGuestInfoChange({
+                          ...guestInfo,
+                          phone: e.target.value,
+                        })
+                      }
+                      className={`w-full rounded-xl border ${
+                        errors.phone
+                          ? "border-rose-500 focus:border-rose-500"
+                          : "border-black/[0.06] dark:border-white/[0.06] focus:border-foreground/20"
+                      } bg-black/[0.02] dark:bg-white/[0.03] py-3 pl-11 pr-3 text-sm text-foreground placeholder:text-muted-foreground/30 focus:ring-2 focus:ring-foreground/10 outline-none transition-all`}
+                    />
+                  </div>
                   {errors.phone && (
-                    <p className="mt-1 text-xs text-rose-500">
+                    <p className="text-[11px] font-medium text-rose-500 flex items-center gap-1">
+                      <span className="w-1 h-1 rounded-full bg-rose-500" />
                       {errors.phone}
                     </p>
                   )}
                 </div>
-                <div className="relative">
-                  <Mail className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground/40" />
-                  <input
-                    type="email"
-                    placeholder={t(
-                      "email_optional"
-                    )}
-                    value={
-                      guestInfo.email || ""
-                    }
-                    onChange={(e) =>
-                      onGuestInfoChange({
-                        ...guestInfo,
-                        email:
-                          e.target.value,
-                      })
-                    }
-                    className="w-full rounded-lg border border-black/[0.04] dark:border-white/[0.04] bg-black/[0.02] dark:bg-white/[0.03] py-2.5 pl-10 pr-3 text-sm text-foreground placeholder:text-muted-foreground/40 focus:border-foreground/20 focus:ring-1 focus:ring-foreground/20 outline-none transition-colors"
-                  />
+
+                {/* Email */}
+                <div className="space-y-1.5">
+                  <label className="text-[10px] font-semibold text-muted-foreground/50 uppercase tracking-wider">
+                    {t("email_optional")}
+                  </label>
+                  <div className="relative">
+                    <Mail className="absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground/40" />
+                    <input
+                      type="email"
+                      placeholder="email@example.com"
+                      value={guestInfo.email || ""}
+                      onChange={(e) =>
+                        onGuestInfoChange({
+                          ...guestInfo,
+                          email: e.target.value,
+                        })
+                      }
+                      className="w-full rounded-xl border border-black/[0.06] dark:border-white/[0.06] bg-black/[0.02] dark:bg-white/[0.03] py-3 pl-11 pr-3 text-sm text-foreground placeholder:text-muted-foreground/30 focus:border-foreground/20 focus:ring-2 focus:ring-foreground/10 outline-none transition-all"
+                    />
+                  </div>
                 </div>
               </div>
             </motion.div>
@@ -198,141 +212,164 @@ export default function ShippingStep({
         </AnimatePresence>
       </div>
 
-      <div className="rounded-xl border border-black/[0.04] dark:border-white/[0.04] bg-white dark:bg-[#09090b] p-4 shadow-[0_1px_3px_rgba(0,0,0,0.04)]">
-        <h3 className="flex items-center gap-2 text-sm font-semibold text-foreground mb-3">
-          <MapPin className="h-4 w-4 text-muted-foreground/60" />
-          {t("delivery_address")}
-        </h3>
-
-        {!isGuest &&
-          addresses.length > 0 &&
-          !useCustomAddress && (
-            <AddressBook
-              addresses={addresses}
-              selectedId={selectedAddressId}
-              onSelect={onSelectAddress}
-              onAdd={onAddAddress}
-              onDelete={onDeleteAddress}
-            />
-          )}
-
-        <button
-          onClick={onToggleCustomAddress}
-          className="mt-3 flex w-full items-center justify-between rounded-lg border border-black/[0.04] dark:border-white/[0.04] p-3 text-sm text-muted-foreground/60 hover:bg-black/[0.02] dark:hover:bg-white/[0.03] transition-colors"
-        >
-          <span>
-            {useCustomAddress
-              ? t("same_as_above")
-              : t(
-                  "enter_address_manually"
-                )}
-          </span>
-          {useCustomAddress ? (
-            <ChevronUp className="h-4 w-4" />
-          ) : (
-            <ChevronDown className="h-4 w-4" />
-          )}
-        </button>
-
-        <AnimatePresence>
-          {useCustomAddress && (
-            <motion.div
-              initial={{
-                height: 0,
-                opacity: 0,
-              }}
-              animate={{
-                height: "auto",
-                opacity: 1,
-              }}
-              exit={{
-                height: 0,
-                opacity: 0,
-              }}
-              className="overflow-hidden"
-            >
-              <div className="mt-3 space-y-3">
-                <input
-                  type="text"
-                  placeholder={`${t("name_required")} *`}
-                  value={customName}
-                  onChange={(e) =>
-                    onCustomChange(
-                      "name",
-                      e.target.value
-                    )
-                  }
-                  className={`w-full rounded-lg border ${
-                    errors.customName
-                      ? "border-rose-500"
-                      : "border-black/[0.04] dark:border-white/[0.04]"
-                  } bg-black/[0.02] dark:bg-white/[0.03] px-3 py-2.5 text-sm text-foreground placeholder:text-muted-foreground/40 focus:border-foreground/20 focus:ring-1 focus:ring-foreground/20 outline-none transition-colors`}
-                />
-                {errors.customName && (
-                  <p className="text-xs text-rose-500">
-                    {errors.customName}
-                  </p>
-                )}
-                <input
-                  type="tel"
-                  placeholder={`${t("phone_required")} *`}
-                  value={customPhone}
-                  onChange={(e) =>
-                    onCustomChange(
-                      "phone",
-                      e.target.value
-                    )
-                  }
-                  className={`w-full rounded-lg border ${
-                    errors.customPhone
-                      ? "border-rose-500"
-                      : "border-black/[0.04] dark:border-white/[0.04]"
-                  } bg-black/[0.02] dark:bg-white/[0.03] px-3 py-2.5 text-sm text-foreground placeholder:text-muted-foreground/40 focus:border-foreground/20 focus:ring-1 focus:ring-foreground/20 outline-none transition-colors`}
-                />
-                {errors.customPhone && (
-                  <p className="text-xs text-rose-500">
-                    {errors.customPhone}
-                  </p>
-                )}
-                <textarea
-                  placeholder={`${t("delivery_address")} *`}
-                  value={customAddress}
-                  onChange={(e) =>
-                    onCustomChange(
-                      "address",
-                      e.target.value
-                    )
-                  }
-                  rows={3}
-                  className={`w-full rounded-lg border ${
-                    errors.customAddress
-                      ? "border-rose-500"
-                      : "border-black/[0.04] dark:border-white/[0.04]"
-                  } bg-black/[0.02] dark:bg-white/[0.03] px-3 py-2.5 text-sm text-foreground placeholder:text-muted-foreground/40 focus:border-foreground/20 focus:ring-1 focus:ring-foreground/20 outline-none transition-colors resize-none`}
-                />
-                {errors.customAddress && (
-                  <p className="text-xs text-rose-500">
-                    {errors.customAddress}
-                  </p>
-                )}
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
-
-        {isGuest && !useCustomAddress && (
-          <div className="mt-3">
-            <button
-              onClick={onToggleCustomAddress}
-              className="flex w-full items-center justify-center gap-2 rounded-lg border border-dashed border-black/[0.1] dark:border-white/[0.1] py-3 text-sm font-medium text-muted-foreground/50 hover:border-foreground/20 hover:text-foreground transition-colors"
-            >
-              <MapPin className="h-4 w-4" />
-              {t(
-                "enter_address_manually"
-              )}
-            </button>
+      {/* Delivery Address */}
+      <div className="rounded-2xl border border-black/[0.04] dark:border-white/[0.04] bg-white dark:bg-[#09090b] overflow-hidden shadow-[0_1px_3px_rgba(0,0,0,0.04)]">
+        <div className="p-5">
+          <div className="flex items-center gap-3 mb-4">
+            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-black/[0.04] dark:bg-white/[0.06]">
+              <MapPin className="h-4.5 w-4.5 text-muted-foreground/60" />
+            </div>
+            <div>
+              <h3 className="text-sm font-semibold text-foreground">
+                {t("delivery_address")}
+              </h3>
+              <p className="text-[10px] text-muted-foreground/50">
+                Where should we deliver?
+              </p>
+            </div>
           </div>
-        )}
+
+          {/* Saved Addresses */}
+          {!isGuest &&
+            addresses.length > 0 &&
+            !useCustomAddress && (
+              <AddressBook
+                addresses={addresses}
+                selectedId={selectedAddressId}
+                onSelect={onSelectAddress}
+                onAdd={onAddAddress}
+                onDelete={onDeleteAddress}
+              />
+            )}
+
+          {/* Custom Address Toggle */}
+          <button
+            onClick={onToggleCustomAddress}
+            className={`mt-3 flex w-full items-center justify-between rounded-xl border p-3.5 text-sm transition-all ${
+              useCustomAddress
+                ? "border-foreground/20 bg-black/[0.02] dark:bg-white/[0.04]"
+                : "border-black/[0.06] dark:border-white/[0.06] hover:border-black/[0.1] dark:hover:border-white/[0.1] text-muted-foreground/60"
+            }`}
+          >
+            <span className="flex items-center gap-2 font-medium">
+              {useCustomAddress ? (
+                <Check className="h-4 w-4 text-foreground" />
+              ) : (
+                <Plus className="h-4 w-4" />
+              )}
+              {useCustomAddress
+                ? t("same_as_above")
+                : t("enter_address_manually")}
+            </span>
+            {useCustomAddress ? (
+              <ChevronUp className="h-4 w-4" />
+            ) : (
+              <ChevronDown className="h-4 w-4" />
+            )}
+          </button>
+
+          <AnimatePresence>
+            {useCustomAddress && (
+              <motion.div
+                initial={{ height: 0, opacity: 0 }}
+                animate={{ height: "auto", opacity: 1 }}
+                exit={{ height: 0, opacity: 0 }}
+                transition={{ duration: 0.25 }}
+                className="overflow-hidden"
+              >
+                <div className="mt-4 space-y-3">
+                  <div className="space-y-1.5">
+                    <label className="text-[10px] font-semibold text-muted-foreground/50 uppercase tracking-wider">
+                      {t("name_required")} *
+                    </label>
+                    <input
+                      type="text"
+                      placeholder="Full name"
+                      value={customName}
+                      onChange={(e) =>
+                        onCustomChange("name", e.target.value)
+                      }
+                      className={`w-full rounded-xl border ${
+                        errors.customName
+                          ? "border-rose-500"
+                          : "border-black/[0.06] dark:border-white/[0.06]"
+                      } bg-black/[0.02] dark:bg-white/[0.03] px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground/30 focus:border-foreground/20 focus:ring-2 focus:ring-foreground/10 outline-none transition-all`}
+                    />
+                    {errors.customName && (
+                      <p className="text-[11px] font-medium text-rose-500 flex items-center gap-1">
+                        <span className="w-1 h-1 rounded-full bg-rose-500" />
+                        {errors.customName}
+                      </p>
+                    )}
+                  </div>
+
+                  <div className="space-y-1.5">
+                    <label className="text-[10px] font-semibold text-muted-foreground/50 uppercase tracking-wider">
+                      {t("phone_required")} *
+                    </label>
+                    <input
+                      type="tel"
+                      placeholder="01XXXXXXXXX"
+                      value={customPhone}
+                      onChange={(e) =>
+                        onCustomChange("phone", e.target.value)
+                      }
+                      className={`w-full rounded-xl border ${
+                        errors.customPhone
+                          ? "border-rose-500"
+                          : "border-black/[0.06] dark:border-white/[0.06]"
+                      } bg-black/[0.02] dark:bg-white/[0.03] px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground/30 focus:border-foreground/20 focus:ring-2 focus:ring-foreground/10 outline-none transition-all`}
+                    />
+                    {errors.customPhone && (
+                      <p className="text-[11px] font-medium text-rose-500 flex items-center gap-1">
+                        <span className="w-1 h-1 rounded-full bg-rose-500" />
+                        {errors.customPhone}
+                      </p>
+                    )}
+                  </div>
+
+                  <div className="space-y-1.5">
+                    <label className="text-[10px] font-semibold text-muted-foreground/50 uppercase tracking-wider">
+                      {t("delivery_address")} *
+                    </label>
+                    <textarea
+                      placeholder="House #, Road #, Area, City"
+                      value={customAddress}
+                      onChange={(e) =>
+                        onCustomChange("address", e.target.value)
+                      }
+                      rows={3}
+                      className={`w-full rounded-xl border ${
+                        errors.customAddress
+                          ? "border-rose-500"
+                          : "border-black/[0.06] dark:border-white/[0.06]"
+                      } bg-black/[0.02] dark:bg-white/[0.03] px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground/30 focus:border-foreground/20 focus:ring-2 focus:ring-foreground/10 outline-none transition-all resize-none`}
+                    />
+                    {errors.customAddress && (
+                      <p className="text-[11px] font-medium text-rose-500 flex items-center gap-1">
+                        <span className="w-1 h-1 rounded-full bg-rose-500" />
+                        {errors.customAddress}
+                      </p>
+                    )}
+                  </div>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+
+          {/* Guest: Add Address Button */}
+          {isGuest && !useCustomAddress && (
+            <div className="mt-3">
+              <button
+                onClick={onToggleCustomAddress}
+                className="flex w-full items-center justify-center gap-2 rounded-xl border border-dashed border-black/[0.1] dark:border-white/[0.1] py-3.5 text-sm font-medium text-muted-foreground/50 hover:border-foreground/20 hover:text-foreground transition-all"
+              >
+                <MapPin className="h-4 w-4" />
+                {t("enter_address_manually")}
+              </button>
+            </div>
+          )}
+        </div>
       </div>
     </motion.div>
   );

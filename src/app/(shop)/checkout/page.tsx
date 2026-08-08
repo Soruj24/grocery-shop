@@ -1,7 +1,7 @@
 "use client";
 
-import { ArrowLeft, Loader2 } from "lucide-react";
-import { AnimatePresence } from "framer-motion";
+import { ArrowLeft, ShieldCheck } from "lucide-react";
+import { AnimatePresence, motion } from "framer-motion";
 import { useCheckout } from "@/features/checkout/hooks/useCheckout";
 import CheckoutStepper from "@/features/checkout/components/CheckoutStepper";
 import CheckoutSkeleton from "@/features/checkout/components/CheckoutSkeleton";
@@ -21,7 +21,7 @@ export default function CheckoutPage() {
   if (checkout.isComplete && checkout.orderId) {
     return (
       <div className="min-h-screen flex items-center justify-center p-4">
-        <div className="w-full max-w-md">
+        <div className="w-full max-w-lg">
           <OrderSuccess
             orderId={checkout.orderId}
             guestName={
@@ -44,18 +44,22 @@ export default function CheckoutPage() {
     {
       number: 1,
       label: checkout.t("step_information"),
+      description: "Contact & address",
     },
     {
       number: 2,
       label: checkout.t("step_delivery"),
+      description: "Shipping & time",
     },
     {
       number: 3,
       label: checkout.t("step_payment"),
+      description: "Payment method",
     },
     {
       number: 4,
       label: checkout.t("step_review"),
+      description: "Review order",
     },
   ];
 
@@ -70,41 +74,61 @@ export default function CheckoutPage() {
   };
 
   return (
-    <div className="min-h-screen pb-24 lg:pb-0">
+    <div className="min-h-screen pb-32 lg:pb-0">
       <div className="mx-auto max-w-7xl px-4 py-6 sm:py-10">
-        <div className="mb-6 flex items-center gap-3">
+        {/* Header */}
+        <motion.div
+          initial={{ opacity: 0, y: -8 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="mb-8 flex items-center gap-4"
+        >
           <button
             onClick={() =>
               checkout.currentStep === 1
                 ? checkout.router.push("/cart")
                 : checkout.prevStep()
             }
-            className="flex h-10 w-10 items-center justify-center rounded-lg bg-black/[0.04] dark:bg-white/[0.06] border border-black/[0.04] dark:border-white/[0.04] text-muted-foreground/50 hover:text-foreground transition-colors"
+            className="flex h-10 w-10 items-center justify-center rounded-xl bg-black/[0.04] dark:bg-white/[0.06] border border-black/[0.04] dark:border-white/[0.04] text-muted-foreground/50 hover:text-foreground hover:bg-black/[0.06] dark:hover:bg-white/[0.08] transition-all"
           >
             <ArrowLeft className="h-4 w-4" />
           </button>
-          <div>
-            <h1 className="text-xl sm:text-2xl font-bold text-foreground tracking-tight">
+          <div className="flex-1">
+            <h1 className="text-2xl sm:text-3xl font-bold text-foreground tracking-tight">
               {checkout.t("checkout")}
             </h1>
-            <p className="text-xs font-medium text-muted-foreground/50">
+            <p className="text-xs font-medium text-muted-foreground/50 mt-0.5">
               {checkout.t("step_text")}{" "}
-              {checkout.currentStep}:{" "}
+              <span className="text-foreground font-semibold">
+                {checkout.currentStep}
+              </span>
+              {" / 4 — "}
               {steps[checkout.currentStep - 1]
                 ?.label}
             </p>
           </div>
-        </div>
+          <div className="hidden sm:flex items-center gap-1.5 text-[10px] font-medium text-muted-foreground/40">
+            <ShieldCheck className="w-3 h-3" />
+            SSL Encrypted
+          </div>
+        </motion.div>
 
-        <div className="mb-8 rounded-xl border border-black/[0.04] dark:border-white/[0.04] bg-white dark:bg-[#09090b] p-4 shadow-[0_1px_3px_rgba(0,0,0,0.04)]">
+        {/* Stepper */}
+        <motion.div
+          initial={{ opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.05 }}
+          className="mb-8 rounded-2xl border border-black/[0.04] dark:border-white/[0.04] bg-white dark:bg-[#09090b] p-5 shadow-[0_1px_3px_rgba(0,0,0,0.04)]"
+        >
           <CheckoutStepper
             steps={steps}
             currentStep={checkout.currentStep}
             onStepClick={checkout.goToStep}
           />
-        </div>
+        </motion.div>
 
+        {/* Main Grid */}
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-3 lg:gap-8 items-start">
+          {/* Steps */}
           <div className="lg:col-span-2">
             <AnimatePresence mode="wait">
               {checkout.currentStep === 1 && (
@@ -267,15 +291,27 @@ export default function CheckoutPage() {
               )}
             </AnimatePresence>
 
-            {checkout.error && (
-              <div className="mt-4 rounded-xl border border-rose-200 dark:border-rose-800 bg-rose-500/[0.04] p-3 text-sm text-rose-600 dark:text-rose-400">
-                {checkout.error}
-              </div>
-            )}
+            {/* Error */}
+            <AnimatePresence>
+              {checkout.error && (
+                <motion.div
+                  initial={{ opacity: 0, y: 8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -8 }}
+                  className="mt-4 rounded-xl border border-rose-200 dark:border-rose-800/50 bg-rose-500/[0.04] dark:bg-rose-500/[0.06] p-4 text-sm text-rose-600 dark:text-rose-400 flex items-center gap-2"
+                >
+                  <div className="w-5 h-5 rounded-full bg-rose-500/10 flex items-center justify-center shrink-0">
+                    <span className="text-[10px] font-bold">!</span>
+                  </div>
+                  {checkout.error}
+                </motion.div>
+              )}
+            </AnimatePresence>
           </div>
 
+          {/* Sidebar */}
           <div className="lg:col-span-1">
-            <div className="sticky top-12">
+            <div className="lg:sticky lg:top-12">
               <OrderSummary
                 items={checkout.cart}
                 subtotal={checkout.totalPrice}
@@ -297,6 +333,7 @@ export default function CheckoutPage() {
         </div>
       </div>
 
+      {/* Mobile Bar */}
       <MobileCheckoutBar
         total={checkout.totalPrice}
         shippingCost={checkout.shippingCost}

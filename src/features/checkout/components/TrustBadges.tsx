@@ -26,24 +26,24 @@ const badges = [
   },
   {
     icon: Lock,
-    label: "SSL Encrypted",
-    desc: "Data protected",
+    label: "Data Protected",
+    desc: "Privacy assured",
   },
 ];
 
 export default function TrustBadges() {
   return (
-    <div className="grid grid-cols-2 gap-2.5">
+    <div className="grid grid-cols-2 gap-2">
       {badges.map((badge, i) => (
         <motion.div
           key={badge.label}
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{
-            delay: i * 0.08,
+            delay: i * 0.06,
             ease: [0.21, 0.47, 0.32, 0.98],
           }}
-          className="flex items-center gap-2.5 rounded-lg border border-black/[0.04] dark:border-white/[0.04] bg-black/[0.02] dark:bg-white/[0.02] px-3 py-2.5"
+          className="flex items-center gap-2.5 rounded-xl border border-black/[0.04] dark:border-white/[0.04] bg-black/[0.02] dark:bg-white/[0.02] px-3 py-2.5"
         >
           <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-black/[0.04] dark:bg-white/[0.06]">
             <badge.icon className="h-4 w-4 text-muted-foreground/60" />
