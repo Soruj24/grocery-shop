@@ -119,6 +119,10 @@ export const apiSlice = createApi({
       query: (params) => ({ url: "/admin/customers", params }),
       providesTags: ["Customer"],
     }),
+    getAdminCustomerDetails: builder.query<Record<string, unknown>, string>({
+      query: (id) => `/admin/customers/${id}`,
+      providesTags: (_, __, id) => [{ type: "Customer", id }],
+    }),
 
     // ─── Reviews ───
     getAdminReviews: builder.query<{ data: Record<string, unknown>[] }, void>({
@@ -271,7 +275,7 @@ export const {
   useGetAdminBrandsQuery, useCreateAdminBrandMutation,
   useUpdateAdminBrandMutation, useDeleteAdminBrandMutation,
   useGetAdminOrdersQuery, useUpdateAdminOrderMutation, useBulkOrdersMutation,
-  useGetAdminCustomersQuery,
+  useGetAdminCustomersQuery, useGetAdminCustomerDetailsQuery,
   useGetAdminReviewsQuery, useUpdateReviewStatusMutation,
   useGetAdminReturnsQuery, useUpdateReturnStatusMutation,
   useGetAdminCouponsQuery, useCreateAdminCouponMutation,

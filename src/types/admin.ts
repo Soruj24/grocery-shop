@@ -132,8 +132,15 @@ export interface AdminCustomer {
   phone?: string;
   address?: string;
   createdAt: string;
+  loyaltyPoints?: number;
   orderCount?: number;
   totalSpent?: number;
+  lastOrderDate?: string | null;
+  subscription?: {
+    plan: string;
+    nextDelivery?: string;
+    isActive: boolean;
+  };
 }
 
 export interface AdminCombo {
