@@ -18,11 +18,12 @@ export default function PriceBreakdown({
   freeDeliveryThreshold,
 }: PriceBreakdownProps) {
   const { t } = useLanguage();
-  const finalTotal = totalPrice + deliveryFee + vat - discount;
+  const finalTotal =
+    totalPrice + deliveryFee + vat - discount;
 
   return (
-    <div className="space-y-4 pt-4">
-      <div className="flex justify-between items-center text-sm font-bold text-muted-foreground">
+    <div className="space-y-3 pt-2">
+      <div className="flex justify-between items-center text-sm font-medium text-muted-foreground/60">
         <span>{t("subtotal")}</span>
         <span className="text-foreground">
           {t("currency_symbol")}
@@ -30,11 +31,11 @@ export default function PriceBreakdown({
         </span>
       </div>
 
-      <div className="flex justify-between items-center text-sm font-bold text-muted-foreground">
+      <div className="flex justify-between items-center text-sm font-medium text-muted-foreground/60">
         <div className="flex items-center gap-2">
           <span>{t("delivery_charge")}</span>
           {totalPrice > freeDeliveryThreshold && (
-            <span className="text-[10px] bg-primary-subtle text-primary px-2 py-0.5 rounded-full">
+            <span className="text-[9px] font-semibold bg-emerald-500/[0.06] text-emerald-600 dark:text-emerald-400 px-1.5 py-0.5 rounded">
               {t("free")}
             </span>
           )}
@@ -46,7 +47,7 @@ export default function PriceBreakdown({
         </span>
       </div>
 
-      <div className="flex justify-between items-center text-sm font-bold text-muted-foreground">
+      <div className="flex justify-between items-center text-sm font-medium text-muted-foreground/60">
         <span>
           {t("vat")} {t("vat_percentage")}
         </span>
@@ -57,7 +58,7 @@ export default function PriceBreakdown({
       </div>
 
       {discount > 0 && (
-        <div className="flex justify-between items-center text-sm font-bold text-primary">
+        <div className="flex justify-between items-center text-sm font-medium text-emerald-600 dark:text-emerald-400">
           <span>{t("discount")}</span>
           <span>
             -{t("currency_symbol")}
@@ -66,14 +67,14 @@ export default function PriceBreakdown({
         </div>
       )}
 
-      <div className="h-px bg-border my-4" />
+      <div className="h-px bg-black/[0.04] dark:bg-white/[0.04] my-3" />
 
       <div className="flex justify-between items-end">
         <div className="space-y-1">
-          <span className="text-xs font-black uppercase tracking-widest text-muted-foreground">
+          <span className="text-[9px] font-semibold uppercase tracking-wider text-muted-foreground/50">
             {t("grand_total")}
           </span>
-          <div className="text-4xl font-black text-foreground tracking-tight">
+          <div className="text-2xl font-bold text-foreground tracking-tight">
             {t("currency_symbol")}
             {finalTotal.toLocaleString("bn-BD")}
           </div>

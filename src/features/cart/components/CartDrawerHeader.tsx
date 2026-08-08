@@ -1,6 +1,9 @@
 "use client";
 
-import { X, ShoppingBag } from "lucide-react";
+import {
+  X,
+  ShoppingBag,
+} from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 
 interface CartDrawerHeaderProps {
@@ -15,26 +18,26 @@ export default function CartDrawerHeader({
   const { t } = useLanguage();
 
   return (
-    <div className="p-8 border-b border-border flex items-center justify-between bg-card">
-      <div className="flex items-center gap-4">
-        <div className="w-12 h-12 bg-primary rounded-lg flex items-center justify-center text-primary-foreground shadow-primary">
-          <ShoppingBag size={24} />
+    <div className="p-5 border-b border-black/[0.04] dark:border-white/[0.04] flex items-center justify-between">
+      <div className="flex items-center gap-3">
+        <div className="w-9 h-9 bg-foreground text-background rounded-lg flex items-center justify-center">
+          <ShoppingBag size={16} />
         </div>
         <div>
-          <h2 className="text-xl font-black text-foreground">
+          <h2 className="text-base font-bold text-foreground">
             {t("your_bag")}
           </h2>
-          <p className="text-sm text-muted-foreground font-bold uppercase tracking-widest">
-            {itemCount.toLocaleString("bn-BD")}
+          <p className="text-[10px] font-medium text-muted-foreground/50 uppercase tracking-wider">
+            {itemCount.toLocaleString("bn-BD")}{" "}
             {t("items_suffix")}
           </p>
         </div>
       </div>
       <button
         onClick={onClose}
-        className="w-12 h-12 rounded-lg bg-muted flex items-center justify-center text-muted-foreground hover:text-danger hover:bg-danger-subtle transition-all"
+        className="w-9 h-9 rounded-lg bg-black/[0.04] dark:bg-white/[0.06] flex items-center justify-center text-muted-foreground/50 hover:text-foreground hover:bg-black/[0.08] dark:hover:bg-white/[0.1] transition-all"
       >
-        <X size={24} />
+        <X size={16} />
       </button>
     </div>
   );

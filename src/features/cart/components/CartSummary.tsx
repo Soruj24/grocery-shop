@@ -1,6 +1,9 @@
 "use client";
 
-import { ArrowRight, ShieldCheck } from "lucide-react";
+import {
+  ArrowRight,
+  ShieldCheck,
+} from "lucide-react";
 import Link from "next/link";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useCouponValidation } from "@/features/home/hooks/useCouponValidation";
@@ -12,7 +15,9 @@ interface CartSummaryProps {
   totalPrice: number;
 }
 
-export default function CartSummary({ totalPrice }: CartSummaryProps) {
+export default function CartSummary({
+  totalPrice,
+}: CartSummaryProps) {
   const { t } = useLanguage();
   const {
     promoCode,
@@ -24,20 +29,25 @@ export default function CartSummary({ totalPrice }: CartSummaryProps) {
   } = useCouponValidation(totalPrice);
 
   const freeDeliveryThreshold = 500;
-  const deliveryFee = totalPrice > freeDeliveryThreshold ? 0 : 50;
+  const deliveryFee =
+    totalPrice > freeDeliveryThreshold ? 0 : 50;
   const vat = Math.round(totalPrice * 0.05);
-  const discount = appliedCoupon ? appliedCoupon.discount : 0;
+  const discount = appliedCoupon
+    ? appliedCoupon.discount
+    : 0;
 
   return (
     <div className="lg:col-span-1">
-      <div className="bg-card p-6 md:p-8 rounded-xl shadow-lg border border-border space-y-8 md:sticky md:top-24">
-        <h3 className="text-2xl font-black text-foreground">
+      <div className="bg-white dark:bg-[#09090b] p-6 md:p-7 rounded-xl border border-black/[0.04] dark:border-white/[0.04] space-y-7 md:sticky md:top-24 shadow-[0_1px_3px_rgba(0,0,0,0.04)]">
+        <h3 className="text-lg font-bold text-foreground tracking-tight">
           {t("order_summary")}
         </h3>
 
         <DeliveryProgress
           totalPrice={totalPrice}
-          freeDeliveryThreshold={freeDeliveryThreshold}
+          freeDeliveryThreshold={
+            freeDeliveryThreshold
+          }
         />
 
         <CouponSection
@@ -54,24 +64,28 @@ export default function CartSummary({ totalPrice }: CartSummaryProps) {
           deliveryFee={deliveryFee}
           vat={vat}
           discount={discount}
-          freeDeliveryThreshold={freeDeliveryThreshold}
+          freeDeliveryThreshold={
+            freeDeliveryThreshold
+          }
         />
 
-        <div className="space-y-4 pt-4">
+        <div className="space-y-3 pt-2">
           <Link
             href={{
               pathname: "/checkout",
-              query: appliedCoupon ? { coupon: appliedCoupon.code } : {},
+              query: appliedCoupon
+                ? { coupon: appliedCoupon.code }
+                : {},
             }}
-            className="w-full bg-primary hover:bg-primary-hover text-primary-foreground py-4 md:py-5 rounded-lg font-black text-base md:text-lg transition-all flex items-center justify-center gap-3 shadow-primary active:scale-95 group"
+            className="w-full bg-foreground text-background py-3.5 md:py-4 rounded-lg font-semibold text-sm transition-all flex items-center justify-center gap-2 active:scale-[0.98] hover:opacity-90"
           >
             {t("checkout_button")}
-            <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+            <ArrowRight className="w-4 h-4" />
           </Link>
 
-          <div className="flex items-center justify-center gap-2 pt-2">
-            <ShieldCheck className="w-4 h-4 text-muted-foreground" />
-            <span className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">
+          <div className="flex items-center justify-center gap-2 pt-1">
+            <ShieldCheck className="w-3.5 h-3.5 text-muted-foreground/40" />
+            <span className="text-[9px] font-semibold uppercase tracking-wider text-muted-foreground/40">
               {t("secure_payment_guarantee")}
             </span>
           </div>

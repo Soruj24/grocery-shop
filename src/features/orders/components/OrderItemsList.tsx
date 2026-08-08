@@ -15,20 +15,53 @@ interface OrderItemsListProps {
   t: (key: TranslationKey) => string;
 }
 
-export default function OrderItemsList({ items, t }: OrderItemsListProps) {
+export default function OrderItemsList({
+  items,
+  t,
+}: OrderItemsListProps) {
   return (
-    <div className="space-y-4">
+    <div className="space-y-3">
       {items.map((item, idx) => (
-        <div key={idx} className="flex items-center gap-4 group/item">
-          <div className="w-16 h-16 bg-muted rounded-2xl border border-border overflow-hidden flex-shrink-0 flex items-center justify-center relative">
-            <Image src={item.product?.image || getProductFallbackImage(item.name)} alt={item.name} fill sizes="64px" className="object-cover" />
+        <div
+          key={idx}
+          className="flex items-center gap-3"
+        >
+          <div className="w-14 h-14 bg-black/[0.04] dark:bg-white/[0.06] rounded-lg border border-black/[0.04] dark:border-white/[0.04] overflow-hidden shrink-0 relative">
+            <Image
+              src={
+                item.product?.image ||
+                getProductFallbackImage(
+                  item.name
+                )
+              }
+              alt={item.name}
+              fill
+              sizes="56px"
+              className="object-cover"
+            />
           </div>
           <div className="flex-1 min-w-0">
-            <p className="font-black text-foreground truncate group-hover/item:text-primary transition-colors">{item.name}</p>
-            <p className="text-xs font-bold text-muted-foreground">{item.quantity.toLocaleString("bn-BD")} x {t("currency_symbol")}{item.price.toLocaleString("bn-BD")}</p>
+            <p className="text-sm font-semibold text-foreground truncate">
+              {item.name}
+            </p>
+            <p className="text-[10px] font-medium text-muted-foreground/50">
+              {item.quantity.toLocaleString(
+                "bn-BD"
+              )}{" "}
+              x{" "}
+              {t("currency_symbol")}
+              {item.price.toLocaleString(
+                "bn-BD"
+              )}
+            </p>
           </div>
           <div className="text-right">
-            <p className="font-black text-foreground">{t("currency_symbol")}{(item.quantity * item.price).toLocaleString("bn-BD")}</p>
+            <p className="text-sm font-bold text-foreground">
+              {t("currency_symbol")}
+              {(
+                item.quantity * item.price
+              ).toLocaleString("bn-BD")}
+            </p>
           </div>
         </div>
       ))}

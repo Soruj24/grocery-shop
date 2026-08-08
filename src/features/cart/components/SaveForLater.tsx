@@ -1,12 +1,16 @@
 "use client";
 
 import { motion, AnimatePresence } from "framer-motion";
-import { RotateCcw, Trash2, ShoppingBag, Heart, X } from "lucide-react";
+import {
+  RotateCcw,
+  Trash2,
+  ShoppingBag,
+  Heart,
+  X,
+} from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useCart } from "@/contexts/CartContext";
 import Image from "next/image";
-import { getProductFallbackImage } from "@/constants/fallback-images";
-import { Badge } from "@/components/ui";
 
 interface SaveForLaterItem {
   _id: string;
@@ -36,8 +40,13 @@ export default function SaveForLater({
 
   if (items.length === 0) return null;
 
-  const handleMoveToCart = (item: SaveForLaterItem) => {
-    addToCart({ ...item, _id: item._id } as any, 1);
+  const handleMoveToCart = (
+    item: SaveForLaterItem
+  ) => {
+    addToCart(
+      { ...item, _id: item._id } as any,
+      1
+    );
     onMoveToCart(item._id);
   };
 
@@ -53,26 +62,22 @@ export default function SaveForLater({
           <motion.h2
             initial={{ opacity: 0, x: -10 }}
             animate={{ opacity: 1, x: 0 }}
-            className="flex items-center gap-3 text-xl font-black text-foreground"
+            className="flex items-center gap-3 text-lg font-bold text-foreground"
           >
-            <motion.span
-              animate={{ rotate: [0, 360] }}
-              transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-              className="text-primary"
-            >
-              <RotateCcw className="w-6 h-6" />
-            </motion.span>
+            <RotateCcw className="w-4 h-4 text-muted-foreground/50" />
             <span>{t("saved_for_later")}</span>
-            <span className="bg-muted px-3 py-1 rounded-full text-sm font-bold text-muted-foreground">
+            <span className="text-[10px] font-semibold text-muted-foreground/50 bg-black/[0.04] dark:bg-white/[0.06] px-2 py-0.5 rounded">
               {items.length}
             </span>
           </motion.h2>
           <button
-            onClick={() => items.forEach((i) => onRemove(i._id))}
-            className="p-2 rounded-xl text-muted-foreground hover:text-danger hover:bg-danger/10 transition-all"
+            onClick={() =>
+              items.forEach((i) => onRemove(i._id))
+            }
+            className="p-1.5 rounded-lg text-muted-foreground/50 hover:text-rose-500 hover:bg-rose-500/[0.06] transition-all"
             title={t("clear_all")}
           >
-            <X className="w-5 h-5" />
+            <X className="w-4 h-4" />
           </button>
         </div>
 
@@ -83,77 +88,87 @@ export default function SaveForLater({
           {items.map((item, index) => (
             <motion.div
               key={item._id}
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.05 }}
-              className="group relative bg-card rounded-2xl border border-border p-4 sm:p-6 hover:shadow-lg hover:border-primary/30 transition-all duration-300"
+              transition={{
+                delay: index * 0.04,
+                ease: [0.21, 0.47, 0.32, 0.98],
+              }}
+              className="bg-white dark:bg-[#09090b] rounded-xl border border-black/[0.04] dark:border-white/[0.04] p-4 shadow-[0_1px_3px_rgba(0,0,0,0.04)]"
             >
-              <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-6">
-                <div className="relative w-full sm:w-20 aspect-square bg-muted rounded-xl overflow-hidden border border-border flex-shrink-0">
+              <div className="flex items-start gap-4">
+                <div className="relative w-16 aspect-square bg-black/[0.02] dark:bg-white/[0.02] rounded-lg overflow-hidden border border-black/[0.04] dark:border-white/[0.04] shrink-0">
                   <Image
-                    src={item.image || `https://picsum.photos/seed/${encodeURIComponent(item.name)}/200/200`}
+                    src={
+                      item.image ||
+                      `https://picsum.photos/seed/${encodeURIComponent(item.name)}/200/200`
+                    }
                     alt={item.name}
                     fill
-                    sizes="80px"
-                    className="object-cover transition-transform duration-500 group-hover:scale-105"
+                    sizes="64px"
+                    className="object-cover"
                   />
-                  <Badge tone="info" size="xs" className="absolute top-2 left-2 shadow-sm">
-                    {t("saved")}
-                  </Badge>
                 </div>
 
-                <div className="flex-1 min-w-0 space-y-2">
-                  <h3 className="text-sm sm:text-base font-black text-foreground leading-tight line-clamp-2">
+                <div className="flex-1 min-w-0 space-y-1.5">
+                  <h3 className="text-xs font-semibold text-foreground leading-tight line-clamp-2">
                     {item.name}
                   </h3>
-
                   {item.variant && (
-                    <span className="inline-flex items-center gap-1 text-xs font-bold text-muted-foreground">
-                      <span className="w-1.5 h-1.5 rounded-full bg-primary" />
+                    <span className="text-[9px] font-medium text-muted-foreground/50">
                       {item.variant}
                     </span>
                   )}
-
-                  <div className="flex items-center gap-3">
-                    <span className="text-lg font-black text-primary">
+                  <div className="flex items-center gap-2">
+                    <span className="text-sm font-bold text-foreground">
                       {t("currency_symbol")}
-                      {(item.discountPrice ?? item.price).toLocaleString("bn-BD")}
+                      {(
+                        item.discountPrice ??
+                        item.price
+                      ).toLocaleString("bn-BD")}
                     </span>
                     {item.discountPrice && (
-                      <span className="text-sm font-bold text-muted-foreground line-through">
-                        {t("currency_symbol")}{item.price.toLocaleString("bn-BD")}
+                      <span className="text-[9px] font-medium text-muted-foreground/40 line-through">
+                        {t("currency_symbol")}
+                        {item.price.toLocaleString(
+                          "bn-BD"
+                        )}
                       </span>
                     )}
                   </div>
                 </div>
               </div>
 
-              <div className="mt-4 pt-4 border-t border-border/50 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
+              <div className="mt-3 pt-3 border-t border-black/[0.04] dark:border-white/[0.04] flex items-center gap-2">
                 <motion.button
                   whileTap={{ scale: 0.98 }}
-                  onClick={() => handleMoveToCart(item)}
-                  className="flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-primary text-primary-foreground font-black text-sm sm:text-base transition-all hover:bg-primary-hover active:scale-98"
+                  onClick={() =>
+                    handleMoveToCart(item)
+                  }
+                  className="flex-1 flex items-center justify-center gap-1.5 px-3 py-2 rounded-lg bg-foreground text-background font-semibold text-[11px] transition-all active:scale-[0.98]"
                 >
-                  <ShoppingBag className="w-4 h-4" />
+                  <ShoppingBag className="w-3.5 h-3.5" />
                   {t("move_to_cart")}
                 </motion.button>
 
                 <motion.button
                   whileTap={{ scale: 0.98 }}
-                  onClick={() => onMoveToWishlist?.(item._id)}
-                  className="flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-xl border border-border bg-muted text-foreground font-black text-sm sm:text-base transition-all hover:bg-primary/10 hover:text-primary hover:border-primary active:scale-98"
+                  onClick={() =>
+                    onMoveToWishlist?.(item._id)
+                  }
+                  className="p-2 rounded-lg border border-black/[0.04] dark:border-white/[0.04] text-muted-foreground/50 hover:text-foreground hover:bg-black/[0.04] dark:hover:bg-white/[0.06] transition-all"
                 >
-                  <Heart className="w-4 h-4" />
-                  {t("wishlist")}
+                  <Heart className="w-3.5 h-3.5" />
                 </motion.button>
 
                 <motion.button
                   whileTap={{ scale: 0.98 }}
-                  onClick={() => onRemove(item._id)}
-                  className="flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-xl border border-danger/30 bg-danger/5 text-danger font-bold text-sm sm:text-base transition-all hover:bg-danger/10 active:scale-98"
+                  onClick={() =>
+                    onRemove(item._id)
+                  }
+                  className="p-2 rounded-lg text-muted-foreground/50 hover:text-rose-500 hover:bg-rose-500/[0.06] transition-all"
                 >
-                  <Trash2 className="w-4 h-4" />
-                  {t("remove")}
+                  <Trash2 className="w-3.5 h-3.5" />
                 </motion.button>
               </div>
             </motion.div>

@@ -1,19 +1,36 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Truck, Sun, Sunset, Moon, Clock, Check } from "lucide-react";
-import { type ShippingMethod, type DeliverySlot, SHIPPING_METHODS, DELIVERY_SLOTS } from "@/types/checkout";
+import {
+  Truck,
+  Sun,
+  Sunset,
+  Moon,
+  Clock,
+  Check,
+} from "lucide-react";
+import {
+  type ShippingMethod,
+  type DeliverySlot,
+  SHIPPING_METHODS,
+  DELIVERY_SLOTS,
+} from "@/types/checkout";
 import ShippingMethods from "../ShippingMethods";
 
 interface DeliveryStepProps {
   selectedShipping: ShippingMethod;
-  onSelectShipping: (method: ShippingMethod) => void;
+  onSelectShipping: (
+    method: ShippingMethod
+  ) => void;
   selectedSlot: DeliverySlot;
   onSelectSlot: (slot: DeliverySlot) => void;
   cartTotal: number;
 }
 
-const slotIcons: Record<string, React.ElementType> = {
+const slotIcons: Record<
+  string,
+  React.ElementType
+> = {
   sun: Sun,
   "sun-dim": Sunset,
   sunset: Sunset,
@@ -32,12 +49,11 @@ export default function DeliveryStep({
       initial={{ opacity: 0, x: 20 }}
       animate={{ opacity: 1, x: 0 }}
       exit={{ opacity: 0, x: -20 }}
-      className="space-y-6"
+      className="space-y-5"
     >
-      {/* Shipping Method */}
-      <div className="rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 p-4">
-        <h3 className="flex items-center gap-2 text-sm font-semibold text-gray-900 dark:text-white mb-3">
-          <Truck className="h-4 w-4 text-emerald-500" />
+      <div className="rounded-xl border border-black/[0.04] dark:border-white/[0.04] bg-white dark:bg-[#09090b] p-4 shadow-[0_1px_3px_rgba(0,0,0,0.04)]">
+        <h3 className="flex items-center gap-2 text-sm font-semibold text-foreground mb-3">
+          <Truck className="h-4 w-4 text-muted-foreground/60" />
           Shipping Method
         </h3>
         <ShippingMethods
@@ -47,45 +63,59 @@ export default function DeliveryStep({
         />
       </div>
 
-      {/* Delivery Time Slot */}
-      <div className="rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 p-4">
-        <h3 className="flex items-center gap-2 text-sm font-semibold text-gray-900 dark:text-white mb-3">
-          <Clock className="h-4 w-4 text-emerald-500" />
+      <div className="rounded-xl border border-black/[0.04] dark:border-white/[0.04] bg-white dark:bg-[#09090b] p-4 shadow-[0_1px_3px_rgba(0,0,0,0.04)]">
+        <h3 className="flex items-center gap-2 text-sm font-semibold text-foreground mb-3">
+          <Clock className="h-4 w-4 text-muted-foreground/60" />
           Delivery Time
         </h3>
         <div className="grid grid-cols-2 gap-2">
           {DELIVERY_SLOTS.map((slot) => {
-            const Icon = slotIcons[slot.icon] || Clock;
-            const isSelected = selectedSlot.id === slot.id;
+            const Icon =
+              slotIcons[slot.icon] || Clock;
+            const isSelected =
+              selectedSlot.id === slot.id;
             return (
               <motion.div
                 key={slot.id}
-                whileTap={{ scale: 0.95 }}
-                onClick={() => slot.available && onSelectSlot(slot)}
-                className={`relative cursor-pointer rounded-xl border-2 p-3 text-center transition-all ${
+                whileTap={{ scale: 0.97 }}
+                onClick={() =>
+                  slot.available &&
+                  onSelectSlot(slot)
+                }
+                className={`relative cursor-pointer rounded-lg border p-3 text-center transition-all ${
                   isSelected
-                    ? "border-emerald-500 bg-emerald-50 dark:bg-emerald-950/20"
+                    ? "border-foreground bg-black/[0.02] dark:bg-white/[0.04]"
                     : slot.available
-                    ? "border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600"
-                    : "border-gray-100 dark:border-gray-800 opacity-40 cursor-not-allowed"
+                    ? "border-black/[0.04] dark:border-white/[0.04] hover:border-black/[0.08] dark:hover:border-white/[0.1]"
+                    : "border-black/[0.04] dark:border-white/[0.04] opacity-40 cursor-not-allowed"
                 }`}
               >
                 <Icon
-                  className={`mx-auto h-5 w-5 mb-1 ${
-                    isSelected ? "text-emerald-500" : "text-gray-400 dark:text-gray-500"
+                  className={`mx-auto h-4 w-4 mb-1 ${
+                    isSelected
+                      ? "text-foreground"
+                      : "text-muted-foreground/40"
                   }`}
                 />
-                <p className={`text-xs font-semibold ${isSelected ? "text-emerald-700 dark:text-emerald-400" : "text-gray-700 dark:text-gray-300"}`}>
+                <p
+                  className={`text-xs font-semibold ${
+                    isSelected
+                      ? "text-foreground"
+                      : "text-foreground"
+                  }`}
+                >
                   {slot.label}
                 </p>
-                <p className="text-[10px] text-gray-500 dark:text-gray-400 mt-0.5">{slot.time}</p>
+                <p className="text-[10px] text-muted-foreground/50 mt-0.5">
+                  {slot.time}
+                </p>
                 {isSelected && (
                   <motion.div
                     initial={{ scale: 0 }}
                     animate={{ scale: 1 }}
-                    className="absolute -top-1.5 -right-1.5 flex h-5 w-5 items-center justify-center rounded-full bg-emerald-500"
+                    className="absolute -top-1.5 -right-1.5 flex h-5 w-5 items-center justify-center rounded-full bg-foreground"
                   >
-                    <Check className="h-3 w-3 text-white" />
+                    <Check className="h-3 w-3 text-background" />
                   </motion.div>
                 )}
               </motion.div>

@@ -2,7 +2,12 @@
 
 import { useEffect } from "react";
 import { motion } from "framer-motion";
-import { CheckCircle2, Package, ArrowRight, Phone, Copy } from "lucide-react";
+import {
+  CheckCircle2,
+  Package,
+  ArrowRight,
+  Copy,
+} from "lucide-react";
 import confetti from "canvas-confetti";
 import { useLanguage } from "@/contexts/LanguageContext";
 
@@ -12,7 +17,11 @@ interface OrderSuccessProps {
   total?: number;
 }
 
-export default function OrderSuccess({ orderId, guestName, total }: OrderSuccessProps) {
+export default function OrderSuccess({
+  orderId,
+  guestName,
+  total,
+}: OrderSuccessProps) {
   const { t } = useLanguage();
 
   useEffect(() => {
@@ -25,16 +34,27 @@ export default function OrderSuccess({ orderId, guestName, total }: OrderSuccess
         angle: 60,
         spread: 55,
         origin: { x: 0, y: 0.7 },
-        colors: ["#10b981", "#06b6d4", "#8b5cf6", "#f59e0b"],
+        colors: [
+          "#18181b",
+          "#27272a",
+          "#3f3f46",
+          "#71717a",
+        ],
       });
       confetti({
         particleCount: 3,
         angle: 120,
         spread: 55,
         origin: { x: 1, y: 0.7 },
-        colors: ["#10b981", "#06b6d4", "#8b5cf6", "#f59e0b"],
+        colors: [
+          "#18181b",
+          "#27272a",
+          "#3f3f46",
+          "#71717a",
+        ],
       });
-      if (Date.now() < end) requestAnimationFrame(frame);
+      if (Date.now() < end)
+        requestAnimationFrame(frame);
     };
     frame();
   }, []);
@@ -45,24 +65,29 @@ export default function OrderSuccess({ orderId, guestName, total }: OrderSuccess
 
   return (
     <motion.div
-      initial={{ opacity: 0, scale: 0.9 }}
+      initial={{ opacity: 0, scale: 0.95 }}
       animate={{ opacity: 1, scale: 1 }}
-      className="rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 p-6 text-center"
+      className="rounded-xl border border-black/[0.04] dark:border-white/[0.04] bg-white dark:bg-[#09090b] p-8 text-center shadow-[0_1px_3px_rgba(0,0,0,0.04)]"
     >
       <motion.div
         initial={{ scale: 0 }}
         animate={{ scale: 1 }}
-        transition={{ type: "spring", stiffness: 200, damping: 15, delay: 0.2 }}
-        className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-emerald-100 dark:bg-emerald-900/30 mb-4"
+        transition={{
+          type: "spring",
+          stiffness: 200,
+          damping: 15,
+          delay: 0.2,
+        }}
+        className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-foreground mb-4"
       >
-        <CheckCircle2 className="h-10 w-10 text-emerald-500" />
+        <CheckCircle2 className="h-8 w-8 text-background" />
       </motion.div>
 
       <motion.h2
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.4 }}
-        className="text-xl font-bold text-gray-900 dark:text-white mb-1"
+        className="text-xl font-bold text-foreground mb-1"
       >
         {t("order_placed_successfully")}
       </motion.h2>
@@ -72,7 +97,7 @@ export default function OrderSuccess({ orderId, guestName, total }: OrderSuccess
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.5 }}
-          className="text-sm text-gray-500 dark:text-gray-400 mb-1"
+          className="text-sm text-muted-foreground/60 mb-1"
         >
           {t("order_thank_you")}, {guestName}!
         </motion.p>
@@ -82,7 +107,7 @@ export default function OrderSuccess({ orderId, guestName, total }: OrderSuccess
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.6 }}
-        className="text-xs text-gray-500 dark:text-gray-400 mb-6"
+        className="text-xs text-muted-foreground/50 mb-6"
       >
         {t("order_confirmation_sent")}
       </motion.p>
@@ -91,20 +116,26 @@ export default function OrderSuccess({ orderId, guestName, total }: OrderSuccess
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.7 }}
-        className="rounded-xl bg-gray-50 dark:bg-gray-800 p-4 mb-6"
+        className="rounded-xl bg-black/[0.03] dark:bg-white/[0.04] p-4 mb-6"
       >
-        <p className="text-[10px] text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-1">Order ID</p>
+        <p className="text-[10px] text-muted-foreground/50 uppercase tracking-wider mb-1">
+          Order ID
+        </p>
         <div className="flex items-center justify-center gap-2">
-          <p className="text-sm font-mono font-bold text-gray-900 dark:text-white">{orderId}</p>
+          <p className="text-sm font-mono font-bold text-foreground">
+            {orderId}
+          </p>
           <button
             onClick={handleCopyOrderId}
-            className="rounded-lg p-1 text-gray-400 hover:text-emerald-500 hover:bg-emerald-50 dark:hover:bg-emerald-950/30 transition-colors"
+            className="rounded-lg p-1 text-muted-foreground/40 hover:text-foreground hover:bg-black/[0.06] dark:hover:bg-white/[0.1] transition-colors"
           >
             <Copy className="h-3.5 w-3.5" />
           </button>
         </div>
         {total && (
-          <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">Total: ৳{total.toLocaleString()}</p>
+          <p className="text-xs text-muted-foreground/50 mt-1">
+            Total: ৳{total.toLocaleString()}
+          </p>
         )}
       </motion.div>
 
@@ -116,7 +147,7 @@ export default function OrderSuccess({ orderId, guestName, total }: OrderSuccess
       >
         <a
           href="/account/orders"
-          className="flex w-full items-center justify-center gap-2 rounded-xl bg-emerald-500 py-3 text-sm font-semibold text-white hover:bg-emerald-600 transition-colors"
+          className="flex w-full items-center justify-center gap-2 rounded-lg bg-foreground py-3 text-sm font-semibold text-background hover:opacity-90 transition-opacity active:scale-[0.98]"
         >
           <Package className="h-4 w-4" />
           {t("order_track_your")}
@@ -124,7 +155,7 @@ export default function OrderSuccess({ orderId, guestName, total }: OrderSuccess
         </a>
         <a
           href="/"
-          className="flex w-full items-center justify-center gap-2 rounded-xl border border-gray-200 dark:border-gray-700 py-3 text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
+          className="flex w-full items-center justify-center gap-2 rounded-lg border border-black/[0.04] dark:border-white/[0.04] py-3 text-sm font-medium text-foreground hover:bg-black/[0.02] dark:hover:bg-white/[0.04] transition-colors"
         >
           Continue Shopping
         </a>

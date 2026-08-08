@@ -6,7 +6,11 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import { motion } from "framer-motion";
 import { Product } from "@/types/product";
 
-export default function ShareButton({ product }: { product: Product }) {
+export default function ShareButton({
+  product,
+}: {
+  product: Product;
+}) {
   const { t } = useLanguage();
   const productName = product.name;
 
@@ -19,10 +23,12 @@ export default function ShareButton({ product }: { product: Product }) {
           url: window.location.href,
         });
       } else {
-        await navigator.clipboard.writeText(window.location.href);
+        await navigator.clipboard.writeText(
+          window.location.href
+        );
         Toast.fire({
-          icon: 'success',
-          title: t('share_success'),
+          icon: "success",
+          title: t("share_success"),
         });
       }
     } catch (err) {
@@ -31,15 +37,15 @@ export default function ShareButton({ product }: { product: Product }) {
   };
 
   return (
-    <motion.button 
+    <motion.button
       whileTap={{ scale: 0.95 }}
       onClick={handleShare}
-      className="flex items-center gap-2 text-sm font-black text-muted-foreground hover:text-info transition-colors group"
+      className="flex items-center gap-2 text-sm font-medium text-muted-foreground/60 hover:text-foreground transition-colors"
     >
-      <div className="p-2 bg-muted rounded-xl group-hover:bg-info-subtle transition-colors">
-        <Share2 className="w-5 h-5" />
+      <div className="p-2 rounded-lg bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] dark:hover:bg-white/[0.1] transition-colors">
+        <Share2 className="w-4 h-4" />
       </div>
-      <span>{t('share')}</span>
+      <span>{t("share")}</span>
     </motion.button>
   );
 }

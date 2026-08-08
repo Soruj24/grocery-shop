@@ -1,4 +1,3 @@
-
 import { CheckCircle2 } from "lucide-react";
 import { TranslationKey } from "@/constants/translations";
 
@@ -16,36 +15,81 @@ interface OrderTrackingTimelineProps {
   t: (key: TranslationKey) => string;
 }
 
-export default function OrderTrackingTimeline({ steps, currentStepIndex, updatedAt, t }: OrderTrackingTimelineProps) {
+export default function OrderTrackingTimeline({
+  steps,
+  currentStepIndex,
+  updatedAt,
+  t,
+}: OrderTrackingTimelineProps) {
   return (
-    <div className="bg-card backdrop-blur-xl p-8 md:p-12 rounded-2xl border border-border shadow-xl">
-      <div className="space-y-12">
+    <div className="bg-white dark:bg-[#09090b] p-6 md:p-8 rounded-xl border border-black/[0.04] dark:border-white/[0.04] shadow-[0_1px_3px_rgba(0,0,0,0.04)]">
+      <div className="space-y-8">
         {steps.map((step, index) => {
-          const isCompleted = index <= currentStepIndex;
-          const isCurrent = index === currentStepIndex;
+          const isCompleted =
+            index <= currentStepIndex;
+          const isCurrent =
+            index === currentStepIndex;
           const Icon = step.icon;
 
           return (
-            <div key={step.key} className="relative flex gap-8 group">
+            <div
+              key={step.key}
+              className="relative flex gap-5"
+            >
               {index !== steps.length - 1 && (
-                <div className={`absolute left-6 top-12 w-0.5 h-16 transition-colors duration-500 ${index < currentStepIndex ? "bg-primary" : "bg-border"}`} />
+                <div
+                  className={`absolute left-5 top-10 w-0.5 h-12 transition-colors duration-500 ${
+                    index < currentStepIndex
+                      ? "bg-foreground"
+                      : "bg-black/[0.06] dark:bg-white/[0.06]"
+                  }`}
+                />
               )}
-              <div className={`relative z-10 w-12 h-12 rounded-2xl flex items-center justify-center shrink-0 transition-all duration-500 ${isCompleted ? "bg-primary text-primary-foreground shadow-lg shadow-primary" : "bg-muted text-muted-foreground"} ${isCurrent ? "scale-125 ring-4 ring-primary/10" : ""}`}>
-                <Icon className="w-6 h-6" />
+              <div
+                className={`relative z-10 w-10 h-10 rounded-lg flex items-center justify-center shrink-0 transition-all duration-500 ${
+                  isCompleted
+                    ? "bg-foreground text-background"
+                    : "bg-black/[0.04] dark:bg-white/[0.06] text-muted-foreground/50"
+                } ${isCurrent ? "scale-110 ring-4 ring-foreground/[0.08]" : ""}`}
+              >
+                <Icon className="w-5 h-5" />
               </div>
               <div className="flex-1 pt-1">
-                <h3 className={`text-lg font-black transition-colors ${isCompleted ? "text-foreground" : "text-muted-foreground"}`}>{step.label}</h3>
-                <p className={`text-sm font-bold transition-colors ${isCompleted ? "text-muted-foreground" : "text-muted-foreground"}`}>{step.desc}</p>
+                <h3
+                  className={`text-sm font-bold transition-colors ${
+                    isCompleted
+                      ? "text-foreground"
+                      : "text-muted-foreground/50"
+                  }`}
+                >
+                  {step.label}
+                </h3>
+                <p
+                  className={`text-xs font-medium transition-colors ${
+                    isCompleted
+                      ? "text-muted-foreground/60"
+                      : "text-muted-foreground/40"
+                  }`}
+                >
+                  {step.desc}
+                </p>
                 {isCurrent && updatedAt && (
-                  <p className="text-xs text-primary font-black mt-2 bg-primary-subtle px-3 py-1 rounded-lg inline-block">
-                    {t("last_updated")}: {new Date(updatedAt).toLocaleTimeString("bn-BD")}
+                  <p className="text-[10px] font-semibold text-foreground mt-1.5 bg-black/[0.04] dark:bg-white/[0.06] px-2.5 py-1 rounded inline-block">
+                    {t("last_updated")}:{" "}
+                    {new Date(
+                      updatedAt
+                    ).toLocaleTimeString(
+                      "bn-BD"
+                    )}
                   </p>
                 )}
               </div>
               {isCompleted && (
-                <div className="hidden md:flex items-center gap-2 text-primary">
-                  <CheckCircle2 className="w-5 h-5" />
-                  <span className="text-xs font-black uppercase tracking-widest">{t("completed")}</span>
+                <div className="hidden md:flex items-center gap-1.5 text-muted-foreground/50">
+                  <CheckCircle2 className="w-4 h-4" />
+                  <span className="text-[10px] font-semibold uppercase tracking-wider">
+                    {t("completed")}
+                  </span>
                 </div>
               )}
             </div>

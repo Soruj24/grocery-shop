@@ -16,27 +16,47 @@ import OrderSuccess from "@/features/checkout/components/steps/OrderSuccess";
 export default function CheckoutPage() {
   const checkout = useCheckout();
 
-  if (checkout.status === "loading") return <CheckoutSkeleton />;
+  if (checkout.status === "loading")
+    return <CheckoutSkeleton />;
   if (checkout.isComplete && checkout.orderId) {
     return (
-      <div className="min-h-screen bg-gray-50 dark:bg-gray-950 flex items-center justify-center p-4">
+      <div className="min-h-screen flex items-center justify-center p-4">
         <div className="w-full max-w-md">
           <OrderSuccess
             orderId={checkout.orderId}
-            guestName={checkout.guestInfo.name || checkout.customName}
+            guestName={
+              checkout.guestInfo.name ||
+              checkout.customName
+            }
             total={checkout.total}
           />
         </div>
       </div>
     );
   }
-  if (checkout.cart.length === 0 && !checkout.isComplete) return null;
+  if (
+    checkout.cart.length === 0 &&
+    !checkout.isComplete
+  )
+    return null;
 
   const steps = [
-    { number: 1, label: checkout.t("step_information") },
-    { number: 2, label: checkout.t("step_delivery") },
-    { number: 3, label: checkout.t("step_payment") },
-    { number: 4, label: checkout.t("step_review") },
+    {
+      number: 1,
+      label: checkout.t("step_information"),
+    },
+    {
+      number: 2,
+      label: checkout.t("step_delivery"),
+    },
+    {
+      number: 3,
+      label: checkout.t("step_payment"),
+    },
+    {
+      number: 4,
+      label: checkout.t("step_review"),
+    },
   ];
 
   const getDeliveryAddress = () => {
@@ -50,9 +70,8 @@ export default function CheckoutPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-950 pb-24 lg:pb-0">
+    <div className="min-h-screen pb-24 lg:pb-0">
       <div className="mx-auto max-w-7xl px-4 py-6 sm:py-10">
-        {/* Header */}
         <div className="mb-6 flex items-center gap-3">
           <button
             onClick={() =>
@@ -60,23 +79,24 @@ export default function CheckoutPage() {
                 ? checkout.router.push("/cart")
                 : checkout.prevStep()
             }
-            className="flex h-10 w-10 items-center justify-center rounded-xl bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-400 hover:text-emerald-600 hover:border-emerald-300 transition-colors"
+            className="flex h-10 w-10 items-center justify-center rounded-lg bg-black/[0.04] dark:bg-white/[0.06] border border-black/[0.04] dark:border-white/[0.04] text-muted-foreground/50 hover:text-foreground transition-colors"
           >
-            <ArrowLeft className="h-5 w-5" />
+            <ArrowLeft className="h-4 w-4" />
           </button>
           <div>
-            <h1 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white">
+            <h1 className="text-xl sm:text-2xl font-bold text-foreground tracking-tight">
               {checkout.t("checkout")}
             </h1>
-            <p className="text-xs text-gray-500 dark:text-gray-400">
-              {checkout.t("step_text")} {checkout.currentStep}:{" "}
-              {steps[checkout.currentStep - 1]?.label}
+            <p className="text-xs font-medium text-muted-foreground/50">
+              {checkout.t("step_text")}{" "}
+              {checkout.currentStep}:{" "}
+              {steps[checkout.currentStep - 1]
+                ?.label}
             </p>
           </div>
         </div>
 
-        {/* Stepper */}
-        <div className="mb-8 rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 p-4">
+        <div className="mb-8 rounded-xl border border-black/[0.04] dark:border-white/[0.04] bg-white dark:bg-[#09090b] p-4 shadow-[0_1px_3px_rgba(0,0,0,0.04)]">
           <CheckoutStepper
             steps={steps}
             currentStep={checkout.currentStep}
@@ -84,9 +104,7 @@ export default function CheckoutPage() {
           />
         </div>
 
-        {/* Content */}
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-3 lg:gap-8 items-start">
-          {/* Left - Form Steps */}
           <div className="lg:col-span-2">
             <AnimatePresence mode="wait">
               {checkout.currentStep === 1 && (
@@ -94,48 +112,128 @@ export default function CheckoutPage() {
                   key="shipping"
                   isGuest={checkout.isGuest}
                   guestInfo={checkout.guestInfo}
-                  onGuestInfoChange={(info) => checkout.updateField("guestInfo", info)}
-                  onToggleGuest={checkout.toggleGuest}
-                  addresses={checkout.addresses}
-                  selectedAddressId={checkout.selectedAddress?.id || null}
-                  onSelectAddress={checkout.selectAddress}
-                  onAddAddress={checkout.addAddress}
-                  onDeleteAddress={checkout.deleteAddress}
-                  customAddress={checkout.customAddress}
-                  customName={checkout.customName}
-                  customPhone={checkout.customPhone}
-                  onCustomChange={(field, value) => {
-                    if (field === "name") checkout.updateField("customName", value);
-                    else if (field === "phone") checkout.updateField("customPhone", value);
-                    else if (field === "address") checkout.updateField("customAddress", value);
-                  }}
-                  useCustomAddress={checkout.useCustomAddress}
-                  onToggleCustomAddress={() =>
-                    checkout.setUseCustomAddress(!checkout.useCustomAddress)
+                  onGuestInfoChange={(info) =>
+                    checkout.updateField(
+                      "guestInfo",
+                      info
+                    )
                   }
-                  errors={checkout.validationErrors}
+                  onToggleGuest={
+                    checkout.toggleGuest
+                  }
+                  addresses={checkout.addresses}
+                  selectedAddressId={
+                    checkout.selectedAddress?.id ||
+                    null
+                  }
+                  onSelectAddress={
+                    checkout.selectAddress
+                  }
+                  onAddAddress={
+                    checkout.addAddress
+                  }
+                  onDeleteAddress={
+                    checkout.deleteAddress
+                  }
+                  customAddress={
+                    checkout.customAddress
+                  }
+                  customName={
+                    checkout.customName
+                  }
+                  customPhone={
+                    checkout.customPhone
+                  }
+                  onCustomChange={(
+                    field,
+                    value
+                  ) => {
+                    if (field === "name")
+                      checkout.updateField(
+                        "customName",
+                        value
+                      );
+                    else if (
+                      field === "phone"
+                    )
+                      checkout.updateField(
+                        "customPhone",
+                        value
+                      );
+                    else if (
+                      field === "address"
+                    )
+                      checkout.updateField(
+                        "customAddress",
+                        value
+                      );
+                  }}
+                  useCustomAddress={
+                    checkout.useCustomAddress
+                  }
+                  onToggleCustomAddress={() =>
+                    checkout.setUseCustomAddress(
+                      !checkout.useCustomAddress
+                    )
+                  }
+                  errors={
+                    checkout.validationErrors
+                  }
                 />
               )}
 
               {checkout.currentStep === 2 && (
                 <DeliveryStep
                   key="delivery"
-                  selectedShipping={checkout.shippingMethod}
-                  onSelectShipping={(m) => checkout.updateField("shippingMethod", m)}
-                  selectedSlot={checkout.deliverySlot}
-                  onSelectSlot={(s) => checkout.updateField("deliverySlot", s)}
-                  cartTotal={checkout.totalPrice}
+                  selectedShipping={
+                    checkout.shippingMethod
+                  }
+                  onSelectShipping={(m) =>
+                    checkout.updateField(
+                      "shippingMethod",
+                      m
+                    )
+                  }
+                  selectedSlot={
+                    checkout.deliverySlot
+                  }
+                  onSelectSlot={(s) =>
+                    checkout.updateField(
+                      "deliverySlot",
+                      s
+                    )
+                  }
+                  cartTotal={
+                    checkout.totalPrice
+                  }
                 />
               )}
 
               {checkout.currentStep === 3 && (
                 <PaymentStep
                   key="payment"
-                  selectedMethod={checkout.paymentMethod}
-                  onSelectMethod={(m) => checkout.updateField("paymentMethod", m)}
-                  transactionId={checkout.transactionId}
-                  onTransactionIdChange={(id) => checkout.updateField("transactionId", id)}
-                  error={checkout.validationErrors.transactionId}
+                  selectedMethod={
+                    checkout.paymentMethod
+                  }
+                  onSelectMethod={(m) =>
+                    checkout.updateField(
+                      "paymentMethod",
+                      m
+                    )
+                  }
+                  transactionId={
+                    checkout.transactionId
+                  }
+                  onTransactionIdChange={(id) =>
+                    checkout.updateField(
+                      "transactionId",
+                      id
+                    )
+                  }
+                  error={
+                    checkout.validationErrors
+                      .transactionId
+                  }
                 />
               )}
 
@@ -144,9 +242,17 @@ export default function CheckoutPage() {
                   key="review"
                   guestInfo={
                     checkout.useCustomAddress
-                      ? { name: checkout.customName, phone: checkout.customPhone, email: checkout.guestInfo.email }
+                      ? {
+                          name: checkout.customName,
+                          phone: checkout.customPhone,
+                          email: checkout.guestInfo.email,
+                        }
                       : checkout.selectedAddress
-                      ? { name: checkout.selectedAddress.name, phone: checkout.selectedAddress.phone, email: "" }
+                      ? {
+                          name: checkout.selectedAddress.name,
+                          phone: checkout.selectedAddress.phone,
+                          email: "",
+                        }
                       : checkout.guestInfo
                   }
                   deliveryAddress={getDeliveryAddress()}
@@ -162,13 +268,12 @@ export default function CheckoutPage() {
             </AnimatePresence>
 
             {checkout.error && (
-              <div className="mt-4 rounded-xl border border-red-200 dark:border-red-800 bg-red-50 dark:bg-red-950/30 p-3 text-sm text-red-700 dark:text-red-400">
+              <div className="mt-4 rounded-xl border border-rose-200 dark:border-rose-800 bg-rose-500/[0.04] p-3 text-sm text-rose-600 dark:text-rose-400">
                 {checkout.error}
               </div>
             )}
           </div>
 
-          {/* Right - Order Summary */}
           <div className="lg:col-span-1">
             <div className="sticky top-12">
               <OrderSummary
@@ -178,7 +283,9 @@ export default function CheckoutPage() {
                 discount={checkout.discount}
                 coupon={checkout.appliedCoupon}
                 onCouponApply={checkout.applyCoupon}
-                onCouponRemove={checkout.removeCoupon}
+                onCouponRemove={
+                  checkout.removeCoupon
+                }
                 total={checkout.total}
                 currentStep={checkout.currentStep}
                 isSubmitting={checkout.isSubmitting}
@@ -190,7 +297,6 @@ export default function CheckoutPage() {
         </div>
       </div>
 
-      {/* Mobile Checkout Bar */}
       <MobileCheckoutBar
         total={checkout.totalPrice}
         shippingCost={checkout.shippingCost}

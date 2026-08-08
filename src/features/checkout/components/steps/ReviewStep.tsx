@@ -1,8 +1,22 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { MapPin, Truck, CreditCard, ShoppingBag, Tag, CheckCircle2 } from "lucide-react";
-import { type CheckoutCartItem, type ShippingMethod, type DeliverySlot, type PaymentMethod, type AppliedCoupon, type GuestInfo } from "@/types/checkout";
+import {
+  MapPin,
+  Truck,
+  CreditCard,
+  ShoppingBag,
+  Tag,
+  CheckCircle2,
+} from "lucide-react";
+import {
+  type CheckoutCartItem,
+  type ShippingMethod,
+  type DeliverySlot,
+  type PaymentMethod,
+  type AppliedCoupon,
+  type GuestInfo,
+} from "@/types/checkout";
 import { PAYMENT_METHODS } from "@/types/checkout";
 import TrustBadges from "../TrustBadges";
 import { useLanguage } from "@/contexts/LanguageContext";
@@ -31,10 +45,13 @@ export default function ReviewStep({
   subtotal,
 }: ReviewStepProps) {
   const { t } = useLanguage();
-  const payment = PAYMENT_METHODS.find((m) => m.id === paymentMethod);
+  const payment = PAYMENT_METHODS.find(
+    (m) => m.id === paymentMethod
+  );
   const shippingCost = shipping.price;
   const discount = coupon?.discount || 0;
-  const total = subtotal + shippingCost - discount;
+  const total =
+    subtotal + shippingCost - discount;
 
   const sections = [
     {
@@ -42,10 +59,20 @@ export default function ReviewStep({
       title: "Contact & Address",
       content: (
         <div>
-          <p className="text-sm font-medium text-gray-900 dark:text-white">{guestInfo.name}</p>
-          <p className="text-xs text-gray-500 dark:text-gray-400">{guestInfo.phone}</p>
-          {guestInfo.email && <p className="text-xs text-gray-500 dark:text-gray-400">{guestInfo.email}</p>}
-          <p className="text-xs text-gray-600 dark:text-gray-300 mt-1">{deliveryAddress}</p>
+          <p className="text-sm font-medium text-foreground">
+            {guestInfo.name}
+          </p>
+          <p className="text-[10px] text-muted-foreground/50">
+            {guestInfo.phone}
+          </p>
+          {guestInfo.email && (
+            <p className="text-[10px] text-muted-foreground/50">
+              {guestInfo.email}
+            </p>
+          )}
+          <p className="text-[10px] text-muted-foreground/60 mt-1">
+            {deliveryAddress}
+          </p>
         </div>
       ),
     },
@@ -54,10 +81,17 @@ export default function ReviewStep({
       title: "Shipping & Delivery",
       content: (
         <div>
-          <p className="text-sm font-medium text-gray-900 dark:text-white">{shipping.name}</p>
-          <p className="text-xs text-gray-500 dark:text-gray-400">{deliverySlot.label} - {deliverySlot.time}</p>
-          <p className="text-xs text-emerald-600 dark:text-emerald-400 mt-0.5">
-            {shippingCost === 0 ? "Free shipping" : `৳${shippingCost}`}
+          <p className="text-sm font-medium text-foreground">
+            {shipping.name}
+          </p>
+          <p className="text-[10px] text-muted-foreground/50">
+            {deliverySlot.label} -{" "}
+            {deliverySlot.time}
+          </p>
+          <p className="text-[10px] text-emerald-600 dark:text-emerald-400 mt-0.5">
+            {shippingCost === 0
+              ? "Free shipping"
+              : `৳${shippingCost}`}
           </p>
         </div>
       ),
@@ -67,9 +101,13 @@ export default function ReviewStep({
       title: "Payment",
       content: (
         <div>
-          <p className="text-sm font-medium text-gray-900 dark:text-white">{payment?.name}</p>
+          <p className="text-sm font-medium text-foreground">
+            {payment?.name}
+          </p>
           {transactionId && (
-            <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">TXN: {transactionId}</p>
+            <p className="text-[10px] text-muted-foreground/50 mt-0.5">
+              TXN: {transactionId}
+            </p>
           )}
         </div>
       ),
@@ -80,15 +118,27 @@ export default function ReviewStep({
       content: (
         <div className="space-y-2">
           {items.map((item, i) => (
-            <div key={i} className="flex items-center gap-3">
-              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-gray-100 dark:bg-gray-800">
-                <ShoppingBag className="h-4 w-4 text-gray-400" />
+            <div
+              key={i}
+              className="flex items-center gap-3"
+            >
+              <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-black/[0.04] dark:bg-white/[0.06]">
+                <ShoppingBag className="h-4 w-4 text-muted-foreground/40" />
               </div>
               <div className="flex-1 min-w-0">
-                <p className="text-xs font-medium text-gray-900 dark:text-white truncate">{item.name}</p>
-                <p className="text-[10px] text-gray-500 dark:text-gray-400">Qty: {item.quantity}</p>
+                <p className="text-xs font-medium text-foreground truncate">
+                  {item.name}
+                </p>
+                <p className="text-[10px] text-muted-foreground/50">
+                  Qty: {item.quantity}
+                </p>
               </div>
-              <p className="text-xs font-semibold text-gray-900 dark:text-white">৳{(item.price * item.quantity).toLocaleString()}</p>
+              <p className="text-xs font-semibold text-foreground">
+                ৳
+                {(
+                  item.price * item.quantity
+                ).toLocaleString()}
+              </p>
             </div>
           ))}
         </div>
@@ -109,10 +159,10 @@ export default function ReviewStep({
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: i * 0.1 }}
-          className="rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 p-4"
+          className="rounded-xl border border-black/[0.04] dark:border-white/[0.04] bg-white dark:bg-[#09090b] p-4 shadow-[0_1px_3px_rgba(0,0,0,0.04)]"
         >
-          <h4 className="flex items-center gap-2 text-xs font-semibold text-gray-500 dark:text-gray-400 mb-2 uppercase tracking-wider">
-            <section.icon className="h-3.5 w-3.5 text-emerald-500" />
+          <h4 className="flex items-center gap-2 text-[10px] font-semibold text-muted-foreground/50 mb-2 uppercase tracking-wider">
+            <section.icon className="h-3.5 w-3.5" />
             {section.title}
           </h4>
           {section.content}
@@ -123,47 +173,69 @@ export default function ReviewStep({
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          className="rounded-xl border border-emerald-200 dark:border-emerald-800 bg-emerald-50 dark:bg-emerald-950/20 p-3 flex items-center gap-2"
+          className="rounded-lg border border-emerald-200 dark:border-emerald-800 bg-emerald-500/[0.04] p-3 flex items-center gap-2"
         >
-          <Tag className="h-4 w-4 text-emerald-500" />
-          <p className="text-sm font-medium text-emerald-700 dark:text-emerald-400">
+          <Tag className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
+          <p className="text-xs font-medium text-emerald-600 dark:text-emerald-400">
             Coupon applied: -৳{discount}
           </p>
         </motion.div>
       )}
 
-      <div className="rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 p-4">
-        <h4 className="text-xs font-semibold text-gray-500 dark:text-gray-400 mb-3 uppercase tracking-wider">Order Total</h4>
+      <div className="rounded-xl border border-black/[0.04] dark:border-white/[0.04] bg-white dark:bg-[#09090b] p-4 shadow-[0_1px_3px_rgba(0,0,0,0.04)]">
+        <h4 className="text-[10px] font-semibold text-muted-foreground/50 mb-3 uppercase tracking-wider">
+          Order Total
+        </h4>
         <div className="space-y-2">
-          <div className="flex justify-between text-sm">
-            <span className="text-gray-600 dark:text-gray-400">Subtotal ({items.length} items)</span>
-            <span className="font-medium text-gray-900 dark:text-white">৳{subtotal.toLocaleString()}</span>
+          <div className="flex justify-between text-xs">
+            <span className="text-muted-foreground/60">
+              Subtotal ({items.length} items)
+            </span>
+            <span className="font-medium text-foreground">
+              ৳{subtotal.toLocaleString()}
+            </span>
           </div>
-          <div className="flex justify-between text-sm">
-            <span className="text-gray-600 dark:text-gray-400">Shipping</span>
-            <span className="font-medium text-gray-900 dark:text-white">
-              {shippingCost === 0 ? "Free" : `৳${shippingCost}`}
+          <div className="flex justify-between text-xs">
+            <span className="text-muted-foreground/60">
+              Shipping
+            </span>
+            <span className="font-medium text-foreground">
+              {shippingCost === 0
+                ? "Free"
+                : `৳${shippingCost}`}
             </span>
           </div>
           {discount > 0 && (
-            <div className="flex justify-between text-sm">
-              <span className="text-gray-600 dark:text-gray-400">Discount</span>
-              <span className="font-medium text-emerald-600 dark:text-emerald-400">-৳{discount}</span>
+            <div className="flex justify-between text-xs">
+              <span className="text-muted-foreground/60">
+                Discount
+              </span>
+              <span className="font-medium text-emerald-600 dark:text-emerald-400">
+                -৳{discount}
+              </span>
             </div>
           )}
-          <div className="border-t border-gray-100 dark:border-gray-800 pt-2 flex justify-between">
-            <span className="text-sm font-bold text-gray-900 dark:text-white">Total</span>
-            <span className="text-lg font-bold text-emerald-600 dark:text-emerald-400">৳{total.toLocaleString()}</span>
+          <div className="border-t border-black/[0.04] dark:border-white/[0.04] pt-2 flex justify-between">
+            <span className="text-sm font-bold text-foreground">
+              Total
+            </span>
+            <span className="text-lg font-bold text-foreground">
+              ৳{total.toLocaleString()}
+            </span>
           </div>
         </div>
       </div>
 
       <TrustBadges />
 
-      <div className="rounded-xl bg-emerald-50 dark:bg-emerald-950/20 border border-emerald-200 dark:border-emerald-800 p-4 text-center">
-        <CheckCircle2 className="mx-auto h-8 w-8 text-emerald-500 mb-2" />
-        <p className="text-sm font-semibold text-gray-900 dark:text-white">Ready to place your order?</p>
-        <p className="text-xs text-gray-500 dark:text-gray-400">Click the button below to confirm</p>
+      <div className="rounded-lg bg-black/[0.02] dark:bg-white/[0.03] border border-black/[0.04] dark:border-white/[0.04] p-4 text-center">
+        <CheckCircle2 className="mx-auto h-7 w-7 text-muted-foreground/30 mb-2" />
+        <p className="text-sm font-semibold text-foreground">
+          Ready to place your order?
+        </p>
+        <p className="text-[10px] text-muted-foreground/50">
+          Click the button below to confirm
+        </p>
       </div>
     </motion.div>
   );

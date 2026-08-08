@@ -9,9 +9,12 @@ import { AdminOrder as Order } from "@/types/admin";
 import { LoadingState } from "@/components/ui";
 
 export default function OrdersPage() {
-  const { data: session, status } = useSession();
+  const { data: session, status } =
+    useSession();
   const router = useRouter();
-  const [orders, setOrders] = useState<Order[]>([]);
+  const [orders, setOrders] = useState<Order[]>(
+    []
+  );
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -24,13 +27,18 @@ export default function OrdersPage() {
 
   const fetchOrders = async () => {
     try {
-      const res = await fetch("/api/orders/user");
+      const res = await fetch(
+        "/api/orders/user"
+      );
       if (res.ok) {
         const data = await res.json();
         setOrders(data);
       }
     } catch (error) {
-      console.error("Error fetching orders:", error);
+      console.error(
+        "Error fetching orders:",
+        error
+      );
     } finally {
       setLoading(false);
     }
@@ -38,7 +46,7 @@ export default function OrdersPage() {
 
   if (loading) {
     return (
-      <div className="min-h-[60vh] flex items-center justify-center bg-background">
+      <div className="min-h-[60vh] flex items-center justify-center">
         <LoadingState />
       </div>
     );
@@ -49,19 +57,23 @@ export default function OrdersPage() {
   }
 
   return (
-    <div className="max-w-4xl mx-auto py-8 space-y-10">
-      <div className="flex flex-col gap-2">
-        <h1 className="text-3xl font-black text-foreground tracking-tight">
+    <div className="max-w-4xl mx-auto py-8 space-y-8">
+      <div className="flex flex-col gap-1.5">
+        <h1 className="text-3xl font-bold text-foreground tracking-tight">
           আমার অর্ডারসমূহ
         </h1>
-        <p className="text-muted-foreground font-bold">
-          আপনার সব অর্ডারের স্ট্যাটাস এবং ডিটেইলস এখানে দেখুন
+        <p className="text-sm font-medium text-muted-foreground/60">
+          আপনার সব অর্ডারের স্ট্যাটাস এবং
+          ডিটেইলস এখানে দেখুন
         </p>
       </div>
 
-      <div className="grid gap-6">
+      <div className="grid gap-5">
         {orders.map((order) => (
-          <OrderCard key={order._id} order={order as Order} />
+          <OrderCard
+            key={order._id}
+            order={order as Order}
+          />
         ))}
       </div>
     </div>
