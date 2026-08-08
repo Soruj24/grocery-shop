@@ -1,78 +1,234 @@
 "use client";
 
-import { useState } from "react";
-import { useGetAdminOrdersQuery, useUpdateAdminOrderMutation } from "@/redux/apiSlice";
-import DataTable from "@/features/admin/shared/DataTable";
+import { useState, useCallback, useMemo } from "react";
+import {
+  useGetAdminOrdersQuery,
+  useUpdateAdminOrderMutation,
+  useBulkOrdersMutation,
+} from "@/redux/apiSlice";
 import AdminPageHeader from "@/features/admin/shared/AdminPageHeader";
-import StatusBadge from "@/features/admin/components/StatusBadge";
+import OrdersTable from "@/features/admin/shared/OrdersTable";
+import OrderDetailsDrawer from "@/features/admin/components/OrderDetailsDrawer";
 import { useToast } from "@/components/ui/system/Toast";
-import { ShoppingCart } from "lucide-react";
-import { cn } from "@/utils/utils";
-
-const statusFilters = ["", "pending", "confirmed", "processing", "shipped", "delivered", "cancelled"] as const;
+import type { AdminOrder } from "@/types/admin";
 
 export default function AdminOrdersPage() {
+  /* ─── State ─── */
   const [page, setPage] = useState(1);
-  const [status, setStatus] = useState("");
-  const { data, isLoading } = useGetAdminOrdersQuery({ page, status: status || undefined });
-  const [update] = useUpdateAdminOrderMutation();
+  const [search, setSearch] = useState("");
+  const [sort, setSort] = useState("createdAt");
+  const [sortDir, setSortDir] = useState<"asc" | "desc">("desc");
+  const [statusFilter, setStatusFilter] = useState("");
+  const [paymentFilter, setPaymentFilter] = useState("");
+  const [dateFrom, setDateFrom] = useState("");
+  const [dateTo, setDateTo] = useState("");
+  const [selectedIds, setSelectedIds] = useState<string[]>([]);
+  const [drawerOrder, setDrawerOrder] = useState<AdminOrder | null>(null);
+
+  /* ─── API ─── */
+  const { data, isLoading, isError } = useGetAdminOrdersQuery({
+    page,
+    limit: 20,
+    search,
+    sort,
+    sortDir,
+    ...(statusFilter && { status: statusFilter }),
+    ...(paymentFilter && { paymentStatus: paymentFilter }),
+    ...(dateFrom && { dateFrom }),
+    ...(dateTo && { dateTo }),
+  });
+
+  const [update, { isLoading: updating }] = useUpdateAdminOrderMutation();
+  const [bulkOp, { isLoading: bulkLoading }] = useBulkOrdersMutation();
   const { success, error: toastError } = useToast();
 
-  const handleStatusChange = async (orderId: string, newStatus: string) => {
-    try {
-      await update({ id: orderId, body: { status: newStatus as any } }).unwrap();
-      success("স্ট্যাটাস আপডেট", `অর্ডার স্ট্যাটাস "${newStatus}" এ পরিবর্তন করা হয়েছে।`);
-    } catch {
-      toastError("আপডেট ব্যর্থ", "অর্ডার স্ট্যাটাস আপডেট করা যায়নি।");
-    }
-  };
+  const orders = data?.data || [];
+  const totalCount = data?.totalCount || 0;
+  const totalPages = data?.totalPages || 0;
 
-  const columns = [
-    { key: "_id", label: "Order", render: (item: any) => (
-      <div className="flex items-center gap-3">
-        <div className="h-9 w-9 rounded-lg bg-muted flex items-center justify-center">
-          <ShoppingCart className="h-4 w-4 text-muted-foreground" />
-        </div>
-        <div>
-          <p className="text-sm font-mono font-semibold text-foreground">#{item._id?.slice(-6).toUpperCase()}</p>
-          <p className="text-xs text-muted-foreground">{new Date(item.createdAt).toLocaleDateString()}</p>
+  /* ─── Handlers ─── */
+  const handleSearch = useCallback((v: string) => {
+    setSearch(v);
+    setPage(1);
+    setSelectedIds([]);
+  }, []);
+
+  const handleSort = useCallback((key: string) => {
+    setSort((prev) => {
+      if (prev === key) {
+        setSortDir((d) => (d === "asc" ? "desc" : "asc"));
+        return key;
+      }
+      setSortDir("asc");
+      return key;
+    });
+  }, []);
+
+  const handleStatusFilter = useCallback((v: string) => {
+    setStatusFilter(v);
+    setPage(1);
+    setSelectedIds([]);
+  }, []);
+
+  const handlePaymentFilter = useCallback((v: string) => {
+    setPaymentFilter(v);
+    setPage(1);
+    setSelectedIds([]);
+  }, []);
+
+  const handleDateChange = useCallback((from: string, to: string) => {
+    setDateFrom(from);
+    setDateTo(to);
+    setPage(1);
+    setSelectedIds([]);
+  }, []);
+
+  const handleSelectToggle = useCallback((id: string) => {
+    setSelectedIds((prev) => prev.includes(id) ? prev.filter((i) => i !== id) : [...prev, id]);
+  }, []);
+
+  const handleSelectAll = useCallback(() => {
+    if (orders.every((o) => selectedIds.includes(o._id))) {
+      setSelectedIds([]);
+    } else {
+      setSelectedIds(orders.map((o) => o._id));
+    }
+  }, [orders, selectedIds]);
+
+  const handleRowClick = useCallback((order: AdminOrder) => {
+    setDrawerOrder(order);
+  }, []);
+
+  const handleStatusChange = useCallback(async (orderId: string, status: string) => {
+    try {
+      await update({ id: orderId, body: { status: status as AdminOrder["status"] } }).unwrap();
+      success("Status Updated", `Order status changed to "${status}".`);
+      // Update drawer if same order
+      setDrawerOrder((prev) => prev?._id === orderId ? { ...prev, status: status as AdminOrder["status"] } : prev);
+    } catch {
+      toastError("Update Failed", "Could not update order status.");
+    }
+  }, [update, success, toastError]);
+
+  const handlePaymentStatusChange = useCallback(async (orderId: string, paymentStatus: string) => {
+    try {
+      await update({ id: orderId, body: { paymentStatus: paymentStatus as AdminOrder["paymentStatus"] } }).unwrap();
+      success("Payment Updated", `Payment status changed to "${paymentStatus}".`);
+      setDrawerOrder((prev) => prev?._id === orderId ? { ...prev, paymentStatus: paymentStatus as AdminOrder["paymentStatus"] } : prev);
+    } catch {
+      toastError("Update Failed", "Could not update payment status.");
+    }
+  }, [update, success, toastError]);
+
+  /* ─── Bulk Operations ─── */
+  const handleBulkStatus = useCallback(async (status: string) => {
+    try {
+      await bulkOp({ action: "bulkUpdate", ids: selectedIds, data: { status } }).unwrap();
+      success("Bulk Update", `${selectedIds.length} orders updated to "${status}".`);
+      setSelectedIds([]);
+    } catch {
+      toastError("Update Failed", "Could not update orders.");
+    }
+  }, [selectedIds, bulkOp, success, toastError]);
+
+  const handleBulkPaymentStatus = useCallback(async (paymentStatus: string) => {
+    try {
+      await bulkOp({ action: "bulkUpdate", ids: selectedIds, data: { paymentStatus } }).unwrap();
+      success("Bulk Update", `${selectedIds.length} orders payment updated to "${paymentStatus}".`);
+      setSelectedIds([]);
+    } catch {
+      toastError("Update Failed", "Could not update orders.");
+    }
+  }, [selectedIds, bulkOp, success, toastError]);
+
+  const handleBulkExport = useCallback(() => {
+    const exportOrders = selectedIds.length > 0
+      ? orders.filter((o) => selectedIds.includes(o._id))
+      : orders;
+
+    const headers = ["Order ID", "Customer", "Phone", "Total", "Status", "Payment Method", "Payment Status", "Date"];
+    const rows = exportOrders.map((o) => [
+      o._id.slice(-6).toUpperCase(),
+      o.name || o.guestInfo?.name || o.phone || "Unknown",
+      o.phone,
+      o.total,
+      o.status,
+      o.paymentMethod || "cod",
+      o.paymentStatus || "unpaid",
+      new Date(o.createdAt).toLocaleDateString(),
+    ]);
+
+    const csv = [headers, ...rows].map((r) => r.join(",")).join("\n");
+    const blob = new Blob([csv], { type: "text/csv" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `orders-${new Date().toISOString().slice(0, 10)}.csv`;
+    a.click();
+    URL.revokeObjectURL(url);
+    success("Export Complete", `${exportOrders.length} orders exported to CSV.`);
+  }, [selectedIds, orders, success]);
+
+  /* ─── Error State ─── */
+  if (isError) {
+    return (
+      <div className="space-y-6">
+        <AdminPageHeader title="Orders" description="Manage customer orders" />
+        <div className="rounded-xl border border-border bg-card flex flex-col items-center justify-center py-20">
+          <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-danger-subtle mb-4">
+            <span className="text-danger text-2xl">!</span>
+          </div>
+          <p className="text-base font-semibold text-foreground">Failed to load orders</p>
+          <p className="text-sm text-muted-foreground mt-1">Check your connection and try again.</p>
         </div>
       </div>
-    )},
-    { key: "phone", label: "Customer", render: (item: any) => <span className="text-sm text-muted-foreground">{item.name || item.phone}</span> },
-    { key: "total", label: "Total", sortable: true, render: (item: any) => <span className="text-sm font-semibold text-foreground">৳{Number(item.total).toLocaleString()}</span> },
-    { key: "status", label: "Status", render: (item: any) => (
-      <select
-        value={item.status}
-        onChange={(e) => handleStatusChange(item._id, e.target.value)}
-        aria-label={`Order status for ${item._id?.slice(-6).toUpperCase()}`}
-        className={cn(
-          "text-xs font-semibold px-3 py-1.5 rounded-lg border border-border bg-muted",
-          "text-foreground cursor-pointer outline-none focus:ring-2 focus:ring-ring",
-        )}
-      >
-        {statusFilters.filter(Boolean).map((s) => (
-          <option key={s} value={s}>{s}</option>
-        ))}
-      </select>
-    )},
-    { key: "paymentMethod", label: "Payment", render: (item: any) => <span className="text-xs text-muted-foreground uppercase font-medium">{item.paymentMethod || "---"}</span> },
-  ];
+    );
+  }
 
+  /* ─── Main Render ─── */
   return (
     <div className="space-y-6">
       <AdminPageHeader title="Orders" description="Manage customer orders" />
-      <div className="flex gap-2 flex-wrap">
-        {statusFilters.map((s) => (
-          <button key={s} onClick={() => { setStatus(s); setPage(1); }}
-            aria-pressed={status === s}
-            className={cn(
-              "px-3.5 py-1.5 rounded-lg text-xs font-medium capitalize transition-colors",
-              status === s ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground hover:text-foreground",
-            )}>{s || "All"}</button>
-        ))}
-      </div>
-      <DataTable columns={columns} data={data?.data || []} searchable searchKeys={["phone", "name"]} searchPlaceholder="Search orders..." pageSize={10} loading={isLoading} />
+
+      <OrdersTable
+        data={orders}
+        totalCount={totalCount}
+        currentPage={data?.currentPage || page}
+        totalPages={totalPages}
+        loading={isLoading}
+        search={search}
+        onSearchChange={handleSearch}
+        sort={sort}
+        sortDir={sortDir}
+        onSort={handleSort}
+        page={page}
+        onPageChange={(p) => { setPage(p); setSelectedIds([]); }}
+        statusFilter={statusFilter}
+        onStatusFilterChange={handleStatusFilter}
+        paymentFilter={paymentFilter}
+        onPaymentFilterChange={handlePaymentFilter}
+        dateFrom={dateFrom}
+        dateTo={dateTo}
+        onDateChange={handleDateChange}
+        selectedIds={selectedIds}
+        onSelectToggle={handleSelectToggle}
+        onSelectAll={handleSelectAll}
+        onBulkStatus={handleBulkStatus}
+        onBulkPaymentStatus={handleBulkPaymentStatus}
+        onBulkExport={handleBulkExport}
+        onRowClick={handleRowClick}
+        onStatusChange={handleStatusChange}
+        bulkLoading={bulkLoading}
+      />
+
+      <OrderDetailsDrawer
+        order={drawerOrder}
+        isOpen={!!drawerOrder}
+        onClose={() => setDrawerOrder(null)}
+        onStatusChange={handleStatusChange}
+        onPaymentStatusChange={handlePaymentStatusChange}
+        updating={updating}
+      />
     </div>
   );
 }

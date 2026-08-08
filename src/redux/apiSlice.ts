@@ -106,7 +106,11 @@ export const apiSlice = createApi({
       providesTags: ["Order"],
     }),
     updateAdminOrder: builder.mutation<AdminOrder, { id: string; body: Partial<AdminOrder> }>({
-      query: ({ id, body }) => ({ url: `/admin/orders/${id}`, method: "PUT", body }),
+      query: ({ id, body }) => ({ url: "/admin/orders", method: "PATCH", body: { id, ...body } }),
+      invalidatesTags: ["Order"],
+    }),
+    bulkOrders: builder.mutation<{ updated?: number }, { action: string; ids: string[]; data?: Record<string, unknown> }>({
+      query: (body) => ({ url: "/admin/orders", method: "PATCH", body }),
       invalidatesTags: ["Order"],
     }),
 
@@ -266,7 +270,7 @@ export const {
   useUpdateAdminCategoryMutation, useDeleteAdminCategoryMutation,
   useGetAdminBrandsQuery, useCreateAdminBrandMutation,
   useUpdateAdminBrandMutation, useDeleteAdminBrandMutation,
-  useGetAdminOrdersQuery, useUpdateAdminOrderMutation,
+  useGetAdminOrdersQuery, useUpdateAdminOrderMutation, useBulkOrdersMutation,
   useGetAdminCustomersQuery,
   useGetAdminReviewsQuery, useUpdateReviewStatusMutation,
   useGetAdminReturnsQuery, useUpdateReturnStatusMutation,

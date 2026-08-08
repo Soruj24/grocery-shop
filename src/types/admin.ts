@@ -62,9 +62,13 @@ export interface AdminOrder {
   status: "pending" | "confirmed" | "delivered" | "cancelled" | "processing" | "shipped";
   address: string;
   phone: string;
+  name?: string;
   createdAt: string;
   paymentMethod?: string;
+  paymentStatus?: "unpaid" | "paid" | "partially_paid";
   transactionId?: string;
+  deliveryMethod?: string;
+  deliverySlot?: string;
   deliveryStatus?: string;
   trackingId?: string;
   deliveryBoy?: {
@@ -79,6 +83,12 @@ export interface AdminOrder {
     name: string;
     email: string;
   } | string;
+  guestInfo?: {
+    name?: string;
+    phone?: string;
+    email?: string;
+  };
+  user?: string;
 }
 
 export interface AdminCoupon {
