@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { signOut } from "next-auth/react";
@@ -60,11 +60,13 @@ export default function AdminSidebar({ session }: AdminSidebarProps) {
 
   const isActive = (href: string) => pathname === href || pathname.startsWith(href + "/");
 
-  const toggleSection = (label: string) => {
+  const toggleSection = useCallback((label: string) => {
     setExpandedSections((prev) =>
       prev.includes(label) ? prev.filter((s) => s !== label) : [...prev, label]
     );
-  };
+  }, []);
+
+  const closeMobile = useCallback(() => setMobileOpen(false), []);
 
   const SidebarContent = () => (
     <div className="flex flex-col h-full">
@@ -82,7 +84,7 @@ export default function AdminSidebar({ session }: AdminSidebarProps) {
         </Link>
       </div>
 
-      <nav className="flex-1 overflow-y-auto py-3 px-2 space-y-4">
+      <nav className="flex-1 overflow-y-auto py-3 px-2 space-y-4" aria-label="Admin navigation">
         {navItems.map((section) => {
           const expanded = expandedSections.includes(section.label);
           return (
@@ -90,10 +92,11 @@ export default function AdminSidebar({ session }: AdminSidebarProps) {
               {!collapsed && (
                 <button
                   onClick={() => toggleSection(section.label)}
+                  aria-expanded={expanded}
                   className="flex w-full items-center justify-between px-3 py-1.5"
                 >
                   <span className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">{section.label}</span>
-                  <ChevronDown className={cn("h-3 w-3 text-muted-foreground transition-transform", !expanded && "-rotate-90")} />
+                  <ChevronDown className={cn("h-3 w-3 text-muted-foreground transition-transform", !expanded && "-rotate-90")} aria-hidden="true" />
                 </button>
               )}
               <div className={cn("space-y-0.5", !collapsed && !expanded ? "hidden" : "")}>
@@ -103,7 +106,8 @@ export default function AdminSidebar({ session }: AdminSidebarProps) {
                     <Link
                       key={item.href}
                       href={item.href}
-                      onClick={() => setMobileOpen(false)}
+                      onClick={closeMobile}
+                      aria-current={active ? "page" : undefined}
                       className={cn(
                         "relative flex items-center gap-2.5 rounded-lg text-sm font-medium transition-colors",
                         collapsed ? "justify-center px-2 py-2" : "px-3 py-2",
@@ -120,7 +124,7 @@ export default function AdminSidebar({ session }: AdminSidebarProps) {
                           transition={{ type: "spring", stiffness: 350, damping: 30 }}
                         />
                       )}
-                      <item.icon className={cn("relative h-4 w-4 shrink-0", active && "text-foreground")} />
+                      <item.icon className={cn("relative h-4 w-4 shrink-0", active && "text-foreground")} aria-hidden="true" />
                       {!collapsed && <span className="relative">{item.label}</span>}
                     </Link>
                   );
@@ -135,7 +139,7 @@ export default function AdminSidebar({ session }: AdminSidebarProps) {
         {!collapsed ? (
           <div className="rounded-lg bg-muted p-3">
             <div className="flex items-center gap-3">
-              <div className="h-8 w-8 rounded-lg bg-foreground flex items-center justify-center text-background text-xs font-medium shrink-0">
+              <div className="h-8 w-8 rounded-lg bg-foreground flex items-center justify-center text-background text-xs font-medium shrink-0" aria-hidden="true">
                 {session?.user?.name?.charAt(0) || "A"}
               </div>
               <div className="min-w-0 flex-1">
@@ -146,12 +150,13 @@ export default function AdminSidebar({ session }: AdminSidebarProps) {
             <button
               onClick={() => signOut({ callbackUrl: "/" })}
               className="mt-2.5 flex w-full items-center justify-center gap-2 rounded-lg py-1.5 text-xs font-medium text-muted-foreground hover:text-danger hover:bg-danger-subtle transition-colors"
+              aria-label="Sign out"
             >
               <LogOut className="h-3 w-3" /> Sign Out
             </button>
           </div>
         ) : (
-          <button onClick={() => signOut({ callbackUrl: "/" })} className="flex w-full items-center justify-center rounded-lg p-2 text-muted-foreground hover:text-danger hover:bg-danger-subtle transition-colors">
+          <button onClick={() => signOut({ callbackUrl: "/" })} className="flex w-full items-center justify-center rounded-lg p-2 text-muted-foreground hover:text-danger hover:bg-danger-subtle transition-colors" aria-label="Sign out">
             <LogOut className="h-4 w-4" />
           </button>
         )}
@@ -161,16 +166,16 @@ export default function AdminSidebar({ session }: AdminSidebarProps) {
 
   return (
     <>
-      <button onClick={() => setMobileOpen(true)} className="lg:hidden fixed top-4 left-4 z-50 flex h-10 w-10 items-center justify-center rounded-xl bg-card border border-border shadow-lg">
+      <button onClick={() => setMobileOpen(true)} className="lg:hidden fixed top-4 left-4 z-50 flex h-10 w-10 items-center justify-center rounded-xl bg-card border border-border shadow-lg" aria-label="Open menu">
         <Menu className="h-5 w-5 text-muted-foreground" />
       </button>
 
       {mobileOpen && (
         <div className="lg:hidden fixed inset-0 z-50">
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="absolute inset-0 bg-black/40 backdrop-blur-sm" onClick={() => setMobileOpen(false)} />
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="absolute inset-0 bg-black/40 backdrop-blur-sm" onClick={closeMobile} aria-hidden="true" />
           <motion.div initial={{ x: -280 }} animate={{ x: 0 }} transition={{ type: "spring", stiffness: 300, damping: 30 }} className="absolute left-0 top-0 bottom-0 w-[260px] bg-card shadow-2xl">
             <div className="flex items-center justify-end p-2">
-              <button onClick={() => setMobileOpen(false)} className="p-2 rounded-lg hover:bg-muted"><X className="h-4 w-4 text-muted-foreground" /></button>
+              <button onClick={closeMobile} className="p-2 rounded-lg hover:bg-muted" aria-label="Close menu"><X className="h-4 w-4 text-muted-foreground" /></button>
             </div>
             <SidebarContent />
           </motion.div>
@@ -193,8 +198,9 @@ export default function AdminSidebar({ session }: AdminSidebarProps) {
           "text-muted-foreground hover:text-foreground shadow-sm transition-all",
         )}
         style={{ left: collapsed ? "52px" : "224px" }}
+        aria-label={collapsed ? "Expand sidebar" : "Collapse sidebar"}
       >
-        <ChevronDown className={cn("h-3 w-3 transition-transform", collapsed ? "-rotate-90" : "rotate-90")} />
+        <ChevronDown className={cn("h-3 w-3 transition-transform", collapsed ? "-rotate-90" : "rotate-90")} aria-hidden="true" />
       </button>
     </>
   );

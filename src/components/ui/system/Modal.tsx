@@ -1,114 +1,154 @@
 "use client";
 
-import * as React from "react";
+import { useEffect, useRef, useCallback, ReactNode } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X } from "lucide-react";
-import { cn } from "./types";
-import { fadeVariants, scaleInVariants, overlayTransition, springGentle } from "@/lib/motion";
+import { cn } from "@/utils/utils";
 
-export interface ModalProps {
-  open: boolean;
+interface ModalProps {
+  isOpen?: boolean;
+  open?: boolean;
   onClose: () => void;
-  title?: React.ReactNode;
-  description?: React.ReactNode;
-  children?: React.ReactNode;
-  footer?: React.ReactNode;
+  title?: string;
+  description?: string;
+  children: ReactNode;
   size?: "sm" | "md" | "lg" | "xl";
-  closeOnOverlay?: boolean;
-  hideCloseButton?: boolean;
+  showClose?: boolean;
+  className?: string;
 }
 
 const sizeMap = {
   sm: "max-w-sm",
-  md: "max-w-md",
-  lg: "max-w-lg",
-  xl: "max-w-2xl",
+  md: "max-w-lg",
+  lg: "max-w-2xl",
+  xl: "max-w-4xl",
 };
 
-export function Modal({
+export const Modal = function Modal({
+  isOpen,
   open,
   onClose,
   title,
   description,
   children,
-  footer,
   size = "md",
-  closeOnOverlay = true,
-  hideCloseButton,
+  showClose = true,
+  className,
 }: ModalProps) {
-  React.useEffect(() => {
-    if (!open) return;
-    const onKey = (e: KeyboardEvent) => e.key === "Escape" && onClose();
-    document.addEventListener("keydown", onKey);
-    document.body.style.overflow = "hidden";
+  const visible = isOpen ?? open ?? false;
+  const overlayRef = useRef<HTMLDivElement>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
+  const previousFocusRef = useRef<HTMLElement | null>(null);
+
+  const handleKeyDown = useCallback(
+    (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        e.preventDefault();
+        onClose();
+        return;
+      }
+
+      if (e.key === "Tab" && contentRef.current) {
+        const focusable = contentRef.current.querySelectorAll<HTMLElement>(
+          'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])',
+        );
+        if (focusable.length === 0) return;
+
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+
+        if (e.shiftKey) {
+          if (document.activeElement === first) {
+            e.preventDefault();
+            last.focus();
+          }
+        } else {
+          if (document.activeElement === last) {
+            e.preventDefault();
+            first.focus();
+          }
+        }
+      }
+    },
+    [onClose],
+  );
+
+  useEffect(() => {
+    if (visible) {
+      previousFocusRef.current = document.activeElement as HTMLElement;
+      document.addEventListener("keydown", handleKeyDown);
+      document.body.style.overflow = "hidden";
+      setTimeout(() => closeButtonRef.current?.focus(), 50);
+    }
     return () => {
-      document.removeEventListener("keydown", onKey);
+      document.removeEventListener("keydown", handleKeyDown);
       document.body.style.overflow = "";
+      previousFocusRef.current?.focus();
     };
-  }, [open, onClose]);
+  }, [visible, handleKeyDown]);
 
   return (
     <AnimatePresence>
-      {open && (
-        <div
-          className="fixed inset-0 z-[200] flex items-center justify-center p-4"
-          role="dialog"
-          aria-modal="true"
-        >
+      {visible && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
           <motion.div
-            variants={fadeVariants}
-            initial="hidden"
-            animate="visible"
-            exit="exit"
-            transition={overlayTransition}
-            className="absolute inset-0 bg-black/40 backdrop-blur-sm"
-            onClick={closeOnOverlay ? onClose : undefined}
-            aria-hidden
+            ref={overlayRef}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="absolute inset-0 bg-black/50 backdrop-blur-sm"
+            onClick={onClose}
+            aria-hidden="true"
           />
           <motion.div
-            variants={scaleInVariants}
-            initial="hidden"
-            animate="visible"
-            exit="exit"
-            transition={springGentle}
+            ref={contentRef}
+            initial={{ opacity: 0, scale: 0.95, y: 10 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.95, y: 10 }}
+            transition={{ duration: 0.15 }}
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby={title ? "modal-title" : undefined}
+            aria-describedby={description ? "modal-description" : undefined}
             className={cn(
-              "relative z-10 w-full bg-card text-card-foreground border border-border rounded-xl shadow-xl",
-              "max-h-[90vh] flex flex-col",
+              "relative w-full bg-card rounded-xl shadow-xl border border-border overflow-hidden my-auto max-h-[90vh] flex flex-col",
               sizeMap[size],
+              className,
             )}
           >
-            {(title || !hideCloseButton) && (
-              <div className="flex items-start justify-between gap-4 px-6 pt-6 pb-0">
+            {(title || showClose) && (
+              <div className="flex items-center justify-between px-6 py-4 border-b border-border bg-muted/30 shrink-0">
                 <div>
                   {title && (
-                    <h2 className="text-h4 font-semibold tracking-tight">{title}</h2>
+                    <h2 id="modal-title" className="text-base font-semibold text-foreground">
+                      {title}
+                    </h2>
                   )}
                   {description && (
-                    <p className="mt-1 text-body-sm text-muted-foreground">{description}</p>
+                    <p id="modal-description" className="mt-0.5 text-xs text-muted-foreground">
+                      {description}
+                    </p>
                   )}
                 </div>
-                {!hideCloseButton && (
+                {showClose && (
                   <button
-                    type="button"
+                    ref={closeButtonRef}
                     onClick={onClose}
-                    aria-label="Close"
-                    className="rounded-lg p-2 text-muted-foreground hover:bg-muted transition-colors shrink-0"
+                    className="p-2 rounded-lg text-muted-foreground hover:text-foreground hover:bg-muted transition-colors"
+                    aria-label="Close dialog"
                   >
                     <X className="h-4 w-4" />
                   </button>
                 )}
               </div>
             )}
-            <div className="flex-1 overflow-y-auto ds-custom-scrollbar px-6 py-5">
+            <div className="overflow-y-auto flex-1">
               {children}
             </div>
-            {footer && (
-              <div className="flex items-center justify-end gap-3 px-6 pb-6 pt-0">{footer}</div>
-            )}
           </motion.div>
         </div>
       )}
     </AnimatePresence>
   );
 }
-Modal.displayName = "Modal";

@@ -11,7 +11,7 @@ interface StatCardProps {
   change?: number;
   changeLabel?: string;
   icon: LucideIcon;
-  color?: string;
+  color?: "blue" | "green" | "amber" | "red" | "purple" | "neutral";
   suffix?: string;
   loading?: boolean;
 }
@@ -34,25 +34,27 @@ export default function StatCard({ title, value, change, changeLabel, icon: Icon
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       className={cn(
-        "relative rounded-xl border border-border bg-card p-5",
+        "relative rounded-xl border border-border bg-card p-6",
         "overflow-hidden group hover:shadow-md transition-shadow duration-300",
       )}
+      role="region"
+      aria-label={title}
     >
       <div className="flex items-start justify-between">
         <div className="space-y-2">
           <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">{title}</p>
           {loading ? (
-            <div className="h-8 w-24 rounded-lg bg-muted animate-pulse" />
+            <div className="h-9 w-28 rounded-lg bg-muted animate-pulse" aria-busy="true" aria-label="Loading" />
           ) : (
-            <p className="text-2xl font-bold text-foreground">
+            <p className="text-3xl font-bold text-foreground tracking-tight">
               {value}{suffix && <span className="text-sm font-medium text-muted-foreground ml-1">{suffix}</span>}
             </p>
           )}
           {change !== undefined && (
-            <div className="flex items-center gap-1">
-              {trend === "up" && <TrendingUp className="h-3 w-3 text-success" />}
-              {trend === "down" && <TrendingDown className="h-3 w-3 text-danger" />}
-              {trend === "neutral" && <Minus className="h-3 w-3 text-muted-foreground" />}
+            <div className="flex items-center gap-1.5">
+              {trend === "up" && <TrendingUp className="h-3.5 w-3.5 text-success" aria-label="Trending up" />}
+              {trend === "down" && <TrendingDown className="h-3.5 w-3.5 text-danger" aria-label="Trending down" />}
+              {trend === "neutral" && <Minus className="h-3.5 w-3.5 text-muted-foreground" aria-label="No change" />}
               <span className={cn(
                 "text-xs font-semibold",
                 trend === "up" && "text-success",
@@ -65,11 +67,11 @@ export default function StatCard({ title, value, change, changeLabel, icon: Icon
             </div>
           )}
         </div>
-        <div className={cn("flex h-10 w-10 items-center justify-center rounded-xl", colors.bg)}>
+        <div className={cn("flex h-11 w-11 items-center justify-center rounded-xl", colors.bg)}>
           <Icon className={cn("h-5 w-5", colors.icon)} />
         </div>
       </div>
-      <div className="absolute -bottom-8 -right-8 h-24 w-24 rounded-full bg-gradient-to-br from-muted to-transparent opacity-50 group-hover:scale-150 transition-transform duration-500" />
+      <div className="absolute -bottom-8 -right-8 h-28 w-28 rounded-full bg-gradient-to-br from-muted to-transparent opacity-30 group-hover:scale-150 transition-transform duration-500" />
     </motion.div>
   );
 }

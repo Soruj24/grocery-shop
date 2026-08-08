@@ -23,10 +23,10 @@ export default function AdminReportsPage() {
         ))}
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        <StatCard title="Total Revenue" value={data?.summary?.totalRevenue ? `৳${Number(data.summary.totalRevenue).toLocaleString()}` : "---"} icon={DollarSign} color="from-emerald-500 to-emerald-600" loading={isLoading} />
-        <StatCard title="Total Orders" value={data?.summary?.totalOrders ?? "---"} icon={ShoppingCart} color="from-blue-500 to-blue-600" loading={isLoading} />
-        <StatCard title="Products" value={data?.summary?.productCount ?? "---"} icon={Package} color="from-violet-500 to-violet-600" loading={isLoading} />
-        <StatCard title="Avg Order Value" value={data?.summary?.totalOrders ? `৳${Math.round(Number(data.summary.totalRevenue) / Number(data.summary.totalOrders)).toLocaleString()}` : "---"} icon={TrendingUp} color="from-amber-500 to-amber-600" loading={isLoading} />
+        <StatCard title="Total Revenue" value={data?.summary?.totalRevenue ? `৳${Number(data.summary.totalRevenue).toLocaleString()}` : "---"} icon={DollarSign} color="green" loading={isLoading} />
+        <StatCard title="Total Orders" value={data?.summary?.totalOrders ?? "---"} icon={ShoppingCart} color="blue" loading={isLoading} />
+        <StatCard title="Products" value={data?.summary?.productCount ?? "---"} icon={Package} color="purple" loading={isLoading} />
+        <StatCard title="Avg Order Value" value={data?.summary?.totalOrders ? `৳${Math.round(Number(data.summary.totalRevenue) / Number(data.summary.totalOrders)).toLocaleString()}` : "---"} icon={TrendingUp} color="amber" loading={isLoading} />
       </div>
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <div className="rounded-xl border border-border bg-card p-5">

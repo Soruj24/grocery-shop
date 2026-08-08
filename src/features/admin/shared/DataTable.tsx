@@ -77,7 +77,7 @@ export default function DataTable<T extends { [key: string]: any }>({
   return (
     <div className="rounded-xl border border-border bg-card overflow-hidden">
       {(searchable || actions) && (
-        <div className="flex items-center justify-between gap-4 border-b border-border p-4">
+        <div className="flex items-center justify-between gap-4 border-b border-border px-5 py-4">
           {searchable && searchKeys && (
             <div className="relative flex-1 max-w-sm">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
@@ -86,10 +86,11 @@ export default function DataTable<T extends { [key: string]: any }>({
                 placeholder={searchPlaceholder}
                 value={search}
                 onChange={(e) => { setSearch(e.target.value); setPage(1); }}
+                aria-label={searchPlaceholder}
                 className={cn(
-                  "w-full rounded-lg border border-border bg-muted pl-10 pr-4 py-2",
+                  "w-full rounded-lg border border-border bg-muted pl-10 pr-4 py-2.5",
                   "text-sm text-foreground placeholder:text-muted-foreground",
-                  "focus:border-ring focus:ring-1 focus:ring-ring outline-none",
+                  "focus:border-ring focus:ring-1 focus:ring-ring outline-none transition-all",
                 )}
               />
             </div>
@@ -106,18 +107,28 @@ export default function DataTable<T extends { [key: string]: any }>({
                 <th
                   key={col.key}
                   className={cn(
-                    "px-4 py-3 text-[10px] font-bold uppercase tracking-wider text-muted-foreground",
+                    "px-5 py-3.5 text-xs font-semibold uppercase tracking-wider text-muted-foreground",
                     col.sortable && "cursor-pointer select-none hover:text-foreground",
                     col.className,
                   )}
+                  scope="col"
+                  aria-sort={col.sortable ? (sortKey === col.key ? (sortDir === "asc" ? "ascending" : "descending") : "none") : undefined}
                   onClick={() => col.sortable && handleSort(col.key)}
+                  role={col.sortable ? "button" : undefined}
+                  tabIndex={col.sortable ? 0 : undefined}
+                  onKeyDown={(e) => {
+                    if (col.sortable && (e.key === "Enter" || e.key === " ")) {
+                      e.preventDefault();
+                      handleSort(col.key);
+                    }
+                  }}
                 >
                   <div className="flex items-center gap-1.5">
                     {col.label}
                     {col.sortable && sortKey === col.key && (
-                      sortDir === "asc" ? <ArrowUp className="h-3 w-3" /> : <ArrowDown className="h-3 w-3" />
+                      sortDir === "asc" ? <ArrowUp className="h-3 w-3" aria-hidden="true" /> : <ArrowDown className="h-3 w-3" aria-hidden="true" />
                     )}
-                    {col.sortable && sortKey !== col.key && <ArrowUpDown className="h-3 w-3 opacity-30" />}
+                    {col.sortable && sortKey !== col.key && <ArrowUpDown className="h-3 w-3 opacity-30" aria-hidden="true" />}
                   </div>
                 </th>
               ))}
@@ -126,13 +137,15 @@ export default function DataTable<T extends { [key: string]: any }>({
           <tbody className="divide-y divide-border/50">
             {loading ? (
               <tr>
-                <td colSpan={columns.length} className="px-4 py-8">
-                  <div className="space-y-3">{[1, 2, 3, 4, 5].map((i) => <div key={i} className="h-10 rounded-lg bg-muted animate-pulse" />)}</div>
+                <td colSpan={columns.length} className="px-5 py-12">
+                  <div className="space-y-3" role="status" aria-label="Loading">
+                    {[1, 2, 3, 4, 5].map((i) => <div key={i} className="h-12 rounded-lg bg-muted animate-pulse" />)}
+                  </div>
                 </td>
               </tr>
             ) : paged.length === 0 ? (
               <tr>
-                <td colSpan={columns.length} className="px-4 py-16 text-center">
+                <td colSpan={columns.length} className="px-5 py-16 text-center">
                   <p className="text-sm text-muted-foreground">{emptyMessage}</p>
                 </td>
               </tr>
@@ -147,7 +160,7 @@ export default function DataTable<T extends { [key: string]: any }>({
                   )}
                 >
                   {columns.map((col) => (
-                    <td key={col.key} className={cn("px-4 py-3.5 text-sm", col.className)}>
+                    <td key={col.key} className={cn("px-5 py-4 text-sm", col.className)}>
                       {col.render ? col.render(item, (page - 1) * pageSize + i) : String(item[col.key] ?? "")}
                     </td>
                   ))}
@@ -159,12 +172,12 @@ export default function DataTable<T extends { [key: string]: any }>({
       </div>
 
       {totalPages > 1 && (
-        <div className="flex items-center justify-between border-t border-border px-4 py-3">
-          <p className="text-xs text-muted-foreground">
+        <div className="flex items-center justify-between border-t border-border px-5 py-4" role="navigation" aria-label="Pagination">
+          <p className="text-xs text-muted-foreground" aria-live="polite">
             Showing {(page - 1) * pageSize + 1} to {Math.min(page * pageSize, filtered.length)} of {filtered.length}
           </p>
           <div className="flex items-center gap-1">
-            <button onClick={() => setPage((p) => Math.max(1, p - 1))} disabled={page === 1} className="p-1.5 rounded-lg text-muted-foreground hover:bg-muted disabled:opacity-30">
+            <button onClick={() => setPage((p) => Math.max(1, p - 1))} disabled={page === 1} className="p-2 rounded-lg text-muted-foreground hover:bg-muted disabled:opacity-30 transition-colors" aria-label="Previous page">
               <ChevronLeft className="h-4 w-4" />
             </button>
             {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
@@ -175,8 +188,10 @@ export default function DataTable<T extends { [key: string]: any }>({
                 <button
                   key={p}
                   onClick={() => setPage(p)}
+                  aria-label={`Page ${p}`}
+                  aria-current={p === page ? "page" : undefined}
                   className={cn(
-                    "h-8 w-8 rounded-lg text-xs font-semibold",
+                    "h-8 w-8 rounded-lg text-xs font-medium transition-colors",
                     p === page
                       ? "bg-primary text-primary-foreground"
                       : "text-muted-foreground hover:bg-muted",
@@ -186,7 +201,7 @@ export default function DataTable<T extends { [key: string]: any }>({
                 </button>
               );
             })}
-            <button onClick={() => setPage((p) => Math.min(totalPages, p + 1))} disabled={page === totalPages} className="p-1.5 rounded-lg text-muted-foreground hover:bg-muted disabled:opacity-30">
+            <button onClick={() => setPage((p) => Math.min(totalPages, p + 1))} disabled={page === totalPages} className="p-2 rounded-lg text-muted-foreground hover:bg-muted disabled:opacity-30 transition-colors" aria-label="Next page">
               <ChevronRight className="h-4 w-4" />
             </button>
           </div>
