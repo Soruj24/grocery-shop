@@ -59,6 +59,10 @@ export const apiSlice = createApi({
       query: (id) => ({ url: `/admin/products/${id}`, method: "DELETE" }),
       invalidatesTags: ["Product"],
     }),
+    bulkProducts: builder.mutation<{ deleted?: number; updated?: number }, { action: string; ids: string[]; data?: Record<string, unknown> }>({
+      query: (body) => ({ url: "/admin/products", method: "PATCH", body }),
+      invalidatesTags: ["Product"],
+    }),
 
     // ─── Categories ───
     getAdminCategories: builder.query<AdminCategory[], void>({
@@ -257,7 +261,7 @@ export const apiSlice = createApi({
 export const {
   useGetDashboardStatsQuery, useGetDashboardAnalyticsQuery,
   useGetAdminProductsQuery, useGetAdminProductQuery,
-  useCreateAdminProductMutation, useUpdateAdminProductMutation, useDeleteAdminProductMutation,
+  useCreateAdminProductMutation, useUpdateAdminProductMutation, useDeleteAdminProductMutation, useBulkProductsMutation,
   useGetAdminCategoriesQuery, useCreateAdminCategoryMutation,
   useUpdateAdminCategoryMutation, useDeleteAdminCategoryMutation,
   useGetAdminBrandsQuery, useCreateAdminBrandMutation,

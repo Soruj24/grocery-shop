@@ -2,10 +2,10 @@
 
 import { useState, useMemo } from "react";
 import ProductModal from "@/features/admin/components/ProductModal";
-import type { AdminCategory, GroupedCategory, AdminProductFormData } from "@/types/admin";
+import type { AdminCategory, AdminProduct, GroupedCategory, AdminProductFormData } from "@/types/admin";
 
 interface Props {
-  data: Record<string, unknown> | null;
+  data: Record<string, unknown> | AdminProduct | null;
   categories: AdminCategory[];
   onClose: () => void;
   onSave: (data: AdminProductFormData) => Promise<void>;
