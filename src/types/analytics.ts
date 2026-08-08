@@ -1,6 +1,7 @@
 export interface DailySale {
   _id: string;
   totalSales: number;
+  orderCount: number;
 }
 
 export interface UserGrowth {

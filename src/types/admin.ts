@@ -110,6 +110,8 @@ export interface AdminStats {
   productCount: number;
   todayOrderCount: number;
   todayRevenue: number;
+  totalOrders: number;
+  totalRevenue: number;
   recentOrders: AdminOrder[];
 }
 

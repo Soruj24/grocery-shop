@@ -15,10 +15,14 @@ export async function GET() {
 
     await dbConnect();
 
-    const [customerCount, productCount, recentOrders] = await Promise.all([
+    const [customerCount, productCount, recentOrders, totalAgg] = await Promise.all([
       User.countDocuments({ role: "customer" }),
       Product.countDocuments(),
-      Order.find().sort({ createdAt: -1 }).limit(5)
+      Order.find().sort({ createdAt: -1 }).limit(10),
+      Order.aggregate([
+        { $match: { status: { $ne: "cancelled" } } },
+        { $group: { _id: null, totalRevenue: { $sum: "$total" }, totalOrders: { $sum: 1 } } },
+      ]),
     ]);
 
     // Calculate today's orders and revenue
@@ -37,6 +41,8 @@ export async function GET() {
       productCount,
       todayOrderCount,
       todayRevenue,
+      totalOrders: totalAgg[0]?.totalOrders || 0,
+      totalRevenue: totalAgg[0]?.totalRevenue || 0,
       recentOrders
     });
   } catch (error) {
