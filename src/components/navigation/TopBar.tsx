@@ -7,7 +7,7 @@ import { useLanguage } from "@/contexts/LanguageContext";
 export default function TopBar() {
   const { t } = useLanguage();
   return (
-    <div className="bg-foreground text-background/70 py-2 px-4 hidden md:fixed md:top-0 md:left-0 md:right-0 md:block relative z-50">
+    <div className="bg-foreground text-background/60 py-1.5 px-4 hidden md:fixed md:top-0 md:left-0 md:right-0 md:block relative z-50">
       <div className="max-w-7xl mx-auto flex justify-between items-center text-[11px] font-medium tracking-wide">
         <div className="flex items-center gap-5">
           <div className="flex items-center gap-2">
@@ -22,21 +22,23 @@ export default function TopBar() {
             <PhoneCall className="w-3 h-3" />
             <span>
               {t("helpline")}:{" "}
-              <span className="text-white font-semibold">{t("helpline_number")}</span>
+              <span className="text-white font-semibold">
+                {t("helpline_number")}
+              </span>
             </span>
           </div>
         </div>
         <div className="flex items-center gap-5">
           <Link
             href="/track-order"
-            className="hover:text-white transition-colors"
+            className="hover:text-white transition-colors duration-200"
           >
             {t("track_order")}
           </Link>
           <div className="w-px h-3 bg-white/15" />
           <Link
             href="/products?filter=offers"
-            className="flex items-center gap-1.5 text-warning hover:text-warning/80 transition-colors"
+            className="flex items-center gap-1.5 text-warning hover:text-warning/80 transition-colors duration-200"
           >
             <Star className="w-3 h-3 fill-current" />
             {t("special_offers")}

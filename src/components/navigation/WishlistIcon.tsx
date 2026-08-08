@@ -14,14 +14,14 @@ export default function WishlistIcon() {
     <Link
       href="/wishlist"
       title={t("wishlist") || "Wishlist"}
-      className="relative h-12 w-12 flex items-center justify-center bg-muted hover:bg-rose-50 dark:hover:bg-rose-500/10 text-muted-foreground hover:text-rose-500 rounded-2xl transition-all group hidden sm:flex border border-transparent hover:border-rose-100 dark:hover:border-rose-500/20 shadow-sm hover:shadow-md"
+      className="relative hidden sm:flex h-9 w-9 items-center justify-center text-muted-foreground rounded-xl transition-all duration-200 hover:bg-rose-500/[0.06] hover:text-rose-500 dark:hover:bg-rose-500/[0.08] active:scale-[0.95]"
     >
-      <Heart className="w-6 h-6 group-hover:scale-110 transition-transform" />
+      <Heart className="w-[18px] h-[18px]" />
       {totalWishlistItems > 0 && (
         <motion.span
           initial={{ scale: 0 }}
           animate={{ scale: 1 }}
-          className="absolute -top-1.5 -right-1.5 bg-rose-500 text-white text-[10px] font-black min-w-[20px] h-[20px] px-1 rounded-full flex items-center justify-center border-2 border-background shadow-lg"
+          className="absolute -top-0.5 -right-0.5 bg-rose-500 text-white text-[9px] font-bold min-w-[17px] h-[17px] px-1 rounded-full flex items-center justify-center border-[1.5px] border-white dark:border-[#09090b]"
         >
           {totalWishlistItems}
         </motion.span>

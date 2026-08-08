@@ -18,32 +18,70 @@ interface MobileDrawerProps {
   session: Session | null;
 }
 
-export default function MobileDrawer({ isOpen, onClose, categories, totalWishlistItems, session }: MobileDrawerProps) {
+export default function MobileDrawer({
+  isOpen,
+  onClose,
+  categories,
+  totalWishlistItems,
+  session,
+}: MobileDrawerProps) {
   useDrawerOverlay(isOpen, onClose);
 
   return (
     <AnimatePresence>
       {isOpen && (
         <>
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[200] lg:hidden" onClick={onClose} aria-hidden="true" />
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[200] lg:hidden"
+            onClick={onClose}
+            aria-hidden="true"
+          />
 
-          <motion.div initial={{ x: "-100%" }} animate={{ x: 0 }} exit={{ x: "-100%" }}
-            transition={{ type: "spring", damping: 25, stiffness: 200 }}
-            className="fixed top-0 left-0 bottom-0 w-[90%] max-w-[360px] bg-card z-[201] lg:hidden flex flex-col shadow-2xl overflow-hidden"
-            role="dialog" aria-modal="true"
-            style={{ paddingTop: "env(safe-area-inset-top)", paddingBottom: "env(safe-area-inset-bottom)" }}>
-            <div className="absolute top-0 right-0 w-64 h-64 bg-primary/5 blur-[80px] rounded-full pointer-events-none" />
+          <motion.div
+            initial={{ x: "-100%" }}
+            animate={{ x: 0 }}
+            exit={{ x: "-100%" }}
+            transition={{
+              type: "spring",
+              damping: 30,
+              stiffness: 300,
+            }}
+            className="fixed top-0 left-0 bottom-0 w-[85%] max-w-[360px] bg-white dark:bg-[#09090b] z-[201] lg:hidden flex flex-col shadow-[20px_0_60px_-15px_rgba(0,0,0,0.2)] overflow-hidden"
+            role="dialog"
+            aria-modal="true"
+            style={{
+              paddingTop:
+                "env(safe-area-inset-top)",
+              paddingBottom:
+                "env(safe-area-inset-bottom)",
+            }}
+          >
+            <div className="absolute top-0 right-0 w-64 h-64 bg-primary/[0.03] blur-[80px] rounded-full pointer-events-none" />
 
-            <MobileDrawerHeader onClose={onClose} session={session} />
+            <MobileDrawerHeader
+              onClose={onClose}
+              session={session}
+            />
 
             <div className="flex-1 overflow-y-auto p-6 sm:p-8 space-y-8 sm:space-y-10 custom-scrollbar relative z-10">
               <MobileSearchForm onClose={onClose} />
-              <MobileNavLinks onClose={onClose} totalWishlistItems={totalWishlistItems} />
-              <MobileCategoryGrid onClose={onClose} categories={categories} />
+              <MobileNavLinks
+                onClose={onClose}
+                totalWishlistItems={totalWishlistItems}
+              />
+              <MobileCategoryGrid
+                onClose={onClose}
+                categories={categories}
+              />
             </div>
 
-            {session && <MobileDrawerFooter />}
+            {session && (
+              <MobileDrawerFooter />
+            )}
           </motion.div>
         </>
       )}
