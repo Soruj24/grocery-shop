@@ -1,7 +1,8 @@
 "use client";
 
 import { useState, useMemo } from "react";
-import ProductModal from "@/features/admin/components/ProductModal";
+import ProductForm from "@/features/admin/components/ProductForm";
+import { Modal } from "@/components/ui/system/Modal";
 import type { AdminCategory, AdminProduct, GroupedCategory, AdminProductFormData } from "@/types/admin";
 
 interface Props {
@@ -48,14 +49,22 @@ export default function ProductModalWrapper({ data, categories, onClose, onSave 
   };
 
   return (
-    <ProductModal
+    <Modal
       isOpen={true}
       onClose={onClose}
-      editingProduct={data as any}
-      formData={formData}
-      setFormData={setFormData}
-      handleSubmit={handleSubmit}
-      groupedCategories={groupedCategories}
-    />
+      title={data ? "Edit Product" : "Add New Product"}
+      description="Fill in the details below to manage your product"
+      size="xl"
+      showClose={false}
+    >
+      <ProductForm
+        editingProduct={data as AdminProduct | null}
+        formData={formData}
+        setFormData={setFormData}
+        handleSubmit={handleSubmit}
+        groupedCategories={groupedCategories}
+        onClose={onClose}
+      />
+    </Modal>
   );
 }
