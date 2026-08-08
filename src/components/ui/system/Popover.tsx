@@ -65,7 +65,7 @@ export function Popover({
             exit="exit"
             transition={springSnappy}
             className={cn(
-              "absolute z-[120] min-w-[12rem] rounded-lg border border-border bg-popover text-popover-foreground shadow-lg p-1.5",
+              "absolute z-[120] min-w-[14rem] rounded-xl border border-border bg-popover text-popover-foreground shadow-lg p-1.5",
               alignMap[align],
               sideMap[side],
               className,
@@ -86,7 +86,7 @@ export const PopoverItem = React.forwardRef<
   <button
     ref={ref}
     className={cn(
-      "w-full flex items-center gap-2 rounded-md px-3 py-2 text-left text-sm font-medium text-foreground",
+      "w-full flex items-center gap-2.5 rounded-lg px-3 py-2 text-left text-sm font-medium text-foreground",
       "hover:bg-muted transition-colors",
       className,
     )}
@@ -96,5 +96,5 @@ export const PopoverItem = React.forwardRef<
 PopoverItem.displayName = "PopoverItem";
 
 export const PopoverSeparator = () => (
-  <div className="my-1 h-px bg-border" aria-hidden />
+  <div className="my-1.5 h-px bg-border" aria-hidden />
 );

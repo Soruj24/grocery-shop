@@ -26,11 +26,13 @@ export interface HomepageRedesignProps {
   categories: Category[];
 }
 
-export default function HomepageRedesign({ categories }: HomepageRedesignProps) {
+export default function HomepageRedesign({
+  categories,
+}: HomepageRedesignProps) {
   const { t } = useLanguage();
 
   return (
-    <div className="relative space-y-2 pb-10">
+    <div className="relative">
       {/* 1. Hero */}
       <PremiumHero categories={categories} />
 
@@ -55,7 +57,7 @@ export default function HomepageRedesign({ categories }: HomepageRedesignProps) 
         title={
           <>
             {t("trending_now_title_1") ?? t("featured_products_title_1")}{" "}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-sky-500 to-cyan-500">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-sky-600 to-cyan-500">
               {t("trending_now_title_2") ?? t("featured_products_title_2")}
             </span>
           </>
@@ -69,7 +71,7 @@ export default function HomepageRedesign({ categories }: HomepageRedesignProps) 
 
       {/* 8. Best Sellers */}
       <section className="mx-auto max-w-7xl px-4">
-        <div className="rounded-[2rem] border border-border bg-subtle p-2">
+        <div className="rounded-[2rem] border border-black/[0.04] bg-zinc-50/80 p-2 dark:bg-white/[0.02] dark:border-white/[0.04]">
           <SectionShell
             eyebrow={t("best_sellers") ?? t("featured_products_tab_bestsellers")}
             eyebrowTone="warning"
@@ -84,7 +86,7 @@ export default function HomepageRedesign({ categories }: HomepageRedesignProps) 
             subtitle={t("best_sellers_desc") ?? t("featured_products_desc")}
             viewAllHref="/products?sort=reviews"
             viewAllLabel={t("see_all")}
-            className="!py-10"
+            className="!py-14 lg:!py-20"
           >
             <ProductRow sort="reviews" limit={8} columns={4} />
           </SectionShell>

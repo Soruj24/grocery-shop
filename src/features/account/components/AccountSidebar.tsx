@@ -8,10 +8,9 @@ import { motion } from "framer-motion";
 import {
   LayoutDashboard, Package, Heart, Star, MapPin, CreditCard,
   Ticket, Bell, Clock, Shield, Settings, HeadphonesIcon,
-  RotateCcw, Download, FileText, LogOut, ChevronLeft, User, Menu, X,
+  RotateCcw, Download, FileText, LogOut, ChevronLeft, Menu, X,
 } from "lucide-react";
 import { useState } from "react";
-import { useLanguage } from "@/contexts/LanguageContext";
 
 const navSections = [
   {
@@ -60,31 +59,29 @@ export default function AccountSidebar() {
 
   const SidebarContent = () => (
     <div className="flex flex-col h-full">
-      {/* User Profile */}
-      <div className="p-5 border-b border-gray-100 dark:border-gray-800">
+      <div className="p-5 border-b border-border">
         <div className="flex items-center gap-3">
           <div className="relative">
-            <div className="h-11 w-11 rounded-full bg-gradient-to-br from-emerald-400 to-teal-500 flex items-center justify-center text-white font-bold text-sm shadow-lg shadow-emerald-500/20">
+            <div className="h-10 w-10 rounded-full bg-foreground flex items-center justify-center text-background font-medium text-sm">
               {session?.user?.name?.charAt(0)?.toUpperCase() || "U"}
             </div>
-            <div className="absolute -bottom-0.5 -right-0.5 h-3.5 w-3.5 rounded-full border-2 border-white dark:border-gray-900 bg-emerald-400" />
+            <div className="absolute -bottom-0.5 -right-0.5 h-3 w-3 rounded-full border-2 border-card bg-success" />
           </div>
           <div className="min-w-0 flex-1">
-            <p className="text-sm font-semibold text-gray-900 dark:text-white truncate">
+            <p className="text-sm font-medium text-foreground truncate">
               {session?.user?.name || "User"}
             </p>
-            <p className="text-xs text-gray-500 dark:text-gray-400 truncate">
+            <p className="text-xs text-muted-foreground truncate">
               {session?.user?.email || ""}
             </p>
           </div>
         </div>
       </div>
 
-      {/* Navigation */}
       <nav className="flex-1 overflow-y-auto py-3 px-3 space-y-5">
         {navSections.map((section) => (
           <div key={section.label}>
-            <p className="px-3 mb-1.5 text-[10px] font-bold uppercase tracking-widest text-gray-400 dark:text-gray-500">
+            <p className="px-3 mb-1.5 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
               {section.label}
             </p>
             <div className="space-y-0.5">
@@ -95,20 +92,20 @@ export default function AccountSidebar() {
                     key={item.href}
                     href={item.href}
                     onClick={() => setMobileOpen(false)}
-                    className={`relative flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all ${
+                    className={`relative flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
                       active
-                        ? "bg-emerald-50 dark:bg-emerald-950/30 text-emerald-700 dark:text-emerald-400"
-                        : "text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800/50 hover:text-gray-900 dark:hover:text-white"
+                        ? "bg-muted text-foreground"
+                        : "text-muted-foreground hover:bg-muted hover:text-foreground"
                     }`}
                   >
                     {active && (
                       <motion.div
                         layoutId="sidebar-active"
-                        className="absolute inset-0 rounded-xl bg-emerald-50 dark:bg-emerald-950/30"
+                        className="absolute inset-0 rounded-lg bg-muted"
                         transition={{ type: "spring", stiffness: 350, damping: 30 }}
                       />
                     )}
-                    <item.icon className={`relative h-4 w-4 ${active ? "text-emerald-600 dark:text-emerald-400" : ""}`} />
+                    <item.icon className={`relative h-4 w-4 ${active ? "text-foreground" : ""}`} />
                     <span className="relative">{item.label}</span>
                   </Link>
                 );
@@ -118,18 +115,17 @@ export default function AccountSidebar() {
         ))}
       </nav>
 
-      {/* Footer */}
-      <div className="p-3 border-t border-gray-100 dark:border-gray-800">
+      <div className="p-3 border-t border-border">
         <Link
           href="/"
-          className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-gray-500 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-all"
+          className="flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm font-medium text-muted-foreground hover:bg-muted hover:text-foreground transition-colors"
         >
           <ChevronLeft className="h-4 w-4" />
           Back to Shop
         </Link>
         <button
           onClick={() => signOut()}
-          className="flex w-full items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-red-500 hover:bg-red-50 dark:hover:bg-red-950/20 transition-all"
+          className="flex w-full items-center gap-2.5 px-3 py-2 rounded-lg text-sm font-medium text-danger hover:bg-danger-subtle transition-colors"
         >
           <LogOut className="h-4 w-4" />
           Sign Out
@@ -140,21 +136,19 @@ export default function AccountSidebar() {
 
   return (
     <>
-      {/* Mobile Toggle */}
       <button
         onClick={() => setMobileOpen(true)}
-        className="lg:hidden fixed bottom-20 right-4 z-50 flex h-12 w-12 items-center justify-center rounded-full bg-emerald-500 text-white shadow-lg shadow-emerald-500/30"
+        className="lg:hidden fixed bottom-20 right-4 z-50 flex h-12 w-12 items-center justify-center rounded-xl bg-foreground text-background shadow-lg"
       >
         <Menu className="h-5 w-5" />
       </button>
 
-      {/* Mobile Drawer */}
       {mobileOpen && (
         <div className="lg:hidden fixed inset-0 z-50">
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            className="absolute inset-0 bg-black/50 backdrop-blur-sm"
+            className="absolute inset-0 bg-black/40 backdrop-blur-sm"
             onClick={() => setMobileOpen(false)}
           />
           <motion.div
@@ -162,12 +156,12 @@ export default function AccountSidebar() {
             animate={{ x: 0 }}
             exit={{ x: -300 }}
             transition={{ type: "spring", stiffness: 300, damping: 30 }}
-            className="absolute left-0 top-0 bottom-0 w-72 bg-white dark:bg-gray-900 shadow-2xl"
+            className="absolute left-0 top-0 bottom-0 w-72 bg-card shadow-2xl"
           >
-            <div className="flex items-center justify-between p-4 border-b border-gray-100 dark:border-gray-800">
-              <p className="text-sm font-bold text-gray-900 dark:text-white">My Account</p>
-              <button onClick={() => setMobileOpen(false)} className="p-1 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800">
-                <X className="h-5 w-5 text-gray-500" />
+            <div className="flex items-center justify-between p-4 border-b border-border">
+              <p className="text-sm font-medium text-foreground">My Account</p>
+              <button onClick={() => setMobileOpen(false)} className="p-1.5 rounded-lg hover:bg-muted">
+                <X className="h-4 w-4 text-muted-foreground" />
               </button>
             </div>
             <SidebarContent />
@@ -175,10 +169,9 @@ export default function AccountSidebar() {
         </div>
       )}
 
-      {/* Desktop Sidebar */}
       <aside className="hidden lg:block w-64 shrink-0">
         <div className="sticky top-24">
-          <div className="rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 shadow-sm overflow-hidden">
+          <div className="rounded-xl border border-border bg-card overflow-hidden">
             <SidebarContent />
           </div>
         </div>

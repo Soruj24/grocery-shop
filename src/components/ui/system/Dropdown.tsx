@@ -54,14 +54,14 @@ export function Dropdown({ trigger, items, align = "end", className }: DropdownP
             exit="exit"
             transition={springSnappy}
             className={cn(
-              "absolute z-[120] mt-2 min-w-[12rem] rounded-lg border border-border bg-popover text-popover-foreground shadow-lg p-1.5",
+              "absolute z-[120] mt-2 min-w-[14rem] rounded-xl border border-border bg-popover text-popover-foreground shadow-lg p-1.5",
               alignMap[align],
               className,
             )}
           >
             {items.map((it, i) => (
               <React.Fragment key={i}>
-                {it.separatorBefore && <div className="my-1 h-px bg-border" aria-hidden />}
+                {it.separatorBefore && <div className="my-1.5 h-px bg-border" aria-hidden />}
                 <button
                   role="menuitem"
                   disabled={it.disabled}
@@ -71,7 +71,7 @@ export function Dropdown({ trigger, items, align = "end", className }: DropdownP
                     setOpen(false);
                   }}
                   className={cn(
-                    "w-full flex items-center gap-2.5 rounded-md px-3 py-2 text-left text-sm font-medium transition-colors",
+                    "w-full flex items-center gap-2.5 rounded-lg px-3 py-2 text-left text-sm font-medium transition-colors",
                     "disabled:opacity-40 disabled:cursor-not-allowed",
                     it.danger
                       ? "text-danger hover:bg-danger-subtle"

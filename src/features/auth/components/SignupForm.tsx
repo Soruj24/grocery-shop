@@ -33,10 +33,10 @@ export default function SignupForm() {
       if (res.ok) {
         router.push("/login?success=true");
       } else {
-        setError(data.message || "রেজিস্ট্রেশন ব্যর্থ হয়েছে");
+        setError(data.message || "রেজিস্ট্রেশন ব্যর্থ হয়েছে");
       }
     } catch (err) {
-      setError("কিছু একটা সমস্যা হয়েছে। আবার চেষ্টা করুন।");
+      setError("কিছু একটা সমস্যা হয়েছে। আবার চেষ্টা করুন।");
     } finally {
       setIsLoading(false);
     }
@@ -45,14 +45,14 @@ export default function SignupForm() {
   return (
     <div className="relative">
       {error && (
-        <div className="mb-6 animate-shake">
+        <div className="mb-6">
           <Alert tone="danger" title={error} />
         </div>
       )}
 
-      <form onSubmit={handleSubmit} className="space-y-5">
-        <div className="space-y-2">
-          <label className="text-[10px] font-black uppercase tracking-widest text-muted-foreground ml-4">
+      <form onSubmit={handleSubmit} className="space-y-4">
+        <div className="space-y-1.5">
+          <label className="text-sm font-medium text-foreground">
             আপনার নাম
           </label>
           <Input
@@ -61,13 +61,13 @@ export default function SignupForm() {
             size="lg"
             value={formData.name}
             onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-            leftIcon={<User className="w-5 h-5" />}
+            leftIcon={<User className="w-4 h-4" />}
             placeholder="আপনার নাম লিখুন"
           />
         </div>
 
-        <div className="space-y-2">
-          <label className="text-[10px] font-black uppercase tracking-widest text-muted-foreground ml-4">
+        <div className="space-y-1.5">
+          <label className="text-sm font-medium text-foreground">
             ইমেইল এড্রেস
           </label>
           <Input
@@ -76,14 +76,14 @@ export default function SignupForm() {
             size="lg"
             value={formData.email}
             onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-            leftIcon={<Mail className="w-5 h-5" />}
+            leftIcon={<Mail className="w-4 h-4" />}
             placeholder="example@mail.com"
           />
         </div>
 
-        <div className="space-y-2">
-          <label className="text-[10px] font-black uppercase tracking-widest text-muted-foreground ml-4">
-            পাসওয়ার্ড
+        <div className="space-y-1.5">
+          <label className="text-sm font-medium text-foreground">
+            পাসওয়ার্ড
           </label>
           <Input
             type="password"
@@ -93,7 +93,7 @@ export default function SignupForm() {
             onChange={(e) =>
               setFormData({ ...formData, password: e.target.value })
             }
-            leftIcon={<Lock className="w-5 h-5" />}
+            leftIcon={<Lock className="w-4 h-4" />}
             placeholder="••••••••"
           />
         </div>
@@ -105,18 +105,18 @@ export default function SignupForm() {
           fullWidth
           loading={isLoading}
           disabled={isLoading}
-          rightIcon={<ArrowRight className="w-5 h-5" />}
+          rightIcon={<ArrowRight className="w-4 h-4" />}
         >
           অ্যাকাউন্ট তৈরি করুন
         </Button>
       </form>
 
-      <div className="mt-10 text-center">
-        <p className="text-sm font-bold text-muted-foreground">
+      <div className="mt-8 text-center">
+        <p className="text-sm text-muted-foreground">
           আগে থেকেই অ্যাকাউন্ট আছে?{" "}
           <Link
             href="/login"
-            className="text-primary hover:text-primary-hover underline underline-offset-4"
+            className="text-foreground font-medium hover:underline underline-offset-4"
           >
             লগইন করুন
           </Link>

@@ -15,9 +15,9 @@ export interface TabsProps {
 
 const listVariant = {
   underline:
-    "flex gap-1 border-b border-border overflow-x-auto ds-custom-scrollbar",
-  pill: "inline-flex gap-1 rounded-lg bg-muted p-1",
-  boxed: "inline-flex gap-1 rounded-md border border-border p-1",
+    "flex gap-0 border-b border-border overflow-x-auto ds-custom-scrollbar",
+  pill: "inline-flex gap-1 rounded-xl bg-muted p-1",
+  boxed: "inline-flex gap-1 rounded-xl border border-border p-1",
 };
 
 export function Tabs({
@@ -50,25 +50,25 @@ export function Tabs({
               disabled={it.disabled}
               onClick={() => !it.disabled && select(it.value)}
               className={cn(
-                "inline-flex items-center gap-2 whitespace-nowrap font-semibold transition-all",
+                "inline-flex items-center gap-2 whitespace-nowrap font-medium transition-all",
                 it.disabled && "opacity-40 cursor-not-allowed",
                 variant === "underline" &&
                   cn(
                     "px-4 py-3 text-sm border-b-2 -mb-px",
                     active
-                      ? "border-primary text-primary"
+                      ? "border-foreground text-foreground"
                       : "border-transparent text-muted-foreground hover:text-foreground",
                   ),
                 variant === "pill" &&
                   cn(
-                    "px-4 py-2 text-sm rounded-md",
+                    "px-4 py-2 text-sm rounded-lg",
                     active
                       ? "bg-card text-foreground shadow-sm"
                       : "text-muted-foreground hover:text-foreground",
                   ),
                 variant === "boxed" &&
                   cn(
-                    "px-4 py-2 text-sm rounded-sm",
+                    "px-4 py-2 text-sm rounded-lg",
                     active
                       ? "bg-primary text-primary-foreground"
                       : "text-muted-foreground hover:text-foreground",

@@ -1,11 +1,10 @@
 "use client";
 
-import { Facebook, Twitter, Instagram, Youtube, ShoppingBasket } from "lucide-react";
+import { Facebook, Instagram, Youtube, ShoppingBasket } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useSettings } from "@/contexts/SettingsContext";
 import Image from "next/image";
 import Link from "next/link";
-import { motion } from "framer-motion";
 
 export default function FooterLogo() {
   const { t } = useLanguage();
@@ -15,70 +14,58 @@ export default function FooterLogo() {
     { icon: Facebook, href: settings.facebook || "#", show: !!settings.facebook },
     { icon: Instagram, href: settings.instagram || "#", show: !!settings.instagram },
     { icon: Youtube, href: settings.youtube || "#", show: !!settings.youtube },
-    // Twitter is not in settings schema, but we can keep it or remove it. 
-    // Since it's not in schema, I'll remove it or just show if present (not present in schema).
   ].filter(link => link.show);
 
   return (
-    <div className="space-y-8">
-      <Link href="/" className="flex flex-col group">
+    <div className="space-y-6">
+      <Link href="/" className="inline-flex flex-col group">
         {settings.logo ? (
-          <div className="relative w-48 h-16">
+          <div className="relative w-40 h-12">
             <Image 
               src={settings.logo} 
               alt={settings.shopName} 
               fill 
-              className="object-contain object-left group-hover:scale-105 transition-transform duration-300" 
+              className="object-contain object-left" 
             />
           </div>
         ) : (
-          <div className="flex items-center gap-3">
-             <div className="w-10 h-10 bg-gradient-to-br from-primary to-primary-hover rounded-xl flex items-center justify-center shadow-lg shadow-primary group-hover:scale-110 transition-transform duration-300">
-                <ShoppingBasket className="w-6 h-6 text-white" />
+          <div className="flex items-center gap-2.5">
+             <div className="w-8 h-8 bg-foreground rounded-lg flex items-center justify-center">
+                <ShoppingBasket className="w-4 h-4 text-background" />
              </div>
-             <div>
-                 <span className="text-2xl font-black tracking-tighter text-foreground leading-none block">
-                  {settings.shopName || `${t('brand_name_first')} ${t('brand_name_second')}`}
-                </span>
-             </div>
+             <span className="text-lg font-semibold tracking-tight text-foreground">
+               {settings.shopName || `${t('brand_name_first')} ${t('brand_name_second')}`}
+             </span>
           </div>
         )}
-          <span className="text-[10px] font-black text-muted-foreground uppercase tracking-[0.3em] mt-3 group-hover:text-primary transition-colors">
-            {t('premium_grocery')}
-        </span>
       </Link>
       
-        <p className="text-muted-foreground leading-relaxed font-bold text-sm">
+      <p className="text-sm text-muted-foreground leading-relaxed max-w-xs">
         {settings.footerDescription || t('footer_desc')}
       </p>
 
-      <div className="flex gap-4">
+      <div className="flex gap-2">
         {socialLinks.length > 0 ? (
            socialLinks.map((item, i) => (
-            <motion.a 
+            <a
               key={i}
               href={item.href} 
               target="_blank"
               rel="noopener noreferrer"
-              whileHover={{ scale: 1.1, rotate: 10 }}
-              whileTap={{ scale: 0.9 }}
-              className="w-12 h-12 bg-muted dark:bg-muted rounded-xl flex items-center justify-center text-muted-foreground hover:bg-primary hover:text-primary-foreground transition-colors duration-300 border border-transparent shadow-sm hover:shadow-lg hover:shadow-primary/20"
+              className="w-9 h-9 rounded-lg flex items-center justify-center text-muted-foreground hover:bg-muted hover:text-foreground transition-colors"
             >
-              <item.icon className="w-5 h-5" />
-            </motion.a>
+              <item.icon className="w-4 h-4" />
+            </a>
           ))
         ) : (
-          // Default placeholders if no social links set
            [Facebook, Instagram, Youtube].map((Icon, i) => (
-            <motion.a 
+            <a
               key={i}
               href="#" 
-              whileHover={{ scale: 1.1, rotate: 10 }}
-              whileTap={{ scale: 0.9 }}
-              className="w-12 h-12 bg-muted dark:bg-muted rounded-xl flex items-center justify-center text-muted-foreground hover:bg-primary hover:text-primary-foreground transition-colors duration-300 border border-transparent shadow-sm hover:shadow-lg hover:shadow-primary/20"
+              className="w-9 h-9 rounded-lg flex items-center justify-center text-muted-foreground hover:bg-muted hover:text-foreground transition-colors"
             >
-              <Icon className="w-5 h-5" />
-            </motion.a>
+              <Icon className="w-4 h-4" />
+            </a>
           ))
         )}
       </div>

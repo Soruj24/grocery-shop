@@ -31,14 +31,22 @@ export default function ProductRow({
   skeletonCount,
 }: ProductRowProps) {
   const { data, isLoading } = useQuery({
-    queryKey: ["home-product-row", sort, tag, category, limit],
+    queryKey: [
+      "home-product-row",
+      sort,
+      tag,
+      category,
+      limit,
+    ],
     queryFn: async () => {
       const params = new URLSearchParams();
       params.set("sort", sort);
       params.set("limit", String(limit));
       if (tag) params.set("tag", tag);
       if (category) params.set("category", category);
-      const res = await fetch(`/api/products/list?${params.toString()}`);
+      const res = await fetch(
+        `/api/products/list?${params.toString()}`
+      );
       if (!res.ok) throw new Error("Failed to load products");
       const json = await res.json();
       return (json.products ?? []) as Product[];
@@ -49,13 +57,15 @@ export default function ProductRow({
 
   if (isLoading) {
     return (
-      <div className={`grid gap-6 lg:gap-8 ${colClass[columns]}`}>
+      <div
+        className={`grid gap-6 lg:gap-8 ${colClass[columns]}`}
+      >
         {Array.from({ length: count }).map((_, i) => (
           <div
             key={i}
-            className="aspect-[3/4] rounded-xl border border-border bg-card"
+            className="aspect-[3/4] rounded-2xl border border-black/[0.04] bg-zinc-50 dark:bg-white/[0.02] dark:border-white/[0.04]"
           >
-            <Skeleton className="h-full w-full rounded-xl" />
+            <Skeleton className="h-full w-full rounded-2xl" />
           </div>
         ))}
       </div>
@@ -65,9 +75,14 @@ export default function ProductRow({
   if (!data || data.length === 0) return null;
 
   return (
-    <div className={`grid gap-6 lg:gap-8 ${colClass[columns]}`}>
+    <div
+      className={`grid gap-6 lg:gap-8 ${colClass[columns]}`}
+    >
       {data.map((product, idx) => (
-        <Reveal key={product._id} delay={Math.min(idx * 0.05, 0.4)}>
+        <Reveal
+          key={product._id}
+          delay={Math.min(idx * 0.05, 0.4)}
+        >
           <ProductCard product={product} />
         </Reveal>
       ))}

@@ -1,5 +1,3 @@
-import Link from "next/link";
-import { ShoppingBasket, User, Search, ShoppingCart } from "lucide-react";
 import Header from "@/components/navigation/Header";
 import Footer from "@/components/navigation/Footer";
 import MobileBottomNav from "@/components/navigation/MobileBottomNav";
@@ -11,21 +9,17 @@ export default async function ShopLayout({
 }) {
   return (
     <div
-      className="min-h-screen bg-background pb-20 md:pb-0 transition-colors duration-300"
-      style={{ paddingBottom: 'calc(5rem + env(safe-area-inset-bottom))' }}
+      className="min-h-screen bg-background transition-colors duration-200"
+      style={{ paddingBottom: 'calc(4rem + env(safe-area-inset-bottom))' }}
     >
-      {/* Header */}
       <Header />
 
-      {/* Main Content */}
-      <main className="max-w-7xl mx-auto px-4 py-6">
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 lg:py-8">
         {children}
       </main>
 
-      {/* Mobile Bottom Nav */}
       <MobileBottomNav />
 
-      {/* Footer */}
       <Footer />
     </div>
   );

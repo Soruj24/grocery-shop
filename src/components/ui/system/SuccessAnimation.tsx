@@ -13,7 +13,7 @@ interface SuccessAnimationProps {
 export function SuccessAnimation({ size = 80, className }: SuccessAnimationProps) {
   const r = (size - 10) / 2;
   const circumference = 2 * Math.PI * r;
-  const strokeW = 4;
+  const strokeW = 3;
 
   return (
     <motion.div

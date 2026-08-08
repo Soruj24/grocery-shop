@@ -28,7 +28,7 @@ function RailButton({
       onClick={onClick}
       aria-label={label}
       title={label}
-      className="relative flex h-12 w-12 items-center justify-center rounded-2xl bg-muted text-muted-foreground transition-all hover:bg-primary-subtle hover:text-primary hover:shadow-md active:scale-95 group border border-transparent hover:border-primary/20"
+      className="relative flex h-10 w-10 items-center justify-center rounded-xl text-muted-foreground transition-colors hover:bg-muted hover:text-foreground active:scale-95"
     >
       {children}
     </button>
@@ -47,9 +47,9 @@ function BadgeDot({
     <motion.span
       initial={{ scale: 0 }}
       animate={{ scale: 1 }}
-      className={`absolute -top-1.5 -right-1.5 min-w-[20px] h-[20px] px-1 text-[10px] font-black flex items-center justify-center rounded-full border-2 border-background shadow-lg ${
+      className={`absolute -top-1 -right-1 min-w-[18px] h-[18px] px-1 text-[10px] font-semibold flex items-center justify-center rounded-full border-2 border-background ${
         tone === "rose"
-          ? "bg-rose-500 text-white"
+          ? "bg-danger text-danger-foreground"
           : "bg-primary text-primary-foreground"
       }`}
     >
@@ -65,12 +65,12 @@ export default function UserActions() {
   const { t } = useLanguage();
 
   return (
-    <div className="flex items-center gap-5">
+    <div className="flex items-center gap-1">
       <Popover
         align="end"
         trigger={
           <RailButton label={t("recently_viewed_title")}>
-            <History className="w-6 h-6 transition-transform group-hover:scale-110" />
+            <History className="w-5 h-5" />
             <BadgeDot count={recentlyViewed.length} />
           </RailButton>
         }
@@ -86,7 +86,7 @@ export default function UserActions() {
         align="end"
         trigger={
           <RailButton label={t("cart")}>
-            <ShoppingCart className="w-6 h-6 transition-transform group-hover:scale-110" />
+            <ShoppingCart className="w-5 h-5" />
             <BadgeDot count={totalItems} />
           </RailButton>
         }

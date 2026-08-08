@@ -12,7 +12,7 @@ const selectHeight: Record<Size, string> = {
   xs: "h-8 text-xs",
   sm: "h-9 text-sm",
   md: "h-11 text-sm",
-  lg: "h-12 text-base",
+  lg: "h-12 text-[15px]",
   xl: "h-14 text-base",
 };
 
@@ -21,8 +21,8 @@ export const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
     return (
       <div
         className={cn(
-          "relative flex items-center w-full rounded-md border bg-card transition-all duration-200",
-          "border-input focus-within:border-primary focus-within:shadow-focus",
+          "relative flex items-center w-full rounded-lg border bg-card transition-all duration-200",
+          "border-input hover:border-border-strong focus-within:border-foreground/20 focus-within:shadow-focus",
           invalid && "border-danger",
           disabledState(disabled),
           selectHeight[size],

@@ -11,9 +11,9 @@ export default function NavbarLogo() {
   const settings = useSettings();
 
   return (
-    <Link href="/" className="group flex items-center gap-4 shrink-0">
+    <Link href="/" className="group flex items-center gap-3 shrink-0">
       {settings.logo ? (
-        <div className="relative w-14 h-14">
+        <div className="relative w-10 h-10">
            <Image 
              src={settings.logo} 
              alt={settings.shopName} 
@@ -22,21 +22,20 @@ export default function NavbarLogo() {
            />
         </div>
       ) : (
-        <div className="relative w-14 h-14 bg-gradient-to-br from-primary to-primary-hover rounded-2xl flex items-center justify-center transform transition-all duration-700 group-hover:rotate-[360deg] shadow-primary">
-          <ShoppingBasket className="w-8 h-8 text-white" />
-          <div className="absolute -top-1.5 -right-1.5 w-5 h-5 bg-yellow-400 rounded-full border-4 border-background animate-bounce shadow-lg"></div>
+        <div className="relative w-10 h-10 bg-foreground rounded-xl flex items-center justify-center transition-transform duration-300 group-hover:scale-105">
+          <ShoppingBasket className="w-5 h-5 text-background" />
         </div>
       )}
       
       <div className="flex flex-col">
-        <span className="text-2xl lg:text-3xl font-black tracking-tighter text-foreground leading-[0.8]">
+        <span className="text-xl font-semibold tracking-tight text-foreground leading-none">
           {settings.shopName ? (
             settings.shopName
           ) : (
-            <>{t('brand_name_first')}<span className="text-primary">{t('brand_name_second')}</span></>
+            <>{t('brand_name_first')}<span className="text-muted-foreground">{t('brand_name_second')}</span></>
           )}
         </span>
-        <span className="text-[10px] font-black text-muted-foreground uppercase tracking-[0.3em] mt-2">
+        <span className="text-[10px] font-medium text-muted-foreground uppercase tracking-[0.15em] mt-0.5">
           {t('brand_tagline')}
         </span>
       </div>

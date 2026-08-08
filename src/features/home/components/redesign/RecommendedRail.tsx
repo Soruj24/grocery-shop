@@ -12,25 +12,42 @@ export default function RecommendedRail() {
   const { recentlyViewed } = useRecentlyViewed();
 
   const viewedCategoryIds = Array.from(
-    new Set(recentlyViewed.map((p) => p.category?._id).filter(Boolean))
+    new Set(
+      recentlyViewed
+        .map((p) => p.category?._id)
+        .filter(Boolean)
+    )
   );
 
   const { data, isLoading } = useQuery({
-    queryKey: ["home-recommendations", viewedCategoryIds],
+    queryKey: [
+      "home-recommendations",
+      viewedCategoryIds,
+    ],
     queryFn: async () => {
       const res = viewedCategoryIds.length
-        ? await fetch("/api/products/recommendations", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ categoryIds: viewedCategoryIds }),
-          })
-        : await fetch("/api/products/recommendations?fallback=true");
+        ? await fetch(
+            "/api/products/recommendations",
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                categoryIds: viewedCategoryIds,
+              }),
+            }
+          )
+        : await fetch(
+            "/api/products/recommendations?fallback=true"
+          );
       if (!res.ok) throw new Error("Failed");
       return (await res.json()) as any[];
     },
   });
 
-  if (isLoading || !data || data.length === 0) return null;
+  if (isLoading || !data || data.length === 0)
+    return null;
 
   return (
     <SectionShell
@@ -38,7 +55,7 @@ export default function RecommendedRail() {
       eyebrowTone="accent"
       title={
         <span className="flex items-center gap-3">
-          <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-accent to-primary text-white shadow-lg shadow-accent/30">
+          <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-accent to-primary text-white shadow-[0_4px_16px_rgba(0,0,0,0.08)]">
             <Sparkles className="h-6 w-6" />
           </span>
           {t("recommended_for_you")}
@@ -49,11 +66,16 @@ export default function RecommendedRail() {
       viewAllLabel={t("explore_all") ?? t("view_all")}
     >
       <div className="grid grid-cols-2 gap-6 md:grid-cols-3 lg:grid-cols-5">
-        {data.slice(0, 10).map((product: any, idx: number) => (
-          <Reveal key={product._id} delay={Math.min(idx * 0.05, 0.4)}>
-            <ProductCard product={product} />
-          </Reveal>
-        ))}
+        {data
+          .slice(0, 10)
+          .map((product: any, idx: number) => (
+            <Reveal
+              key={product._id}
+              delay={Math.min(idx * 0.05, 0.4)}
+            >
+              <ProductCard product={product} />
+            </Reveal>
+          ))}
       </div>
     </SectionShell>
   );

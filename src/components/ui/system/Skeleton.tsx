@@ -5,7 +5,6 @@ export interface SkeletonProps extends React.HTMLAttributes<HTMLDivElement> {
   width?: string | number;
   height?: string | number;
   circle?: boolean;
-  /** Shimmer sweep instead of plain pulse. */
   shimmer?: boolean;
 }
 
@@ -22,9 +21,9 @@ export function Skeleton({
     <div
       aria-hidden
       className={cn(
-        "relative overflow-hidden bg-muted",
-        shimmer ? "ds-custom-scrollbar" : "animate-pulse",
-        circle ? "rounded-full" : "rounded-md",
+        "relative overflow-hidden bg-muted rounded-md",
+        shimmer && "ds-custom-scrollbar",
+        circle && "rounded-full",
         className,
       )}
       style={{
@@ -36,7 +35,7 @@ export function Skeleton({
     >
       {shimmer && (
         <span
-          className="ds-animate-shimmer absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/40 to-transparent dark:via-white/10"
+          className="ds-animate-shimmer absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/50 to-transparent dark:via-white/10"
           aria-hidden
         />
       )}

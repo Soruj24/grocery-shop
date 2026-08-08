@@ -27,49 +27,49 @@ export default function Header() {
     <>
       <TopBar />
       <motion.header
-        initial={{ y: -80 }}
+        initial={{ y: -60 }}
         animate={{ y: 0 }}
-        transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-        className={`fixed left-0 right-0 z-50 transition-all duration-300 top-0 md:top-[37px] ${
+        transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+        className={`fixed left-0 right-0 z-50 transition-all duration-200 top-0 md:top-[33px] ${
           isScrolled
-            ? "bg-card/80 backdrop-blur-xl shadow-lg shadow-black/5 border-b border-border/60 py-2"
-            : "bg-card/95 backdrop-blur-md py-4"
+            ? "bg-card/80 backdrop-blur-xl shadow-sm border-b border-border py-2"
+            : "bg-card/95 backdrop-blur-md py-3"
         }`}
         style={{ paddingTop: "env(safe-area-inset-top)" }}
       >
-        <div className="mx-auto flex max-w-7xl items-center gap-4 px-4 lg:gap-8">
+        <div className="mx-auto flex max-w-7xl items-center gap-6 px-4">
           <div className="shrink-0">
             <NavbarLogo />
           </div>
 
-          <div className="ml-auto hidden flex-1 justify-center md:flex lg:max-w-2xl">
+          <div className="ml-auto hidden flex-1 justify-center md:flex">
             <SearchBar />
           </div>
 
-          <div className="flex items-center gap-5">
+          <div className="flex items-center gap-2">
             <div className="hidden lg:block">
               <UserActions />
             </div>
 
             <button
               onClick={() => setIsMobileMenuOpen(true)}
-              className="rounded-full p-2 text-muted-foreground transition-colors hover:bg-muted md:hidden"
+              className="rounded-xl p-2 text-muted-foreground transition-colors hover:bg-muted md:hidden"
               aria-label="Search"
             >
-              <Search className="h-6 w-6" />
+              <Search className="h-5 w-5" />
             </button>
 
             <button
               onClick={() => setIsMobileMenuOpen(true)}
-              className="rounded-full p-2 text-muted-foreground transition-colors hover:bg-muted lg:hidden"
+              className="rounded-xl p-2 text-muted-foreground transition-colors hover:bg-muted lg:hidden"
               aria-label="Menu"
             >
-              <Menu className="h-6 w-6" />
+              <Menu className="h-5 w-5" />
             </button>
           </div>
         </div>
 
-        <div className="hidden border-t border-border/60 md:block">
+        <div className="hidden border-t border-border md:block">
           <DesktopNav
             categories={categories as any}
             isCategoryMenuOpen={isCategoryMenuOpen}
@@ -79,8 +79,8 @@ export default function Header() {
       </motion.header>
 
       <div
-        className="md:h-32"
-        style={{ height: "calc(5rem + env(safe-area-inset-top))" }}
+        className="md:h-[73px]"
+        style={{ height: "calc(3.75rem + env(safe-area-inset-top))" }}
       />
 
       <MobileDrawer

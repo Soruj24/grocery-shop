@@ -10,9 +10,9 @@ export interface OrderCardProps {
   total: number;
   currencySymbol?: string;
   itemCount?: number;
-  thumbnailSlot?: React.ReactNode; // e.g. first product image(s)
-  metaSlot?: React.ReactNode; // delivery address / payment method
-  actionSlot?: React.ReactNode; // track / reorder buttons
+  thumbnailSlot?: React.ReactNode;
+  metaSlot?: React.ReactNode;
+  actionSlot?: React.ReactNode;
   className?: string;
 }
 
@@ -21,7 +21,7 @@ export function OrderCard({
   date,
   status,
   total,
-  currencySymbol = "৳",
+  currencySymbol = "\u09F3",
   itemCount,
   thumbnailSlot,
   metaSlot,
@@ -32,10 +32,10 @@ export function OrderCard({
     <Card padding="md" className={cn("flex flex-col gap-4", className)}>
       <div className="flex items-start justify-between gap-3">
         <div>
-          <p className="text-xs font-bold uppercase tracking-wide text-muted-foreground">
+          <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
             Order
           </p>
-          <p className="font-extrabold text-foreground">#{orderId}</p>
+          <p className="font-semibold text-foreground">#{orderId}</p>
           {date && <p className="text-xs text-muted-foreground mt-0.5">{date}</p>}
         </div>
         {status && <Badge tone={status.tone ?? "info"} soft dot>{status.label}</Badge>}
@@ -54,7 +54,7 @@ export function OrderCard({
       <div className="flex items-center justify-between gap-3 border-t border-border pt-4">
         <div>
           <p className="text-xs text-muted-foreground">Total</p>
-          <p className="text-lg font-extrabold text-foreground">
+          <p className="text-lg font-semibold text-foreground">
             {currencySymbol}
             {total.toLocaleString()}
           </p>

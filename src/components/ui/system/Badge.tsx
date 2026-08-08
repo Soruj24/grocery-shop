@@ -30,10 +30,10 @@ const toneSolid: Record<Tone, string> = {
 
 const sizeMap: Record<Size, string> = {
   xs: "text-[10px] px-2 py-0.5 gap-1",
-  sm: "text-xs px-2.5 py-1 gap-1",
-  md: "text-xs px-3 py-1.5 gap-1.5",
-  lg: "text-sm px-3.5 py-2 gap-1.5",
-  xl: "text-sm px-4 py-2.5 gap-2",
+  sm: "text-xs px-2.5 py-0.5 gap-1",
+  md: "text-xs px-3 py-1 gap-1.5",
+  lg: "text-sm px-3.5 py-1.5 gap-1.5",
+  xl: "text-sm px-4 py-2 gap-2",
 };
 
 const dotColor: Record<Tone, string> = {
@@ -52,7 +52,7 @@ export const Badge = React.forwardRef<HTMLSpanElement, BadgeProps>(
       <span
         ref={ref}
         className={cn(
-          "inline-flex items-center rounded-full font-bold tracking-wide whitespace-nowrap",
+          "inline-flex items-center rounded-full font-medium tracking-wide whitespace-nowrap",
           soft ? toneSoft[tone] : toneSolid[tone],
           sizeMap[size],
           className,
@@ -60,7 +60,7 @@ export const Badge = React.forwardRef<HTMLSpanElement, BadgeProps>(
         {...props}
       >
         {dot && (
-          <span className={cn("h-1.5 w-1.5 rounded-full", dotColor[tone])} aria-hidden />
+          <span className={cn("h-1.5 w-1.5 rounded-full shrink-0", dotColor[tone])} aria-hidden />
         )}
         {children}
       </span>

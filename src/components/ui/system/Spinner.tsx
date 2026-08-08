@@ -10,8 +10,8 @@ export interface SpinnerProps {
 const sizeMap: Record<Size, string> = {
   xs: "h-4 w-4 border-2",
   sm: "h-5 w-5 border-2",
-  md: "h-7 w-7 border-[3px]",
-  lg: "h-10 w-10 border-4",
+  md: "h-7 w-7 border-[2.5px]",
+  lg: "h-10 w-10 border-[3px]",
   xl: "h-14 w-14 border-4",
 };
 
@@ -21,7 +21,7 @@ export function Spinner({ size = "md", className, label = "Loading" }: SpinnerPr
       role="status"
       aria-label={label}
       className={cn(
-        "ds-animate-spin inline-block rounded-full border-current border-r-transparent text-primary",
+        "ds-animate-spin inline-block rounded-full border-current border-r-transparent text-muted-foreground",
         sizeMap[size],
         className,
       )}
@@ -51,7 +51,7 @@ export function LoadingState({
       )}
     >
       <Spinner size={size} />
-      <span className="text-sm font-semibold tracking-wide">{label}…</span>
+      <span className="text-sm font-medium tracking-wide">{label}...</span>
     </div>
   );
 }

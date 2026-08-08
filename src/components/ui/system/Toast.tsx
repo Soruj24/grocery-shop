@@ -35,13 +35,13 @@ interface ToastContextValue {
 const ToastContext = React.createContext<ToastContextValue | null>(null);
 
 const toneStyle: Record<Tone, { ring: string; icon: React.ElementType; color: string }> = {
-  primary: { ring: "border-primary-border", icon: Info, color: "text-primary" },
+  primary: { ring: "border-primary-border", icon: Info, color: "text-foreground" },
   neutral: { ring: "border-border", icon: Info, color: "text-muted-foreground" },
-  success: { ring: "border-success/40", icon: CheckCircle2, color: "text-success" },
-  warning: { ring: "border-warning/40", icon: AlertTriangle, color: "text-warning" },
-  danger: { ring: "border-danger/40", icon: XCircle, color: "text-danger" },
-  info: { ring: "border-info/40", icon: Info, color: "text-info" },
-  accent: { ring: "border-accent/40", icon: Info, color: "text-accent" },
+  success: { ring: "border-success/30", icon: CheckCircle2, color: "text-success" },
+  warning: { ring: "border-warning/30", icon: AlertTriangle, color: "text-warning" },
+  danger: { ring: "border-danger/30", icon: XCircle, color: "text-danger" },
+  info: { ring: "border-info/30", icon: Info, color: "text-info" },
+  accent: { ring: "border-accent/30", icon: Info, color: "text-accent" },
 };
 
 export function ToastProvider({ children }: { children: React.ReactNode }) {
@@ -58,7 +58,7 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
     (opts: ToastOptions) => {
       const id = Math.random().toString(36).slice(2);
       setItems((prev) => [...prev, { ...opts, id }]);
-      const duration = opts.duration ?? 3800;
+      const duration = opts.duration ?? 4000;
       window.setTimeout(() => remove(id), duration);
     },
     [remove],
@@ -80,7 +80,7 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
       {children}
       {mounted &&
         createPortal(
-          <div className="fixed bottom-4 right-4 z-[300] flex w-full max-w-sm flex-col gap-2.5">
+          <div className="fixed bottom-4 right-4 z-[300] flex w-full max-w-sm flex-col gap-2">
             <AnimatePresence mode="popLayout">
               {items.map((t) => {
                 const { ring, icon: Icon, color } = toneStyle[t.tone ?? "info"];
@@ -95,24 +95,24 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
                     exit="exit"
                     transition={springSnappy}
                     className={cn(
-                      "flex items-start gap-3 rounded-lg border bg-card p-4 shadow-lg",
+                      "flex items-start gap-3 rounded-xl border bg-card p-4 shadow-lg",
                       ring,
                     )}
                   >
                     <Icon className={cn("h-5 w-5 shrink-0 mt-0.5", color)} aria-hidden />
                     <div className="flex-1 min-w-0">
-                      <p className="text-sm font-bold text-foreground">{t.title}</p>
+                      <p className="text-sm font-semibold text-foreground">{t.title}</p>
                       {t.description && (
-                        <p className="text-xs text-muted-foreground mt-0.5">{t.description}</p>
+                        <p className="text-xs text-muted-foreground mt-0.5 leading-relaxed">{t.description}</p>
                       )}
                     </div>
                     <button
                       type="button"
                       onClick={() => remove(t.id)}
                       aria-label="Dismiss"
-                      className="rounded-xs p-1 text-muted-foreground hover:bg-muted transition-colors"
+                      className="rounded-lg p-1 text-muted-foreground hover:bg-muted transition-colors shrink-0"
                     >
-                      <X className="h-4 w-4" />
+                      <X className="h-3.5 w-3.5" />
                     </button>
                   </motion.div>
                 );

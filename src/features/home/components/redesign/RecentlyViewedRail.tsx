@@ -2,7 +2,10 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { History, Sparkles, ArrowRight } from "lucide-react";
+import {
+  History,
+  ArrowRight,
+} from "lucide-react";
 import Image from "next/image";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useSettings } from "@/contexts/SettingsContext";
@@ -11,7 +14,10 @@ import { getProductFallbackImage } from "@/constants/fallback-images";
 import { SectionShell } from "./SectionShell";
 
 export default function RecentlyViewedRail() {
-  const { recentlyViewed, clearRecentlyViewed } = useRecentlyViewed();
+  const {
+    recentlyViewed,
+    clearRecentlyViewed,
+  } = useRecentlyViewed();
   const { currencySymbol } = useSettings();
   const { t } = useLanguage();
 
@@ -23,53 +29,64 @@ export default function RecentlyViewedRail() {
       eyebrowTone="info"
       title={
         <span className="flex items-center gap-3">
-          <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-info-subtle text-info">
+          <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-info-subtle text-info">
             <History className="h-6 w-6" />
           </span>
           {t("recently_viewed")}
         </span>
       }
       viewAllHref="/products"
-      viewAllLabel={t("explore_all") ?? t("view_all")}
+      viewAllLabel={
+        t("explore_all") ?? t("view_all")
+      }
     >
-      <div className="flex items-center justify-end pb-4">
+      <div className="flex items-center justify-end pb-5">
         <button
           onClick={clearRecentlyViewed}
-          className="text-xs font-bold text-muted-foreground transition-colors hover:text-danger"
+          className="text-xs font-semibold text-muted-foreground transition-colors duration-300 hover:text-danger"
         >
           {t("clear_recent") ?? "পরিষ্কার"}
         </button>
       </div>
-      <div className="flex gap-4 overflow-x-auto pb-4 ds-custom-scrollbar">
+      <div className="flex gap-5 overflow-x-auto pb-4 ds-custom-scrollbar">
         {recentlyViewed.map((p, i) => {
-          const price = p.discountPrice ?? p.price;
+          const price =
+            p.discountPrice ?? p.price;
           return (
             <motion.div
               key={p._id}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: Math.min(i * 0.05, 0.3) }}
+              transition={{
+                delay: Math.min(i * 0.05, 0.3),
+                ease: [0.21, 0.47, 0.32, 0.98],
+              }}
               className="group w-44 shrink-0"
             >
               <Link
                 href={`/products/${p._id}`}
-                className="block overflow-hidden rounded-2xl border border-border bg-card shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg"
+                className="block overflow-hidden rounded-2xl border border-black/[0.04] bg-white shadow-[0_1px_3px_rgba(0,0,0,0.04)] transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_12px_40px_rgba(0,0,0,0.08)] dark:border-white/[0.04] dark:bg-white/[0.02]"
               >
-                <div className="relative aspect-square overflow-hidden bg-muted">
+                <div className="relative aspect-square overflow-hidden bg-zinc-50 dark:bg-white/[0.02]">
                   <Image
-                    src={p.image || getProductFallbackImage(p.name)}
+                    src={
+                      p.image ||
+                      getProductFallbackImage(
+                        p.name
+                      )
+                    }
                     alt={p.name}
                     fill
                     sizes="176px"
-                    className="object-cover transition-transform duration-700 group-hover:scale-110"
+                    className="object-cover transition-transform duration-700 ease-out group-hover:scale-110"
                   />
                 </div>
-                <div className="space-y-1 p-3">
-                  <p className="line-clamp-1 text-sm font-bold text-foreground">
+                <div className="space-y-1.5 p-3.5">
+                  <p className="line-clamp-1 text-sm font-semibold text-foreground">
                     {p.name}
                   </p>
-                  <span className="text-sm font-black text-primary">
+                  <span className="text-sm font-extrabold text-primary">
                     {currencySymbol}
                     {price.toLocaleString("bn-BD")}
                   </span>

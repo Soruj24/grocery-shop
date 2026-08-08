@@ -1,6 +1,6 @@
 "use client";
 
-import { Search, Mic, X, Sparkles } from "lucide-react";
+import { Search, Mic, X } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useSearch } from "@/features/search/hooks/useSearch";
 import SearchDropdownContent from "./SearchDropdownContent";
@@ -11,12 +11,11 @@ export default function SearchBar() {
   const search = useSearch();
 
   return (
-    <div className="hidden lg:flex flex-1 max-w-2xl px-8" ref={search.searchRef}>
+    <div className="hidden lg:flex flex-1 max-w-xl" ref={search.searchRef}>
       <form onSubmit={search.handleSubmit} className="relative w-full group z-50">
-        <div className="absolute -inset-0.5 rounded-full bg-gradient-to-r from-primary/30 via-accent/20 to-primary/30 opacity-0 blur transition-opacity duration-500 group-focus-within:opacity-100 pointer-events-none" />
-        <div className="relative flex items-center bg-card dark:bg-card rounded-full border border-border transition-all duration-300 shadow-sm hover:shadow-md focus-within:shadow-focus focus-within:border-primary overflow-hidden h-[56px]">
+        <div className="relative flex items-center bg-muted/50 rounded-xl border border-border transition-all duration-200 hover:border-border-strong focus-within:border-foreground/20 focus-within:bg-card focus-within:shadow-sm overflow-hidden h-10">
           <div className="flex-1 relative flex items-center h-full">
-            <Search className="absolute left-4 w-5 h-5 text-muted-foreground group-focus-within:text-primary transition-colors pointer-events-none" />
+            <Search className="absolute left-3 w-4 h-4 text-muted-foreground transition-colors pointer-events-none" />
             <input
               ref={search.inputRef}
               type="text"
@@ -25,7 +24,7 @@ export default function SearchBar() {
               onKeyDown={search.handleKeyDown}
               onFocus={() => search.setIsOpen(true)}
               placeholder={t("search_placeholder")}
-              className="w-full h-full bg-transparent border-none pl-12 pr-12 text-foreground placeholder-muted-foreground focus:ring-0 text-sm font-semibold"
+              className="w-full h-full bg-transparent border-none pl-10 pr-10 text-foreground placeholder:text-muted-foreground/60 focus:ring-0 text-sm"
             />
             {search.searchTerm && (
               <button
@@ -35,40 +34,37 @@ export default function SearchBar() {
                   search.setIsOpen(false);
                   search.inputRef.current?.focus();
                 }}
-                className="absolute right-12 p-1.5 rounded-full bg-muted text-muted-foreground hover:text-danger hover:bg-danger-subtle transition-all"
+                className="absolute right-10 p-1 rounded-md text-muted-foreground hover:text-foreground transition-colors"
               >
-                <X className="w-3 h-3" />
+                <X className="w-3.5 h-3.5" />
               </button>
             )}
             <button
               type="button"
               onClick={search.startVoiceSearch}
-              className={`absolute right-3 p-2 rounded-full transition-all ${
+              className={`absolute right-3 p-1.5 rounded-md transition-colors ${
                 search.isListening
-                  ? "bg-danger-subtle text-danger animate-pulse ring-2 ring-danger/20"
-                  : "text-muted-foreground hover:text-primary hover:bg-primary-subtle dark:hover:bg-primary-subtle"
+                  ? "bg-danger-subtle text-danger animate-pulse"
+                  : "text-muted-foreground hover:text-foreground"
               }`}
             >
               {search.isListening ? (
                 <div className="w-4 h-4 relative flex items-center justify-center">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
-                  <Mic className="w-3 h-3 relative z-10" />
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-danger opacity-40"></span>
+                  <Mic className="w-3.5 h-3.5 relative z-10" />
                 </div>
               ) : (
-                <Mic className="w-5 h-5" />
+                <Mic className="w-4 h-4" />
               )}
             </button>
           </div>
-          <span className="hidden xl:flex items-center gap-1 mr-1.5 rounded-full bg-gradient-to-r from-primary/10 to-accent/10 px-3 py-1.5 text-[11px] font-black text-primary border border-primary/20">
-            <Sparkles className="w-3.5 h-3.5" />
-            {t("ai_search")}
-          </span>
           <Button
             type="submit"
             variant="primary"
+            size="sm"
             loading={search.isLoading}
             leftIcon={!search.isLoading ? <Search className="w-4 h-4" /> : undefined}
-            className="h-[46px] mr-1.5 px-6 rounded-full font-bold text-sm shadow-lg shadow-primary/20 hover:shadow-primary/30 flex items-center gap-2 transform hover:scale-105 active:scale-95"
+            className="h-8 mr-1 px-4 rounded-lg text-xs font-medium"
           >
             <span className="hidden xl:inline">{t("search_button")}</span>
           </Button>

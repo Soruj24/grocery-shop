@@ -6,7 +6,7 @@ export function Table({
   ...props
 }: React.HTMLAttributes<HTMLTableElement>) {
   return (
-    <div className="w-full overflow-x-auto ds-custom-scrollbar rounded-lg border border-border">
+    <div className="w-full overflow-x-auto ds-custom-scrollbar rounded-xl border border-border">
       <table className={cn("w-full border-collapse text-sm", className)} {...props} />
     </div>
   );
@@ -18,7 +18,7 @@ export function TableHeader({
 }: React.HTMLAttributes<HTMLTableSectionElement>) {
   return (
     <thead
-      className={cn("bg-muted text-muted-foreground text-xs uppercase tracking-wide", className)}
+      className={cn("bg-muted/50 text-muted-foreground text-xs uppercase tracking-wider font-medium", className)}
       {...props}
     />
   );
@@ -37,7 +37,7 @@ export function TableRow({
 }: React.HTMLAttributes<HTMLTableRowElement>) {
   return (
     <tr
-      className={cn("transition-colors hover:bg-subtle data-[state=selected]:bg-primary-subtle", className)}
+      className={cn("transition-colors hover:bg-muted/50 data-[state=selected]:bg-primary-subtle", className)}
       {...props}
     />
   );
@@ -49,7 +49,7 @@ export function TableHead({
 }: React.ThHTMLAttributes<HTMLTableCellElement>) {
   return (
     <th
-      className={cn("px-4 py-3 text-left font-bold whitespace-nowrap", className)}
+      className={cn("px-4 py-3 text-left font-medium whitespace-nowrap", className)}
       {...props}
     />
   );

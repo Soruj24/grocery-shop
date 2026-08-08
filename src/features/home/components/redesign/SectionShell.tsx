@@ -20,11 +20,16 @@ interface SectionShellProps {
 }
 
 const eyebrowMap: Record<string, string> = {
-  primary: "bg-primary-subtle text-primary-subtle-foreground",
-  accent: "bg-accent-subtle text-accent-subtle-foreground",
-  warning: "bg-warning-subtle text-warning-subtle-foreground",
-  danger: "bg-danger-subtle text-danger-subtle-foreground",
-  info: "bg-info-subtle text-info-subtle-foreground",
+  primary:
+    "bg-primary/[0.08] text-primary ring-1 ring-primary/[0.12]",
+  accent:
+    "bg-accent/[0.08] text-accent ring-1 ring-accent/[0.12]",
+  warning:
+    "bg-warning/[0.08] text-warning ring-1 ring-warning/[0.12]",
+  danger:
+    "bg-danger/[0.08] text-danger ring-1 ring-danger/[0.12]",
+  info:
+    "bg-info/[0.08] text-info ring-1 ring-info/[0.12]",
 };
 
 export function SectionShell({
@@ -45,40 +50,40 @@ export function SectionShell({
   return (
     <section
       id={id}
-      className={`relative py-16 lg:py-24 overflow-hidden ${className}`}
+      className={`relative py-20 lg:py-28 overflow-hidden ${className}`}
     >
       <div className="mx-auto max-w-7xl px-4 relative z-10">
         {(eyebrow || title || subtitle || viewAllHref) && (
-          <div className="mb-10 flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+          <div className="mb-12 lg:mb-16 flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
             <div className="space-y-4">
               {eyebrow && (
                 <motion.span
-                  initial={{ opacity: 0, y: 12 }}
+                  initial={{ opacity: 0, y: 8 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
-                  className={`inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-xs font-black uppercase tracking-[0.18em] ${eyebrowMap[eyebrowTone]}`}
+                  className={`inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-[11px] font-extrabold uppercase tracking-[0.2em] ${eyebrowMap[eyebrowTone]}`}
                 >
                   {eyebrow}
                 </motion.span>
               )}
               {title && (
                 <motion.h2
-                  initial={{ opacity: 0, y: 16 }}
+                  initial={{ opacity: 0, y: 12 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
-                  transition={{ delay: 0.05 }}
-                  className="text-3xl font-black tracking-tight text-foreground md:text-4xl lg:text-5xl"
+                  transition={{ delay: 0.06 }}
+                  className="text-4xl font-extrabold tracking-[-0.03em] text-foreground sm:text-5xl lg:text-[3.25rem]"
                 >
                   {title}
                 </motion.h2>
               )}
               {subtitle && (
                 <motion.p
-                  initial={{ opacity: 0, y: 16 }}
+                  initial={{ opacity: 0, y: 12 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: 0.1 }}
-                  className="max-w-2xl text-base font-medium leading-relaxed text-muted-foreground"
+                  className="max-w-2xl text-base font-medium leading-relaxed text-muted-foreground lg:text-lg"
                 >
                   {subtitle}
                 </motion.p>
@@ -86,7 +91,7 @@ export function SectionShell({
             </div>
             {viewAllHref && (
               <motion.div
-                initial={{ opacity: 0, y: 16 }}
+                initial={{ opacity: 0, y: 12 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: 0.1 }}
@@ -94,10 +99,10 @@ export function SectionShell({
               >
                 <Link
                   href={viewAllHref}
-                  className="group inline-flex items-center gap-2 rounded-full border border-border bg-card px-5 py-3 text-sm font-black text-foreground transition-all hover:border-primary/40 hover:bg-primary-subtle hover:text-primary hover:shadow-md active:scale-95"
+                  className="group inline-flex items-center gap-2.5 rounded-full border border-black/[0.08] bg-white px-6 py-3 text-sm font-semibold text-foreground shadow-[0_1px_2px_rgba(0,0,0,0.05)] transition-all duration-300 hover:border-primary/[0.2] hover:bg-primary/[0.04] hover:text-primary hover:shadow-[0_4px_12px_rgba(0,0,0,0.06)] active:scale-[0.98] dark:border-white/[0.08] dark:bg-white/[0.03]"
                 >
                   {viewAllLabel ?? t("view_all")}
-                  <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                  <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
                 </Link>
               </motion.div>
             )}
@@ -121,10 +126,12 @@ export function Reveal({
   const reduceMotion = useReducedMotion();
   return (
     <motion.div
-      initial={reduceMotion ? { opacity: 0 } : { opacity: 0, y: 20 }}
+      initial={
+        reduceMotion ? { opacity: 0 } : { opacity: 0, y: 24 }
+      }
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-50px" }}
-      transition={{ duration: 0.5, delay }}
+      viewport={{ once: true, margin: "-60px" }}
+      transition={{ duration: 0.5, delay, ease: [0.21, 0.47, 0.32, 0.98] }}
       className={className}
     >
       {children}

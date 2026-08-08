@@ -12,7 +12,7 @@ export interface IconButtonProps
 const iconVariant: Record<string, string> = {
   primary: "bg-primary text-primary-foreground hover:bg-primary-hover",
   secondary: "bg-muted text-foreground hover:bg-border",
-  outline: "border border-border-strong text-foreground hover:bg-muted",
+  outline: "border border-border text-foreground hover:bg-muted",
   ghost: "text-foreground hover:bg-muted",
   danger: "bg-danger text-danger-foreground hover:opacity-90",
 };
@@ -35,7 +35,7 @@ export const IconButton = React.forwardRef<HTMLButtonElement, IconButtonProps>(
         ref={ref}
         disabled={disabled || loading}
         className={cn(
-          "inline-flex items-center justify-center rounded-md transition-all duration-200 active:scale-95",
+          "inline-flex items-center justify-center rounded-lg transition-all duration-200 active:scale-95",
           square[size],
           iconVariant[variant],
           disabledState(disabled || loading),

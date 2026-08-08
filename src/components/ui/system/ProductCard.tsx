@@ -25,7 +25,6 @@ export interface ProductCardProps {
   imageSlot?: React.ReactNode;
   actionSlot?: React.ReactNode;
   className?: string;
-  /** Presentational only — no business logic. */
   skeleton?: boolean;
 }
 
@@ -34,7 +33,7 @@ export function ProductCard({
   image,
   price,
   compareAtPrice,
-  currencySymbol = "৳",
+  currencySymbol = "\u09F3",
   rating,
   reviewCount,
   badge,
@@ -60,9 +59,9 @@ export function ProductCard({
         )}
       >
         <div className="aspect-square rounded-lg bg-muted" />
-        <div className="h-4 w-2/3 rounded bg-muted" />
-        <div className="h-6 w-1/2 rounded bg-muted" />
-        <div className="h-10 w-full rounded-md bg-muted" />
+        <div className="h-4 w-2/3 rounded-md bg-muted" />
+        <div className="h-6 w-1/2 rounded-md bg-muted" />
+        <div className="h-10 w-full rounded-lg bg-muted" />
       </div>
     );
   }
@@ -75,7 +74,7 @@ export function ProductCard({
     <div
       className={cn(
         "group relative flex flex-col rounded-xl border border-border bg-card shadow-sm",
-        "transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:border-primary/30",
+        "transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md hover:border-border-strong",
         className,
       )}
     >
@@ -111,14 +110,14 @@ export function ProductCard({
             type="button"
             onClick={onWishlist}
             aria-label={wishlisted ? "Remove from wishlist" : "Add to wishlist"}
-            className="absolute right-3 bottom-3 rounded-full bg-card/90 p-2 text-muted-foreground shadow-sm backdrop-blur transition-colors hover:text-danger"
+            className="absolute right-3 bottom-3 rounded-full bg-card/90 p-2 text-muted-foreground shadow-sm backdrop-blur-sm transition-colors hover:text-danger"
           >
-            <span className={cn(wishlisted && "text-danger")}>♥</span>
+            <span className={cn(wishlisted && "text-danger")}>&#9829;</span>
           </button>
         )}
         {outOfStock && (
-          <div className="absolute inset-0 flex items-center justify-center bg-black/40">
-            <span className="rounded-full bg-card px-4 py-1.5 text-xs font-bold text-foreground">
+          <div className="absolute inset-0 flex items-center justify-center bg-black/40 backdrop-blur-sm">
+            <span className="rounded-full bg-card px-4 py-1.5 text-xs font-semibold text-foreground">
               Out of stock
             </span>
           </div>
@@ -126,7 +125,7 @@ export function ProductCard({
       </div>
 
       <div className="flex flex-1 flex-col gap-2 p-4">
-        <h3 className="line-clamp-2 min-h-[2.5rem] font-bold text-foreground text-sm leading-snug">
+        <h3 className="line-clamp-2 min-h-[2.5rem] font-medium text-foreground text-sm leading-snug">
           {name}
         </h3>
 
@@ -136,7 +135,7 @@ export function ProductCard({
 
         <div className="mt-auto flex items-end justify-between gap-2 pt-2">
           <div>
-            <span className="text-lg font-extrabold text-foreground">
+            <span className="text-lg font-semibold text-foreground">
               {currencySymbol}
               {price.toLocaleString()}
             </span>
@@ -150,11 +149,11 @@ export function ProductCard({
 
           {actionSlot ??
             (quantity > 0 ? (
-              <div className="flex items-center gap-1 rounded-md border border-border bg-card p-1">
+              <div className="flex items-center gap-1 rounded-lg border border-border bg-card p-1">
                 <IconButton size="xs" variant="ghost" aria-label="Decrease" onClick={onDecrement}>
                   <Minus className="h-3.5 w-3.5" />
                 </IconButton>
-                <span className="w-6 text-center text-sm font-bold">{quantity}</span>
+                <span className="w-6 text-center text-sm font-medium">{quantity}</span>
                 <IconButton
                   size="xs"
                   variant="ghost"

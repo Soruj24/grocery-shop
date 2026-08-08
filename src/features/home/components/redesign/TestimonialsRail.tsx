@@ -69,7 +69,7 @@ export default function TestimonialsRail() {
         </>
       }
     >
-      <div className="grid grid-cols-1 gap-5 md:grid-cols-3 auto-rows-[230px]">
+      <div className="grid grid-cols-1 gap-5 md:grid-cols-3 auto-rows-[240px]">
         {TESTIMONIALS.map((item, idx) => (
           <Reveal
             key={item.id}
@@ -82,40 +82,46 @@ export default function TestimonialsRail() {
                 : ""
             }
           >
-            <div className="group flex h-full flex-col justify-between rounded-3xl border border-border bg-card p-7 shadow-sm transition-all duration-500 hover:-translate-y-1 hover:border-primary/30 hover:shadow-xl">
+            <div className="group flex h-full flex-col justify-between rounded-2xl border border-black/[0.04] bg-white p-7 shadow-[0_1px_3px_rgba(0,0,0,0.04)] transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_12px_40px_rgba(0,0,0,0.08)] dark:border-white/[0.04] dark:bg-white/[0.02]">
               <div className="space-y-5">
                 <div className="flex items-center justify-between">
                   <div className="flex gap-1">
-                    {Array.from({ length: 5 }).map((_, i) => (
-                      <Star
-                        key={i}
-                        className={`h-4 w-4 ${
-                          i < item.rating
-                            ? "fill-warning text-warning"
-                            : "text-border-strong"
-                        }`}
-                      />
-                    ))}
+                    {Array.from({ length: 5 }).map(
+                      (_, i) => (
+                        <Star
+                          key={i}
+                          className={`h-4 w-4 transition-colors ${
+                            i < item.rating
+                              ? "fill-warning text-warning"
+                              : "text-zinc-200 dark:text-white/[0.1]"
+                          }`}
+                        />
+                      )
+                    )}
                   </div>
-                  <Quote className="h-9 w-9 text-border transition-colors group-hover:text-primary/40" />
+                  <Quote className="h-10 w-10 text-zinc-100 transition-colors duration-300 group-hover:text-primary/20 dark:text-white/[0.06]" />
                 </div>
                 <p
                   className={`font-medium leading-relaxed text-muted-foreground ${
-                    item.size === "large" ? "text-lg" : "text-sm"
+                    item.size === "large"
+                      ? "text-lg"
+                      : "text-sm"
                   }`}
                 >
                   &ldquo;{item.content}&rdquo;
                 </p>
               </div>
-              <div className="flex items-center gap-3 border-t border-border pt-5">
+              <div className="flex items-center gap-3 border-t border-black/[0.04] pt-5 dark:border-white/[0.06]">
                 <div
                   className={`flex h-11 w-11 items-center justify-center rounded-2xl text-white shadow-sm ${item.color}`}
                 >
                   <User className="h-5 w-5" />
                 </div>
                 <div>
-                  <h4 className="font-black text-foreground">{item.author}</h4>
-                  <p className="text-xs font-bold uppercase tracking-wider text-muted-foreground">
+                  <h4 className="font-bold text-foreground">
+                    {item.author}
+                  </h4>
+                  <p className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground/70">
                     {item.role}
                   </p>
                 </div>

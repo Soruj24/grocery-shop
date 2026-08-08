@@ -19,7 +19,9 @@ export default function TodaysDeals() {
   const { data, isLoading } = useQuery({
     queryKey: ["todays-deals"],
     queryFn: async () => {
-      const res = await fetch("/api/products/list?tag=deals&sort=price_low&limit=8");
+      const res = await fetch(
+        "/api/products/list?tag=deals&sort=price_low&limit=8"
+      );
       if (!res.ok) throw new Error("Failed");
       const json = await res.json();
       return (json.products ?? []) as Product[];
@@ -35,24 +37,31 @@ export default function TodaysDeals() {
       viewAllHref="/products?tag=deals"
       viewAllLabel={t("see_all_deals")}
     >
-      <div className="flex gap-4 overflow-x-auto pb-4 ds-custom-scrollbar">
+      <div className="flex gap-5 overflow-x-auto pb-4 ds-custom-scrollbar">
         {(isLoading
           ? (Array.from({ length: 6 }) as undefined[])
           : (data ?? [])
-        ).map((product: Product | undefined, i: number) => {
+        ).map(
+          (
+            product: Product | undefined,
+            i: number
+          ) => {
             if (!product) {
               return (
                 <div
                   key={i}
-                  className="aspect-[3/4] w-56 shrink-0 rounded-2xl border border-border bg-card"
+                  className="aspect-[3/4] w-56 shrink-0 rounded-2xl border border-black/[0.04] bg-zinc-50 dark:bg-white/[0.02] dark:border-white/[0.04]"
                 />
               );
             }
-            const finalPrice = product.discountPrice ?? product.price;
+            const finalPrice =
+              product.discountPrice ?? product.price;
             const off = product.discount
               ? product.discount
               : Math.round(
-                  ((product.price - finalPrice) / product.price) * 100
+                  ((product.price - finalPrice) /
+                    product.price) *
+                    100
                 );
             return (
               <motion.div
@@ -60,40 +69,53 @@ export default function TodaysDeals() {
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ delay: Math.min(i * 0.05, 0.3) }}
+                transition={{
+                  delay: Math.min(i * 0.05, 0.3),
+                  ease: [0.21, 0.47, 0.32, 0.98],
+                }}
                 className="group w-56 shrink-0"
               >
                 <Link
                   href={`/products/${product._id}`}
-                  className="relative block overflow-hidden rounded-2xl border border-border bg-card shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-primary/30 hover:shadow-lg"
+                  className="relative block overflow-hidden rounded-2xl border border-black/[0.04] bg-white shadow-[0_1px_3px_rgba(0,0,0,0.04)] transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_12px_40px_rgba(0,0,0,0.08)] dark:border-white/[0.04] dark:bg-white/[0.02]"
                 >
-                  <div className="relative aspect-square overflow-hidden bg-muted">
+                  <div className="relative aspect-square overflow-hidden bg-zinc-50 dark:bg-white/[0.02]">
                     <Image
-                      src={product.image || getProductFallbackImage(product.name)}
+                      src={
+                        product.image ||
+                        getProductFallbackImage(
+                          product.name
+                        )
+                      }
                       alt={product.name}
                       fill
                       sizes="224px"
-                      className="object-cover transition-transform duration-700 group-hover:scale-110"
+                      className="object-cover transition-transform duration-700 ease-out group-hover:scale-110"
                     />
                     {off > 0 && (
-                      <span className="absolute left-3 top-3 inline-flex items-center gap-1 rounded-full bg-danger px-2.5 py-1 text-[11px] font-black text-white shadow-sm">
-                        <Tag className="h-3 w-3" />-{off}%
+                      <span className="absolute left-3 top-3 inline-flex items-center gap-1 rounded-full bg-danger px-3 py-1.5 text-[11px] font-extrabold text-white shadow-[0_2px_8px_rgba(239,68,68,0.3)]">
+                        <Tag className="h-3 w-3" />-
+                        {off}%
                       </span>
                     )}
                   </div>
                   <div className="space-y-2 p-4">
-                    <p className="line-clamp-1 text-sm font-bold text-foreground">
+                    <p className="line-clamp-1 text-sm font-semibold text-foreground">
                       {product.name}
                     </p>
                     <div className="flex items-center gap-2">
-                      <span className="text-base font-black text-primary">
+                      <span className="text-base font-extrabold text-primary">
                         {currencySymbol}
-                        {finalPrice.toLocaleString("bn-BD")}
+                        {finalPrice.toLocaleString(
+                          "bn-BD"
+                        )}
                       </span>
                       {off > 0 && (
-                        <span className="text-xs font-bold text-muted-foreground line-through">
+                        <span className="text-xs font-semibold text-muted-foreground line-through">
                           {currencySymbol}
-                          {product.price.toLocaleString("bn-BD")}
+                          {product.price.toLocaleString(
+                            "bn-BD"
+                          )}
                         </span>
                       )}
                     </div>
@@ -105,17 +127,17 @@ export default function TodaysDeals() {
         )}
       </div>
 
-      <div className="mt-6 flex items-center justify-between rounded-2xl border border-border bg-subtle px-5 py-4">
-        <span className="text-sm font-bold text-muted-foreground">
+      <div className="mt-8 flex items-center justify-between rounded-2xl border border-black/[0.04] bg-zinc-50/80 px-6 py-5 dark:bg-white/[0.02] dark:border-white/[0.04]">
+        <span className="text-sm font-semibold text-muted-foreground">
           {t("deals_end_in") ?? "ডিল শেষ হচ্ছে"}
         </span>
         <CountdownBadge compact />
         <Link
           href="/products?tag=deals"
-          className="group inline-flex items-center gap-1.5 text-sm font-black text-primary"
+          className="group inline-flex items-center gap-2 text-sm font-bold text-primary transition-colors duration-300 hover:text-primary-hover"
         >
           {t("see_all_deals")}
-          <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+          <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
         </Link>
       </div>
     </SectionShell>

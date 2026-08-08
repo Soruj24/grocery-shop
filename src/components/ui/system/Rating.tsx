@@ -15,10 +15,10 @@ export interface RatingProps {
 
 const starSize: Record<Size, string> = {
   xs: "h-3 w-3",
-  sm: "h-4 w-4",
-  md: "h-5 w-5",
-  lg: "h-6 w-6",
-  xl: "h-8 w-8",
+  sm: "h-3.5 w-3.5",
+  md: "h-4.5 w-4.5",
+  lg: "h-5.5 w-5.5",
+  xl: "h-7 w-7",
 };
 
 export const Rating = React.forwardRef<HTMLDivElement, RatingProps>(
@@ -32,7 +32,7 @@ export const Rating = React.forwardRef<HTMLDivElement, RatingProps>(
     return (
       <div
         ref={ref}
-        className={cn("inline-flex items-center gap-1.5", className)}
+        className={cn("inline-flex items-center gap-1", className)}
         role={readOnly ? "img" : "radiogroup"}
         aria-label={`Rating ${value} of ${max}`}
       >
@@ -67,7 +67,7 @@ export const Rating = React.forwardRef<HTMLDivElement, RatingProps>(
           })}
         </div>
         {showValue && (
-          <span className="text-sm font-bold text-foreground">{value.toFixed(1)}</span>
+          <span className="text-sm font-semibold text-foreground">{value.toFixed(1)}</span>
         )}
         {count !== undefined && (
           <span className="text-xs text-muted-foreground">({count})</span>

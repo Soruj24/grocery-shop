@@ -1,5 +1,3 @@
-"use client";
-
 import * as React from "react";
 import { cn, controlHeight, disabledState, type Size, type Variant } from "./types";
 
@@ -15,19 +13,19 @@ export interface ButtonProps
 
 const variantClasses: Record<Variant, string> = {
   primary:
-    "bg-primary text-primary-foreground hover:bg-primary-hover active:bg-primary-active shadow-primary",
+    "bg-primary text-primary-foreground hover:bg-primary-hover active:bg-primary-active shadow-xs",
   secondary:
-    "bg-muted text-foreground hover:bg-border active:bg-border-strong",
+    "bg-muted text-foreground hover:bg-border/60 active:bg-border",
   outline:
-    "border border-border-strong bg-transparent text-foreground hover:bg-muted active:bg-subtle",
+    "border border-border bg-transparent text-foreground hover:bg-muted active:bg-subtle",
   ghost: "bg-transparent text-foreground hover:bg-muted active:bg-subtle",
   danger:
-    "bg-danger text-danger-foreground hover:opacity-90 active:opacity-100 shadow-sm",
+    "bg-danger text-danger-foreground hover:opacity-90 active:opacity-100 shadow-xs",
   success:
-    "bg-success text-success-foreground hover:opacity-90 active:opacity-100 shadow-sm",
+    "bg-success text-success-foreground hover:opacity-90 active:opacity-100 shadow-xs",
   warning:
-    "bg-warning text-warning-foreground hover:opacity-90 active:opacity-100 shadow-sm",
-  info: "bg-info text-info-foreground hover:opacity-90 active:opacity-100 shadow-sm",
+    "bg-warning text-warning-foreground hover:opacity-90 active:opacity-100 shadow-xs",
+  info: "bg-info text-info-foreground hover:opacity-90 active:opacity-100 shadow-xs",
 };
 
 export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
@@ -74,8 +72,8 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         ref={ref}
         disabled={disabled || loading}
         className={cn(
-          "inline-flex items-center justify-center font-semibold rounded-md font-sans",
-          "transition-all duration-200 active:scale-[0.97] whitespace-nowrap",
+          "inline-flex items-center justify-center font-medium rounded-lg font-sans",
+          "transition-all duration-200 active:scale-[0.98] whitespace-nowrap",
           "ds-ripple",
           controlHeight[size],
           variantClasses[variant],
@@ -88,7 +86,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       >
         <span
           ref={rippleRef}
-          className="pointer-events-none absolute h-5 w-5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-white/30 opacity-0 scale-0"
+          className="pointer-events-none absolute h-5 w-5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-white/25 opacity-0 scale-0"
           aria-hidden
           style={{ position: "absolute" }}
         />

@@ -10,7 +10,7 @@ export interface CartCardProps {
   quantity: number;
   stock?: number;
   currencySymbol?: string;
-  unitSlot?: React.ReactNode; // unit label e.g. "1 kg"
+  unitSlot?: React.ReactNode;
   imageSlot?: React.ReactNode;
   onIncrement?: () => void;
   onDecrement?: () => void;
@@ -24,7 +24,7 @@ export function CartCard({
   price,
   quantity,
   stock = 99,
-  currencySymbol = "৳",
+  currencySymbol = "\u09F3",
   unitSlot,
   imageSlot,
   onIncrement,
@@ -35,11 +35,11 @@ export function CartCard({
   return (
     <div
       className={cn(
-        "flex items-center gap-4 rounded-lg border border-border bg-card p-3",
+        "flex items-center gap-4 rounded-xl border border-border bg-card p-3",
         className,
       )}
     >
-      <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-md bg-muted">
+      <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-lg bg-muted">
         {imageSlot ??
           (image ? (
             // eslint-disable-next-line @next/next/no-img-element
@@ -51,13 +51,13 @@ export function CartCard({
 
       <div className="flex min-w-0 flex-1 flex-col gap-2">
         <div className="flex items-start justify-between gap-2">
-          <h4 className="line-clamp-2 text-sm font-bold text-foreground">{name}</h4>
+          <h4 className="line-clamp-2 text-sm font-medium text-foreground">{name}</h4>
           {onRemove && (
             <button
               type="button"
               onClick={onRemove}
               aria-label="Remove item"
-              className="text-muted-foreground hover:text-danger transition-colors"
+              className="text-muted-foreground hover:text-danger transition-colors shrink-0"
             >
               <Trash2 className="h-4 w-4" />
             </button>
@@ -65,15 +65,15 @@ export function CartCard({
         </div>
 
         <div className="flex items-center justify-between gap-2">
-          <span className="text-base font-extrabold text-primary">
+          <span className="text-base font-semibold text-foreground">
             {currencySymbol}
             {(price * quantity).toLocaleString()}
           </span>
-          <div className="flex items-center gap-1 rounded-md border border-border bg-card p-1">
+          <div className="flex items-center gap-1 rounded-lg border border-border bg-card p-0.5">
             <IconButton size="xs" variant="ghost" aria-label="Decrease" onClick={onDecrement}>
               <Minus className="h-3.5 w-3.5" />
             </IconButton>
-            <span className="w-6 text-center text-sm font-bold">{quantity}</span>
+            <span className="w-6 text-center text-sm font-medium">{quantity}</span>
             <IconButton
               size="xs"
               variant="ghost"

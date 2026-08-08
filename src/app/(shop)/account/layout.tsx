@@ -27,8 +27,8 @@ export default function AccountLayout({ children }: { children: React.ReactNode 
   if (!session) return null;
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-950">
-      <div className="mx-auto max-w-7xl px-4 py-6 sm:py-10">
+    <div className="min-h-screen bg-background">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-6 lg:py-10">
         <div className="flex gap-8 items-start">
           <AccountSidebar />
           <main className="flex-1 min-w-0">

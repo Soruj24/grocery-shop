@@ -2,8 +2,11 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { TrendingUp, Star, Sparkles, ArrowRight } from "lucide-react";
-import Link from "next/link";
+import {
+  TrendingUp,
+  Star,
+  Sparkles,
+} from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import { Product } from "@/types/product";
 import { useLanguage } from "@/contexts/LanguageContext";
@@ -13,22 +16,26 @@ import { SectionShell } from "./SectionShell";
 
 export default function TrendingTabs() {
   const { t } = useLanguage();
-  const [active, setActive] = useState<"trending" | "bestsellers" | "new">(
-    "trending"
-  );
+  const [active, setActive] = useState<
+    "trending" | "bestsellers" | "new"
+  >("trending");
 
   const TABS = [
     {
       id: "trending",
-      label: t("trending_now") ?? t("featured_products_tab_trending"),
+      label:
+        t("trending_now") ??
+        t("featured_products_tab_trending"),
       icon: TrendingUp,
-      color: "from-sky-500 to-cyan-500",
+      color: "from-sky-600 to-cyan-500",
       sort: "rating",
       href: "/products?sort=rating",
     },
     {
       id: "bestsellers",
-      label: t("best_sellers") ?? t("featured_products_tab_bestsellers"),
+      label:
+        t("best_sellers") ??
+        t("featured_products_tab_bestsellers"),
       icon: Star,
       color: "from-amber-400 to-orange-600",
       sort: "reviews",
@@ -38,7 +45,7 @@ export default function TrendingTabs() {
       id: "new",
       label: t("featured_products_tab_new"),
       icon: Sparkles,
-      color: "from-purple-500 to-pink-600",
+      color: "from-violet-500 to-fuchsia-600",
       sort: "newest",
       href: "/products?sort=newest",
     },
@@ -73,7 +80,7 @@ export default function TrendingTabs() {
       viewAllHref={current.href}
       viewAllLabel={t("see_all")}
     >
-      <div className="mb-10 flex flex-wrap justify-center gap-2 rounded-full border border-border bg-muted p-2">
+      <div className="mb-12 flex flex-wrap justify-center gap-2 rounded-2xl border border-black/[0.04] bg-zinc-50/80 p-2 dark:bg-white/[0.02] dark:border-white/[0.04]">
         {TABS.map((tab) => {
           const Icon = tab.icon;
           const isActive = tab.id === active;
@@ -81,17 +88,21 @@ export default function TrendingTabs() {
             <button
               key={tab.id}
               onClick={() => setActive(tab.id)}
-              className={`relative flex items-center gap-2 rounded-full px-6 py-3 text-sm font-bold transition-all duration-300 ${
+              className={`relative flex items-center gap-2.5 rounded-xl px-7 py-3.5 text-sm font-semibold transition-all duration-300 ${
                 isActive
-                  ? "text-primary-foreground shadow-lg"
-                  : "text-muted-foreground hover:bg-background hover:text-foreground"
+                  ? "text-white shadow-lg"
+                  : "text-muted-foreground hover:bg-white hover:text-foreground dark:hover:bg-white/[0.04]"
               }`}
             >
               {isActive && (
                 <motion.span
                   layoutId="trendingTab"
-                  className={`absolute inset-0 rounded-full bg-gradient-to-r ${tab.color}`}
-                  transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
+                  className={`absolute inset-0 rounded-xl bg-gradient-to-r ${tab.color} shadow-lg`}
+                  transition={{
+                    type: "spring",
+                    bounce: 0.18,
+                    duration: 0.55,
+                  }}
                 />
               )}
               <Icon
@@ -99,7 +110,7 @@ export default function TrendingTabs() {
                   isActive ? "animate-pulse" : ""
                 }`}
               />
-              <span className="relative z-10 uppercase tracking-wide">
+              <span className="relative z-10 font-bold uppercase tracking-wide">
                 {tab.label}
               </span>
             </button>
@@ -113,9 +124,9 @@ export default function TrendingTabs() {
             {Array.from({ length: 8 }).map((_, i) => (
               <div
                 key={i}
-                className="aspect-[3/4] rounded-xl border border-border bg-card"
+                className="aspect-[3/4] rounded-2xl border border-black/[0.04] bg-zinc-50 dark:bg-white/[0.02] dark:border-white/[0.04]"
               >
-                <Skeleton className="h-full w-full rounded-xl" />
+                <Skeleton className="h-full w-full rounded-2xl" />
               </div>
             ))}
           </div>
@@ -133,7 +144,10 @@ export default function TrendingTabs() {
                 key={product._id}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: Math.min(idx * 0.05, 0.35) }}
+                transition={{
+                  delay: Math.min(idx * 0.05, 0.35),
+                  ease: [0.21, 0.47, 0.32, 0.98],
+                }}
               >
                 <ProductCard product={product} />
               </motion.div>

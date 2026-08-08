@@ -7,16 +7,16 @@ interface AuthLogoProps {
 
 export default function AuthLogo({ subtitle }: AuthLogoProps) {
   return (
-    <div className="flex flex-col items-center mb-10">
-      <Link href="/" className="group flex flex-col items-center gap-4 mb-6">
-        <div className="w-16 h-16 bg-primary text-primary-foreground rounded-2xl flex items-center justify-center transform transition-all duration-500 group-hover:rotate-[360deg] shadow-primary">
-          <ShoppingBasket className="w-8 h-8" />
+    <div className="flex flex-col items-center mb-8">
+      <Link href="/" className="group flex flex-col items-center gap-3 mb-4">
+        <div className="w-12 h-12 bg-foreground rounded-xl flex items-center justify-center transition-transform duration-300 group-hover:scale-105">
+          <ShoppingBasket className="w-6 h-6 text-background" />
         </div>
         <div className="flex flex-col items-center">
-          <h1 className="text-3xl font-black tracking-tighter text-foreground">
-            EMRAN<span className="text-primary">SHOP</span>
+          <h1 className="text-2xl font-semibold tracking-tight text-foreground">
+            EMRAN<span className="text-muted-foreground">SHOP</span>
           </h1>
-          <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-[0.3em] mt-1">
+          <p className="text-[11px] font-medium text-muted-foreground uppercase tracking-wider mt-0.5">
             {subtitle}
           </p>
         </div>

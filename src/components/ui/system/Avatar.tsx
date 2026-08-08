@@ -33,7 +33,7 @@ export const Avatar = React.forwardRef<HTMLSpanElement, AvatarProps>(
       <span
         ref={ref}
         className={cn(
-          "relative inline-flex items-center justify-center overflow-hidden rounded-full bg-muted text-muted-foreground font-bold shrink-0",
+          "relative inline-flex items-center justify-center overflow-hidden rounded-full bg-muted text-muted-foreground font-medium shrink-0",
           ring && "ring-2 ring-primary ring-offset-2 ring-offset-background",
           sizeMap[size],
           className,

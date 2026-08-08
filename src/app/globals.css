@@ -1,152 +1,152 @@
 @import "tailwindcss";
 
 /* ============================================================================
-   EMRAN SHOP DESIGN SYSTEM — TOKENS
-   Single source of truth for color, radius, shadow, spacing, typography.
-   Built for Tailwind v4 (@theme inline). Semantic tokens drive light/dark.
+   EMRAN SHOP — REFINED DESIGN SYSTEM
+   Premium · Minimal · Elegant · Enterprise-grade
+   Inspired by shadcn/ui, Vercel, Linear, Stripe, Raycast, Notion
+   Original design system built with Tailwind CSS v4
    ========================================================================== */
 
 @layer base {
   :root {
-    /* Geist variable is provided by <html class={GeistSans.variable}>; fall back if absent */
     --font-geist-sans: var(--font-geist-sans);
     --font-geist-mono: var(--font-geist-mono);
 
     /* ---- Surfaces ---- */
-    --background: #f7f8f7;
-    --foreground: #0b1120;
+    --background: #fafafa;
+    --foreground: #0a0a0a;
     --card: #ffffff;
-    --card-foreground: #0b1120;
+    --card-foreground: #0a0a0a;
     --popover: #ffffff;
-    --popover-foreground: #0b1120;
-    --muted: #f1f3f1;
-    --muted-foreground: #6b7280;
-    --subtle: #f8faf8;
+    --popover-foreground: #0a0a0a;
+    --muted: #f4f4f5;
+    --muted-foreground: #71717a;
+    --subtle: #f9f9fb;
 
-    /* ---- Brand (primary green) ---- */
-    --primary: #16a34a;
-    --primary-foreground: #ffffff;
-    --primary-hover: #15803d;
-    --primary-active: #166534;
-    --primary-subtle: #ecfdf3;
-    --primary-subtle-foreground: #067647;
-    --primary-border: #a6f4c5;
+    /* ---- Brand (primary) ---- */
+    --primary: #18181b;
+    --primary-foreground: #fafafa;
+    --primary-hover: #27272a;
+    --primary-active: #18181b;
+    --primary-subtle: #f0f0f2;
+    --primary-subtle-foreground: #18181b;
+    --primary-border: #e4e4e7;
 
-    /* ---- Accents (used sparingly) ---- */
-    --accent: #0ea5e9;
+    /* ---- Accent ---- */
+    --accent: #6366f1;
     --accent-foreground: #ffffff;
-    --accent-subtle: #ecfeff;
-    --accent-subtle-foreground: #0369a1;
+    --accent-subtle: #eef2ff;
+    --accent-subtle-foreground: #4338ca;
 
     /* ---- Semantic states ---- */
-    --success: #16a34a;
+    --success: #22c55e;
     --success-foreground: #ffffff;
-    --success-subtle: #ecfdf3;
-    --success-subtle-foreground: #067647;
+    --success-subtle: #f0fdf4;
+    --success-subtle-foreground: #15803d;
 
-    --warning: #d97706;
+    --warning: #f59e0b;
     --warning-foreground: #ffffff;
-    --warning-subtle: #fffaeb;
+    --warning-subtle: #fffbeb;
     --warning-subtle-foreground: #b45309;
 
-    --danger: #dc2626;
+    --danger: #ef4444;
     --danger-foreground: #ffffff;
-    --danger-subtle: #fef3f2;
-    --danger-subtle-foreground: #b42318;
+    --danger-subtle: #fef2f2;
+    --danger-subtle-foreground: #dc2626;
 
-    --info: #2563eb;
+    --info: #3b82f6;
     --info-foreground: #ffffff;
     --info-subtle: #eff6ff;
-    --info-subtle-foreground: #1d4ed8;
+    --info-subtle-foreground: #2563eb;
 
     /* ---- Borders & rings ---- */
-    --border: #e5e7eb;
-    --border-strong: #d1d5db;
-    --input: #e5e7eb;
-    --ring: #16a34a;
+    --border: #e4e4e7;
+    --border-strong: #d4d4d8;
+    --input: #e4e4e7;
+    --ring: #18181b;
 
-    /* ---- Radius scale (fixed, no ad-hoc values) ---- */
-    --radius-xs: 0.375rem;   /* 6px  */
-    --radius-sm: 0.5rem;     /* 8px  */
-    --radius-md: 0.75rem;    /* 12px */
-    --radius-lg: 1rem;       /* 16px */
-    --radius-xl: 1.5rem;     /* 24px */
-    --radius-2xl: 2rem;      /* 32px */
+    /* ---- Radius scale ---- */
+    --radius-xs: 0.375rem;
+    --radius-sm: 0.5rem;
+    --radius-md: 0.625rem;
+    --radius-lg: 0.75rem;
+    --radius-xl: 1rem;
+    --radius-2xl: 1.5rem;
     --radius-full: 9999px;
 
-    /* ---- Shadow scale (one language) ---- */
-    --shadow-xs: 0 1px 2px 0 rgb(15 23 42 / 0.05);
-    --shadow-sm: 0 1px 3px 0 rgb(15 23 42 / 0.08), 0 1px 2px -1px rgb(15 23 42 / 0.06);
-    --shadow-md: 0 4px 12px -2px rgb(15 23 42 / 0.10), 0 2px 6px -2px rgb(15 23 42 / 0.06);
-    --shadow-lg: 0 12px 28px -6px rgb(15 23 42 / 0.14), 0 4px 10px -4px rgb(15 23 42 / 0.08);
-    --shadow-xl: 0 24px 48px -12px rgb(15 23 42 / 0.20), 0 8px 16px -6px rgb(15 23 42 / 0.10);
-    --shadow-2xl: 0 40px 80px -20px rgb(15 23 42 / 0.28);
-    --shadow-primary: 0 8px 20px -6px rgb(22 163 74 / 0.45);
-    --shadow-focus: 0 0 0 4px rgb(22 163 74 / 0.18);
+    /* ---- Shadow scale — multi-layered, soft ---- */
+    --shadow-xs: 0 1px 2px rgb(0 0 0 / 0.04);
+    --shadow-sm: 0 1px 3px rgb(0 0 0 / 0.06), 0 1px 2px rgb(0 0 0 / 0.04);
+    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.07), 0 2px 4px -2px rgb(0 0 0 / 0.05);
+    --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.08), 0 4px 6px -4px rgb(0 0 0 / 0.04);
+    --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.08), 0 8px 10px -6px rgb(0 0 0 / 0.04);
+    --shadow-2xl: 0 25px 50px -12px rgb(0 0 0 / 0.18);
+    --shadow-primary: 0 8px 20px -6px rgb(24 24 27 / 0.3);
+    --shadow-focus: 0 0 0 3px rgb(24 24 27 / 0.12);
   }
 
   .dark {
-    --background: #0a0e16;
-    --foreground: #e8edf2;
-    --card: #111722;
-    --card-foreground: #e8edf2;
-    --popover: #131a26;
-    --popover-foreground: #e8edf2;
-    --muted: #1a2230;
-    --muted-foreground: #94a3b8;
-    --subtle: #0e141f;
+    --background: #09090b;
+    --foreground: #fafafa;
+    --card: #0f0f11;
+    --card-foreground: #fafafa;
+    --popover: #131316;
+    --popover-foreground: #fafafa;
+    --muted: #18181b;
+    --muted-foreground: #a1a1aa;
+    --subtle: #0c0c0e;
 
-    --primary: #22c55e;
-    --primary-foreground: #04140a;
-    --primary-hover: #16a34a;
-    --primary-active: #15803d;
-    --primary-subtle: #0c2a18;
-    --primary-subtle-foreground: #4ade80;
-    --primary-border: #14532d;
+    --primary: #fafafa;
+    --primary-foreground: #09090b;
+    --primary-hover: #e4e4e7;
+    --primary-active: #d4d4d8;
+    --primary-subtle: #18181b;
+    --primary-subtle-foreground: #e4e4e7;
+    --primary-border: #27272a;
 
-    --accent: #38bdf8;
-    --accent-foreground: #04141f;
-    --accent-subtle: #0a2333;
-    --accent-subtle-foreground: #7dd3fc;
+    --accent: #818cf8;
+    --accent-foreground: #09090b;
+    --accent-subtle: #1e1b4b;
+    --accent-subtle-foreground: #a5b4fc;
 
-    --success: #22c55e;
-    --success-foreground: #04140a;
-    --success-subtle: #0c2a18;
+    --success: #4ade80;
+    --success-foreground: #052e16;
+    --success-subtle: #052e16;
     --success-subtle-foreground: #4ade80;
 
-    --warning: #f59e0b;
-    --warning-foreground: #1a1205;
-    --warning-subtle: #2a1c06;
+    --warning: #fbbf24;
+    --warning-foreground: #451a03;
+    --warning-subtle: #451a03;
     --warning-subtle-foreground: #fbbf24;
 
     --danger: #f87171;
-    --danger-foreground: #1a0606;
-    --danger-subtle: #2a1011;
+    --danger-foreground: #450a0a;
+    --danger-subtle: #450a0a;
     --danger-subtle-foreground: #fca5a5;
 
     --info: #60a5fa;
-    --info-foreground: #05101f;
-    --info-subtle: #0c1c33;
+    --info-foreground: #172554;
+    --info-subtle: #172554;
     --info-subtle-foreground: #93c5fd;
 
-    --border: #232c3b;
-    --border-strong: #2f3a4d;
-    --input: #2a3342;
-    --ring: #22c55e;
+    --border: #27272a;
+    --border-strong: #3f3f46;
+    --input: #27272a;
+    --ring: #d4d4d8;
 
-    --shadow-xs: 0 1px 2px 0 rgb(0 0 0 / 0.4);
-    --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.5), 0 1px 2px -1px rgb(0 0 0 / 0.4);
-    --shadow-md: 0 4px 12px -2px rgb(0 0 0 / 0.5), 0 2px 6px -2px rgb(0 0 0 / 0.4);
-    --shadow-lg: 0 12px 28px -6px rgb(0 0 0 / 0.6), 0 4px 10px -4px rgb(0 0 0 / 0.4);
-    --shadow-xl: 0 24px 48px -12px rgb(0 0 0 / 0.7), 0 8px 16px -6px rgb(0 0 0 / 0.5);
-    --shadow-2xl: 0 40px 80px -20px rgb(0 0 0 / 0.8);
-    --shadow-primary: 0 8px 20px -6px rgb(34 197 94 / 0.5);
-    --shadow-focus: 0 0 0 4px rgb(34 197 94 / 0.22);
+    --shadow-xs: 0 1px 2px rgb(0 0 0 / 0.2);
+    --shadow-sm: 0 1px 3px rgb(0 0 0 / 0.3), 0 1px 2px rgb(0 0 0 / 0.2);
+    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.35), 0 2px 4px -2px rgb(0 0 0 / 0.25);
+    --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.4), 0 4px 6px -4px rgb(0 0 0 / 0.2);
+    --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.4), 0 8px 10px -6px rgb(0 0 0 / 0.2);
+    --shadow-2xl: 0 25px 50px -12px rgb(0 0 0 / 0.6);
+    --shadow-primary: 0 8px 20px -6px rgb(129 140 248 / 0.35);
+    --shadow-focus: 0 0 0 3px rgb(212 212 216 / 0.15);
   }
 }
 
 /* ============================================================================
-   THEME MAPPING — expose tokens to Tailwind utilities
+   THEME MAPPING — Tailwind v4 token integration
    ========================================================================== */
 @theme inline {
   --color-background: var(--background);
@@ -227,13 +227,14 @@
   --text-caption: 0.8125rem;
   --text-eyebrow: 0.6875rem;
 
-  --spacing-section: 4rem;
-  --spacing-block: 2rem;
+  /* Spacing scale */
+  --spacing-section: 5rem;
+  --spacing-block: 2.5rem;
   --spacing-stack: 1rem;
 }
 
 /* ============================================================================
-   BASE TYPOGRAPHY — Geist applied, no Arial override
+   BASE TYPOGRAPHY & FOUNDATIONS
    ========================================================================== */
 @layer base {
   html {
@@ -248,28 +249,34 @@
     font-family: var(--font-geist-sans), ui-sans-serif, system-ui, -apple-system,
       "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
     font-size: var(--text-body);
-    line-height: 1.6;
+    line-height: 1.65;
     letter-spacing: -0.011em;
-    transition: background-color 0.25s ease, color 0.25s ease;
+    transition: background-color 0.2s ease, color 0.2s ease;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
 
   h1, h2, h3, h4, h5 {
-    font-weight: 800;
-    letter-spacing: -0.02em;
-    line-height: 1.15;
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    line-height: 1.2;
     color: var(--foreground);
   }
 
-  /* Accessible focus ring everywhere */
+  /* Accessible focus ring */
   :where(a, button, input, select, textarea, [tabindex]):focus-visible {
     outline: none;
     box-shadow: var(--shadow-focus);
     border-radius: var(--radius-sm);
   }
 
-  /* Respect reduced motion globally */
+  /* Smooth selection */
+  ::selection {
+    background: var(--primary);
+    color: var(--primary-foreground);
+  }
+
+  /* Respect reduced motion */
   @media (prefers-reduced-motion: reduce) {
     *,
     *::before,
@@ -283,7 +290,7 @@
 }
 
 /* ============================================================================
-   UTILITY COMPONENTS (reusable design-system classes)
+   UTILITY COMPONENTS
    ========================================================================== */
 @layer components {
   .ds-surface {
@@ -295,17 +302,17 @@
 
   .ds-container {
     width: 100%;
-    max-width: 80rem; /* 1280px */
+    max-width: 80rem;
     margin-inline: auto;
-    padding-inline: 1rem;
+    padding-inline: 1.5rem;
   }
 
   .ds-eyebrow {
     font-size: var(--text-eyebrow);
-    font-weight: 700;
+    font-weight: 600;
     text-transform: uppercase;
-    letter-spacing: 0.14em;
-    color: var(--primary);
+    letter-spacing: 0.1em;
+    color: var(--muted-foreground);
   }
 
   .ds-sr-only {
@@ -325,17 +332,33 @@
     scrollbar-color: var(--border-strong) transparent;
   }
   .ds-custom-scrollbar::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
+    width: 6px;
+    height: 6px;
+  }
+  .ds-custom-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
   }
   .ds-custom-scrollbar::-webkit-scrollbar-thumb {
     background-color: var(--border-strong);
     border-radius: var(--radius-full);
   }
+
+  /* Glass morphism utility */
+  .ds-glass {
+    background: rgba(255, 255, 255, 0.72);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+  }
+  .dark .ds-glass {
+    background: rgba(15, 15, 17, 0.72);
+  }
 }
 
-/* Motion primitives (only run when motion is allowed) */
+/* ============================================================================
+   KEYFRAME ANIMATIONS
+   ========================================================================== */
 @keyframes ds-shimmer {
+  0% { transform: translateX(-100%); }
   100% { transform: translateX(100%); }
 }
 @keyframes ds-spin {
@@ -348,27 +371,21 @@
   from { opacity: 0; }
   to { opacity: 1; }
 }
-@keyframes ds-shake {
-  10%, 90% { transform: translateX(-1px); }
-  20%, 80% { transform: translateX(2px); }
-  30%, 50%, 70% { transform: translateX(-4px); }
-  40%, 60% { transform: translateX(4px); }
-}
 @keyframes ds-slide-up {
-  from { opacity: 0; transform: translateY(8px); }
+  from { opacity: 0; transform: translateY(12px); }
   to { opacity: 1; transform: translateY(0); }
 }
 @keyframes ds-slide-down {
-  from { opacity: 0; transform: translateY(-8px); }
+  from { opacity: 0; transform: translateY(-12px); }
   to { opacity: 1; transform: translateY(0); }
 }
 @keyframes ds-scale-in {
-  from { opacity: 0; transform: scale(0.96); }
+  from { opacity: 0; transform: scale(0.95); }
   to { opacity: 1; transform: scale(1); }
 }
 @keyframes ds-pop {
   0% { transform: scale(1); }
-  50% { transform: scale(1.25); }
+  50% { transform: scale(1.15); }
   100% { transform: scale(1); }
 }
 @keyframes ds-checkmark {
@@ -378,26 +395,71 @@
 @keyframes ds-ripple {
   to { transform: scale(4); opacity: 0; }
 }
-
-@media (prefers-reduced-motion: no-preference) {
-  .ds-animate-shimmer { animation: ds-shimmer 1.6s infinite; }
-  .ds-animate-spin { animation: ds-spin 0.8s linear infinite; }
-  .ds-animate-ping { animation: ds-ping 1.4s cubic-bezier(0, 0, 0.2, 1) infinite; }
-  .ds-animate-fade-in { animation: ds-fade-in 0.2s ease-out; }
-  .ds-animate-shake { animation: ds-shake 0.5s cubic-bezier(0.36, 0.07, 0.19, 0.97); }
-  .ds-animate-slide-up { animation: ds-slide-up 0.25s ease-out; }
-  .ds-animate-slide-down { animation: ds-slide-down 0.25s ease-out; }
-  .ds-animate-scale-in { animation: ds-scale-in 0.2s ease-out; }
-  .ds-animate-pop { animation: ds-pop 0.3s ease-out; }
+@keyframes ds-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+@keyframes ds-glow {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 0.8; }
 }
 
-/* Ripple container for buttons */
+@media (prefers-reduced-motion: no-preference) {
+  .ds-animate-shimmer { animation: ds-shimmer 2s infinite; }
+  .ds-animate-spin { animation: ds-spin 0.8s linear infinite; }
+  .ds-animate-ping { animation: ds-ping 1.4s cubic-bezier(0, 0, 0.2, 1) infinite; }
+  .ds-animate-fade-in { animation: ds-fade-in 0.3s ease-out; }
+  .ds-animate-slide-up { animation: ds-slide-up 0.3s ease-out; }
+  .ds-animate-slide-down { animation: ds-slide-down 0.3s ease-out; }
+  .ds-animate-scale-in { animation: ds-scale-in 0.2s ease-out; }
+  .ds-animate-pop { animation: ds-pop 0.3s ease-out; }
+  .ds-animate-float { animation: ds-float 3s ease-in-out infinite; }
+  .ds-animate-glow { animation: ds-glow 2s ease-in-out infinite; }
+}
+
+/* Ripple container */
 .ds-ripple {
   position: relative;
   overflow: hidden;
 }
 .ds-ripple > .ds-ripple-active {
   transform: scale(0);
-  opacity: 0.35;
-  animation: ds-ripple 0.6s ease-out forwards;
+  opacity: 0.25;
+  animation: ds-ripple 0.5s ease-out forwards;
+}
+
+/* ============================================================================
+   PRODUCT GRID & LAYOUT UTILITIES
+   ========================================================================== */
+@layer components {
+  /* Product grid — responsive with consistent gap */
+  .ds-product-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+  @media (min-width: 640px) {
+    .ds-product-grid { grid-template-columns: repeat(3, 1fr); }
+  }
+  @media (min-width: 1024px) {
+    .ds-product-grid { grid-template-columns: repeat(4, 1fr); gap: 1.25rem; }
+  }
+
+  /* Section spacing */
+  .ds-section {
+    padding-block: var(--spacing-section);
+  }
+
+  /* Container with responsive padding */
+  .ds-page-container {
+    max-width: 80rem;
+    margin-inline: auto;
+    padding-inline: 1rem;
+  }
+  @media (min-width: 640px) {
+    .ds-page-container { padding-inline: 1.5rem; }
+  }
+  @media (min-width: 1024px) {
+    .ds-page-container { padding-inline: 2rem; }
+  }
 }

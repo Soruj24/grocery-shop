@@ -61,7 +61,7 @@ export function Modal({
             animate="visible"
             exit="exit"
             transition={overlayTransition}
-            className="absolute inset-0 bg-black/50 backdrop-blur-sm"
+            className="absolute inset-0 bg-black/40 backdrop-blur-sm"
             onClick={closeOnOverlay ? onClose : undefined}
             aria-hidden
           />
@@ -72,16 +72,16 @@ export function Modal({
             exit="exit"
             transition={springGentle}
             className={cn(
-              "relative z-10 w-full bg-card text-card-foreground border border-border rounded-2xl shadow-xl",
+              "relative z-10 w-full bg-card text-card-foreground border border-border rounded-xl shadow-xl",
               "max-h-[90vh] flex flex-col",
               sizeMap[size],
             )}
           >
             {(title || !hideCloseButton) && (
-              <div className="flex items-start justify-between gap-4 p-6 pb-0">
+              <div className="flex items-start justify-between gap-4 px-6 pt-6 pb-0">
                 <div>
                   {title && (
-                    <h2 className="text-h4 font-extrabold tracking-tight">{title}</h2>
+                    <h2 className="text-h4 font-semibold tracking-tight">{title}</h2>
                   )}
                   {description && (
                     <p className="mt-1 text-body-sm text-muted-foreground">{description}</p>
@@ -92,9 +92,9 @@ export function Modal({
                     type="button"
                     onClick={onClose}
                     aria-label="Close"
-                    className="rounded-md p-2 text-muted-foreground hover:bg-muted transition-colors"
+                    className="rounded-lg p-2 text-muted-foreground hover:bg-muted transition-colors shrink-0"
                   >
-                    <X className="h-5 w-5" />
+                    <X className="h-4 w-4" />
                   </button>
                 )}
               </div>
@@ -103,7 +103,7 @@ export function Modal({
               {children}
             </div>
             {footer && (
-              <div className="flex items-center justify-end gap-3 p-6 pt-0">{footer}</div>
+              <div className="flex items-center justify-end gap-3 px-6 pb-6 pt-0">{footer}</div>
             )}
           </motion.div>
         </div>

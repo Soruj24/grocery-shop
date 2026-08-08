@@ -33,7 +33,7 @@ export function Accordion({
   };
 
   return (
-    <div className={cn("divide-y divide-border rounded-lg border border-border bg-card", className)}>
+    <div className={cn("divide-y divide-border rounded-xl border border-border bg-card", className)}>
       {items.map((it) => {
         const isOpen = open.includes(it.value);
         return (
@@ -43,12 +43,12 @@ export function Accordion({
               disabled={it.disabled}
               aria-expanded={isOpen}
               onClick={() => !it.disabled && toggle(it.value)}
-              className="flex w-full items-center justify-between gap-4 px-5 py-4 text-left font-semibold text-foreground hover:bg-muted transition-colors"
+              className="flex w-full items-center justify-between gap-4 px-5 py-4 text-left font-medium text-foreground hover:bg-muted/50 transition-colors"
             >
               <span>{it.title}</span>
               <ChevronDown
                 className={cn(
-                  "h-5 w-5 shrink-0 text-muted-foreground transition-transform duration-300",
+                  "h-4 w-4 shrink-0 text-muted-foreground transition-transform duration-300",
                   isOpen && "rotate-180",
                 )}
                 aria-hidden
@@ -62,7 +62,7 @@ export function Accordion({
               aria-hidden={!isOpen}
             >
               <div className="overflow-hidden">
-                <div className="px-5 pb-5 text-body-sm text-muted-foreground">
+                <div className="px-5 pb-5 text-body-sm text-muted-foreground leading-relaxed">
                   {it.content}
                 </div>
               </div>

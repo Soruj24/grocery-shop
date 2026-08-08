@@ -27,19 +27,19 @@ export function Pagination({
   const total = Math.max(1, totalPages);
   const current = Math.min(Math.max(1, page), total);
 
-  const pages: (number | "…")[] = [];
+  const pages: (number | "...")[] = [];
   const left = Math.max(2, current - siblingCount);
   const right = Math.min(total - 1, current + siblingCount);
 
   pages.push(1);
-  if (left > 2) pages.push("…");
+  if (left > 2) pages.push("...");
   pages.push(...range(left, right));
-  if (right < total - 1) pages.push("…");
+  if (right < total - 1) pages.push("...");
   if (total > 1) pages.push(total);
 
   return (
     <nav
-      className={cn("flex items-center gap-1.5", className)}
+      className={cn("flex items-center gap-1", className)}
       aria-label="Pagination"
     >
       <IconButton
@@ -53,9 +53,9 @@ export function Pagination({
       </IconButton>
 
       {pages.map((p, i) =>
-        p === "…" ? (
+        p === "..." ? (
           <span key={`e${i}`} className="px-2 text-muted-foreground" aria-hidden>
-            …
+            ...
           </span>
         ) : (
           <button
@@ -63,7 +63,7 @@ export function Pagination({
             onClick={() => onPageChange(p)}
             aria-current={p === current ? "page" : undefined}
             className={cn(
-              "h-9 min-w-9 rounded-md px-3 text-sm font-semibold transition-colors",
+              "h-9 min-w-9 rounded-lg px-3 text-sm font-medium transition-colors",
               p === current
                 ? "bg-primary text-primary-foreground"
                 : "text-foreground hover:bg-muted",

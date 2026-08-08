@@ -35,14 +35,14 @@ export function EmptyState({
       animate="visible"
       transition={easeOut}
       className={cn(
-        "flex flex-col items-center justify-center text-center px-6 py-16 rounded-xl border border-dashed border-border bg-subtle",
+        "flex flex-col items-center justify-center text-center px-6 py-20 rounded-xl border border-dashed border-border bg-subtle/50",
         className,
       )}
     >
       {icon && (
         <div
           className={cn(
-            "flex items-center justify-center rounded-full bg-muted text-muted-foreground mb-5",
+            "flex items-center justify-center rounded-2xl bg-muted text-muted-foreground mb-6",
             iconWrap[size],
           )}
           aria-hidden
@@ -50,9 +50,9 @@ export function EmptyState({
           {icon}
         </div>
       )}
-      <h3 className="text-h4 font-extrabold tracking-tight">{title}</h3>
+      <h3 className="text-h4 font-semibold tracking-tight">{title}</h3>
       {description && (
-        <p className="mt-2 max-w-sm text-body-sm text-muted-foreground">{description}</p>
+        <p className="mt-2 max-w-sm text-body-sm text-muted-foreground leading-relaxed">{description}</p>
       )}
       {action && <div className="mt-6">{action}</div>}
     </motion.div>

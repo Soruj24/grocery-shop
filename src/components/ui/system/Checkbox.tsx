@@ -32,16 +32,16 @@ export const Checkbox = React.forwardRef<HTMLInputElement, CheckboxProps>(
           />
           <span
             className={cn(
-              "flex h-5 w-5 items-center justify-center rounded-xs border border-input",
+              "flex h-[18px] w-[18px] items-center justify-center rounded-[5px] border border-input",
               "bg-card transition-all duration-200",
               "peer-checked:bg-primary peer-checked:border-primary",
               "peer-focus-visible:shadow-focus peer-focus-visible:border-primary",
-              "group-hover:border-primary",
+              "group-hover:border-border-strong",
             )}
             aria-hidden
           >
             <Check
-              className="h-3.5 w-3.5 text-primary-foreground scale-0 transition-transform duration-200 peer-checked:scale-100"
+              className="h-3 w-3 text-primary-foreground stroke-[3] scale-0 transition-transform duration-200 peer-checked:scale-100"
             />
           </span>
         </span>
@@ -53,7 +53,7 @@ export const Checkbox = React.forwardRef<HTMLInputElement, CheckboxProps>(
               </span>
             )}
             {description && (
-              <span className="block text-xs text-muted-foreground">
+              <span className="block text-xs text-muted-foreground leading-relaxed">
                 {description}
               </span>
             )}
@@ -95,13 +95,13 @@ export const Radio = React.forwardRef<HTMLInputElement, RadioProps>(
           />
           <span
             className={cn(
-              "flex h-5 w-5 items-center justify-center rounded-full border border-input bg-card",
-              "transition-all duration-200 peer-focus-visible:shadow-focus peer-focus-visible:border-primary group-hover:border-primary",
+              "flex h-[18px] w-[18px] items-center justify-center rounded-full border border-input bg-card",
+              "transition-all duration-200 peer-focus-visible:shadow-focus peer-focus-visible:border-primary group-hover:border-border-strong",
             )}
             aria-hidden
           >
             <span
-              className="h-2.5 w-2.5 rounded-full bg-primary scale-0 transition-transform duration-200 peer-checked:scale-100"
+              className="h-2 w-2 rounded-full bg-primary scale-0 transition-transform duration-200 peer-checked:scale-100"
             />
           </span>
         </span>
@@ -113,7 +113,7 @@ export const Radio = React.forwardRef<HTMLInputElement, RadioProps>(
               </span>
             )}
             {description && (
-              <span className="block text-xs text-muted-foreground">
+              <span className="block text-xs text-muted-foreground leading-relaxed">
                 {description}
               </span>
             )}

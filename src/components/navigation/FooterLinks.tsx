@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import { motion } from "framer-motion";
 
 interface LinkItem {
   name: string;
@@ -15,29 +14,20 @@ interface FooterLinksProps {
 
 export default function FooterLinks({ title, links }: FooterLinksProps) {
   return (
-    <div className="space-y-8">
-      <motion.h4 
-        initial={{ opacity: 0, y: 10 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        className="text-xs font-black text-muted-foreground uppercase tracking-[0.3em]"
-      >
+    <div className="space-y-5">
+      <h4 className="text-xs font-semibold text-foreground uppercase tracking-wider">
         {title}
-      </motion.h4>
-      <ul className="space-y-4">
-        {links.map((link, idx) => (
-          <motion.li 
-            key={link.href}
-            initial={{ opacity: 0, x: -10 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: idx * 0.05 }}
-          >
-            <Link href={link.href} className="text-muted-foreground hover:text-primary transition-all flex items-center gap-3 font-bold group">
-              <div className="w-1.5 h-1.5 rounded-full bg-border-strong group-hover:bg-primary group-hover:scale-150 transition-all duration-300" />
-              <span className="group-hover:translate-x-1 transition-transform duration-300">{link.name}</span>
+      </h4>
+      <ul className="space-y-3">
+        {links.map((link) => (
+          <li key={link.href}>
+            <Link
+              href={link.href}
+              className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+            >
+              {link.name}
             </Link>
-          </motion.li>
+          </li>
         ))}
       </ul>
     </div>

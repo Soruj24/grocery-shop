@@ -36,20 +36,20 @@ export function ErrorState({
       className={cn(
         "flex flex-col items-center justify-center text-center px-6",
         compact ? "py-10" : "py-16",
-        "rounded-xl border border-danger/30 bg-danger-subtle",
+        "rounded-xl border border-danger/20 bg-danger-subtle",
         className,
       )}
     >
       <div
-        className="flex items-center justify-center h-16 w-16 rounded-full bg-danger/10 text-danger mb-5"
+        className="flex items-center justify-center h-14 w-14 rounded-2xl bg-danger/10 text-danger mb-5"
         aria-hidden
       >
-        {icon ?? <AlertTriangle className="h-8 w-8" />}
+        {icon ?? <AlertTriangle className="h-7 w-7" />}
       </div>
-      <h3 className="text-h4 font-extrabold tracking-tight text-danger-subtle-foreground">
+      <h3 className="text-h4 font-semibold tracking-tight text-danger-subtle-foreground">
         {title}
       </h3>
-      <p className="mt-2 max-w-sm text-body-sm text-muted-foreground">{description}</p>
+      <p className="mt-2 max-w-sm text-body-sm text-muted-foreground leading-relaxed">{description}</p>
       {onRetry && (
         <div className="mt-6">
           <Button variant="danger" size="sm" onClick={onRetry}>

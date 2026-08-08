@@ -33,7 +33,7 @@ export default function LoginForm() {
         router.refresh();
       }
     } catch (err) {
-      setError("কিছু একটা সমস্যা হয়েছে। আবার চেষ্টা করুন।");
+      setError("কিছু একটা সমস্যা হয়েছে। আবার চেষ্টা করুন।");
     } finally {
       setIsLoading(false);
     }
@@ -42,14 +42,14 @@ export default function LoginForm() {
   return (
     <div className="relative">
       {error && (
-        <div className="mb-6 animate-shake">
+        <div className="mb-6">
           <Alert tone="danger" title={error} />
         </div>
       )}
 
-      <form onSubmit={handleSubmit} className="space-y-5">
-        <div className="space-y-2">
-          <label className="text-[10px] font-black uppercase tracking-widest text-muted-foreground ml-4">
+      <form onSubmit={handleSubmit} className="space-y-4">
+        <div className="space-y-1.5">
+          <label className="text-sm font-medium text-foreground">
             ইমেইল এড্রেস
           </label>
           <Input
@@ -58,19 +58,19 @@ export default function LoginForm() {
             size="lg"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            leftIcon={<Mail className="w-5 h-5" />}
+            leftIcon={<Mail className="w-4 h-4" />}
             placeholder="example@mail.com"
           />
         </div>
 
-        <div className="space-y-2">
-          <div className="flex justify-between items-center ml-4">
-            <label className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">
-              পাসওয়ার্ড
+        <div className="space-y-1.5">
+          <div className="flex justify-between items-center">
+            <label className="text-sm font-medium text-foreground">
+              পাসওয়ার্ড
             </label>
             <Link
               href="#"
-              className="text-[10px] font-black uppercase tracking-widest text-primary hover:text-primary-hover"
+              className="text-xs text-muted-foreground hover:text-foreground transition-colors"
             >
               ভুলে গেছেন?
             </Link>
@@ -81,7 +81,7 @@ export default function LoginForm() {
             size="lg"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            leftIcon={<Lock className="w-5 h-5" />}
+            leftIcon={<Lock className="w-4 h-4" />}
             placeholder="••••••••"
           />
         </div>
@@ -93,18 +93,18 @@ export default function LoginForm() {
           fullWidth
           loading={isLoading}
           disabled={isLoading}
-          rightIcon={<ArrowRight className="w-5 h-5" />}
+          rightIcon={<ArrowRight className="w-4 h-4" />}
         >
           লগইন করুন
         </Button>
       </form>
 
-      <div className="mt-10 text-center">
-        <p className="text-sm font-bold text-muted-foreground">
+      <div className="mt-8 text-center">
+        <p className="text-sm text-muted-foreground">
           অ্যাকাউন্ট নেই?{" "}
           <Link
             href="/signup"
-            className="text-primary hover:text-primary-hover underline underline-offset-4"
+            className="text-foreground font-medium hover:underline underline-offset-4"
           >
             নতুন তৈরি করুন
           </Link>
