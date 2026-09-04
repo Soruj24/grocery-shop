@@ -4,7 +4,7 @@ import { useState, useCallback, useRef, useEffect, useMemo } from "react";
 import {
   Package, Image as ImageIcon, DollarSign, Boxes, Tag, Layers,
   Truck, Search, ToggleLeft, ChevronDown, Upload, X, AlertTriangle,
-  Loader2, Globe,
+  Loader2, Globe, Plus, GripVertical,
 } from "lucide-react";
 import { cn } from "@/utils/utils";
 import type { AdminCategory, AdminProduct, GroupedCategory, AdminProductFormData } from "@/types/admin";
@@ -215,6 +215,198 @@ function ImageDropZone({ value, onChange }: { value: string; onChange: (v: strin
           Load
         </button>
       </div>
+    </div>
+  );
+}
+
+/* ─── Variant Manager ─── */
+function VariantManager({ variants, basePrice, baseStock, onChange }: {
+  variants: AdminProductFormData["variants"];
+  basePrice: number;
+  baseStock: number;
+  onChange: (variants: AdminProductFormData["variants"]) => void;
+}) {
+  const v = variants || [];
+
+  const addGroup = () => {
+    onChange([...v, { name: "", options: [{ label: "", price: basePrice, stock: baseStock }] }]);
+  };
+
+  const removeGroup = (gi: number) => {
+    onChange(v.filter((_, i) => i !== gi));
+  };
+
+  const updateGroupName = (gi: number, name: string) => {
+    const next = v.map((g, i) => i === gi ? { ...g, name } : g);
+    onChange(next);
+  };
+
+  const addOption = (gi: number) => {
+    const next = v.map((g, i) => i === gi
+      ? { ...g, options: [...g.options, { label: "", price: basePrice, stock: baseStock }] }
+      : g);
+    onChange(next);
+  };
+
+  const removeOption = (gi: number, oi: number) => {
+    const next = v.map((g, i) => {
+      if (i !== gi) return g;
+      return { ...g, options: g.options.filter((_, j) => j !== oi) };
+    });
+    onChange(next);
+  };
+
+  const updateOption = (gi: number, oi: number, field: string, value: unknown) => {
+    const next = v.map((g, i) => {
+      if (i !== gi) return g;
+      return {
+        ...g,
+        options: g.options.map((o, j) => j === oi ? { ...o, [field]: value } : o),
+      };
+    });
+    onChange(next);
+  };
+
+  const VARIANT_PRESETS = [
+    { name: "Size", options: ["XS", "S", "M", "L", "XL", "XXL"] },
+    { name: "Color", options: ["Red", "Blue", "Green", "Black", "White"] },
+    { name: "Weight", options: ["250g", "500g", "1kg", "2kg", "5kg"] },
+    { name: "Volume", options: ["250ml", "500ml", "1L", "2L"] },
+  ];
+
+  const applyPreset = (preset: typeof VARIANT_PRESETS[0]) => {
+    const exists = v.some((g) => g.name === preset.name);
+    if (exists) return;
+    onChange([...v, {
+      name: preset.name,
+      options: preset.options.map((label) => ({ label, price: basePrice, stock: baseStock })),
+    }]);
+  };
+
+  const totalCombinations = v.reduce((acc, g) => {
+    if (g.options.length === 0 || !g.name) return acc;
+    return acc === 0 ? g.options.length : acc * g.options.length;
+  }, 0);
+
+  return (
+    <div className="space-y-4">
+      {/* Presets */}
+      {v.length === 0 && (
+        <div className="space-y-3">
+          <p className="text-xs text-muted-foreground">Quick add a variant group:</p>
+          <div className="flex flex-wrap gap-2">
+            {VARIANT_PRESETS.map((preset) => (
+              <button key={preset.name} type="button" onClick={() => applyPreset(preset)}
+                className="inline-flex items-center gap-1.5 rounded-md border border-border bg-card px-3 py-1.5 text-xs font-medium text-foreground hover:bg-muted transition-colors">
+                <Plus className="h-3 w-3" />
+                {preset.name}
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Variant Groups */}
+      {v.map((group, gi) => (
+        <div key={gi} className="rounded-lg border border-border bg-muted/30 p-4 space-y-3">
+          <div className="flex items-center gap-3">
+            <GripVertical className="h-4 w-4 text-muted-foreground shrink-0 cursor-grab" />
+            <input
+              type="text"
+              value={group.name}
+              onChange={(e) => updateGroupName(gi, e.target.value)}
+              placeholder="Variant name (e.g. Size, Color)"
+              className="flex-1 h-9 px-3 rounded-md border border-border bg-card text-sm font-medium text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-ring"
+            />
+            <button type="button" onClick={() => removeGroup(gi)}
+              className="p-1.5 rounded-md text-muted-foreground hover:text-foreground hover:bg-muted transition-colors"
+              aria-label={`Remove ${group.name || "variant"}`}>
+              <X className="h-4 w-4" />
+            </button>
+          </div>
+
+          {/* Options */}
+          <div className="space-y-2 pl-7">
+            {group.options.map((opt, oi) => (
+              <div key={oi} className="flex items-start gap-2">
+                <div className="flex-1 grid grid-cols-3 gap-2">
+                  <input
+                    type="text"
+                    value={opt.label}
+                    onChange={(e) => updateOption(gi, oi, "label", e.target.value)}
+                    placeholder="Label (e.g. Large)"
+                    className="col-span-3 sm:col-span-1 h-8 px-2.5 rounded-md border border-border bg-card text-xs text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-ring"
+                  />
+                  <div className="relative">
+                    <span className="absolute left-2 top-1/2 -translate-y-1/2 text-[10px] text-muted-foreground">৳</span>
+                    <input
+                      type="number"
+                      value={opt.price ?? ""}
+                      onChange={(e) => updateOption(gi, oi, "price", e.target.value ? Number(e.target.value) : undefined)}
+                      placeholder="Price"
+                      min={0}
+                      className="h-8 w-full pl-5 pr-2 rounded-md border border-border bg-card text-xs text-foreground tabular-nums placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-ring"
+                    />
+                  </div>
+                  <div className="relative">
+                    <span className="absolute left-2 top-1/2 -translate-y-1/2 text-[10px] text-muted-foreground">#</span>
+                    <input
+                      type="number"
+                      value={opt.stock ?? ""}
+                      onChange={(e) => updateOption(gi, oi, "stock", e.target.value ? Number(e.target.value) : undefined)}
+                      placeholder="Stock"
+                      min={0}
+                      className="h-8 w-full pl-5 pr-2 rounded-md border border-border bg-card text-xs text-foreground tabular-nums placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-ring"
+                    />
+                  </div>
+                </div>
+                {group.options.length > 1 && (
+                  <button type="button" onClick={() => removeOption(gi, oi)}
+                    className="p-1 rounded-md text-muted-foreground hover:text-foreground hover:bg-muted transition-colors mt-0.5"
+                    aria-label={`Remove option ${opt.label || oi + 1}`}>
+                    <X className="h-3.5 w-3.5" />
+                  </button>
+                )}
+              </div>
+            ))}
+
+            <button type="button" onClick={() => addOption(gi)}
+              className="inline-flex items-center gap-1 text-xs font-medium text-muted-foreground hover:text-foreground transition-colors mt-1">
+              <Plus className="h-3 w-3" />
+              Add option
+            </button>
+          </div>
+
+          {/* Variant summary */}
+          {group.name && group.options.length > 0 && (
+            <div className="pl-7 pt-1 border-t border-border/50">
+              <p className="text-[10px] text-muted-foreground">
+                {group.options.length} option{group.options.length !== 1 ? "s" : ""}
+                {group.options.some((o) => o.label) && (
+                  <>: {group.options.filter((o) => o.label).map((o) => o.label).join(", ")}</>
+                )}
+              </p>
+            </div>
+          )}
+        </div>
+      ))}
+
+      {/* Add Variant Group */}
+      <button type="button" onClick={addGroup}
+        className="flex items-center justify-center gap-2 w-full rounded-lg border border-dashed border-border p-3 text-xs font-medium text-muted-foreground hover:text-foreground hover:border-border/80 hover:bg-muted/50 transition-all">
+        <Plus className="h-3.5 w-3.5" />
+        Add Variant Group
+      </button>
+
+      {/* Combination Summary */}
+      {totalCombinations > 0 && (
+        <div className="flex items-center gap-2 rounded-md bg-muted px-3 py-2">
+          <Boxes className="h-3.5 w-3.5 text-muted-foreground" />
+          <p className="text-xs text-muted-foreground">
+            <span className="font-semibold text-foreground">{totalCombinations}</span> variant combination{totalCombinations !== 1 ? "s" : ""} will be created
+          </p>
+        </div>
+      )}
     </div>
   );
 }
@@ -508,29 +700,121 @@ export default function ProductForm({
           {/* ─── 6. Variants ─── */}
           <div id="variants">
             <FormSection icon={Layers} title="Variants" description="Size, color, or other variations" defaultOpen={false}>
-              <div className="flex flex-col items-center justify-center py-8 text-center">
-                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-muted mb-3">
-                  <Layers className="h-5 w-5 text-muted-foreground" />
-                </div>
-                <p className="text-sm font-medium text-foreground">Variants coming soon</p>
-                <p className="text-xs text-muted-foreground mt-1 max-w-xs">
-                  Size, color, and other product variations will be supported in a future update.
-                </p>
-              </div>
+              <VariantManager
+                variants={formData.variants || []}
+                basePrice={formData.price}
+                baseStock={formData.stock}
+                onChange={(variants) => update("variants", variants)}
+              />
             </FormSection>
           </div>
 
           {/* ─── 7. Shipping ─── */}
           <div id="shipping">
-            <FormSection icon={Truck} title="Shipping" description="Shipping weight and dimensions" defaultOpen={false}>
-              <div className="flex flex-col items-center justify-center py-8 text-center">
-                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-muted mb-3">
-                  <Truck className="h-5 w-5 text-muted-foreground" />
+            <FormSection icon={Truck} title="Shipping" description="Weight, dimensions, and shipping class" defaultOpen={false}>
+              <div className="space-y-4">
+                {/* Weight */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <Field label="Weight" description="Product weight for shipping calculation">
+                    <div className="relative">
+                      <input
+                        type="number"
+                        value={formData.shipping?.weight ?? ""}
+                        onChange={(e) => update("shipping", { ...formData.shipping, weight: e.target.value ? Number(e.target.value) : undefined })}
+                        placeholder="0"
+                        min={0}
+                        step={0.1}
+                        className={cn(INPUT_CLASSES, "tabular-nums")}
+                      />
+                      <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-muted-foreground">kg</span>
+                    </div>
+                  </Field>
+                  <Field label="Shipping Class" description="Group products for rate calculation">
+                    <select
+                      value={formData.shipping?.shippingClass || ""}
+                      onChange={(e) => update("shipping", { ...formData.shipping, shippingClass: e.target.value })}
+                      className={cn(INPUT_CLASSES, "appearance-none cursor-pointer")}
+                    >
+                      <option value="">Default</option>
+                      <option value="standard">Standard</option>
+                      <option value="heavy">Heavy Items</option>
+                      <option value="fragile">Fragile</option>
+                      <option value="perishable">Perishable</option>
+                      <option value="oversized">Oversized</option>
+                    </select>
+                  </Field>
                 </div>
-                <p className="text-sm font-medium text-foreground">Shipping details coming soon</p>
-                <p className="text-xs text-muted-foreground mt-1 max-w-xs">
-                  Weight, dimensions, and shipping class settings will be available in a future update.
-                </p>
+
+                {/* Dimensions */}
+                <div>
+                  <p className={LABEL_CLASSES}>Dimensions</p>
+                  <p className={DESC_CLASSES}>Length × Width × Height (cm)</p>
+                  <div className="grid grid-cols-3 gap-3 mt-2">
+                    <div className="relative">
+                      <input
+                        type="number"
+                        value={formData.shipping?.length ?? ""}
+                        onChange={(e) => update("shipping", { ...formData.shipping, length: e.target.value ? Number(e.target.value) : undefined })}
+                        placeholder="Length"
+                        min={0}
+                        className={cn(INPUT_CLASSES, "tabular-nums")}
+                      />
+                      <span className="absolute right-3 top-1/2 -translate-y-1/2 text-[10px] text-muted-foreground">cm</span>
+                    </div>
+                    <div className="relative">
+                      <input
+                        type="number"
+                        value={formData.shipping?.width ?? ""}
+                        onChange={(e) => update("shipping", { ...formData.shipping, width: e.target.value ? Number(e.target.value) : undefined })}
+                        placeholder="Width"
+                        min={0}
+                        className={cn(INPUT_CLASSES, "tabular-nums")}
+                      />
+                      <span className="absolute right-3 top-1/2 -translate-y-1/2 text-[10px] text-muted-foreground">cm</span>
+                    </div>
+                    <div className="relative">
+                      <input
+                        type="number"
+                        value={formData.shipping?.height ?? ""}
+                        onChange={(e) => update("shipping", { ...formData.shipping, height: e.target.value ? Number(e.target.value) : undefined })}
+                        placeholder="Height"
+                        min={0}
+                        className={cn(INPUT_CLASSES, "tabular-nums")}
+                      />
+                      <span className="absolute right-3 top-1/2 -translate-y-1/2 text-[10px] text-muted-foreground">cm</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Toggles */}
+                <div className="flex flex-col gap-3">
+                  <div className="flex items-center justify-between rounded-lg border border-border p-3">
+                    <div>
+                      <p className="text-sm font-medium text-foreground">Free Shipping</p>
+                      <p className="text-[11px] text-muted-foreground">Exclude this product from shipping charges</p>
+                    </div>
+                    <button type="button" role="switch" aria-checked={formData.shipping?.freeShipping || false}
+                      onClick={() => update("shipping", { ...formData.shipping, freeShipping: !formData.shipping?.freeShipping })}
+                      className={cn("relative h-5 w-9 rounded-full transition-colors", formData.shipping?.freeShipping ? "bg-foreground" : "bg-muted border border-border")}>
+                      <span className={cn("absolute top-0.5 left-0.5 h-4 w-4 rounded-full bg-background transition-transform", formData.shipping?.freeShipping && "translate-x-4")} />
+                    </button>
+                  </div>
+
+                  <Field label="Estimated Delivery" description="Expected delivery time in days">
+                    <div className="relative max-w-[160px]">
+                      <input
+                        type="number"
+                        value={formData.shipping?.estimatedDays ?? ""}
+                        onChange={(e) => update("shipping", { ...formData.shipping, estimatedDays: e.target.value ? Number(e.target.value) : undefined })}
+                        placeholder="e.g. 3"
+                        min={1}
+                        max={30}
+                        className={cn(INPUT_CLASSES, "tabular-nums")}
+                      />
+                      <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-muted-foreground">days</span>
+                    </div>
+                  </Field>
+                </div>
               </div>
             </FormSection>
           </div>

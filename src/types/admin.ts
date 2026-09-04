@@ -45,6 +45,24 @@ export interface AdminProductFormData {
   isDeal?: boolean;
   isPopular?: boolean;
   isNewArrival?: boolean;
+  variants?: Array<{
+    name: string;
+    options: Array<{
+      label: string;
+      price?: number;
+      stock?: number;
+      image?: string;
+    }>;
+  }>;
+  shipping?: {
+    weight?: number;
+    length?: number;
+    width?: number;
+    height?: number;
+    shippingClass?: string;
+    freeShipping?: boolean;
+    estimatedDays?: number;
+  };
 }
 
 export interface AdminOrder {
