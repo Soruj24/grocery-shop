@@ -34,7 +34,7 @@ export default function CartPreview({
 
   if (cart.length === 0) {
     return (
-      <div className="w-[360px] p-2">
+      <div className="w-[360px] max-w-[calc(100vw-2rem)] p-2">
         <EmptyState
           icon={
             <ShoppingBag className="w-7 h-7" />
@@ -63,7 +63,7 @@ export default function CartPreview({
       : 0;
 
   return (
-    <div className="w-[360px]">
+    <div className="w-[360px] max-w-[calc(100vw-2rem)]">
       <div className="flex items-center justify-between border-b border-border px-5 py-4">
         <div className="flex items-center gap-2.5">
           <ShoppingBag className="w-4.5 h-4.5 text-foreground" />

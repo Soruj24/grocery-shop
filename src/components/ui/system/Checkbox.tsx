@@ -17,6 +17,7 @@ export const Checkbox = React.forwardRef<HTMLInputElement, CheckboxProps>(
         htmlFor={inputId}
         className={cn(
           "group inline-flex items-start gap-3 cursor-pointer select-none",
+          "has-checked:[&_svg]:scale-100",
           disabledState(disabled),
           className,
         )}
@@ -37,11 +38,12 @@ export const Checkbox = React.forwardRef<HTMLInputElement, CheckboxProps>(
               "peer-checked:bg-primary peer-checked:border-primary",
               "peer-focus-visible:shadow-focus peer-focus-visible:border-primary",
               "group-hover:border-border-strong",
+              "[&_svg]:scale-0",
             )}
             aria-hidden
           >
             <Check
-              className="h-3 w-3 text-primary-foreground stroke-[3] scale-0 transition-transform duration-200 peer-checked:scale-100"
+              className="h-3 w-3 text-primary-foreground stroke-[3] transition-transform duration-200"
             />
           </span>
         </span>
@@ -80,6 +82,7 @@ export const Radio = React.forwardRef<HTMLInputElement, RadioProps>(
         htmlFor={inputId}
         className={cn(
           "group inline-flex items-start gap-3 cursor-pointer select-none",
+          "has-checked:[&_span]:scale-100",
           disabledState(disabled),
           className,
         )}
@@ -97,11 +100,13 @@ export const Radio = React.forwardRef<HTMLInputElement, RadioProps>(
             className={cn(
               "flex h-[18px] w-[18px] items-center justify-center rounded-full border border-input bg-card",
               "transition-all duration-200 peer-focus-visible:shadow-focus peer-focus-visible:border-primary group-hover:border-border-strong",
+              "peer-checked:border-primary",
+              "[&_span]:scale-0",
             )}
             aria-hidden
           >
             <span
-              className="h-2 w-2 rounded-full bg-primary scale-0 transition-transform duration-200 peer-checked:scale-100"
+              className="h-2 w-2 rounded-full bg-primary transition-transform duration-200"
             />
           </span>
         </span>

@@ -1,5 +1,5 @@
 import * as React from "react";
-import { cn, controlHeight, disabledState, type Size, type Variant } from "./types";
+import { cn, controlHeight, disabledState, focusRing, type Size, type Variant } from "./types";
 
 export interface ButtonProps
   extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, "color"> {
@@ -75,6 +75,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
           "inline-flex items-center justify-center font-medium rounded-lg font-sans",
           "transition-all duration-200 active:scale-[0.98] whitespace-nowrap",
           "ds-ripple",
+          focusRing,
           controlHeight[size],
           variantClasses[variant],
           fullWidth && "w-full",

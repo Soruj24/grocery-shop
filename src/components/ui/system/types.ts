@@ -53,4 +53,12 @@ export function disabledState(disabled?: boolean) {
     : "";
 }
 
+/** Consistent keyboard focus ring for all interactive elements. */
+export const focusRing =
+  "focus-visible:outline-none focus-visible:shadow-focus";
+
+/** Theme-aware danger focus shadow (works in light + dark mode). */
+export const invalidShadow =
+  "shadow-[0_0_0_3px_color-mix(in_srgb,var(--danger)_15%,transparent)]";
+
 export { cn };

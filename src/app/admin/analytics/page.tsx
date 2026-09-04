@@ -181,7 +181,7 @@ export default function AdminAnalyticsPage() {
             <KPICard icon={TrendingUp} label="Avg. Order Value" value={kpi?.aov.total || 0} change={kpi?.aov.change} prefix="৳" />
             <KPICard icon={Users} label="New Customers" value={kpi?.customers.total || 0} change={kpi?.customers.change} />
           </div>
-          <div className="grid grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             <KPICard icon={Target} label="Conversion" value={kpi?.conversionRate || 0} suffix="%" />
             <KPICard icon={BarChart3} label="Retention" value={kpi?.retentionRate || 0} suffix="%" />
             <KPICard icon={Package} label="Active Products" value={kpi?.activeProducts || 0} />

@@ -39,7 +39,7 @@ export function Pagination({
 
   return (
     <nav
-      className={cn("flex items-center gap-1", className)}
+      className={cn("flex items-center gap-1 max-w-full overflow-x-auto ds-custom-scrollbar", className)}
       aria-label="Pagination"
     >
       <IconButton

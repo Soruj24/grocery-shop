@@ -61,7 +61,7 @@ export default function MobileCategoryGrid({
       <p className="text-[10px] font-bold text-muted-foreground/60 uppercase tracking-[0.2em]">
         {t("top_categories")}
       </p>
-      <div className="grid grid-cols-2 xs:grid-cols-3 gap-2.5">
+      <div className="grid grid-cols-2 gap-2.5">
         {displayCategories
           .slice(0, 10)
           .map((cat: Category, idx: number) => (

@@ -333,7 +333,7 @@ export default function OrdersTable({
 
       {/* ─── Table ─── */}
       <div className="overflow-x-auto">
-        <table className="w-full text-left" aria-label="Orders table">
+        <table className="w-full min-w-[720px] text-left" aria-label="Orders table">
           <thead>
             <tr className="border-b border-border bg-muted/30">
               <th className="w-12 px-5 py-3" scope="col">

@@ -1,5 +1,5 @@
 import * as React from "react";
-import { cn, controlHeight, disabledState, type Size, type Variant } from "./types";
+import { cn, disabledState, focusRing, type Size } from "./types";
 
 export interface IconButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
@@ -36,6 +36,7 @@ export const IconButton = React.forwardRef<HTMLButtonElement, IconButtonProps>(
         disabled={disabled || loading}
         className={cn(
           "inline-flex items-center justify-center rounded-lg transition-all duration-200 active:scale-95",
+          focusRing,
           square[size],
           iconVariant[variant],
           disabledState(disabled || loading),

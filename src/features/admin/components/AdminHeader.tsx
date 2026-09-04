@@ -40,9 +40,9 @@ export default function AdminHeader({
         )}
       </div>
 
-      <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+      <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full md:w-auto">
         {onSearchChange && (
-          <div className="relative group min-w-[300px]">
+          <div className="relative group w-full sm:w-auto sm:min-w-[300px]">
             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
               <Search className="h-4 w-4 text-muted-foreground group-focus-within:text-foreground transition-colors" />
             </div>

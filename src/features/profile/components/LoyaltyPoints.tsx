@@ -26,7 +26,7 @@ export default function LoyaltyPoints() {
             <Star className="w-5 h-5 fill-current" />
             <span className="font-black uppercase tracking-widest text-xs">{t('your_current_points')}</span>
           </div>
-          <h2 className="text-6xl md:text-7xl font-black">{points.toLocaleString('bn-BD')}</h2>
+          <h2 className="text-5xl sm:text-6xl md:text-7xl font-black tabular-nums">{points.toLocaleString('bn-BD')}</h2>
           <p className="text-primary-foreground/80 font-medium">{t('points_earning_rule')}</p>
         </div>
 

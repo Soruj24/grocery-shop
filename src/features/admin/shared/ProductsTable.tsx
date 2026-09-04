@@ -310,7 +310,7 @@ export default function ProductsTable({
 
       {/* ─── Table ─── */}
       <div className="overflow-x-auto">
-        <table className="w-full text-left" aria-label="Products table">
+        <table className="w-full min-w-[720px] text-left" aria-label="Products table">
           <thead>
             <tr className="border-b border-border bg-muted/30">
               {/* Checkbox */}

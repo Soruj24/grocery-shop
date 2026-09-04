@@ -1,6 +1,6 @@
 import * as React from "react";
 import { ChevronDown } from "lucide-react";
-import { cn, disabledState, type Size } from "./types";
+import { cn, disabledState, invalidShadow, type Size } from "./types";
 
 export interface SelectProps
   extends Omit<React.SelectHTMLAttributes<HTMLSelectElement>, "size"> {
@@ -23,7 +23,7 @@ export const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
         className={cn(
           "relative flex items-center w-full rounded-lg border bg-card transition-all duration-200",
           "border-input hover:border-border-strong focus-within:border-foreground/20 focus-within:shadow-focus",
-          invalid && "border-danger",
+          invalid && cn("border-danger focus-within:border-danger", invalidShadow),
           disabledState(disabled),
           selectHeight[size],
         )}

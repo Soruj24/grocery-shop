@@ -175,7 +175,7 @@ export default function CustomersTable({
 
       {/* ─── Table ─── */}
       <div className="overflow-x-auto">
-        <table className="w-full text-left" aria-label="Customers table">
+        <table className="w-full min-w-[680px] text-left" aria-label="Customers table">
           <thead>
             <tr className="border-b border-border bg-muted/30">
               <th className="px-5 py-3 text-xs font-semibold uppercase tracking-wider text-muted-foreground cursor-pointer select-none hover:text-foreground transition-colors" scope="col" onClick={() => onSort("name")} aria-sort={sort === "name" ? (sortDir === "asc" ? "ascending" : "descending") : "none"}>

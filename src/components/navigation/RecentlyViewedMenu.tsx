@@ -16,7 +16,7 @@ export default function RecentlyViewedMenu({ onClose }: { onClose?: () => void }
 
   if (recentlyViewed.length === 0) {
     return (
-      <div className="w-[320px] p-8 text-center">
+      <div className="w-[320px] max-w-[calc(100vw-2rem)] p-8 text-center">
         <div className="mx-auto mb-3 flex h-14 w-14 items-center justify-center rounded-2xl bg-muted text-muted-foreground">
           <History className="w-6 h-6" />
         </div>
@@ -26,7 +26,7 @@ export default function RecentlyViewedMenu({ onClose }: { onClose?: () => void }
   }
 
   return (
-    <div className="w-[340px]">
+    <div className="w-[340px] max-w-[calc(100vw-2rem)]">
       <div className="flex items-center justify-between border-b border-border px-5 py-4">
         <div className="flex items-center gap-2">
           <History className="w-5 h-5 text-primary" />

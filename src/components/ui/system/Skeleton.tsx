@@ -22,7 +22,6 @@ export function Skeleton({
       aria-hidden
       className={cn(
         "relative overflow-hidden bg-muted rounded-md",
-        shimmer && "ds-custom-scrollbar",
         circle && "rounded-full",
         className,
       )}

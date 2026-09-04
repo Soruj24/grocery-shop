@@ -1,3 +1,12 @@
+/**
+ * Shop-specific URL-driven pagination (Next.js links, i18n labels,
+ * Bengali numerals, result counts).
+ *
+ * NOTE: This is NOT the generic `Pagination` from `@/components/ui`
+ * (which is a controlled `page`/`onPageChange` component for admin and
+ * custom lists). Keep both: use this file for shop listing pages that
+ * paginate via `?page=` URLs, and the system `Pagination` elsewhere.
+ */
 "use client";
 
 import Link from "next/link";
@@ -52,7 +61,7 @@ export default function Pagination({ totalPages, currentPage, basePath, totalCou
   };
 
   return (
-    <div className="px-10 py-8 border-t border-border flex flex-col md:flex-row items-center justify-between gap-8 bg-card rounded-2xl shadow-sm">
+    <div className="px-4 sm:px-10 py-6 sm:py-8 border-t border-border flex flex-col md:flex-row items-center justify-between gap-6 sm:gap-8 bg-card rounded-2xl shadow-sm">
       {/* Showing Status */}
       {totalCount !== undefined && (
         <div className="flex flex-col items-center md:items-start text-center md:text-left">
@@ -69,7 +78,7 @@ export default function Pagination({ totalPages, currentPage, basePath, totalCou
       )}
 
       {/* Navigation Controls */}
-      <div className="flex items-center gap-3">
+      <div className="flex flex-wrap items-center justify-center gap-3 max-w-full">
         {/* Previous Button */}
         <Link
           href={createPageURL(currentPage - 1)}
@@ -82,7 +91,7 @@ export default function Pagination({ totalPages, currentPage, basePath, totalCou
         </Link>
 
         {/* Page Numbers */}
-        <div className="flex items-center gap-2 bg-muted p-1.5 rounded-2xl border border-border">
+        <div className="flex items-center gap-2 bg-muted p-1.5 rounded-2xl border border-border max-w-full overflow-x-auto ds-custom-scrollbar">
           {getPageNumbers().map((page, idx) => (
             page === "..." ? (
               <span key={`dots-${idx}`} className="w-10 text-center text-muted-foreground font-black tracking-widest">...</span>

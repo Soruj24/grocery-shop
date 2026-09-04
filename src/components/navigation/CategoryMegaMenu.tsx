@@ -40,7 +40,7 @@ export default function CategoryMegaMenu({
   return (
     <div
       onMouseLeave={onClose}
-      className="absolute top-0 left-0 w-[1100px] bg-card backdrop-blur-xl shadow-2xl border border-border rounded-2xl p-10 z-50 grid grid-cols-4 gap-x-8 gap-y-10 max-h-[85vh] overflow-y-auto custom-scrollbar"
+      className="absolute top-0 left-0 w-[min(1100px,calc(100vw-3rem))] bg-card backdrop-blur-xl shadow-2xl border border-border rounded-2xl p-6 lg:p-10 z-50 grid grid-cols-2 lg:grid-cols-4 gap-x-6 lg:gap-x-8 gap-y-8 lg:gap-y-10 max-h-[85vh] overflow-y-auto custom-scrollbar"
     >
       <div className="absolute top-0 right-0 w-96 h-96 bg-primary/[0.03] blur-[100px] rounded-full pointer-events-none" />
       <div className="absolute bottom-0 left-0 w-64 h-64 bg-purple-500/[0.03] blur-[80px] rounded-full pointer-events-none" />

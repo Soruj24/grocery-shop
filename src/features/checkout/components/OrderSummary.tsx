@@ -81,12 +81,12 @@ export default function OrderSummary({ cart, totalPrice, couponDiscount = 0 }: O
               <span>-{t('currency_symbol')}{couponDiscount.toLocaleString('bn-BD')}</span>
             </div>
           )}
-          <div className="flex justify-between items-end pt-4">
-            <div className="space-y-1">
+          <div className="flex justify-between items-end gap-3 pt-4">
+            <div className="space-y-1 min-w-0">
               <span className="text-xs font-black uppercase tracking-widest text-muted-foreground">
                 {t('grand_total')}
               </span>
-              <div className="text-5xl font-black text-foreground">
+              <div className="text-4xl sm:text-5xl font-black text-foreground tabular-nums break-words leading-none">
                 {t('currency_symbol')}{finalTotal.toLocaleString('bn-BD')}
               </div>
             </div>

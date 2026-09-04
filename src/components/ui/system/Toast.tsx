@@ -88,7 +88,7 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
   return (
     <ToastContext.Provider value={{ toast, success, error, warning, info, dismiss }}>
       {children}
-      <div className="fixed bottom-6 right-6 z-[300] flex flex-col-reverse gap-3 max-w-sm w-full pointer-events-none">
+      <div className="fixed inset-x-4 bottom-4 sm:inset-x-auto sm:bottom-6 sm:right-6 z-[300] flex flex-col-reverse gap-3 sm:w-full sm:max-w-sm pointer-events-none">
         <AnimatePresence mode="popLayout">
           {toasts.map((t) => {
             const Icon = iconMap[t.type];

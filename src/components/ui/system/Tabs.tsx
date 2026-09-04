@@ -31,15 +31,34 @@ export function Tabs({
 }: TabsProps) {
   const [uncontrolled, setUncontrolled] = React.useState(defaultValue ?? items[0]?.value);
   const value = controlled ?? uncontrolled;
+  const listRef = React.useRef<HTMLDivElement>(null);
 
   const select = (v: string) => {
     if (controlled === undefined) setUncontrolled(v);
     onValueChange?.(v);
   };
 
+  const onKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key !== "ArrowRight" && e.key !== "ArrowLeft" && e.key !== "Home" && e.key !== "End") return;
+    e.preventDefault();
+    const enabled = items.filter((it) => !it.disabled);
+    if (!enabled.length) return;
+    let idx = enabled.findIndex((it) => it.value === value);
+    if (e.key === "ArrowRight") idx = (idx + 1) % enabled.length;
+    if (e.key === "ArrowLeft") idx = (idx - 1 + enabled.length) % enabled.length;
+    if (e.key === "Home") idx = 0;
+    if (e.key === "End") idx = enabled.length - 1;
+    select(enabled[idx].value);
+    requestAnimationFrame(() => {
+      listRef.current
+        ?.querySelector<HTMLElement>(`[data-tab-value="${enabled[idx].value}"]`)
+        ?.focus();
+    });
+  };
+
   return (
     <div className={className}>
-      <div role="tablist" className={cn(listVariant[variant])} aria-orientation="horizontal">
+      <div ref={listRef} role="tablist" onKeyDown={onKeyDown} className={cn(listVariant[variant])} aria-orientation="horizontal">
         {items.map((it) => {
           const active = it.value === value;
           return (
@@ -47,10 +66,13 @@ export function Tabs({
               key={it.value}
               role="tab"
               aria-selected={active}
+              tabIndex={active ? 0 : -1}
+              data-tab-value={it.value}
               disabled={it.disabled}
               onClick={() => !it.disabled && select(it.value)}
               className={cn(
                 "inline-flex items-center gap-2 whitespace-nowrap font-medium transition-all",
+                "focus-visible:outline-none focus-visible:shadow-focus",
                 it.disabled && "opacity-40 cursor-not-allowed",
                 variant === "underline" &&
                   cn(

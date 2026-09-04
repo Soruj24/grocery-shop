@@ -186,7 +186,7 @@ export default function InventoryTable({
 
       {/* ─── Table ─── */}
       <div className="overflow-x-auto">
-        <table className="w-full text-left" aria-label="Inventory table">
+        <table className="w-full min-w-[680px] text-left" aria-label="Inventory table">
           <thead>
             <tr className="border-b border-border bg-muted/30">
               <th className="w-12 px-5 py-3" scope="col">

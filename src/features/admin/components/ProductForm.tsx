@@ -329,13 +329,13 @@ function VariantManager({ variants, basePrice, baseStock, onChange }: {
           <div className="space-y-2 pl-7">
             {group.options.map((opt, oi) => (
               <div key={oi} className="flex items-start gap-2">
-                <div className="flex-1 grid grid-cols-3 gap-2">
+                <div className="flex-1 grid grid-cols-2 sm:grid-cols-3 gap-2">
                   <input
                     type="text"
                     value={opt.label}
                     onChange={(e) => updateOption(gi, oi, "label", e.target.value)}
                     placeholder="Label (e.g. Large)"
-                    className="col-span-3 sm:col-span-1 h-8 px-2.5 rounded-md border border-border bg-card text-xs text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-ring"
+                    className="col-span-2 sm:col-span-1 h-8 px-2.5 rounded-md border border-border bg-card text-xs text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-ring"
                   />
                   <div className="relative">
                     <span className="absolute left-2 top-1/2 -translate-y-1/2 text-[10px] text-muted-foreground">৳</span>
@@ -864,7 +864,7 @@ export default function ProductForm({
                 {/* Tags */}
                 <div>
                   <p className="text-xs font-semibold text-foreground mb-3">Product Tags</p>
-                  <div className="grid grid-cols-3 gap-3">
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                     {([
                       { field: "isDeal" as const, label: "Deals", icon: "🏷️" },
                       { field: "isPopular" as const, label: "Popular", icon: "⭐" },

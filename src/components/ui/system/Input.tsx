@@ -1,5 +1,5 @@
 import * as React from "react";
-import { cn, disabledState, type Size } from "./types";
+import { cn, disabledState, focusRing, invalidShadow, type Size } from "./types";
 
 export interface InputProps
   extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "size" | "prefix"> {
@@ -28,7 +28,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
         className={cn(
           "group flex items-center w-full rounded-lg border bg-card transition-all duration-200",
           "border-input hover:border-border-strong focus-within:border-foreground/20 focus-within:shadow-focus",
-          invalid && "border-danger focus-within:border-danger focus-within:shadow-[0_0_0_3px_rgb(239_68_68_/0.15)]",
+          invalid && cn("border-danger focus-within:border-danger", invalidShadow),
           disabledState(disabled),
           inputHeight[size],
           wrapperClassName,
@@ -78,7 +78,8 @@ export const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
           "outline-none transition-all duration-200 resize-y min-h-[100px]",
           "border-input hover:border-border-strong focus:border-foreground/20 focus:shadow-focus",
           "placeholder:text-muted-foreground/60",
-          invalid && "border-danger focus:border-danger focus:shadow-[0_0_0_3px_rgb(239_68_68_/0.15)]",
+          focusRing,
+          invalid && cn("border-danger focus:border-danger", invalidShadow),
           disabledState(disabled),
           className,
         )}

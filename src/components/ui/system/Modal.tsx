@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { X } from "lucide-react";
 import { cn } from "@/utils/utils";
 
-interface ModalProps {
+export interface ModalProps {
   isOpen?: boolean;
   open?: boolean;
   onClose: () => void;
@@ -16,6 +16,9 @@ interface ModalProps {
   showClose?: boolean;
   className?: string;
 }
+
+/** Dialog is the canonical name; Modal is kept as an alias. */
+export type DialogProps = ModalProps;
 
 const sizeMap = {
   sm: "max-w-sm",
@@ -97,7 +100,7 @@ export const Modal = function Modal({
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="absolute inset-0 bg-black/50 backdrop-blur-sm"
+            className="absolute inset-0 bg-overlay backdrop-blur-sm"
             onClick={onClose}
             aria-hidden="true"
           />
@@ -151,4 +154,7 @@ export const Modal = function Modal({
       )}
     </AnimatePresence>
   );
-}
+};
+
+/** Canonical Dialog name — same component, same behavior. */
+export const Dialog = Object.assign(Modal, { displayName: "Dialog" });

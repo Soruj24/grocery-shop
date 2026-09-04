@@ -100,7 +100,7 @@ export default function DataTable<T extends { [key: string]: any }>({
       )}
 
       <div className="overflow-x-auto">
-        <table className="w-full text-left">
+        <table className="w-full min-w-[640px] text-left">
           <thead>
             <tr className="border-b border-border">
               {columns.map((col) => (

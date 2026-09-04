@@ -25,7 +25,7 @@ export default function DailyDealsBanner({ data }: Props) {
             <span className="text-xs font-black uppercase tracking-widest text-yellow-300">{content.badge}</span>
           </motion.div>
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }} className="space-y-4">
-            <h2 className="text-5xl md:text-7xl font-black leading-tight tracking-tighter">
+            <h2 className="text-4xl sm:text-5xl md:text-7xl font-black leading-tight tracking-tighter text-balance">
               {content.title}<br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 to-yellow-500 drop-shadow-sm">{content.subtitle}</span>
             </h2>

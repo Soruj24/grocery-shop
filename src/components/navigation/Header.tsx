@@ -52,7 +52,7 @@ export default function Header() {
           paddingTop: "env(safe-area-inset-top)",
         }}
       >
-        <div className="mx-auto flex max-w-7xl items-center gap-6 px-4 lg:px-6">
+        <div className="mx-auto flex max-w-7xl items-center gap-2 sm:gap-6 px-4 lg:px-6">
           <div className="shrink-0">
             <NavbarLogo />
           </div>
