@@ -123,15 +123,19 @@ export default function ShippingStep({
               <div className="px-5 pb-5 space-y-3 border-t border-border pt-4">
                 {/* Name */}
                 <div className="space-y-1.5">
-                  <label className="text-[10px] font-semibold text-muted-foreground/50 uppercase tracking-wider">
+                  <label htmlFor="guest-name" className="text-[10px] font-semibold text-muted-foreground uppercase tracking-wider">
                     {t("name_required")} *
                   </label>
                   <div className="relative">
                     <User className="absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground/40" />
                     <input
+                      id="guest-name"
                       type="text"
+                      autoComplete="name"
                       placeholder="Full name"
                       value={guestInfo.name}
+                      aria-invalid={!!errors.name}
+                      aria-describedby={errors.name ? "guest-name-error" : undefined}
                       onChange={(e) =>
                         onGuestInfoChange({
                           ...guestInfo,
@@ -146,7 +150,7 @@ export default function ShippingStep({
                     />
                   </div>
                   {errors.name && (
-                    <p className="text-[11px] font-medium text-danger flex items-center gap-1">
+                    <p id="guest-name-error" role="alert" className="text-[11px] font-medium text-danger flex items-center gap-1">
                       <span className="w-1 h-1 rounded-full bg-rose-500" />
                       {errors.name}
                     </p>
@@ -155,15 +159,19 @@ export default function ShippingStep({
 
                 {/* Phone */}
                 <div className="space-y-1.5">
-                  <label className="text-[10px] font-semibold text-muted-foreground/50 uppercase tracking-wider">
+                  <label htmlFor="guest-phone" className="text-[10px] font-semibold text-muted-foreground uppercase tracking-wider">
                     {t("phone_required")} *
                   </label>
                   <div className="relative">
                     <Phone className="absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground/40" />
                     <input
+                      id="guest-phone"
                       type="tel"
+                      autoComplete="tel"
                       placeholder="01XXXXXXXXX"
                       value={guestInfo.phone}
+                      aria-invalid={!!errors.phone}
+                      aria-describedby={errors.phone ? "guest-phone-error" : undefined}
                       onChange={(e) =>
                         onGuestInfoChange({
                           ...guestInfo,
@@ -178,7 +186,7 @@ export default function ShippingStep({
                     />
                   </div>
                   {errors.phone && (
-                    <p className="text-[11px] font-medium text-danger flex items-center gap-1">
+                    <p id="guest-phone-error" role="alert" className="text-[11px] font-medium text-danger flex items-center gap-1">
                       <span className="w-1 h-1 rounded-full bg-rose-500" />
                       {errors.phone}
                     </p>
@@ -187,13 +195,15 @@ export default function ShippingStep({
 
                 {/* Email */}
                 <div className="space-y-1.5">
-                  <label className="text-[10px] font-semibold text-muted-foreground/50 uppercase tracking-wider">
+                  <label htmlFor="guest-email" className="text-[10px] font-semibold text-muted-foreground uppercase tracking-wider">
                     {t("email_optional")}
                   </label>
                   <div className="relative">
                     <Mail className="absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground/40" />
                     <input
+                      id="guest-email"
                       type="email"
+                      autoComplete="email"
                       placeholder="email@example.com"
                       value={guestInfo.email || ""}
                       onChange={(e) =>

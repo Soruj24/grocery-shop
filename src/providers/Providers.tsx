@@ -11,6 +11,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Provider } from "react-redux";
 import { store } from "@/redux/store";
 import { useState } from "react";
+import { MotionConfig } from "framer-motion";
 import { SettingsProvider } from "@/contexts/SettingsContext";
 import WhatsAppButton from "@/components/shared/WhatsAppButton";
 import { ToastProvider } from "@/components/ui/system/Toast";
@@ -32,22 +33,25 @@ export function Providers({ children }: { children: React.ReactNode }) {
       <Provider store={store}>
         <QueryClientProvider client={queryClient}>
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-            <LanguageProvider>
-              <SettingsProvider>
-                <NotificationProvider>
-                  <RecentlyViewedProvider>
-                    <WishlistProvider>
-                      <CartProvider>
-                        <ToastProvider>
-                          {children}
-                          <WhatsAppButton />
-                        </ToastProvider>
-                      </CartProvider>
-                    </WishlistProvider>
-                  </RecentlyViewedProvider>
-                </NotificationProvider>
-              </SettingsProvider>
-            </LanguageProvider>
+            {/* All framer-motion animations respect the OS reduced-motion setting. */}
+            <MotionConfig reducedMotion="user">
+              <LanguageProvider>
+                <SettingsProvider>
+                  <NotificationProvider>
+                    <RecentlyViewedProvider>
+                      <WishlistProvider>
+                        <CartProvider>
+                          <ToastProvider>
+                            {children}
+                            <WhatsAppButton />
+                          </ToastProvider>
+                        </CartProvider>
+                      </WishlistProvider>
+                    </RecentlyViewedProvider>
+                  </NotificationProvider>
+                </SettingsProvider>
+              </LanguageProvider>
+            </MotionConfig>
           </ThemeProvider>
         </QueryClientProvider>
       </Provider>

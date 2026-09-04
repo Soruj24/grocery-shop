@@ -8,6 +8,7 @@ import { Product } from "@/types/product";
 import { Category } from "@/types/category";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { Drawer, Button, Skeleton } from "@/components/ui";
+import { staggerContainer, staggerItem } from "@/lib/motion";
 import { ProductCardSkeleton } from "@/components/ui/Skeleton";
 import ProductCardRedesign from "./ProductCardRedesign";
 import ProductListRow from "./ProductListRow";
@@ -241,19 +242,25 @@ export default function ProductListing({
           ) : (
             <>
               {view === "grid" ? (
-                <div className="grid grid-cols-2 gap-4 md:grid-cols-3 xl:grid-cols-4">
+                <motion.div
+                  variants={staggerContainer}
+                  initial="hidden"
+                  animate="visible"
+                  className="grid grid-cols-2 gap-4 md:grid-cols-3 xl:grid-cols-4"
+                >
                   {products.map((p) => (
-                    <ProductCardRedesign
-                      key={p._id}
-                      product={p}
-                      onQuickView={setQuickView}
-                    />
+                    <motion.div key={p._id} variants={staggerItem}>
+                      <ProductCardRedesign
+                        product={p}
+                        onQuickView={setQuickView}
+                      />
+                    </motion.div>
                   ))}
                   {loadingMore &&
                     Array.from({ length: 4 }).map((_, i) => (
                       <ProductCardSkeleton key={`sk-${i}`} />
                     ))}
-                </div>
+                </motion.div>
               ) : (
                 <div className="space-y-4">
                   {products.map((p) => (

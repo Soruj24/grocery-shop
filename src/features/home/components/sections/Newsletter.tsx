@@ -105,6 +105,9 @@ export default function Newsletter() {
                   </div>
                   <input
                     type="email"
+                    aria-label={t(
+                      "newsletter_placeholder"
+                    )}
                     placeholder={t(
                       "newsletter_placeholder"
                     )}

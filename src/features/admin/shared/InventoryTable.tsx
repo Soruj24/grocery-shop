@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, KeyboardEvent } from "react";
 import {
   Search, ChevronLeft, ChevronRight, ArrowUpDown, ArrowUp, ArrowDown,
   Package, Check, ChevronDown, X, Loader2, Minus, Plus, Pencil,
@@ -143,6 +143,13 @@ export default function InventoryTable({
     return sortDir === "asc" ? <ArrowUp className="h-3 w-3" /> : <ArrowDown className="h-3 w-3" />;
   };
 
+  const sortKeyDown = (key: string) => (e: KeyboardEvent) => {
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      onSort(key);
+    }
+  };
+
   return (
     <div className="rounded-xl border border-border bg-card overflow-hidden">
       {/* ─── Toolbar ─── */}
@@ -195,12 +202,12 @@ export default function InventoryTable({
                   onChange={onSelectAll}
                   className="h-4 w-4 rounded border-border text-primary focus:ring-ring cursor-pointer" aria-label="Select all" />
               </th>
-              <th className="px-5 py-3 text-xs font-semibold uppercase tracking-wider text-muted-foreground cursor-pointer select-none hover:text-foreground transition-colors" scope="col" onClick={() => onSort("name")}
+              <th className="px-5 py-3 text-xs font-semibold uppercase tracking-wider text-muted-foreground cursor-pointer select-none hover:text-foreground transition-colors" scope="col" role="button" tabIndex={0} onClick={() => onSort("name")} onKeyDown={sortKeyDown("name")}
                 aria-sort={sort === "name" ? (sortDir === "asc" ? "ascending" : "descending") : "none"}>
                 <div className="flex items-center gap-1.5">Product {sortIcon("name")}</div>
               </th>
               <th className="px-5 py-3 text-xs font-semibold uppercase tracking-wider text-muted-foreground hidden md:table-cell" scope="col">SKU</th>
-              <th className="px-5 py-3 text-xs font-semibold uppercase tracking-wider text-muted-foreground cursor-pointer select-none hover:text-foreground transition-colors" scope="col" onClick={() => onSort("stock")}
+              <th className="px-5 py-3 text-xs font-semibold uppercase tracking-wider text-muted-foreground cursor-pointer select-none hover:text-foreground transition-colors" scope="col" role="button" tabIndex={0} onClick={() => onSort("stock")} onKeyDown={sortKeyDown("stock")}
                 aria-sort={sort === "stock" ? (sortDir === "asc" ? "ascending" : "descending") : "none"}>
                 <div className="flex items-center gap-1.5">Stock {sortIcon("stock")}</div>
               </th>

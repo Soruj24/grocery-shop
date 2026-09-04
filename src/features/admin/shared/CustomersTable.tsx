@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, KeyboardEvent } from "react";
 import {
   Search, ChevronLeft, ChevronRight, ArrowUpDown, ArrowUp, ArrowDown,
   Users, Check, ChevronDown, X, Eye, UserCheck, UserX,
@@ -138,6 +138,13 @@ export default function CustomersTable({
     return sortDir === "asc" ? <ArrowUp className="h-3 w-3" /> : <ArrowDown className="h-3 w-3" />;
   };
 
+  const sortKeyDown = (key: string) => (e: KeyboardEvent) => {
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      onSort(key);
+    }
+  };
+
   return (
     <div className="rounded-xl border border-border bg-card overflow-hidden">
       {/* ─── Toolbar ─── */}
@@ -178,17 +185,17 @@ export default function CustomersTable({
         <table className="w-full min-w-[680px] text-left" aria-label="Customers table">
           <thead>
             <tr className="border-b border-border bg-muted/30">
-              <th className="px-5 py-3 text-xs font-semibold uppercase tracking-wider text-muted-foreground cursor-pointer select-none hover:text-foreground transition-colors" scope="col" onClick={() => onSort("name")} aria-sort={sort === "name" ? (sortDir === "asc" ? "ascending" : "descending") : "none"}>
+              <th className="px-5 py-3 text-xs font-semibold uppercase tracking-wider text-muted-foreground cursor-pointer select-none hover:text-foreground transition-colors" scope="col" role="button" tabIndex={0} onClick={() => onSort("name")} onKeyDown={sortKeyDown("name")} aria-sort={sort === "name" ? (sortDir === "asc" ? "ascending" : "descending") : "none"}>
                 <div className="flex items-center gap-1.5">Customer {sortIcon("name")}</div>
               </th>
               <th className="px-5 py-3 text-xs font-semibold uppercase tracking-wider text-muted-foreground hidden md:table-cell" scope="col">Phone</th>
               <th className="px-5 py-3 text-xs font-semibold uppercase tracking-wider text-muted-foreground hidden lg:table-cell" scope="col">Status</th>
-              <th className="px-5 py-3 text-xs font-semibold uppercase tracking-wider text-muted-foreground text-right cursor-pointer select-none hover:text-foreground transition-colors" scope="col" onClick={() => onSort("totalSpent")} aria-sort={sort === "totalSpent" ? (sortDir === "asc" ? "ascending" : "descending") : "none"}>
+              <th className="px-5 py-3 text-xs font-semibold uppercase tracking-wider text-muted-foreground text-right cursor-pointer select-none hover:text-foreground transition-colors" scope="col" role="button" tabIndex={0} onClick={() => onSort("totalSpent")} onKeyDown={sortKeyDown("totalSpent")} aria-sort={sort === "totalSpent" ? (sortDir === "asc" ? "ascending" : "descending") : "none"}>
                 <div className="flex items-center justify-end gap-1.5">Total Spent {sortIcon("totalSpent")}</div>
               </th>
               <th className="px-5 py-3 text-xs font-semibold uppercase tracking-wider text-muted-foreground text-right hidden md:table-cell" scope="col">Orders</th>
               <th className="px-5 py-3 text-xs font-semibold uppercase tracking-wider text-muted-foreground hidden lg:table-cell" scope="col">Last Order</th>
-              <th className="px-5 py-3 text-xs font-semibold uppercase tracking-wider text-muted-foreground cursor-pointer select-none hover:text-foreground transition-colors" scope="col" onClick={() => onSort("createdAt")} aria-sort={sort === "createdAt" ? (sortDir === "asc" ? "ascending" : "descending") : "none"}>
+              <th className="px-5 py-3 text-xs font-semibold uppercase tracking-wider text-muted-foreground cursor-pointer select-none hover:text-foreground transition-colors" scope="col" role="button" tabIndex={0} onClick={() => onSort("createdAt")} onKeyDown={sortKeyDown("createdAt")} aria-sort={sort === "createdAt" ? (sortDir === "asc" ? "ascending" : "descending") : "none"}>
                 <div className="flex items-center gap-1.5">Joined {sortIcon("createdAt")}</div>
               </th>
               <th className="w-12 px-5 py-3" scope="col"><span className="sr-only">Actions</span></th>

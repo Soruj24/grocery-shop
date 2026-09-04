@@ -110,6 +110,8 @@ export default function MobileSearchOverlay({
                   <input
                     ref={inputRef}
                     type="text"
+                    role="searchbox"
+                    aria-label="Search products"
                     value={localQuery}
                     onChange={(e) => {
                       setLocalQuery(e.target.value);
@@ -129,6 +131,7 @@ export default function MobileSearchOverlay({
                   {localQuery && (
                     <button
                       type="button"
+                      aria-label="Clear search"
                       onClick={() => {
                         setLocalQuery("");
                         search.setSearchTerm("");

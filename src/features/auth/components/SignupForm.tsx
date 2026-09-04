@@ -52,12 +52,14 @@ export default function SignupForm() {
 
       <form onSubmit={handleSubmit} className="space-y-4">
         <div className="space-y-1.5">
-          <label className="text-sm font-medium text-foreground">
+          <label htmlFor="signup-name" className="text-sm font-medium text-foreground">
             আপনার নাম
           </label>
           <Input
+            id="signup-name"
             type="text"
             required
+            autoComplete="name"
             size="lg"
             value={formData.name}
             onChange={(e) => setFormData({ ...formData, name: e.target.value })}
@@ -67,12 +69,14 @@ export default function SignupForm() {
         </div>
 
         <div className="space-y-1.5">
-          <label className="text-sm font-medium text-foreground">
+          <label htmlFor="signup-email" className="text-sm font-medium text-foreground">
             ইমেইল এড্রেস
           </label>
           <Input
+            id="signup-email"
             type="email"
             required
+            autoComplete="email"
             size="lg"
             value={formData.email}
             onChange={(e) => setFormData({ ...formData, email: e.target.value })}
@@ -82,12 +86,14 @@ export default function SignupForm() {
         </div>
 
         <div className="space-y-1.5">
-          <label className="text-sm font-medium text-foreground">
+          <label htmlFor="signup-password" className="text-sm font-medium text-foreground">
             পাসওয়ার্ড
           </label>
           <Input
+            id="signup-password"
             type="password"
             required
+            autoComplete="new-password"
             size="lg"
             value={formData.password}
             onChange={(e) =>

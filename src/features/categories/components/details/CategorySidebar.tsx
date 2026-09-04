@@ -194,7 +194,7 @@ export default function CategorySidebar({
 
       {/* Sort */}
       <div className="space-y-2.5">
-        <label className="text-[10px] font-semibold text-muted-foreground/50 uppercase tracking-wider">
+        <label className="text-[10px] font-semibold text-muted-foreground uppercase tracking-wider">
           Sort by
         </label>
         <div className="space-y-1">
@@ -229,7 +229,7 @@ export default function CategorySidebar({
 
       {/* Price Range */}
       <div className="space-y-3">
-        <label className="text-[10px] font-semibold text-muted-foreground/50 uppercase tracking-wider">
+        <label className="text-[10px] font-semibold text-muted-foreground uppercase tracking-wider">
           Price Range
         </label>
         <div className="flex items-center gap-2">
@@ -306,7 +306,7 @@ export default function CategorySidebar({
 
       {/* Rating Filter */}
       <div className="space-y-2.5">
-        <label className="text-[10px] font-semibold text-muted-foreground/50 uppercase tracking-wider">
+        <label className="text-[10px] font-semibold text-muted-foreground uppercase tracking-wider">
           Rating
         </label>
         <div className="space-y-1">
@@ -348,7 +348,7 @@ export default function CategorySidebar({
       {/* Brand Filter */}
       {brands.length > 0 && (
         <div className="space-y-2.5">
-          <label className="text-[10px] font-semibold text-muted-foreground/50 uppercase tracking-wider">
+          <label className="text-[10px] font-semibold text-muted-foreground uppercase tracking-wider">
             Brand
           </label>
           <div className="space-y-1 max-h-40 overflow-y-auto scrollbar-hide">
@@ -380,7 +380,7 @@ export default function CategorySidebar({
       {/* Color Filter */}
       {colors.length > 0 && (
         <div className="space-y-2.5">
-          <label className="text-[10px] font-semibold text-muted-foreground/50 uppercase tracking-wider">
+          <label className="text-[10px] font-semibold text-muted-foreground uppercase tracking-wider">
             Color
           </label>
           <div className="flex flex-wrap gap-1.5">
@@ -408,7 +408,7 @@ export default function CategorySidebar({
 
       {/* Availability */}
       <div className="space-y-2.5">
-        <label className="text-[10px] font-semibold text-muted-foreground/50 uppercase tracking-wider">
+        <label className="text-[10px] font-semibold text-muted-foreground uppercase tracking-wider">
           Availability
         </label>
         <button
@@ -453,7 +453,7 @@ export default function CategorySidebar({
 
       {/* Category Tree */}
       <div className="space-y-2.5 pt-2 border-t border-border">
-        <label className="text-[10px] font-semibold text-muted-foreground/50 uppercase tracking-wider">
+        <label className="text-[10px] font-semibold text-muted-foreground uppercase tracking-wider">
           Categories
         </label>
         <div className="space-y-0.5 max-h-[300px] overflow-y-auto scrollbar-hide">

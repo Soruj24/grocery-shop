@@ -51,31 +51,31 @@ export default function CouponFormModal({ isOpen, onClose, editingCoupon, onSave
       <form onSubmit={handleSubmit} className="space-y-6">
         <div className="grid grid-cols-2 gap-4">
           <div className="space-y-2">
-            <label className="text-xs font-black uppercase tracking-widest text-gray-400">কুপন কোড</label>
-            <input type="text" required className={inputClass} value={formData.code} onChange={(e) => update("code", e.target.value)} />
+            <label htmlFor="coupon-code" className="text-xs font-black uppercase tracking-widest text-gray-400">কুপন কোড</label>
+            <input id="coupon-code" type="text" required className={inputClass} value={formData.code} onChange={(e) => update("code", e.target.value)} />
           </div>
           <div className="space-y-2">
-            <label className="text-xs font-black uppercase tracking-widest text-gray-400">ডিসকাউন্ট টাইপ</label>
-            <select className={inputClass} value={formData.discountType} onChange={(e) => update("discountType", e.target.value)}>
+            <label htmlFor="coupon-type" className="text-xs font-black uppercase tracking-widest text-gray-400">ডিসকাউন্ট টাইপ</label>
+            <select id="coupon-type" className={inputClass} value={formData.discountType} onChange={(e) => update("discountType", e.target.value)}>
               <option value="percentage">শতাংশ (%)</option>
               <option value="fixed">স্থায়ী (৳)</option>
             </select>
           </div>
           <div className="space-y-2">
-            <label className="text-xs font-black uppercase tracking-widest text-gray-400">ডিসকাউন্ট পরিমাণ</label>
-            <input type="number" required className={inputClass} value={formData.discountValue} onChange={(e) => update("discountValue", Number(e.target.value))} />
+            <label htmlFor="coupon-value" className="text-xs font-black uppercase tracking-widest text-gray-400">ডিসকাউন্ট পরিমাণ</label>
+            <input id="coupon-value" type="number" required className={inputClass} value={formData.discountValue} onChange={(e) => update("discountValue", Number(e.target.value))} />
           </div>
           <div className="space-y-2">
-            <label className="text-xs font-black uppercase tracking-widest text-gray-400">মিনিমাম অর্ডার</label>
-            <input type="number" className={inputClass} value={formData.minOrderAmount} onChange={(e) => update("minOrderAmount", Number(e.target.value))} />
+            <label htmlFor="coupon-min" className="text-xs font-black uppercase tracking-widest text-gray-400">মিনিমাম অর্ডার</label>
+            <input id="coupon-min" type="number" className={inputClass} value={formData.minOrderAmount} onChange={(e) => update("minOrderAmount", Number(e.target.value))} />
           </div>
           <div className="space-y-2">
-            <label className="text-xs font-black uppercase tracking-widest text-gray-400">মেয়াদ শেষ</label>
-            <input type="date" required className={inputClass} value={formData.expiryDate} onChange={(e) => update("expiryDate", e.target.value)} />
+            <label htmlFor="coupon-expiry" className="text-xs font-black uppercase tracking-widest text-gray-400">মেয়াদ শেষ</label>
+            <input id="coupon-expiry" type="date" required className={inputClass} value={formData.expiryDate} onChange={(e) => update("expiryDate", e.target.value)} />
           </div>
           <div className="space-y-2">
-            <label className="text-xs font-black uppercase tracking-widest text-gray-400">ব্যবহারের সীমা</label>
-            <input type="number" className={inputClass} value={formData.usageLimit} onChange={(e) => update("usageLimit", Number(e.target.value))} />
+            <label htmlFor="coupon-limit" className="text-xs font-black uppercase tracking-widest text-gray-400">ব্যবহারের সীমা</label>
+            <input id="coupon-limit" type="number" className={inputClass} value={formData.usageLimit} onChange={(e) => update("usageLimit", Number(e.target.value))} />
           </div>
         </div>
         <button type="submit" disabled={saving}

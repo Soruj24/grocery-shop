@@ -49,12 +49,14 @@ export default function LoginForm() {
 
       <form onSubmit={handleSubmit} className="space-y-4">
         <div className="space-y-1.5">
-          <label className="text-sm font-medium text-foreground">
+          <label htmlFor="login-email" className="text-sm font-medium text-foreground">
             ইমেইল এড্রেস
           </label>
           <Input
+            id="login-email"
             type="email"
             required
+            autoComplete="email"
             size="lg"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
@@ -65,7 +67,7 @@ export default function LoginForm() {
 
         <div className="space-y-1.5">
           <div className="flex justify-between items-center">
-            <label className="text-sm font-medium text-foreground">
+            <label htmlFor="login-password" className="text-sm font-medium text-foreground">
               পাসওয়ার্ড
             </label>
             <Link
@@ -76,8 +78,10 @@ export default function LoginForm() {
             </Link>
           </div>
           <Input
+            id="login-password"
             type="password"
             required
+            autoComplete="current-password"
             size="lg"
             value={password}
             onChange={(e) => setPassword(e.target.value)}

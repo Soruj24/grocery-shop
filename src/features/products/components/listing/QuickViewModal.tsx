@@ -114,7 +114,7 @@ export default function QuickViewModal({
                 <button
                   onClick={() => setQty((q) => Math.min(product.stock || 99, q + 1))}
                   disabled={qty >= (product.stock || 99)}
-                  className="flex h-9 w-9 items-center justify-center rounded-lg bg-card shadow-sm transition-colors hover:bg-primary-subtle hover:text-primary disabled:opacity-30"
+                  className="flex h-9 w-9 items-center justify-center rounded-lg bg-card shadow-sm transition-all hover:bg-primary-subtle hover:text-primary active:scale-95 disabled:opacity-30"
                 >
                   <Plus className="h-4 w-4" />
                 </button>

@@ -35,11 +35,11 @@ export default function SecurityPage() {
         </div>
         <div className="space-y-3 max-w-md">
           <div className="relative">
-            <input type={showPassword ? "text" : "password"} placeholder="Current Password" value={passwords.current} onChange={(e) => setPasswords({ ...passwords, current: e.target.value })} className="w-full rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 px-3 py-2.5 pr-10 text-sm text-gray-900 dark:text-white placeholder:text-gray-400 focus:border-emerald-500 outline-none" />
-            <button onClick={() => setShowPassword(!showPassword)} className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600">{showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}</button>
+            <input id="current-password" type={showPassword ? "text" : "password"} autoComplete="current-password" aria-label="Current Password" placeholder="Current Password" value={passwords.current} onChange={(e) => setPasswords({ ...passwords, current: e.target.value })} className="w-full rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 px-3 py-2.5 pr-10 text-sm text-gray-900 dark:text-white placeholder:text-gray-400 focus:border-emerald-500 outline-none" />
+            <button onClick={() => setShowPassword(!showPassword)} aria-label={showPassword ? "Hide password" : "Show password"} aria-pressed={showPassword} className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600">{showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}</button>
           </div>
-          <input type="password" placeholder="New Password" value={passwords.new} onChange={(e) => setPasswords({ ...passwords, new: e.target.value })} className="w-full rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 px-3 py-2.5 text-sm text-gray-900 dark:text-white placeholder:text-gray-400 focus:border-emerald-500 outline-none" />
-          <input type="password" placeholder="Confirm New Password" value={passwords.confirm} onChange={(e) => setPasswords({ ...passwords, confirm: e.target.value })} className="w-full rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 px-3 py-2.5 text-sm text-gray-900 dark:text-white placeholder:text-gray-400 focus:border-emerald-500 outline-none" />
+          <input id="new-password" type="password" autoComplete="new-password" aria-label="New Password" placeholder="New Password" value={passwords.new} onChange={(e) => setPasswords({ ...passwords, new: e.target.value })} className="w-full rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 px-3 py-2.5 text-sm text-gray-900 dark:text-white placeholder:text-gray-400 focus:border-emerald-500 outline-none" />
+          <input id="confirm-password" type="password" autoComplete="new-password" aria-label="Confirm New Password" placeholder="Confirm New Password" value={passwords.confirm} onChange={(e) => setPasswords({ ...passwords, confirm: e.target.value })} className="w-full rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 px-3 py-2.5 text-sm text-gray-900 dark:text-white placeholder:text-gray-400 focus:border-emerald-500 outline-none" />
           <button onClick={handlePasswordChange} disabled={!passwords.current || !passwords.new || passwords.new !== passwords.confirm} className="rounded-xl bg-emerald-500 px-5 py-2.5 text-sm font-semibold text-white hover:bg-emerald-600 disabled:opacity-50 transition-colors">
             Update Password
           </button>
@@ -58,7 +58,7 @@ export default function SecurityPage() {
               <p className="text-xs text-gray-500 dark:text-gray-400">Add an extra layer of security</p>
             </div>
           </div>
-          <button onClick={() => setTwoFactor(!twoFactor)} className={`relative h-6 w-11 rounded-full transition-colors ${twoFactor ? "bg-emerald-500" : "bg-gray-300 dark:bg-gray-600"}`}>
+          <button role="switch" aria-checked={twoFactor} aria-label="Two-factor authentication" onClick={() => setTwoFactor(!twoFactor)} className={`relative h-6 w-11 rounded-full transition-colors ${twoFactor ? "bg-emerald-500" : "bg-gray-300 dark:bg-gray-600"}`}>
             <span className={`absolute top-0.5 h-5 w-5 rounded-full bg-white shadow transition-transform ${twoFactor ? "left-[22px]" : "left-0.5"}`} />
           </button>
         </div>

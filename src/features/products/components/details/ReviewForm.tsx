@@ -41,11 +41,13 @@ export default function ReviewForm({
       <form onSubmit={onSubmit} className="space-y-5">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <label className="text-[11px] font-semibold text-muted-foreground/60 uppercase tracking-wider">
+            <label htmlFor="review-name" className="text-[11px] font-semibold text-muted-foreground/60 uppercase tracking-wider">
               {t("your_name")}
             </label>
             <Input
+              id="review-name"
               value={name}
+              autoComplete="name"
               onChange={(e) =>
                 onNameChange(e.target.value)
               }
@@ -54,14 +56,17 @@ export default function ReviewForm({
             />
           </div>
           <div>
-            <label className="text-[11px] font-semibold text-muted-foreground/60 uppercase tracking-wider">
+            <span id="review-rating-label" className="text-[11px] font-semibold text-muted-foreground/60 uppercase tracking-wider">
               {t("your_rating")}
-            </label>
-            <div className="mt-2 flex items-center gap-1">
+            </span>
+            <div className="mt-2 flex items-center gap-1" role="radiogroup" aria-labelledby="review-rating-label">
               {[1, 2, 3, 4, 5].map((star) => (
                 <button
                   key={star}
                   type="button"
+                  role="radio"
+                  aria-checked={star === rating}
+                  aria-label={`Rate ${star} out of 5 stars`}
                   onClick={() =>
                     onRatingChange(star)
                   }
@@ -80,10 +85,11 @@ export default function ReviewForm({
           </div>
         </div>
         <div>
-          <label className="text-[11px] font-semibold text-muted-foreground/60 uppercase tracking-wider">
+          <label htmlFor="review-comment" className="text-[11px] font-semibold text-muted-foreground/60 uppercase tracking-wider">
             {t("your_review")}
           </label>
           <Textarea
+            id="review-comment"
             value={comment}
             onChange={(e) =>
               onCommentChange(e.target.value)

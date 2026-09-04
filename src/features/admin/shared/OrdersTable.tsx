@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef, useMemo } from "react";
+import { useState, useEffect, useRef, useMemo, KeyboardEvent } from "react";
 import {
   Search, ChevronLeft, ChevronRight, ArrowUpDown, ArrowUp, ArrowDown,
   MoreHorizontal, Package, Check, ChevronDown, X, Loader2, Eye,
@@ -250,6 +250,13 @@ export default function OrdersTable({
     return sortDir === "asc" ? <ArrowUp className="h-3 w-3" /> : <ArrowDown className="h-3 w-3" />;
   };
 
+  const sortKeyDown = (key: string) => (e: KeyboardEvent) => {
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      onSort(key);
+    }
+  };
+
   return (
     <div className="rounded-xl border border-border bg-card overflow-hidden">
       {/* ─── Toolbar ─── */}
@@ -346,12 +353,12 @@ export default function OrdersTable({
                   aria-label="Select all orders"
                 />
               </th>
-              <th className="px-5 py-3 text-xs font-semibold uppercase tracking-wider text-muted-foreground cursor-pointer select-none hover:text-foreground transition-colors" scope="col" onClick={() => onSort("createdAt")} aria-sort={sort === "createdAt" ? (sortDir === "asc" ? "ascending" : "descending") : "none"}>
+              <th className="px-5 py-3 text-xs font-semibold uppercase tracking-wider text-muted-foreground cursor-pointer select-none hover:text-foreground transition-colors" scope="col" role="button" tabIndex={0} onClick={() => onSort("createdAt")} onKeyDown={sortKeyDown("createdAt")} aria-sort={sort === "createdAt" ? (sortDir === "asc" ? "ascending" : "descending") : "none"}>
                 <div className="flex items-center gap-1.5">Order {sortIcon("createdAt")}</div>
               </th>
               <th className="px-5 py-3 text-xs font-semibold uppercase tracking-wider text-muted-foreground" scope="col">Customer</th>
               <th className="px-5 py-3 text-xs font-semibold uppercase tracking-wider text-muted-foreground hidden md:table-cell" scope="col">Products</th>
-              <th className="px-5 py-3 text-xs font-semibold uppercase tracking-wider text-muted-foreground cursor-pointer select-none hover:text-foreground transition-colors" scope="col" onClick={() => onSort("total")} aria-sort={sort === "total" ? (sortDir === "asc" ? "ascending" : "descending") : "none"}>
+              <th className="px-5 py-3 text-xs font-semibold uppercase tracking-wider text-muted-foreground cursor-pointer select-none hover:text-foreground transition-colors" scope="col" role="button" tabIndex={0} onClick={() => onSort("total")} onKeyDown={sortKeyDown("total")} aria-sort={sort === "total" ? (sortDir === "asc" ? "ascending" : "descending") : "none"}>
                 <div className="flex items-center gap-1.5">Total {sortIcon("total")}</div>
               </th>
               <th className="px-5 py-3 text-xs font-semibold uppercase tracking-wider text-muted-foreground hidden lg:table-cell" scope="col">Payment</th>

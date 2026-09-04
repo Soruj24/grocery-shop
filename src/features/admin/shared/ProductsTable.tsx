@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo, useCallback, useRef, useEffect } from "react";
+import { useState, useMemo, useCallback, useRef, useEffect, KeyboardEvent } from "react";
 import {
   Search, ChevronLeft, ChevronRight, ArrowUpDown, ArrowUp, ArrowDown,
   MoreHorizontal, Pencil, Trash2, Eye, EyeOff, Package, Check,
@@ -207,6 +207,13 @@ export default function ProductsTable({
     return sortDir === "asc" ? <ArrowUp className="h-3 w-3" /> : <ArrowDown className="h-3 w-3" />;
   };
 
+  const sortKeyDown = (key: string) => (e: KeyboardEvent) => {
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      onSort(key);
+    }
+  };
+
   return (
     <div className="rounded-xl border border-border bg-card overflow-hidden">
       {/* ─── Toolbar ─── */}
@@ -328,7 +335,10 @@ export default function ProductsTable({
               <th
                 className="px-5 py-3 text-xs font-semibold uppercase tracking-wider text-muted-foreground cursor-pointer select-none hover:text-foreground transition-colors"
                 scope="col"
+                role="button"
+                tabIndex={0}
                 onClick={() => onSort("name")}
+                onKeyDown={sortKeyDown("name")}
                 aria-sort={sort === "name" ? (sortDir === "asc" ? "ascending" : "descending") : "none"}
               >
                 <div className="flex items-center gap-1.5">Product {sortIcon("name")}</div>
@@ -337,7 +347,10 @@ export default function ProductsTable({
               <th
                 className="px-5 py-3 text-xs font-semibold uppercase tracking-wider text-muted-foreground cursor-pointer select-none hover:text-foreground transition-colors"
                 scope="col"
+                role="button"
+                tabIndex={0}
                 onClick={() => onSort("price")}
+                onKeyDown={sortKeyDown("price")}
                 aria-sort={sort === "price" ? (sortDir === "asc" ? "ascending" : "descending") : "none"}
               >
                 <div className="flex items-center gap-1.5">Price {sortIcon("price")}</div>
@@ -346,7 +359,10 @@ export default function ProductsTable({
               <th
                 className="px-5 py-3 text-xs font-semibold uppercase tracking-wider text-muted-foreground cursor-pointer select-none hover:text-foreground transition-colors"
                 scope="col"
+                role="button"
+                tabIndex={0}
                 onClick={() => onSort("stock")}
+                onKeyDown={sortKeyDown("stock")}
                 aria-sort={sort === "stock" ? (sortDir === "asc" ? "ascending" : "descending") : "none"}
               >
                 <div className="flex items-center gap-1.5">Stock {sortIcon("stock")}</div>

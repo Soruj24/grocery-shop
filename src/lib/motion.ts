@@ -78,3 +78,21 @@ export const popVariants: Variants = {
   visible: { scale: 1 },
   exit: { scale: 0 },
 };
+
+/* ── List Entrance (mount-only, keep subtle) ────────────────────────── */
+
+/** Parent container: staggers direct `staggerItem` children on mount. */
+export const staggerContainer: Variants = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.04 } },
+};
+
+/** Child item: quick fade + minimal rise. */
+export const staggerItem: Variants = {
+  hidden: { opacity: 0, y: 10 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.25, ease: [0, 0, 0.2, 1] },
+  },
+};

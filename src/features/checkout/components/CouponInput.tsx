@@ -65,7 +65,7 @@ export default function CouponInput({
           <button
             onClick={handleApply}
             disabled={loading || !promoCode}
-            className="bg-primary text-primary-foreground px-6 py-3 rounded-lg font-black hover:bg-primary-hover transition-all disabled:opacity-50 flex items-center gap-2"
+            className="bg-primary text-primary-foreground px-6 py-3 rounded-lg font-black hover:bg-primary-hover transition-all active:scale-[0.98] disabled:opacity-50 flex items-center gap-2"
           >
             {loading ? (
               <Loader2 className="w-5 h-5 animate-spin" />

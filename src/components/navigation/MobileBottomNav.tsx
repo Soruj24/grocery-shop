@@ -140,6 +140,7 @@ export default function MobileBottomNav() {
                   key={item.href}
                   href={item.href}
                   aria-label={item.label}
+                  aria-current={isActive ? "page" : undefined}
                   className="relative flex flex-col items-center gap-0.5 px-3 py-2 rounded-xl min-w-[48px] min-h-[48px] justify-center"
                 >
                   {/* Active Indicator */}

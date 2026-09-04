@@ -108,7 +108,7 @@ export default function PaymentStep({
         <button
           onClick={onNext}
           disabled={!isValid}
-          className="flex-[2] bg-primary hover:bg-primary-hover text-primary-foreground py-6 rounded-lg font-black text-xl transition-all flex items-center justify-center gap-4 shadow-primary disabled:opacity-50"
+          className="flex-[2] bg-primary hover:bg-primary-hover text-primary-foreground py-6 rounded-lg font-black text-xl transition-all active:scale-[0.98] flex items-center justify-center gap-4 shadow-primary disabled:opacity-50"
         >
           {t("next_step")}
           <ArrowRight className="w-6 h-6" />

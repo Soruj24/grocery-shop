@@ -56,7 +56,7 @@ export default function AddressBook({ addresses, selectedId, onSelect, onAdd, on
   return (
     <div className="space-y-3">
       {addresses.length > 0 && (
-        <div className="space-y-2">
+        <div className="space-y-2" role="radiogroup" aria-label="Saved addresses">
           {addresses.map((addr) => {
             const LabelIcon = getLabelIcon(addr.label);
             const isSelected = selectedId === addr.id;
@@ -64,7 +64,16 @@ export default function AddressBook({ addresses, selectedId, onSelect, onAdd, on
               <motion.div
                 key={addr.id}
                 layout
+                role="radio"
+                aria-checked={isSelected}
+                tabIndex={0}
                 onClick={() => onSelect(addr)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ") {
+                    e.preventDefault();
+                    onSelect(addr);
+                  }
+                }}
                 className={`relative cursor-pointer rounded-xl border-2 p-3 transition-all ${
                   isSelected
                     ? "border-emerald-500 bg-emerald-50 dark:bg-emerald-950/20"
@@ -99,6 +108,7 @@ export default function AddressBook({ addresses, selectedId, onSelect, onAdd, on
                     )}
                     <button
                       onClick={(e) => { e.stopPropagation(); onDelete(addr.id); }}
+                      aria-label={`Delete address ${addr.label || addr.name || ""}`.trim()}
                       className="rounded-lg p-1.5 text-gray-400 hover:bg-red-50 hover:text-red-500 transition-colors"
                     >
                       <Trash2 className="h-3.5 w-3.5" />
@@ -129,6 +139,7 @@ export default function AddressBook({ addresses, selectedId, onSelect, onAdd, on
                 {defaultLabels.map((l) => (
                   <button
                     key={l.id}
+                    aria-pressed={form.label === l.id}
                     onClick={() => setForm({ ...form, label: l.id })}
                     className={`flex items-center gap-1.5 rounded-lg border px-3 py-1.5 text-xs font-medium transition-all ${
                       form.label === l.id
@@ -142,18 +153,21 @@ export default function AddressBook({ addresses, selectedId, onSelect, onAdd, on
                 ))}
               </div>
               <input
+                aria-label={`${t("name_required")}`}
                 placeholder={`${t("name_required")} *`}
                 value={form.name}
                 onChange={(e) => setForm({ ...form, name: e.target.value })}
                 className="w-full rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 px-3 py-2 text-sm text-gray-900 dark:text-white placeholder:text-gray-400 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 outline-none"
               />
               <input
+                aria-label={`${t("phone_required")}`}
                 placeholder={`${t("phone_required")} *`}
                 value={form.phone}
                 onChange={(e) => setForm({ ...form, phone: e.target.value })}
                 className="w-full rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 px-3 py-2 text-sm text-gray-900 dark:text-white placeholder:text-gray-400 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 outline-none"
               />
               <input
+                aria-label={`${t("delivery_address")}`}
                 placeholder={`${t("delivery_address")} *`}
                 value={form.address}
                 onChange={(e) => setForm({ ...form, address: e.target.value })}
@@ -161,12 +175,14 @@ export default function AddressBook({ addresses, selectedId, onSelect, onAdd, on
               />
               <div className="grid grid-cols-2 gap-2">
                 <input
+                  aria-label="City (optional)"
                   placeholder="City (optional)"
                   value={form.city}
                   onChange={(e) => setForm({ ...form, city: e.target.value })}
                   className="w-full rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 px-3 py-2 text-sm text-gray-900 dark:text-white placeholder:text-gray-400 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 outline-none"
                 />
                 <input
+                  aria-label="Area (optional)"
                   placeholder="Area (optional)"
                   value={form.area}
                   onChange={(e) => setForm({ ...form, area: e.target.value })}

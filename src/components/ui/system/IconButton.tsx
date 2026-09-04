@@ -27,12 +27,13 @@ const square: Record<Size, string> = {
 
 export const IconButton = React.forwardRef<HTMLButtonElement, IconButtonProps>(
   (
-    { variant = "ghost", size = "md", loading, className, disabled, children, ...props },
+    { variant = "ghost", size = "md", type = "button", loading, className, disabled, children, ...props },
     ref,
   ) => {
     return (
       <button
         ref={ref}
+        type={type}
         disabled={disabled || loading}
         className={cn(
           "inline-flex items-center justify-center rounded-lg transition-all duration-200 active:scale-95",

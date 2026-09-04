@@ -295,7 +295,7 @@ export default function PremiumHero({
           {pills.map((pill) => (
             <div
               key={pill.label}
-              className="flex items-center justify-center gap-2.5 rounded-xl bg-muted px-3 py-3.5 text-center text-xs font-semibold text-foreground transition-all duration-300 hover:bg-primary/[0.06] hover:text-primary"
+              className="flex items-center justify-center gap-2.5 rounded-xl bg-muted px-3 py-3.5 text-center text-xs font-semibold text-foreground transition-all duration-300 hover:bg-primary/[0.06] hover:text-primary active:scale-[0.98]"
             >
               <pill.icon className="h-4 w-4 shrink-0 text-primary/70" />
               <span className="hidden sm:inline">
@@ -317,7 +317,7 @@ export default function PremiumHero({
             <Link
               key={cat._id}
               href={`/products?category=${cat._id}`}
-              className="rounded-full border border-border bg-card px-4 py-2 text-xs font-semibold text-foreground transition-all duration-300 hover:border-primary/[0.2] hover:bg-primary/[0.04] hover:text-primary"
+              className="rounded-full border border-border bg-card px-4 py-2 text-xs font-semibold text-foreground transition-all duration-300 hover:border-primary/[0.2] hover:bg-primary/[0.04] hover:text-primary active:scale-[0.97]"
             >
               {cat.name}
             </Link>

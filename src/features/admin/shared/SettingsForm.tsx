@@ -1,7 +1,7 @@
 "use client";
 
 import { useGetAdminSettingsQuery, useUpdateAdminSettingsMutation } from "@/redux/apiSlice";
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useId } from "react";
 import { useToast } from "@/components/ui/system/Toast";
 import { cn } from "@/utils/utils";
 import { Save, Loader2, CheckCircle2, AlertCircle } from "lucide-react";
@@ -70,16 +70,17 @@ export function SettingsShell({ title, description, children, onSave, saving, di
 export function Field({ label, description, children, error }: {
   label: string; description?: string; children: React.ReactNode; error?: string;
 }) {
+  const labelId = useId();
   return (
     <div className="flex flex-col sm:flex-row sm:items-start gap-4 p-5">
       <div className="sm:w-1/3 shrink-0">
-        <label className="text-sm font-medium text-foreground">{label}</label>
+        <span id={labelId} className="text-sm font-medium text-foreground">{label}</span>
         {description && <p className="text-xs text-muted-foreground mt-0.5">{description}</p>}
       </div>
-      <div className="flex-1 space-y-1.5">
+      <div className="flex-1 space-y-1.5" role="group" aria-labelledby={labelId}>
         {children}
         {error && (
-          <div className="flex items-center gap-1.5 text-xs text-danger">
+          <div role="alert" className="flex items-center gap-1.5 text-xs text-danger">
             <AlertCircle className="h-3 w-3" /> {error}
           </div>
         )}

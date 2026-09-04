@@ -211,10 +211,10 @@ function BulkAdjustmentModal({
     <Modal isOpen={isOpen} onClose={onClose} title="Bulk Stock Update" description={`Update ${selectedIds.length} products`} size="md">
       <form onSubmit={handleSubmit} className="p-6 space-y-5">
         <div className="space-y-1.5">
-          <label className="text-xs font-semibold text-foreground">Update Mode</label>
-          <div className="grid grid-cols-3 gap-2">
+          <span id="bulk-mode-label" className="text-xs font-semibold text-foreground">Update Mode</span>
+          <div className="grid grid-cols-3 gap-2" role="radiogroup" aria-labelledby="bulk-mode-label">
             {([["set", "Set to"], ["add", "Add"], ["subtract", "Subtract"]] as const).map(([v, l]) => (
-              <button key={v} type="button" onClick={() => setMode(v)}
+              <button key={v} type="button" role="radio" aria-checked={mode === v} onClick={() => setMode(v)}
                 className={cn("px-3 py-2 rounded-lg text-xs font-medium border transition-colors",
                   mode === v ? "border-primary bg-primary/10 text-primary" : "border-border bg-muted text-muted-foreground hover:text-foreground")}>
                 {l}
@@ -223,13 +223,13 @@ function BulkAdjustmentModal({
           </div>
         </div>
         <div className="space-y-1.5">
-          <label className="text-xs font-semibold text-foreground">{mode === "set" ? "Stock Value" : "Quantity"}</label>
-          <input type="number" value={value} onChange={(e) => setValue(Math.max(0, parseInt(e.target.value) || 0))}
+          <label htmlFor="bulk-stock-value" className="text-xs font-semibold text-foreground">{mode === "set" ? "Stock Value" : "Quantity"}</label>
+          <input id="bulk-stock-value" type="number" value={value} onChange={(e) => setValue(Math.max(0, parseInt(e.target.value) || 0))}
             className="w-full h-10 px-4 rounded-lg border border-border bg-muted text-sm font-bold text-foreground focus:ring-1 focus:ring-ring outline-none tabular-nums" min={0} />
         </div>
         <div className="space-y-1.5">
-          <label className="text-xs font-semibold text-foreground">Reason</label>
-          <input type="text" value={reason} onChange={(e) => setReason(e.target.value)} placeholder="e.g. Bulk restock"
+          <label htmlFor="bulk-reason" className="text-xs font-semibold text-foreground">Reason</label>
+          <input id="bulk-reason" type="text" value={reason} onChange={(e) => setReason(e.target.value)} placeholder="e.g. Bulk restock"
             className="w-full px-3 py-2.5 rounded-lg border border-border bg-muted text-sm text-foreground placeholder:text-muted-foreground focus:ring-1 focus:ring-ring outline-none" />
         </div>
         <div className="flex items-center justify-end gap-3 pt-3 border-t border-border">

@@ -17,6 +17,7 @@ export * from "./system/Spinner";
 export * from "./system/EmptyState";
 export * from "./system/ErrorState";
 export * from "./system/Modal";
+export * from "./system/PageFade";
 export { default as ConfirmDialog } from "./system/ConfirmDialog";
 export * from "./system/Drawer";
 export * from "./system/Popover";

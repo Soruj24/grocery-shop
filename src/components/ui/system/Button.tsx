@@ -33,6 +33,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     {
       variant = "primary",
       size = "md",
+      type = "button",
       fullWidth,
       loading,
       leftIcon,
@@ -70,6 +71,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     return (
       <button
         ref={ref}
+        type={type}
         disabled={disabled || loading}
         className={cn(
           "inline-flex items-center justify-center font-medium rounded-lg font-sans",

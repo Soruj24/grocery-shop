@@ -45,11 +45,13 @@ export default function ProfileEditForm({ session }: ProfileEditFormProps) {
       <form onSubmit={handleSubmit} className="space-y-6">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="space-y-2">
-            <label className="text-sm font-bold text-foreground ml-1">
+            <label htmlFor="profile-name" className="text-sm font-bold text-foreground ml-1">
               {t('full_name')}
             </label>
             <Input
+              id="profile-name"
               type="text"
+              autoComplete="name"
               size="lg"
               value={formData.name}
               onChange={(e) =>
@@ -61,10 +63,11 @@ export default function ProfileEditForm({ session }: ProfileEditFormProps) {
           </div>
 
           <div className="space-y-2">
-            <label className="text-sm font-bold text-foreground ml-1">
+            <label htmlFor="profile-email" className="text-sm font-bold text-foreground ml-1">
               {t('email_label')}
             </label>
             <Input
+              id="profile-email"
               type="email"
               size="lg"
               value={formData.email}
@@ -75,11 +78,13 @@ export default function ProfileEditForm({ session }: ProfileEditFormProps) {
           </div>
 
           <div className="space-y-2">
-            <label className="text-sm font-bold text-foreground ml-1">
+            <label htmlFor="profile-phone" className="text-sm font-bold text-foreground ml-1">
               {t('phone_number')}
             </label>
             <Input
+              id="profile-phone"
               type="tel"
+              autoComplete="tel"
               size="lg"
               value={formData.phone}
               onChange={(e) =>
@@ -91,10 +96,11 @@ export default function ProfileEditForm({ session }: ProfileEditFormProps) {
           </div>
 
           <div className="space-y-2 md:col-span-2">
-            <label className="text-sm font-bold text-foreground ml-1">
+            <label htmlFor="profile-address" className="text-sm font-bold text-foreground ml-1">
               {t('delivery_address')}
             </label>
             <Textarea
+              id="profile-address"
               value={formData.address}
               onChange={(e) =>
                 setFormData({ ...formData, address: e.target.value })

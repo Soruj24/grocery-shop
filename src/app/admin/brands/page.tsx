@@ -57,8 +57,8 @@ export default function AdminBrandsPage() {
       />
       {showForm && (
         <div className="rounded-xl border border-border bg-card p-4 flex items-center gap-4">
-          <input value={name} onChange={(e) => setName(e.target.value)} placeholder="Brand name" className="flex-1 rounded-xl border border-border px-4 py-2 text-sm bg-muted outline-none focus:border-primary" />
-          <input value={slug} onChange={(e) => setSlug(e.target.value)} placeholder="Slug (auto)" className="flex-1 rounded-xl border border-border px-4 py-2 text-sm bg-muted outline-none focus:border-primary" />
+          <input aria-label="Brand name" value={name} onChange={(e) => setName(e.target.value)} placeholder="Brand name" className="flex-1 rounded-xl border border-border px-4 py-2 text-sm bg-muted outline-none focus:border-primary" />
+          <input aria-label="Brand slug" value={slug} onChange={(e) => setSlug(e.target.value)} placeholder="Slug (auto)" className="flex-1 rounded-xl border border-border px-4 py-2 text-sm bg-muted outline-none focus:border-primary" />
           <button onClick={handleSave} className="rounded-xl bg-primary px-4 py-2 text-sm font-semibold text-white hover:bg-primary/90">{editing ? "Update" : "Create"}</button>
           <button onClick={resetForm} className="rounded-xl border border-border px-4 py-2 text-sm font-medium text-muted-foreground hover:bg-muted">Cancel</button>
         </div>

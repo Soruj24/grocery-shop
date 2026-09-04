@@ -173,7 +173,7 @@ export default function ProductListRow({
             </span>
             <button
               onClick={() => cartItem.quantity < product.stock && updateQuantity(product._id, cartItem.quantity + 1)}
-              className="flex h-9 w-9 items-center justify-center rounded-lg bg-card shadow-sm transition-colors hover:bg-primary-subtle hover:text-primary"
+              className="flex h-9 w-9 items-center justify-center rounded-lg bg-card shadow-sm transition-all hover:bg-primary-subtle hover:text-primary active:scale-95"
             >
               <Plus className="h-4 w-4" />
             </button>

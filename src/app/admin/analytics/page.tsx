@@ -148,12 +148,12 @@ export default function AdminAnalyticsPage() {
       {/* ── Custom range ── */}
       {range === "custom" && (
         <Card className="p-4">
-          <div className="flex items-center gap-3">
-            <label className="text-sm text-muted-foreground">From</label>
-            <input type="date" value={customFrom} onChange={(e) => setCustomFrom(e.target.value)}
+          <div className="flex flex-wrap items-center gap-3">
+            <label htmlFor="analytics-from" className="text-sm text-muted-foreground">From</label>
+            <input id="analytics-from" type="date" value={customFrom} onChange={(e) => setCustomFrom(e.target.value)}
               className="h-9 rounded-md border border-border bg-transparent px-3 text-sm text-foreground focus:outline-none focus:ring-1 focus:ring-ring" />
-            <label className="text-sm text-muted-foreground">To</label>
-            <input type="date" value={customTo} onChange={(e) => setCustomTo(e.target.value)}
+            <label htmlFor="analytics-to" className="text-sm text-muted-foreground">To</label>
+            <input id="analytics-to" type="date" value={customTo} onChange={(e) => setCustomTo(e.target.value)}
               className="h-9 rounded-md border border-border bg-transparent px-3 text-sm text-foreground focus:outline-none focus:ring-1 focus:ring-ring" />
           </div>
         </Card>

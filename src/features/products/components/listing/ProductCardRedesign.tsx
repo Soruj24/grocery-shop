@@ -233,6 +233,7 @@ export default function ProductCardRedesign({
                     cartItem.quantity > 1 &&
                     updateQuantity(product._id, cartItem.quantity - 1)
                   }
+                  aria-label={`Decrease quantity of ${product.name}`}
                   className="flex h-9 w-9 items-center justify-center rounded-lg bg-card text-foreground shadow-sm transition-colors hover:bg-rose-100 hover:text-rose-600 dark:hover:bg-rose-900/30"
                 >
                   <Plus className="h-4 w-4 rotate-45" />
@@ -245,7 +246,8 @@ export default function ProductCardRedesign({
                     cartItem.quantity < product.stock &&
                     updateQuantity(product._id, cartItem.quantity + 1)
                   }
-                  className="flex h-9 w-9 items-center justify-center rounded-lg bg-card text-foreground shadow-sm transition-colors hover:bg-primary-subtle hover:text-primary"
+                  aria-label={`Increase quantity of ${product.name}`}
+                  className="flex h-9 w-9 items-center justify-center rounded-lg bg-card text-foreground shadow-sm transition-all hover:bg-primary-subtle hover:text-primary active:scale-95"
                 >
                   <Plus className="h-4 w-4" />
                 </button>

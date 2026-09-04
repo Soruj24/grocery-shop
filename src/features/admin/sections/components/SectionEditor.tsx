@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect } from "react";
 import { X, Save, Plus, Trash } from "lucide-react";
 import { sectionConfigs } from "@/constants/section-config";
 import { useSectionEditor } from "@/features/admin/sections/hooks/useSectionEditor";
@@ -15,11 +16,19 @@ export default function SectionEditor({ section, onClose, onSave }: SectionEdito
   const config = sectionConfigs[section.key];
   const { formData, isSaving, handleFieldChange, handleArrayItemChange, addArrayItem, removeArrayItem, handleSubmit } = useSectionEditor({ section, onSave, onClose });
 
+  useEffect(() => {
+    const onKey = (e: globalThis.KeyboardEvent) => {
+      if (e.key === "Escape") onClose();
+    };
+    document.addEventListener("keydown", onKey);
+    return () => document.removeEventListener("keydown", onKey);
+  }, [onClose]);
+
   if (!config) {
     return (
       <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">
-        <div className="bg-white dark:bg-gray-900 rounded-3xl w-full max-w-lg p-8 relative">
-          <button onClick={onClose} className="absolute top-4 right-4 p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-full transition-colors"><X size={20} /></button>
+        <div role="dialog" aria-modal="true" aria-label="Section configuration unavailable" className="bg-white dark:bg-gray-900 rounded-3xl w-full max-w-lg p-8 relative">
+          <button onClick={onClose} aria-label="Close" className="absolute top-4 right-4 p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-full transition-colors"><X size={20} /></button>
           <div className="text-center py-8">
             <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">No Configuration Found</h3>
             <p className="text-gray-500">This section ({section.key}) does not have an editable configuration yet.</p>
@@ -30,14 +39,14 @@ export default function SectionEditor({ section, onClose, onSave }: SectionEdito
   }
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4 overflow-y-auto">
-      <div className="bg-white dark:bg-gray-900 rounded-3xl w-full max-w-2xl max-h-[90vh] flex flex-col shadow-2xl animate-in fade-in zoom-in duration-200">
+      <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4 overflow-y-auto">
+      <div role="dialog" aria-modal="true" aria-label={`Edit ${config.label}`} className="bg-white dark:bg-gray-900 rounded-3xl w-full max-w-2xl max-h-[90vh] flex flex-col shadow-2xl animate-in fade-in zoom-in duration-200">
         <div className="p-6 border-b border-gray-100 dark:border-gray-800 flex items-center justify-between sticky top-0 bg-white/80 dark:bg-gray-900/80 backdrop-blur-md z-10 rounded-t-3xl">
           <div>
             <h2 className="text-xl font-black text-gray-900 dark:text-white">Edit {config.label}</h2>
             <p className="text-xs text-gray-500 font-medium mt-1">Update the content for this section</p>
           </div>
-          <button onClick={onClose} className="p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-full transition-colors text-gray-500"><X size={20} /></button>
+          <button onClick={onClose} aria-label="Close editor" className="p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-full transition-colors text-gray-500"><X size={20} /></button>
         </div>
 
         <div className="flex-1 overflow-y-auto p-6 space-y-6 custom-scrollbar">

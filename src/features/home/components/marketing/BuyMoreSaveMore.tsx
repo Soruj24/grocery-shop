@@ -64,7 +64,7 @@ export default function BuyMoreSaveMore() {
                     </div>
                   </div>
 
-                  <button className="w-full bg-foreground text-background py-4 rounded-2xl font-black text-sm flex items-center justify-center gap-2 hover:bg-primary hover:text-primary-foreground transition-all group">
+                  <button className="w-full bg-foreground text-background py-4 rounded-2xl font-black text-sm flex items-center justify-center gap-2 hover:bg-primary hover:text-primary-foreground transition-all active:scale-[0.98] group">
                     <Plus className="w-4 h-4 group-hover:rotate-90 transition-transform" />
                     {t('buy_more_increase_qty')}
                   </button>

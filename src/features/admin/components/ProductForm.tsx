@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback, useRef, useEffect, useMemo } from "react";
+import { useState, useCallback, useRef, useEffect, useMemo, useId } from "react";
 import {
   Package, Image as ImageIcon, DollarSign, Boxes, Tag, Layers,
   Truck, Search, ToggleLeft, ChevronDown, Upload, X, AlertTriangle,
@@ -113,15 +113,18 @@ function Field({
   children: React.ReactNode;
   className?: string;
 }) {
+  const labelId = useId();
   return (
     <div className={cn("space-y-1.5", className)}>
-      <label className={LABEL_CLASSES}>
+      <span id={labelId} className={LABEL_CLASSES}>
         {label}
-        {required && <span className="text-danger ml-0.5">*</span>}
-      </label>
-      {children}
+        {required && <span className="text-danger ml-0.5" aria-hidden>*</span>}
+      </span>
+      <div role="group" aria-labelledby={labelId}>
+        {children}
+      </div>
       {description && !error && <p className={DESC_CLASSES}>{description}</p>}
-      {error && <p className={ERROR_CLASSES}>{error}</p>}
+      {error && <p role="alert" className={ERROR_CLASSES}>{error}</p>}
     </div>
   );
 }

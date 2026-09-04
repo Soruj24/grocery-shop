@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import Modal from "@/components/ui/Modal";
 
@@ -25,8 +25,8 @@ export default function DeliveryFormModal({ isOpen, onClose, deliveryData, onDat
       <form onSubmit={onSubmit} className="space-y-6">
         <div className="space-y-4">
           <div className="space-y-2">
-            <label className="text-xs font-black uppercase tracking-widest text-gray-400">ডেলিভারি স্ট্যাটাস</label>
-            <select className={inputClass} value={deliveryData.deliveryStatus}
+            <label htmlFor="delivery-status" className="text-xs font-black uppercase tracking-widest text-gray-400">ডেলিভারি স্ট্যাটাস</label>
+            <select id="delivery-status" className={inputClass} value={deliveryData.deliveryStatus}
               onChange={(e) => onDataChange({ ...deliveryData, deliveryStatus: e.target.value })}>
               <option value="pending">পেন্ডিং</option>
               <option value="processing">প্রসেসিং</option>
@@ -36,19 +36,19 @@ export default function DeliveryFormModal({ isOpen, onClose, deliveryData, onDat
             </select>
           </div>
           <div className="space-y-2">
-            <label className="text-xs font-black uppercase tracking-widest text-gray-400">ট্র্যাকিং আইডি</label>
-            <input type="text" className={inputClass} placeholder="TRK-XXXXXX" value={deliveryData.trackingId}
+            <label htmlFor="tracking-id" className="text-xs font-black uppercase tracking-widest text-gray-400">ট্র্যাকিং আইডি</label>
+            <input id="tracking-id" type="text" className={inputClass} placeholder="TRK-XXXXXX" value={deliveryData.trackingId}
               onChange={(e) => onDataChange({ ...deliveryData, trackingId: e.target.value })} />
           </div>
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-2">
-              <label className="text-xs font-black uppercase tracking-widest text-gray-400">ডেলিভারি বয় (নাম)</label>
-              <input type="text" className={inputClass} value={deliveryData.deliveryBoyName}
+              <label htmlFor="delivery-boy-name" className="text-xs font-black uppercase tracking-widest text-gray-400">ডেলিভারি বয় (নাম)</label>
+              <input id="delivery-boy-name" type="text" className={inputClass} value={deliveryData.deliveryBoyName}
                 onChange={(e) => onDataChange({ ...deliveryData, deliveryBoyName: e.target.value })} />
             </div>
             <div className="space-y-2">
-              <label className="text-xs font-black uppercase tracking-widest text-gray-400">ফোন নম্বর</label>
-              <input type="text" className={inputClass} value={deliveryData.deliveryBoyPhone}
+              <label htmlFor="delivery-boy-phone" className="text-xs font-black uppercase tracking-widest text-gray-400">ফোন নম্বর</label>
+              <input id="delivery-boy-phone" type="text" className={inputClass} value={deliveryData.deliveryBoyPhone}
                 onChange={(e) => onDataChange({ ...deliveryData, deliveryBoyPhone: e.target.value })} />
             </div>
           </div>
