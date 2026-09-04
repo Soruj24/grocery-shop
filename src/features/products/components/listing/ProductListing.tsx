@@ -186,7 +186,7 @@ export default function ProductListing({
       <div className="flex flex-col gap-8 lg:flex-row">
         {/* Desktop sidebar */}
         <aside className="hidden w-72 shrink-0 lg:block">
-          <div className="sticky top-28 rounded-3xl border border-border bg-card p-6 shadow-sm">
+          <div className="sticky top-28 rounded-2xl border border-border bg-card p-6 shadow-sm">
             {sidebar}
           </div>
         </aside>
@@ -219,11 +219,11 @@ export default function ProductListing({
           />
 
           {products.length === 0 ? (
-            <div className="flex flex-col items-center justify-center rounded-3xl border border-dashed border-border bg-subtle py-24 text-center">
+            <div className="flex flex-col items-center justify-center rounded-2xl border border-dashed border-border bg-subtle py-24 text-center">
               <div className="mb-4 flex h-20 w-20 items-center justify-center rounded-2xl bg-muted text-muted-foreground">
                 <PackageX className="h-10 w-10" />
               </div>
-              <h3 className="text-xl font-black text-foreground">
+              <h3 className="text-xl font-bold text-foreground">
                 {t("no_products_found")}
               </h3>
               <p className="mt-2 text-sm font-medium text-muted-foreground">
@@ -351,14 +351,14 @@ function PaginationBar({
     <div className="flex flex-wrap items-center justify-center gap-2 pt-4">
       {pages.map((p, i) =>
         p === "..." ? (
-          <span key={`d-${i}`} className="px-2 font-black text-muted-foreground">
+          <span key={`d-${i}`} className="px-2 font-bold text-muted-foreground">
             ...
           </span>
         ) : (
           <button
             key={p}
             onClick={() => onJump(p)}
-            className={`h-11 min-w-[44px] rounded-xl px-3 text-sm font-black transition-all ${
+            className={`h-11 min-w-[44px] rounded-xl px-3 text-sm font-bold transition-all ${
               currentPage === p
                 ? "bg-primary text-primary-foreground shadow-primary"
                 : "border border-border bg-card text-muted-foreground hover:border-primary/40 hover:text-primary"

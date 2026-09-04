@@ -28,7 +28,7 @@ export default function FlashSaleSection() {
       viewAllLabel={t("see_all_deals")}
       className="bg-gradient-to-b from-rose-50/30 to-transparent dark:from-rose-500/[0.03]"
     >
-      <div className="mb-10 flex flex-col items-start justify-between gap-6 rounded-2xl border border-rose-200/50 bg-white p-6 shadow-[0_1px_3px_rgba(0,0,0,0.04)] sm:flex-row sm:items-center dark:border-rose-500/[0.12] dark:bg-white/[0.02]">
+      <div className="mb-10 flex flex-col items-start justify-between gap-6 rounded-2xl border border-danger/20 bg-card p-6 shadow-sm sm:flex-row sm:items-center">
         <div className="flex items-center gap-4">
           <span className="flex items-center gap-2 rounded-full bg-danger/[0.08] px-4 py-2 text-xs font-extrabold uppercase tracking-wider text-danger ring-1 ring-danger/[0.12]">
             <Flame className="h-4 w-4 animate-pulse" />

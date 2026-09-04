@@ -40,7 +40,7 @@ export default function CategoryMegaMenu({
   return (
     <div
       onMouseLeave={onClose}
-      className="absolute top-0 left-0 w-[1100px] bg-white dark:bg-[#09090b] backdrop-blur-xl shadow-[0_20px_60px_-15px_rgba(0,0,0,0.15)] border border-black/[0.06] dark:border-white/[0.06] rounded-2xl p-10 z-50 grid grid-cols-4 gap-x-8 gap-y-10 max-h-[85vh] overflow-y-auto custom-scrollbar"
+      className="absolute top-0 left-0 w-[1100px] bg-card backdrop-blur-xl shadow-2xl border border-border rounded-2xl p-10 z-50 grid grid-cols-4 gap-x-8 gap-y-10 max-h-[85vh] overflow-y-auto custom-scrollbar"
     >
       <div className="absolute top-0 right-0 w-96 h-96 bg-primary/[0.03] blur-[100px] rounded-full pointer-events-none" />
       <div className="absolute bottom-0 left-0 w-64 h-64 bg-purple-500/[0.03] blur-[80px] rounded-full pointer-events-none" />
@@ -63,7 +63,7 @@ export default function CategoryMegaMenu({
               className="flex items-center gap-4 group/item"
             >
               <div className="relative flex-shrink-0">
-                <div className="w-16 h-16 rounded-xl overflow-hidden bg-black/[0.03] dark:bg-white/[0.04] shadow-[0_2px_8px_rgba(0,0,0,0.06)] border border-black/[0.04] dark:border-white/[0.04] group-hover/item:border-primary/[0.2] transition-all duration-500 relative">
+                <div className="w-16 h-16 rounded-xl overflow-hidden bg-muted shadow-sm border border-border group-hover/item:border-primary/[0.2] transition-all duration-500 relative">
                   <Image
                     src={
                       cat.image ||
@@ -101,7 +101,7 @@ export default function CategoryMegaMenu({
                         onClick={onClose}
                         className="group/sub flex items-center gap-2.5 text-[13px] font-medium text-muted-foreground hover:text-foreground transition-all duration-200 pl-2 border-l-2 border-transparent hover:border-foreground/20"
                       >
-                        <span className="w-1 h-1 rounded-full bg-black/[0.15] dark:bg-white/[0.15] group-hover/sub:bg-foreground transition-colors duration-200" />
+                        <span className="w-1 h-1 rounded-full bg-foreground/15 group-hover/sub:bg-foreground transition-colors duration-200" />
                         <span className="flex-1 leading-snug group-hover/sub:translate-x-0.5 transition-transform duration-200">
                           {sub.name}
                         </span>

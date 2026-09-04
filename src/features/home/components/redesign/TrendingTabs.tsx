@@ -80,7 +80,7 @@ export default function TrendingTabs() {
       viewAllHref={current.href}
       viewAllLabel={t("see_all")}
     >
-      <div className="mb-12 flex flex-wrap justify-center gap-2 rounded-2xl border border-black/[0.04] bg-zinc-50/80 p-2 dark:bg-white/[0.02] dark:border-white/[0.04]">
+      <div className="mb-12 flex flex-wrap justify-center gap-2 rounded-2xl border border-border bg-muted/80 p-2">
         {TABS.map((tab) => {
           const Icon = tab.icon;
           const isActive = tab.id === active;
@@ -124,7 +124,7 @@ export default function TrendingTabs() {
             {Array.from({ length: 8 }).map((_, i) => (
               <div
                 key={i}
-                className="aspect-[3/4] rounded-2xl border border-black/[0.04] bg-zinc-50 dark:bg-white/[0.02] dark:border-white/[0.04]"
+                className="aspect-[3/4] rounded-2xl border border-border bg-muted"
               >
                 <Skeleton className="h-full w-full rounded-2xl" />
               </div>

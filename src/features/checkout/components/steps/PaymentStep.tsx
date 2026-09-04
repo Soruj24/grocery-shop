@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { motion } from "framer-motion";
 import {
@@ -53,10 +53,10 @@ export default function PaymentStep({
       className="space-y-4"
     >
       {/* Payment Methods */}
-      <div className="rounded-2xl border border-black/[0.04] dark:border-white/[0.04] bg-white dark:bg-[#09090b] overflow-hidden shadow-[0_1px_3px_rgba(0,0,0,0.04)]">
-        <div className="p-5 border-b border-black/[0.04] dark:border-white/[0.04]">
+      <div className="rounded-2xl border border-border bg-card overflow-hidden shadow-xs">
+        <div className="p-5 border-b border-border">
           <div className="flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-black/[0.04] dark:bg-white/[0.06]">
+            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-muted">
               <CreditCard className="h-4.5 w-4.5 text-muted-foreground/60" />
             </div>
             <div>
@@ -84,8 +84,8 @@ export default function PaymentStep({
                 }
                 className={`relative cursor-pointer rounded-xl border p-4 transition-all ${
                   isSelected
-                    ? "border-foreground bg-black/[0.02] dark:bg-white/[0.04] shadow-[0_2px_8px_rgba(0,0,0,0.04)]"
-                    : "border-black/[0.04] dark:border-white/[0.04] hover:border-black/[0.08] dark:hover:border-white/[0.1]"
+                    ? "border-foreground bg-subtle shadow-xs"
+                    : "border-border hover:border-border-strong"
                 }`}
               >
                 <div className="flex items-center gap-4">
@@ -93,7 +93,7 @@ export default function PaymentStep({
                     className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-xl transition-all ${
                       isSelected
                         ? "bg-foreground text-background"
-                        : "bg-black/[0.04] dark:bg-white/[0.06] text-muted-foreground/60"
+                        : "bg-muted text-muted-foreground/60"
                     }`}
                   >
                     <Icon className="h-5 w-5" />
@@ -127,11 +127,11 @@ export default function PaymentStep({
         <motion.div
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
-          className="rounded-2xl border border-black/[0.04] dark:border-white/[0.04] bg-white dark:bg-[#09090b] overflow-hidden shadow-[0_1px_3px_rgba(0,0,0,0.04)]"
+          className="rounded-2xl border border-border bg-card overflow-hidden shadow-xs"
         >
           <div className="p-5">
             <div className="flex items-start gap-3 mb-4">
-              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-black/[0.04] dark:bg-white/[0.06]">
+              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-muted">
                 <AlertCircle className="h-4.5 w-4.5 text-muted-foreground/50" />
               </div>
               <div>
@@ -159,11 +159,11 @@ export default function PaymentStep({
                 className={`w-full rounded-xl border ${
                   error
                     ? "border-rose-500 focus:border-rose-500"
-                    : "border-black/[0.06] dark:border-white/[0.06] focus:border-foreground/20"
-                } bg-black/[0.02] dark:bg-white/[0.03] px-4 py-3 text-sm font-mono text-foreground placeholder:text-muted-foreground/30 focus:ring-2 focus:ring-foreground/10 outline-none transition-all`}
+                    : "border-border focus:border-foreground/20"
+                } bg-subtle px-4 py-3 text-sm font-mono text-foreground placeholder:text-muted-foreground/30 focus:ring-2 focus:ring-foreground/10 outline-none transition-all`}
               />
               {error && (
-                <p className="text-[11px] font-medium text-rose-500 flex items-center gap-1">
+                <p className="text-[11px] font-medium text-danger flex items-center gap-1">
                   <span className="w-1 h-1 rounded-full bg-rose-500" />
                   {error}
                 </p>

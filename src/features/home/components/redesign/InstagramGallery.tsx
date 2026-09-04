@@ -47,7 +47,7 @@ export default function InstagramGallery() {
               href={href}
               target="_blank"
               rel="noopener noreferrer"
-              className="group relative block aspect-square overflow-hidden rounded-2xl border border-black/[0.04] dark:border-white/[0.04]"
+              className="group relative block aspect-square overflow-hidden rounded-2xl border border-border"
             >
               <Image
                 src={getProductFallbackImage(key)}

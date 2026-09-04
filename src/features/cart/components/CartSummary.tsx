@@ -52,9 +52,9 @@ export default function CartSummary({
       className="lg:sticky lg:top-32 space-y-4"
     >
       {/* Main Summary Card */}
-      <div className="bg-white dark:bg-[#09090b] rounded-xl border border-black/[0.04] dark:border-white/[0.04] overflow-hidden shadow-[0_1px_3px_rgba(0,0,0,0.04)]">
+      <div className="bg-card rounded-xl border border-border overflow-hidden shadow-sm">
         {/* Header */}
-        <div className="p-5 pb-4 border-b border-black/[0.04] dark:border-white/[0.04]">
+        <div className="p-5 pb-4 border-b border-border">
           <h2 className="text-sm font-bold text-foreground tracking-tight">
             {t("order_summary_title")}
           </h2>
@@ -71,9 +71,9 @@ export default function CartSummary({
           <CouponSection />
 
           {/* Estimated Delivery */}
-          <div className="flex items-center justify-between p-3 bg-black/[0.02] dark:bg-white/[0.03] rounded-lg">
+          <div className="flex items-center justify-between p-3 bg-subtle rounded-lg">
             <div className="flex items-center gap-2">
-              <div className="w-7 h-7 bg-black/[0.04] dark:bg-white/[0.06] rounded-md flex items-center justify-center">
+              <div className="w-7 h-7 bg-muted rounded-md flex items-center justify-center">
                 <Clock className="w-3.5 h-3.5 text-muted-foreground/60" />
               </div>
               <span className="text-xs font-medium text-muted-foreground/60">
@@ -99,7 +99,7 @@ export default function CartSummary({
           </div>
 
           {/* Price Breakdown */}
-          <div className="border-t border-black/[0.04] dark:border-white/[0.04] pt-4">
+          <div className="border-t border-border pt-4">
             <PriceBreakdown
               subtotal={totalPrice}
               shipping={shippingFee}
@@ -116,7 +116,7 @@ export default function CartSummary({
                 ? "/checkout"
                 : "/auth/login?redirect=/checkout"
             }
-            className="w-full group/btn bg-foreground text-background rounded-xl py-3.5 px-4 font-semibold text-sm flex items-center justify-center gap-2.5 active:scale-[0.98] transition-all shadow-[0_2px_8px_rgba(0,0,0,0.12)] hover:shadow-[0_4px_16px_rgba(0,0,0,0.18)]"
+            className="w-full group/btn bg-primary text-primary-foreground rounded-xl py-3.5 px-4 font-semibold text-sm flex items-center justify-center gap-2.5 active:scale-[0.98] transition-all shadow-primary hover:shadow-lg"
           >
             <Lock className="w-3.5 h-3.5" />
             {session?.user
@@ -144,7 +144,7 @@ export default function CartSummary({
       </div>
 
       {/* Guarantee Banner */}
-      <div className="bg-black/[0.02] dark:bg-white/[0.03] rounded-xl p-4 text-center border border-black/[0.04] dark:border-white/[0.04]">
+      <div className="bg-subtle rounded-xl p-4 text-center border border-border">
         <div className="flex items-center justify-center gap-2 mb-1.5">
           <CheckCircle2 className="w-4 h-4 text-emerald-500" />
           <span className="text-xs font-semibold text-foreground">

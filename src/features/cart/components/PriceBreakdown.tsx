@@ -82,7 +82,7 @@ export default function PriceBreakdown({
         </motion.div>
       )}
 
-      <div className="border-t border-black/[0.06] dark:border-white/[0.06] pt-3 flex items-center justify-between">
+      <div className="border-t border-border pt-3 flex items-center justify-between">
         <span className="text-sm font-bold text-foreground">
           {t("grand_total")}
         </span>

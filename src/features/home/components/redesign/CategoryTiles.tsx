@@ -45,7 +45,7 @@ export default function CategoryTiles({
           >
             <Link
               href={`/products?category=${cat._id}`}
-              className="group relative flex h-full w-full items-end overflow-hidden rounded-2xl border border-black/[0.04] shadow-[0_1px_3px_rgba(0,0,0,0.04)] transition-all duration-500 hover:shadow-[0_8px_30px_rgba(0,0,0,0.08)] dark:border-white/[0.04]"
+              className="group relative flex h-full w-full items-end overflow-hidden rounded-2xl border border-border shadow-xs transition-all duration-500 hover:shadow-lg"
             >
               <Image
                 src={cat.image || getCategoryFallbackImage(cat.name)}

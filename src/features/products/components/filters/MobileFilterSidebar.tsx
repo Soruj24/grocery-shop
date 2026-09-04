@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { motion, AnimatePresence } from "framer-motion";
 import { Filter, X, ChevronDown, ChevronUp } from "lucide-react";
@@ -76,7 +76,7 @@ export default function MobileFilterSidebar({
               damping: 28,
               stiffness: 300,
             }}
-            className="fixed bottom-0 left-0 right-0 z-[201] lg:hidden bg-white dark:bg-[#09090b] rounded-t-3xl max-h-[85vh] flex flex-col shadow-[0_-8px_30px_rgba(0,0,0,0.12)]"
+            className="fixed bottom-0 left-0 right-0 z-[201] lg:hidden bg-card rounded-t-3xl max-h-[85vh] flex flex-col shadow-xl"
             style={{
               paddingBottom:
                 "env(safe-area-inset-bottom)",
@@ -84,11 +84,11 @@ export default function MobileFilterSidebar({
           >
             {/* Handle */}
             <div className="flex justify-center pt-3 pb-1">
-              <div className="w-10 h-1 rounded-full bg-black/[0.1] dark:bg-white/[0.1]" />
+              <div className="w-10 h-1 rounded-full bg-border" />
             </div>
 
             {/* Header */}
-            <div className="flex items-center justify-between px-5 py-3 border-b border-black/[0.04] dark:border-white/[0.04]">
+            <div className="flex items-center justify-between px-5 py-3 border-b border-border">
               <div className="flex items-center gap-2.5">
                 <Filter className="h-4 w-4 text-muted-foreground/60" />
                 <h2 className="text-base font-bold text-foreground">
@@ -102,7 +102,7 @@ export default function MobileFilterSidebar({
               </div>
               <button
                 onClick={onClose}
-                className="flex h-9 w-9 items-center justify-center rounded-xl bg-black/[0.04] dark:bg-white/[0.06] text-muted-foreground hover:text-foreground hover:bg-black/[0.06] dark:hover:bg-white/[0.08] transition-all"
+                className="flex h-9 w-9 items-center justify-center rounded-xl bg-muted text-muted-foreground hover:text-foreground hover:bg-muted transition-all"
                 aria-label="Close"
               >
                 <X className="h-4 w-4" />
@@ -112,12 +112,12 @@ export default function MobileFilterSidebar({
             {/* Scrollable Content */}
             <div className="flex-1 overflow-y-auto overscroll-contain px-5 py-4 space-y-2">
               {/* Category Section */}
-              <div className="rounded-2xl border border-black/[0.04] dark:border-white/[0.04] overflow-hidden">
+              <div className="rounded-2xl border border-border overflow-hidden">
                 <button
                   onClick={() =>
                     toggleSection("category")
                   }
-                  className="w-full flex items-center justify-between p-4 hover:bg-black/[0.02] dark:hover:bg-white/[0.02] transition-colors"
+                  className="w-full flex items-center justify-between p-4 hover:bg-muted/50 transition-colors"
                 >
                   <span className="text-sm font-semibold text-foreground">
                     {t("categories")}
@@ -145,7 +145,7 @@ export default function MobileFilterSidebar({
                           className={`w-full text-left px-3.5 py-2.5 rounded-xl text-sm font-medium transition-all ${
                             !selectedCategory
                               ? "bg-foreground text-background"
-                              : "text-muted-foreground/60 hover:bg-black/[0.04] dark:hover:bg-white/[0.06]"
+                              : "text-muted-foreground/60 hover:bg-muted"
                           }`}
                         >
                           {t("all_products")}
@@ -163,7 +163,7 @@ export default function MobileFilterSidebar({
                                 selectedCategory ===
                                 cat._id
                                   ? "bg-foreground text-background"
-                                  : "text-muted-foreground/60 hover:bg-black/[0.04] dark:hover:bg-white/[0.06]"
+                                  : "text-muted-foreground/60 hover:bg-muted"
                               }`}
                             >
                               {cat.name}
@@ -177,12 +177,12 @@ export default function MobileFilterSidebar({
               </div>
 
               {/* Price Section */}
-              <div className="rounded-2xl border border-black/[0.04] dark:border-white/[0.04] overflow-hidden">
+              <div className="rounded-2xl border border-border overflow-hidden">
                 <button
                   onClick={() =>
                     toggleSection("price")
                   }
-                  className="w-full flex items-center justify-between p-4 hover:bg-black/[0.02] dark:hover:bg-white/[0.02] transition-colors"
+                  className="w-full flex items-center justify-between p-4 hover:bg-muted/50 transition-colors"
                 >
                   <span className="text-sm font-semibold text-foreground">
                     {t("price_range")}
@@ -217,7 +217,7 @@ export default function MobileFilterSidebar({
                             ).toLocaleString("bn-BD")}
                           </span>
                         </div>
-                        <div className="relative h-2 rounded-full bg-black/[0.06] dark:bg-white/[0.06]">
+                        <div className="relative h-2 rounded-full bg-muted">
                           <div
                             className="absolute h-full rounded-full bg-foreground"
                             style={{
@@ -277,7 +277,7 @@ export default function MobileFilterSidebar({
                               )
                             }
                             placeholder="Min"
-                            className="rounded-xl border border-black/[0.06] dark:border-white/[0.06] bg-black/[0.02] dark:bg-white/[0.03] px-3.5 py-3 text-sm font-medium text-foreground placeholder:text-muted-foreground/30 outline-none focus:border-foreground/20 transition-all"
+                            className="rounded-xl border border-border bg-subtle px-3.5 py-3 text-sm font-medium text-foreground placeholder:text-muted-foreground/30 outline-none focus:border-foreground/20 transition-all"
                           />
                           <input
                             type="number"
@@ -288,7 +288,7 @@ export default function MobileFilterSidebar({
                               )
                             }
                             placeholder="Max"
-                            className="rounded-xl border border-black/[0.06] dark:border-white/[0.06] bg-black/[0.02] dark:bg-white/[0.03] px-3.5 py-3 text-sm font-medium text-foreground placeholder:text-muted-foreground/30 outline-none focus:border-foreground/20 transition-all"
+                            className="rounded-xl border border-border bg-subtle px-3.5 py-3 text-sm font-medium text-foreground placeholder:text-muted-foreground/30 outline-none focus:border-foreground/20 transition-all"
                           />
                         </div>
                       </div>
@@ -299,13 +299,13 @@ export default function MobileFilterSidebar({
             </div>
 
             {/* Footer Actions */}
-            <div className="px-5 py-4 border-t border-black/[0.04] dark:border-white/[0.04] space-y-2.5 bg-white dark:bg-[#09090b]">
+            <div className="px-5 py-4 border-t border-border space-y-2.5 bg-card">
               <button
                 onClick={() => {
                   onApply();
                   onClose();
                 }}
-                className="w-full bg-foreground text-background py-3.5 rounded-xl text-sm font-semibold hover:opacity-90 active:scale-[0.98] transition-all shadow-[0_2px_8px_rgba(0,0,0,0.12)]"
+                className="w-full bg-foreground text-background py-3.5 rounded-xl text-sm font-semibold hover:opacity-90 active:scale-[0.98] transition-all shadow-md"
               >
                 {t("apply_filter")}{" "}
                 {activeFilterCount > 0 &&

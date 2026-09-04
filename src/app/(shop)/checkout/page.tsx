@@ -88,7 +88,7 @@ export default function CheckoutPage() {
                 ? checkout.router.push("/cart")
                 : checkout.prevStep()
             }
-            className="flex h-10 w-10 items-center justify-center rounded-xl bg-black/[0.04] dark:bg-white/[0.06] border border-black/[0.04] dark:border-white/[0.04] text-muted-foreground/50 hover:text-foreground hover:bg-black/[0.06] dark:hover:bg-white/[0.08] transition-all"
+            className="flex h-10 w-10 items-center justify-center rounded-xl bg-muted border border-border text-muted-foreground hover:text-foreground hover:bg-muted transition-all"
           >
             <ArrowLeft className="h-4 w-4" />
           </button>
@@ -117,7 +117,7 @@ export default function CheckoutPage() {
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.05 }}
-          className="mb-8 rounded-2xl border border-black/[0.04] dark:border-white/[0.04] bg-white dark:bg-[#09090b] p-5 shadow-[0_1px_3px_rgba(0,0,0,0.04)]"
+          className="mb-8 rounded-2xl border border-border bg-card p-5 shadow-sm"
         >
           <CheckoutStepper
             steps={steps}
@@ -298,9 +298,9 @@ export default function CheckoutPage() {
                   initial={{ opacity: 0, y: 8 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -8 }}
-                  className="mt-4 rounded-xl border border-rose-200 dark:border-rose-800/50 bg-rose-500/[0.04] dark:bg-rose-500/[0.06] p-4 text-sm text-rose-600 dark:text-rose-400 flex items-center gap-2"
+                  className="mt-4 rounded-xl border border-danger/20 bg-danger-subtle p-4 text-sm text-danger-foreground flex items-center gap-2"
                 >
-                  <div className="w-5 h-5 rounded-full bg-rose-500/10 flex items-center justify-center shrink-0">
+                  <div className="w-5 h-5 rounded-full bg-danger/10 flex items-center justify-center shrink-0">
                     <span className="text-[10px] font-bold">!</span>
                   </div>
                   {checkout.error}

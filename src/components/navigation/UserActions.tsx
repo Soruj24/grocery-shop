@@ -33,7 +33,7 @@ function RailButton({
       onClick={onClick}
       aria-label={label}
       title={label}
-      className="relative flex h-9 w-9 items-center justify-center rounded-xl text-muted-foreground transition-all duration-200 hover:bg-black/[0.04] hover:text-foreground dark:hover:bg-white/[0.06] active:scale-[0.95]"
+      className="relative flex h-9 w-9 items-center justify-center rounded-xl text-muted-foreground transition-all duration-200 hover:bg-muted hover:text-foreground active:scale-[0.95]"
     >
       {children}
     </button>

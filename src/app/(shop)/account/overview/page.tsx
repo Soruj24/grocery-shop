@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
@@ -107,7 +107,7 @@ export default function OverviewPage() {
     delivered:
       "bg-emerald-500/[0.08] text-emerald-600 dark:text-emerald-400",
     cancelled:
-      "bg-rose-500/[0.08] text-rose-600 dark:text-rose-400",
+      "bg-danger-subtle text-danger",
   };
 
   return (
@@ -139,10 +139,10 @@ export default function OverviewPage() {
               delay: i * 0.06,
               ease: [0.21, 0.47, 0.32, 0.98],
             }}
-            className="rounded-2xl border border-black/[0.04] dark:border-white/[0.04] bg-white dark:bg-[#09090b] p-4 shadow-[0_1px_3px_rgba(0,0,0,0.04)] hover:shadow-[0_4px_16px_rgba(0,0,0,0.06)] transition-shadow"
+            className="rounded-2xl border border-border bg-card p-4 shadow-xs hover:shadow-sm transition-shadow"
           >
             <div className="flex items-center justify-between mb-3">
-              <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-black/[0.04] dark:bg-white/[0.06]">
+              <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-muted">
                 <stat.icon className="h-4 w-4 text-muted-foreground/60" />
               </div>
             </div>
@@ -167,9 +167,9 @@ export default function OverviewPage() {
           >
             <Link
               href={action.href}
-              className="flex items-center gap-3 rounded-xl border border-black/[0.04] dark:border-white/[0.04] bg-white dark:bg-[#09090b] p-3.5 hover:shadow-[0_4px_16px_rgba(0,0,0,0.06)] transition-all group"
+              className="flex items-center gap-3 rounded-xl border border-border bg-card p-3.5 hover:shadow-sm transition-all group"
             >
-              <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-black/[0.04] dark:bg-white/[0.06] group-hover:bg-foreground group-hover:text-background transition-all">
+              <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-muted group-hover:bg-foreground group-hover:text-background transition-all">
                 <action.icon className="h-4 w-4" />
               </div>
               <span className="text-[13px] font-medium text-foreground">
@@ -187,9 +187,9 @@ export default function OverviewPage() {
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.35 }}
-          className="rounded-2xl border border-black/[0.04] dark:border-white/[0.04] bg-white dark:bg-[#09090b] overflow-hidden shadow-[0_1px_3px_rgba(0,0,0,0.04)]"
+          className="rounded-2xl border border-border bg-card overflow-hidden shadow-xs"
         >
-          <div className="flex items-center justify-between p-5 pb-4 border-b border-black/[0.04] dark:border-white/[0.04]">
+          <div className="flex items-center justify-between p-5 pb-4 border-b border-border">
             <h2 className="text-sm font-bold text-foreground">
               Recent Orders
             </h2>
@@ -201,10 +201,10 @@ export default function OverviewPage() {
               <ArrowRight className="h-3 w-3" />
             </Link>
           </div>
-          <div className="divide-y divide-black/[0.04] dark:divide-white/[0.04]">
+          <div className="divide-y divide-border">
             {loading ? (
               <div className="p-8 text-center">
-                <div className="h-4 w-20 mx-auto rounded bg-black/[0.04] dark:bg-white/[0.06] animate-pulse" />
+                <div className="h-4 w-20 mx-auto rounded bg-muted animate-pulse" />
               </div>
             ) : recentOrders.length === 0 ? (
               <div className="p-8 text-center text-sm text-muted-foreground/50">
@@ -214,7 +214,7 @@ export default function OverviewPage() {
               recentOrders.map((order) => (
                 <div
                   key={order._id}
-                  className="p-4 hover:bg-black/[0.02] dark:hover:bg-white/[0.02] transition-colors"
+                  className="p-4 hover:bg-muted/50 transition-colors"
                 >
                   <div className="flex items-center justify-between mb-1.5">
                     <p className="text-sm font-mono font-semibold text-foreground">
@@ -250,9 +250,9 @@ export default function OverviewPage() {
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4 }}
-          className="rounded-2xl border border-black/[0.04] dark:border-white/[0.04] bg-white dark:bg-[#09090b] overflow-hidden shadow-[0_1px_3px_rgba(0,0,0,0.04)]"
+          className="rounded-2xl border border-border bg-card overflow-hidden shadow-xs"
         >
-          <div className="flex items-center justify-between p-5 pb-4 border-b border-black/[0.04] dark:border-white/[0.04]">
+          <div className="flex items-center justify-between p-5 pb-4 border-b border-border">
             <h2 className="text-sm font-bold text-foreground">
               Notifications
             </h2>
@@ -264,7 +264,7 @@ export default function OverviewPage() {
               <ArrowRight className="h-3 w-3" />
             </Link>
           </div>
-          <div className="divide-y divide-black/[0.04] dark:divide-white/[0.04]">
+          <div className="divide-y divide-border">
             {notifications.length === 0 ? (
               <div className="p-8 text-center text-sm text-muted-foreground/50">
                 No notifications

@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { Tag, Copy, Check } from "lucide-react";
 import { useState } from "react";
@@ -60,7 +60,7 @@ export default function CouponOffer({
               delay: idx * 0.04,
               ease: [0.21, 0.47, 0.32, 0.98],
             }}
-            className="flex items-center justify-between bg-white dark:bg-[#09090b] border border-dashed border-primary/[0.2] rounded-xl p-3 hover:border-primary/[0.4] transition-all duration-300"
+            className="flex items-center justify-between bg-card border border-dashed border-primary/[0.2] rounded-xl p-3 hover:border-primary/[0.4] transition-all duration-300"
           >
             <div className="flex items-center gap-3">
               <div className="p-2 rounded-lg bg-primary/[0.06]">
@@ -82,7 +82,7 @@ export default function CouponOffer({
               className={`p-2 rounded-lg transition-all duration-200 ${
                 copiedCode === coupon.code
                   ? "bg-emerald-500 text-white"
-                  : "bg-black/[0.04] dark:bg-white/[0.06] text-muted-foreground hover:text-primary hover:bg-primary/[0.06]"
+                  : "bg-muted text-muted-foreground hover:text-primary hover:bg-primary/[0.06]"
               }`}
             >
               {copiedCode === coupon.code ? (

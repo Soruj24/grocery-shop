@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { motion } from "framer-motion";
 import {
@@ -61,10 +61,10 @@ export default function OrderSummary({
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.1 }}
-      className="rounded-2xl border border-black/[0.04] dark:border-white/[0.04] bg-white dark:bg-[#09090b] overflow-hidden shadow-[0_1px_3px_rgba(0,0,0,0.04)]"
+      className="rounded-2xl border border-border bg-card overflow-hidden shadow-xs"
     >
       {/* Header */}
-      <div className="p-5 pb-4 border-b border-black/[0.04] dark:border-white/[0.04]">
+      <div className="p-5 pb-4 border-b border-border">
         <h3 className="text-sm font-bold text-foreground">
           {t("order_summary")}
         </h3>
@@ -80,7 +80,7 @@ export default function OrderSummary({
             key={item._id}
             className="flex items-center gap-3"
           >
-            <div className="relative h-11 w-11 shrink-0 overflow-hidden rounded-xl bg-black/[0.04] dark:bg-white/[0.06]">
+            <div className="relative h-11 w-11 shrink-0 overflow-hidden rounded-xl bg-muted">
               {item.image ? (
                 <img
                   src={item.image}
@@ -115,7 +115,7 @@ export default function OrderSummary({
       </div>
 
       {/* Coupon */}
-      <div className="border-t border-black/[0.04] dark:border-white/[0.04] p-4">
+      <div className="border-t border-border p-4">
         <CouponInput
           total={subtotal}
           onApply={(coupon) =>
@@ -131,7 +131,7 @@ export default function OrderSummary({
 
       {/* Free Shipping Progress */}
       {remaining > 0 && !coupon && (
-        <div className="mx-4 mb-3 rounded-xl bg-black/[0.02] dark:bg-white/[0.03] p-3">
+        <div className="mx-4 mb-3 rounded-xl bg-subtle p-3">
           <div className="flex items-center gap-1.5">
             <Truck className="h-3.5 w-3.5 text-muted-foreground/50" />
             <p className="text-[11px] font-medium text-muted-foreground/60">
@@ -142,7 +142,7 @@ export default function OrderSummary({
               </span>
             </p>
           </div>
-          <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-black/[0.06] dark:bg-white/[0.06]">
+          <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-muted">
             <motion.div
               initial={{ width: 0 }}
               animate={{
@@ -155,7 +155,7 @@ export default function OrderSummary({
       )}
 
       {/* Totals */}
-      <div className="border-t border-black/[0.04] dark:border-white/[0.04] p-4 space-y-2">
+      <div className="border-t border-border p-4 space-y-2">
         <div className="flex justify-between text-xs">
           <span className="font-medium text-muted-foreground/60">
             {t("subtotal")}
@@ -186,7 +186,7 @@ export default function OrderSummary({
             </span>
           </div>
         )}
-        <div className="border-t border-black/[0.06] dark:border-white/[0.06] pt-2.5 flex justify-between">
+        <div className="border-t border-border pt-2.5 flex justify-between">
           <span className="text-sm font-bold text-foreground">
             {t("grand_total")}
           </span>
@@ -204,7 +204,7 @@ export default function OrderSummary({
             whileTap={{ scale: 0.98 }}
             onClick={onPlaceOrder}
             disabled={isSubmitting}
-            className="flex w-full items-center justify-center gap-2.5 rounded-xl bg-foreground py-3.5 text-sm font-semibold text-background hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-[0_2px_8px_rgba(0,0,0,0.12)] hover:shadow-[0_4px_16px_rgba(0,0,0,0.18)]"
+            className="flex w-full items-center justify-center gap-2.5 rounded-xl bg-foreground py-3.5 text-sm font-semibold text-background hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-[0_2px_8px_rgba(0,0,0,0.12)] hover:shadow-md"
           >
             {isSubmitting ? (
               <>
@@ -223,7 +223,7 @@ export default function OrderSummary({
             whileTap={{ scale: 0.98 }}
             onClick={onNext}
             disabled={isSubmitting}
-            className="flex w-full items-center justify-center gap-2.5 rounded-xl bg-foreground py-3.5 text-sm font-semibold text-background hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-[0_2px_8px_rgba(0,0,0,0.12)] hover:shadow-[0_4px_16px_rgba(0,0,0,0.18)]"
+            className="flex w-full items-center justify-center gap-2.5 rounded-xl bg-foreground py-3.5 text-sm font-semibold text-background hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-[0_2px_8px_rgba(0,0,0,0.12)] hover:shadow-md"
           >
             {t(stepLabels[currentStep] || "continue_to_review")}
             <ChevronRight className="h-4 w-4" />

@@ -45,8 +45,8 @@ export default function Header() {
         }}
         className={`fixed left-0 right-0 z-50 transition-all duration-300 top-0 md:top-[33px] ${
           isScrolled
-            ? "bg-white/80 backdrop-blur-xl border-b border-black/[0.04] shadow-[0_1px_3px_rgba(0,0,0,0.04)] dark:bg-[#09090b]/80 dark:border-white/[0.04]"
-            : "bg-white/95 backdrop-blur-md dark:bg-[#09090b]/95"
+            ? "bg-card/80 backdrop-blur-xl border-b border-border shadow-xs"
+            : "bg-card/95 backdrop-blur-md"
         }`}
         style={{
           paddingTop: "env(safe-area-inset-top)",
@@ -70,7 +70,7 @@ export default function Header() {
               onClick={() =>
                 setIsMobileSearchOpen(true)
               }
-              className="rounded-xl p-2.5 text-muted-foreground transition-colors duration-300 hover:bg-black/[0.04] hover:text-foreground md:hidden dark:hover:bg-white/[0.06]"
+              className="rounded-xl p-2.5 text-muted-foreground transition-colors duration-300 hover:bg-muted hover:text-foreground md:hidden"
               aria-label="Search"
             >
               <Search className="h-5 w-5" />
@@ -80,7 +80,7 @@ export default function Header() {
               onClick={() =>
                 setIsMobileMenuOpen(true)
               }
-              className="rounded-xl p-2.5 text-muted-foreground transition-colors duration-300 hover:bg-black/[0.04] hover:text-foreground lg:hidden dark:hover:bg-white/[0.06]"
+              className="rounded-xl p-2.5 text-muted-foreground transition-colors duration-300 hover:bg-muted hover:text-foreground lg:hidden"
               aria-label="Menu"
             >
               <Menu className="h-5 w-5" />
@@ -88,7 +88,7 @@ export default function Header() {
           </div>
         </div>
 
-        <div className="hidden border-t border-black/[0.04] dark:border-white/[0.04] md:block">
+        <div className="hidden border-t border-border md:block">
           <DesktopNav
             categories={categories as any}
             isCategoryMenuOpen={isCategoryMenuOpen}

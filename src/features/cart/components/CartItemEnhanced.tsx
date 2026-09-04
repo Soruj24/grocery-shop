@@ -107,12 +107,12 @@ export default function CartItemEnhanced({
       animate={{ opacity: 1, y: 0 }}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      className="bg-white dark:bg-[#09090b] rounded-xl border border-black/[0.04] dark:border-white/[0.04] overflow-hidden transition-all duration-300 shadow-[0_1px_3px_rgba(0,0,0,0.04)] hover:shadow-[0_4px_16px_rgba(0,0,0,0.06)] group"
+      className="bg-card rounded-xl border border-border overflow-hidden transition-all duration-300 shadow-xs hover:shadow-sm group"
     >
       <div className="p-4 sm:p-5">
         <div className="flex gap-4 sm:gap-5">
           {/* Product Image */}
-          <div className="relative w-20 h-20 sm:w-24 sm:h-24 bg-black/[0.02] dark:bg-white/[0.02] rounded-xl overflow-hidden border border-black/[0.04] dark:border-white/[0.04] shrink-0">
+          <div className="relative w-20 h-20 sm:w-24 sm:h-24 bg-muted rounded-xl overflow-hidden border border-border shrink-0">
             <Image
               src={item.image || getProductFallbackImage(item.name)}
               alt={item.name}
@@ -135,7 +135,7 @@ export default function CartItemEnhanced({
                   {item.name}
                 </h3>
                 {item.variant && (
-                  <span className="mt-1 inline-flex items-center gap-1 text-[10px] font-medium text-muted-foreground/50 bg-black/[0.03] dark:bg-white/[0.04] px-2 py-0.5 rounded-md">
+                  <span className="mt-1 inline-flex items-center gap-1 text-[10px] font-medium text-muted-foreground bg-muted px-2 py-0.5 rounded-md">
                     <Sparkles className="w-2.5 h-2.5" />
                     {item.variant}
                   </span>
@@ -147,7 +147,7 @@ export default function CartItemEnhanced({
                 <button
                   onClick={handleSaveForLater}
                   disabled={isSaving}
-                  className="p-1.5 rounded-lg text-muted-foreground/40 hover:text-foreground hover:bg-black/[0.04] dark:hover:bg-white/[0.06] transition-all disabled:opacity-40"
+                  className="p-1.5 rounded-lg text-muted-foreground/40 hover:text-foreground hover:bg-muted transition-all disabled:opacity-40"
                   title={t("save_for_later")}
                 >
                   <Bookmark className="w-3.5 h-3.5" />
@@ -157,8 +157,8 @@ export default function CartItemEnhanced({
                   disabled={isWishlisting}
                   className={`p-1.5 rounded-lg transition-all ${
                     isInWishlistState
-                      ? "text-rose-500"
-                      : "text-muted-foreground/40 hover:text-rose-500 hover:bg-rose-500/[0.06]"
+                      ? "text-danger"
+                      : "text-muted-foreground/40 hover:text-danger hover:bg-danger-subtle"
                   }`}
                   title={isInWishlistState ? t("in_wishlist") : t("add_to_wishlist")}
                 >
@@ -170,7 +170,7 @@ export default function CartItemEnhanced({
                 </button>
                 <button
                   onClick={() => onRemove(item._id)}
-                  className="p-1.5 rounded-lg text-muted-foreground/40 hover:text-rose-500 hover:bg-rose-500/[0.06] transition-all"
+                  className="p-1.5 rounded-lg text-muted-foreground/40 hover:text-danger hover:bg-danger-subtle transition-all"
                   title={t("remove")}
                 >
                   <Trash2 className="w-3.5 h-3.5" />
@@ -195,12 +195,12 @@ export default function CartItemEnhanced({
 
               <div className="flex items-center justify-between sm:justify-end gap-4">
                 {/* Quantity Controls */}
-                <div className="flex items-center bg-black/[0.04] dark:bg-white/[0.06] rounded-lg p-0.5">
+                <div className="flex items-center bg-muted rounded-lg p-0.5">
                   <motion.button
                     whileTap={{ scale: 0.9 }}
                     onClick={handleDecrement}
                     disabled={localQuantity <= 1}
-                    className="w-8 h-8 flex items-center justify-center rounded-md text-foreground hover:bg-black/[0.06] dark:hover:bg-white/[0.1] disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+                    className="w-8 h-8 flex items-center justify-center rounded-md text-foreground hover:bg-muted disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
                     aria-label={t("decrease_quantity")}
                   >
                     <Minus className="w-3.5 h-3.5" />
@@ -212,7 +212,7 @@ export default function CartItemEnhanced({
                     whileTap={{ scale: 0.9 }}
                     onClick={handleIncrement}
                     disabled={localQuantity >= maxQuantity}
-                    className="w-8 h-8 flex items-center justify-center rounded-md text-foreground hover:bg-black/[0.06] dark:hover:bg-white/[0.1] disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+                    className="w-8 h-8 flex items-center justify-center rounded-md text-foreground hover:bg-muted disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
                     aria-label={t("increase_quantity")}
                   >
                     <Plus className="w-3.5 h-3.5" />
@@ -236,11 +236,11 @@ export default function CartItemEnhanced({
       </div>
 
       {/* Mobile Action Bar */}
-      <div className="sm:hidden border-t border-black/[0.04] dark:border-white/[0.04] px-4 py-3 flex items-center gap-2">
+      <div className="sm:hidden border-t border-border px-4 py-3 flex items-center gap-2">
         <motion.button
           whileTap={{ scale: 0.95 }}
           onClick={handleSaveForLater}
-          className="flex items-center gap-1.5 text-[11px] font-medium text-muted-foreground/50 hover:text-foreground px-3 py-2 rounded-lg hover:bg-black/[0.04] dark:hover:bg-white/[0.06] transition-all min-h-[36px]"
+          className="flex items-center gap-1.5 text-[11px] font-medium text-muted-foreground hover:text-foreground px-3 py-2 rounded-lg hover:bg-muted transition-all min-h-[36px]"
         >
           <Bookmark className="w-3.5 h-3.5" />
           {t("save_for_later")}
@@ -248,7 +248,7 @@ export default function CartItemEnhanced({
         <motion.button
           whileTap={{ scale: 0.95 }}
           onClick={handleMoveToWishlist}
-          className="flex items-center gap-1.5 text-[11px] font-medium text-muted-foreground/50 hover:text-rose-500 px-3 py-2 rounded-lg hover:bg-rose-500/[0.06] transition-all min-h-[36px]"
+          className="flex items-center gap-1.5 text-[11px] font-medium text-muted-foreground hover:text-danger px-3 py-2 rounded-lg hover:bg-danger-subtle transition-all min-h-[36px]"
         >
           <Heart className="w-3.5 h-3.5" />
           {t("wishlist_button")}
@@ -256,7 +256,7 @@ export default function CartItemEnhanced({
         <motion.button
           whileTap={{ scale: 0.95 }}
           onClick={() => onRemove(item._id)}
-          className="flex items-center gap-1.5 text-[11px] font-medium text-rose-500/70 hover:text-rose-500 px-3 py-2 rounded-lg hover:bg-rose-500/[0.06] transition-all ml-auto min-h-[36px]"
+          className="flex items-center gap-1.5 text-[11px] font-medium text-danger/70 hover:text-danger px-3 py-2 rounded-lg hover:bg-danger-subtle transition-all ml-auto min-h-[36px]"
         >
           <Trash2 className="w-3.5 h-3.5" />
           {t("remove")}

@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import {
   useState,
@@ -138,9 +138,9 @@ export default function CategoryProductGrid({
   return (
     <main className="flex-1 min-w-0 space-y-5">
       {/* Toolbar */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white dark:bg-[#09090b] p-4 rounded-xl border border-black/[0.04] dark:border-white/[0.04] shadow-[0_1px_3px_rgba(0,0,0,0.04)] sticky top-24 z-30">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-card p-4 rounded-xl border border-border shadow-xs sticky top-24 z-30">
         <div className="flex items-center gap-3">
-          <div className="w-9 h-9 bg-black/[0.04] dark:bg-white/[0.06] rounded-lg flex items-center justify-center">
+          <div className="w-9 h-9 bg-muted rounded-lg flex items-center justify-center">
             <LayoutGrid className="w-4 h-4 text-muted-foreground/60" />
           </div>
           <div>
@@ -170,7 +170,7 @@ export default function CategoryProductGrid({
                   e.target.value
                 )
               }
-              className="w-full bg-black/[0.03] dark:bg-white/[0.04] border border-black/[0.06] dark:border-white/[0.06] rounded-lg py-2 pl-8 pr-3 text-xs font-medium text-foreground placeholder:text-muted-foreground/40 focus:ring-1 focus:ring-foreground/20 outline-none"
+              className="w-full bg-muted border border-border rounded-lg py-2 pl-8 pr-3 text-xs font-medium text-foreground placeholder:text-muted-foreground/40 focus:ring-1 focus:ring-foreground/20 outline-none"
             />
           </div>
 
@@ -186,7 +186,7 @@ export default function CategoryProductGrid({
                   200
                 )
               }
-              className="flex items-center gap-2 bg-black/[0.03] dark:bg-white/[0.04] px-3.5 py-2 rounded-lg border border-black/[0.06] dark:border-white/[0.06] hover:border-black/[0.12] dark:hover:border-white/[0.12] transition-colors text-xs font-medium text-foreground"
+              className="flex items-center gap-2 bg-muted px-3.5 py-2 rounded-lg border border-border hover:border-border-strong transition-colors text-xs font-medium text-foreground"
             >
               <ArrowUpDown className="w-3.5 h-3.5 text-muted-foreground/50" />
               {
@@ -219,7 +219,7 @@ export default function CategoryProductGrid({
                     y: 8,
                     scale: 0.96,
                   }}
-                  className="absolute right-0 top-full mt-1.5 w-52 bg-white dark:bg-[#09090b] rounded-xl shadow-[0_8px_30px_rgba(0,0,0,0.12)] border border-black/[0.06] dark:border-white/[0.06] overflow-hidden z-50 p-1.5"
+                  className="absolute right-0 top-full mt-1.5 w-52 bg-card rounded-xl shadow-xl border border-border overflow-hidden z-50 p-1.5"
                 >
                   {sortOptions.map((option) => (
                     <button
@@ -234,7 +234,7 @@ export default function CategoryProductGrid({
                       className={`w-full flex items-center justify-between px-3 py-2 rounded-lg text-xs font-medium transition-all ${
                         sortBy === option.id
                           ? "bg-foreground text-background"
-                          : "text-muted-foreground/60 hover:bg-black/[0.04] dark:hover:bg-white/[0.06]"
+                          : "text-muted-foreground/60 hover:bg-muted"
                       }`}
                     >
                       {option.label}
@@ -259,7 +259,7 @@ export default function CategoryProductGrid({
               onClick={() =>
                 updateFilter(f.key, "")
               }
-              className="inline-flex items-center gap-1 px-2.5 py-1 bg-black/[0.04] dark:bg-white/[0.06] rounded-md text-[11px] font-medium text-muted-foreground/70 hover:text-foreground transition-colors"
+              className="inline-flex items-center gap-1 px-2.5 py-1 bg-muted rounded-md text-[11px] font-medium text-muted-foreground/70 hover:text-foreground transition-colors"
             >
               {f.label}
               <X className="w-3 h-3" />
@@ -293,9 +293,9 @@ export default function CategoryProductGrid({
         <motion.div
           initial={{ opacity: 0, scale: 0.96 }}
           animate={{ opacity: 1, scale: 1 }}
-          className="bg-white dark:bg-[#09090b] rounded-xl p-12 text-center border border-black/[0.04] dark:border-white/[0.04] shadow-[0_1px_3px_rgba(0,0,0,0.04)]"
+          className="bg-card rounded-xl p-12 text-center border border-border shadow-xs"
         >
-          <div className="w-14 h-14 bg-black/[0.04] dark:bg-white/[0.06] rounded-xl flex items-center justify-center mx-auto mb-4 text-muted-foreground/30">
+          <div className="w-14 h-14 bg-muted rounded-xl flex items-center justify-center mx-auto mb-4 text-muted-foreground/30">
             <ShoppingBag className="w-6 h-6" />
           </div>
           <h3 className="text-lg font-bold text-foreground mb-1.5">

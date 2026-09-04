@@ -53,7 +53,7 @@ export default function FeaturesSection() {
   ];
 
   return (
-    <section className="py-20 lg:py-28 bg-background border-y border-black/[0.04] relative overflow-hidden dark:border-white/[0.04]">
+    <section className="py-20 lg:py-28 bg-background border-y border-border relative overflow-hidden">
       {/* Decorative Background */}
       <div
         className="absolute inset-0 opacity-[0.02] pointer-events-none dark:opacity-[0.015]"
@@ -78,7 +78,7 @@ export default function FeaturesSection() {
                   duration: 0.5,
                   ease: [0.21, 0.47, 0.32, 0.98],
                 }}
-                className={`flex flex-col items-center text-center p-8 rounded-2xl bg-zinc-50 border border-black/[0.04] transition-all duration-500 hover:shadow-[0_8px_30px_rgba(0,0,0,0.06)] hover:-translate-y-1 group cursor-default dark:bg-white/[0.02] dark:border-white/[0.04]`}
+                className={`flex flex-col items-center text-center p-8 rounded-2xl bg-muted border border-border transition-all duration-500 hover:shadow-lg hover:-translate-y-1 group cursor-default`}
               >
                 <div
                   className={`w-18 h-18 rounded-2xl ${feature.bg} flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-500`}

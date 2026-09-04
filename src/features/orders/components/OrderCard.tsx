@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { ChevronRight, ShoppingBag } from "lucide-react";
 import { AdminOrder as Order } from "@/types/admin";
@@ -17,7 +17,7 @@ export default function OrderCard({
   const { t } = useLanguage();
 
   return (
-    <div className="bg-white dark:bg-[#09090b] rounded-xl border border-black/[0.04] dark:border-white/[0.04] shadow-[0_1px_3px_rgba(0,0,0,0.04)] overflow-hidden">
+    <div className="bg-card rounded-xl border border-border shadow-xs overflow-hidden">
       <OrderCardHeader
         orderId={order._id}
         status={order.status}
@@ -38,7 +38,7 @@ export default function OrderCard({
           t={t}
         />
       </div>
-      <div className="px-5 py-3 bg-black/[0.02] dark:bg-white/[0.02] border-t border-black/[0.04] dark:border-white/[0.04] flex justify-end">
+      <div className="px-5 py-3 bg-subtle border-t border-border flex justify-end">
         <button className="flex items-center gap-1.5 text-[11px] font-semibold text-muted-foreground/60 hover:text-foreground transition-colors uppercase tracking-wider">
           {t("view_details")}{" "}
           <ChevronRight className="w-3.5 h-3.5" />

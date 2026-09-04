@@ -37,7 +37,7 @@ export default function OrderInfoGrid({
   t,
 }: OrderInfoGridProps) {
   return (
-    <div className="grid sm:grid-cols-2 gap-5 pt-5 border-t border-black/[0.04] dark:border-white/[0.04]">
+    <div className="grid sm:grid-cols-2 gap-5 pt-5 border-t border-border">
       <div className="space-y-3.5">
         <div className="flex items-start gap-2.5">
           <MapPin className="w-4 h-4 text-muted-foreground/40 mt-0.5" />
@@ -77,7 +77,7 @@ export default function OrderInfoGrid({
                 )}
               </p>
               {transactionId && (
-                <p className="text-[9px] font-mono text-muted-foreground/50 bg-black/[0.04] dark:bg-white/[0.06] px-2 py-0.5 rounded w-fit">
+                <p className="text-[9px] font-mono text-muted-foreground/50 bg-muted px-2 py-0.5 rounded w-fit">
                   {t(
                     "transaction_id_label"
                   )}
@@ -109,7 +109,7 @@ export default function OrderInfoGrid({
             </p>
           </div>
         </div>
-        <div className="flex items-center justify-between bg-black/[0.02] dark:bg-white/[0.03] p-3.5 rounded-lg border border-black/[0.04] dark:border-white/[0.04]">
+        <div className="flex items-center justify-between bg-subtle p-3.5 rounded-lg border border-border">
           <span className="text-xs font-medium text-muted-foreground/60">
             {t(
               "total_with_delivery"

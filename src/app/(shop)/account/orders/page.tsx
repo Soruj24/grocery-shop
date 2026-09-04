@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
@@ -24,7 +24,7 @@ const statusColors: Record<string, string> = {
   delivered:
     "bg-emerald-500/[0.08] text-emerald-600 dark:text-emerald-400",
   cancelled:
-    "bg-rose-500/[0.08] text-rose-600 dark:text-rose-400",
+    "bg-danger-subtle text-danger",
 };
 
 const filters = [
@@ -97,7 +97,7 @@ export default function AccountOrdersPage() {
             placeholder="Search by order ID..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full rounded-xl border border-black/[0.06] dark:border-white/[0.06] bg-white dark:bg-[#09090b] pl-11 pr-4 py-2.5 text-sm text-foreground placeholder:text-muted-foreground/30 focus:border-foreground/20 focus:ring-2 focus:ring-foreground/10 outline-none transition-all"
+            className="w-full rounded-xl border border-border bg-card pl-11 pr-4 py-2.5 text-sm text-foreground placeholder:text-muted-foreground/30 focus:border-foreground/20 focus:ring-2 focus:ring-foreground/10 outline-none transition-all"
           />
         </div>
         <div className="flex gap-1.5 overflow-x-auto pb-1">
@@ -108,7 +108,7 @@ export default function AccountOrdersPage() {
               className={`shrink-0 rounded-xl px-3.5 py-2 text-[11px] font-semibold transition-all ${
                 filter === s
                   ? "bg-foreground text-background"
-                  : "bg-black/[0.04] dark:bg-white/[0.06] text-muted-foreground/60 hover:bg-black/[0.06] dark:hover:bg-white/[0.08]"
+                  : "bg-muted text-muted-foreground/60 hover:bg-muted"
               }`}
             >
               {s.charAt(0).toUpperCase() + s.slice(1)}
@@ -122,7 +122,7 @@ export default function AccountOrdersPage() {
         <motion.div
           initial={{ opacity: 0, scale: 0.98 }}
           animate={{ opacity: 1, scale: 1 }}
-          className="rounded-2xl border border-black/[0.04] dark:border-white/[0.04] bg-white dark:bg-[#09090b] p-12 text-center shadow-[0_1px_3px_rgba(0,0,0,0.04)]"
+          className="rounded-2xl border border-border bg-card p-12 text-center shadow-xs"
         >
           <Package className="mx-auto h-10 w-10 text-muted-foreground/20 mb-3" />
           <p className="text-sm font-semibold text-foreground">
@@ -148,11 +148,11 @@ export default function AccountOrdersPage() {
             >
               <Link
                 href={`/orders/track/${order._id}`}
-                className="block rounded-2xl border border-black/[0.04] dark:border-white/[0.04] bg-white dark:bg-[#09090b] p-5 hover:shadow-[0_4px_16px_rgba(0,0,0,0.06)] transition-all group"
+                className="block rounded-2xl border border-border bg-card p-5 hover:shadow-sm transition-all group"
               >
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                   <div className="flex items-center gap-4">
-                    <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-black/[0.04] dark:bg-white/[0.06] group-hover:bg-foreground group-hover:text-background transition-all">
+                    <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-muted group-hover:bg-foreground group-hover:text-background transition-all">
                       <Package className="h-5 w-5" />
                     </div>
                     <div>
@@ -188,7 +188,7 @@ export default function AccountOrdersPage() {
                     .map((item, j) => (
                       <span
                         key={j}
-                        className="text-[10px] bg-black/[0.04] dark:bg-white/[0.06] text-muted-foreground/60 px-2 py-0.5 rounded-full"
+                        className="text-[10px] bg-muted text-muted-foreground/60 px-2 py-0.5 rounded-full"
                       >
                         {item.name} × {item.quantity}
                       </span>

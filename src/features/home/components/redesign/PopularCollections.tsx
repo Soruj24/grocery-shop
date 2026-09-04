@@ -54,7 +54,7 @@ export default function PopularCollections({
           >
             <Link
               href={`/products?category=${cat._id}`}
-              className="group relative flex h-full w-full flex-col justify-end overflow-hidden rounded-2xl border border-black/[0.04] shadow-[0_1px_3px_rgba(0,0,0,0.04)] transition-all duration-500 hover:shadow-[0_12px_40px_rgba(0,0,0,0.08)] dark:border-white/[0.04]"
+              className="group relative flex h-full w-full flex-col justify-end overflow-hidden rounded-2xl border border-border shadow-xs transition-all duration-500 hover:shadow-xl"
             >
               <Image
                 src={
@@ -73,12 +73,12 @@ export default function PopularCollections({
               <div className="relative z-10 flex items-end justify-between p-6">
                 <div>
                   {i === 0 && (
-                    <span className="mb-2.5 inline-flex items-center gap-1.5 rounded-full bg-white/[0.15] px-3 py-1.5 text-[10px] font-extrabold uppercase tracking-wider text-white ring-1 ring-white/[0.2]">
+                    <span className="mb-2.5 inline-flex items-center gap-1.5 rounded-full bg-white/[0.15] px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider text-white ring-1 ring-white/[0.2]">
                       <Sparkles className="h-3 w-3" />
                       Editor's Pick
                     </span>
                   )}
-                  <h3 className="text-xl font-extrabold leading-tight text-white lg:text-2xl">
+                  <h3 className="text-xl font-bold leading-tight text-white lg:text-2xl">
                     {cat.name}
                   </h3>
                   <p className="mt-1.5 flex items-center gap-1.5 text-xs font-semibold text-white/80">

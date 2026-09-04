@@ -43,9 +43,9 @@ export default function TrustBadges() {
             delay: i * 0.06,
             ease: [0.21, 0.47, 0.32, 0.98],
           }}
-          className="flex items-center gap-2.5 rounded-xl border border-black/[0.04] dark:border-white/[0.04] bg-black/[0.02] dark:bg-white/[0.02] px-3 py-2.5"
+          className="flex items-center gap-2.5 rounded-xl border border-border bg-subtle px-3 py-2.5"
         >
-          <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-black/[0.04] dark:bg-white/[0.06]">
+          <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-muted">
             <badge.icon className="h-4 w-4 text-muted-foreground/60" />
           </div>
           <div className="min-w-0">

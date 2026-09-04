@@ -19,7 +19,7 @@ export default function CartDrawerEmpty({
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.3 }}
-        className="w-16 h-16 bg-black/[0.04] dark:bg-white/[0.06] rounded-2xl flex items-center justify-center text-muted-foreground/30"
+        className="w-16 h-16 bg-muted rounded-2xl flex items-center justify-center text-muted-foreground/30"
       >
         <ShoppingBag size={28} />
       </motion.div>
@@ -33,7 +33,7 @@ export default function CartDrawerEmpty({
       </div>
       <button
         onClick={onClose}
-        className="bg-foreground text-background px-6 py-2.5 rounded-xl font-semibold text-xs flex items-center gap-2 active:scale-[0.98] transition-all shadow-[0_2px_8px_rgba(0,0,0,0.12)]"
+        className="bg-primary text-primary-foreground px-6 py-2.5 rounded-xl font-semibold text-xs flex items-center gap-2 active:scale-[0.98] transition-all shadow-md"
       >
         {t("cart_start_shopping")}
         <ArrowRight className="w-3.5 h-3.5" />

@@ -55,14 +55,14 @@ export default function ShippingCalculator({
         <motion.div
           initial={{ opacity: 0, y: -5 }}
           animate={{ opacity: 1, y: 0 }}
-          className="space-y-2.5 p-3.5 bg-black/[0.02] dark:bg-white/[0.02] rounded-lg border border-black/[0.04] dark:border-white/[0.04]"
+          className="space-y-2.5 p-3.5 bg-subtle rounded-lg border border-border"
         >
           <select
             value={city}
             onChange={(e) =>
               setCity(e.target.value)
             }
-            className="w-full bg-white dark:bg-[#09090b] border border-black/[0.04] dark:border-white/[0.04] rounded-lg px-3.5 py-2.5 text-xs font-medium text-foreground focus:ring-1 focus:ring-foreground/20 transition-all"
+            className="w-full bg-card border border-border rounded-lg px-3.5 py-2.5 text-xs font-medium text-foreground focus:ring-1 focus:ring-foreground/20 transition-all"
           >
             <option value="">
               Select your city

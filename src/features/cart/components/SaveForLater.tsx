@@ -41,11 +41,11 @@ export default function SaveForLater({
       initial={{ opacity: 0, y: 12 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.2 }}
-      className="bg-white dark:bg-[#09090b] rounded-xl border border-black/[0.04] dark:border-white/[0.04] overflow-hidden shadow-[0_1px_3px_rgba(0,0,0,0.04)]"
+      className="bg-card rounded-xl border border-border overflow-hidden shadow-xs"
     >
-      <div className="p-5 border-b border-black/[0.04] dark:border-white/[0.04]">
+      <div className="p-5 border-b border-border">
         <div className="flex items-center gap-2.5">
-          <div className="w-8 h-8 bg-black/[0.04] dark:bg-white/[0.06] rounded-lg flex items-center justify-center">
+          <div className="w-8 h-8 bg-muted rounded-lg flex items-center justify-center">
             <Bookmark className="w-4 h-4 text-muted-foreground/60" />
           </div>
           <div>
@@ -59,7 +59,7 @@ export default function SaveForLater({
         </div>
       </div>
 
-      <div className="divide-y divide-black/[0.04] dark:divide-white/[0.04]">
+      <div className="divide-y divide-border">
         <AnimatePresence mode="popLayout">
           {items.map((item) => (
             <motion.div
@@ -70,7 +70,7 @@ export default function SaveForLater({
               exit={{ opacity: 0, height: 0 }}
               className="p-4 flex items-center gap-4"
             >
-              <div className="relative w-14 h-14 bg-black/[0.02] dark:bg-white/[0.02] rounded-lg overflow-hidden border border-black/[0.04] dark:border-white/[0.04] shrink-0">
+              <div className="relative w-14 h-14 bg-subtle rounded-lg overflow-hidden border border-border shrink-0">
                 <Image
                   src={
                     item.image ||
@@ -103,14 +103,14 @@ export default function SaveForLater({
                 </button>
                 <button
                   onClick={() => onMoveToWishlist(item._id)}
-                  className="p-1.5 rounded-lg text-muted-foreground/40 hover:text-rose-500 hover:bg-rose-500/[0.06] transition-all"
+                  className="p-1.5 rounded-lg text-muted-foreground/40 hover:text-danger hover:bg-danger-subtle transition-all"
                   title={t("wishlist_button")}
                 >
                   <Heart className="w-3.5 h-3.5" />
                 </button>
                 <button
                   onClick={() => onRemove(item._id)}
-                  className="p-1.5 rounded-lg text-muted-foreground/40 hover:text-rose-500 hover:bg-rose-500/[0.06] transition-all"
+                  className="p-1.5 rounded-lg text-muted-foreground/40 hover:text-danger hover:bg-danger-subtle transition-all"
                   title={t("remove")}
                 >
                   <Trash2 className="w-3.5 h-3.5" />

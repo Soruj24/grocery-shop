@@ -50,7 +50,7 @@ export default function MobileDrawer({
               damping: 30,
               stiffness: 300,
             }}
-            className="fixed top-0 left-0 bottom-0 w-[85%] max-w-[360px] bg-white dark:bg-[#09090b] z-[201] lg:hidden flex flex-col shadow-[20px_0_60px_-15px_rgba(0,0,0,0.2)] overflow-hidden"
+            className="fixed top-0 left-0 bottom-0 w-[85%] max-w-[360px] bg-card z-[201] lg:hidden flex flex-col shadow-xl overflow-hidden"
             role="dialog"
             aria-modal="true"
             style={{

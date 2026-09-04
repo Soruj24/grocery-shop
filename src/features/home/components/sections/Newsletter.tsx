@@ -68,7 +68,7 @@ export default function Newsletter() {
                   whileInView={{ y: 0, opacity: 1 }}
                   viewport={{ once: true }}
                   transition={{ delay: 0.1 }}
-                  className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-white tracking-[-0.03em] leading-tight"
+                  className="text-4xl md:text-5xl lg:text-6xl font-bold text-white tracking-[-0.03em] leading-tight"
                 >
                   {t("newsletter_title_1")}{" "}
                   <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-primary-hover">
@@ -150,7 +150,7 @@ export default function Newsletter() {
               </div>
 
               {/* Floating Badge */}
-              <div className="absolute -bottom-8 -left-8 bg-card p-6 rounded-2xl shadow-lg z-20 border border-black/[0.04] dark:border-white/[0.04] animate-bounce-slow">
+              <div className="absolute -bottom-8 -left-8 bg-card p-6 rounded-2xl shadow-lg z-20 border border-border animate-bounce-slow">
                 <div className="flex items-center gap-4">
                   <div className="w-12 h-12 bg-primary-subtle rounded-full flex items-center justify-center text-primary text-2xl">
                     🎁

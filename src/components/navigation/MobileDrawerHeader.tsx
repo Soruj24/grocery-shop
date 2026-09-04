@@ -17,7 +17,7 @@ export default function MobileDrawerHeader({
   const { t } = useLanguage();
 
   return (
-    <div className="relative p-6 border-b border-black/[0.06] dark:border-white/[0.06] bg-black/[0.02] dark:bg-white/[0.02]">
+    <div className="relative p-6 border-b border-border bg-subtle">
       <div className="flex items-center justify-between mb-6">
         <Link
           href="/"
@@ -37,7 +37,7 @@ export default function MobileDrawerHeader({
         </Link>
         <button
           onClick={onClose}
-          className="w-10 h-10 rounded-xl bg-black/[0.04] dark:bg-white/[0.06] flex items-center justify-center text-muted-foreground hover:text-rose-500 hover:bg-rose-500/[0.06] dark:hover:bg-rose-500/[0.08] transition-all duration-300 border border-black/[0.04] dark:border-white/[0.04]"
+          className="w-10 h-10 rounded-xl bg-muted flex items-center justify-center text-muted-foreground hover:text-danger hover:bg-danger-subtle transition-all duration-300 border border-border"
           aria-label="Close"
         >
           <X size={18} />
@@ -45,7 +45,7 @@ export default function MobileDrawerHeader({
       </div>
 
       {session ? (
-        <div className="flex items-center gap-3 p-3.5 bg-black/[0.03] dark:bg-white/[0.04] rounded-xl border border-black/[0.04] dark:border-white/[0.04]">
+        <div className="flex items-center gap-3 p-3.5 bg-muted rounded-xl border border-border">
           <div className="w-10 h-10 bg-foreground rounded-xl flex items-center justify-center text-background text-sm font-bold">
             {session.user?.name?.charAt(0)}
           </div>

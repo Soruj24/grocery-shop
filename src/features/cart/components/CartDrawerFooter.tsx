@@ -22,7 +22,7 @@ export default function CartDrawerFooter({
   const grandTotal = totalPrice + shippingFee;
 
   return (
-    <div className="p-5 border-t border-black/[0.04] dark:border-white/[0.04] space-y-4">
+    <div className="p-5 border-t border-border space-y-4">
       {/* Shipping Notice */}
       {totalPrice < 500 && (
         <div className="flex items-center gap-2 text-[10px] font-medium text-muted-foreground/50">
@@ -54,7 +54,7 @@ export default function CartDrawerFooter({
               : `${t("currency_symbol")}${shippingFee.toLocaleString("bn-BD")}`}
           </span>
         </div>
-        <div className="flex justify-between text-lg font-bold text-foreground pt-2 border-t border-black/[0.04] dark:border-white/[0.04]">
+        <div className="flex justify-between text-lg font-bold text-foreground pt-2 border-t border-border">
           <span>{t("grand_total")}</span>
           <span>
             {t("currency_symbol")}
@@ -68,14 +68,14 @@ export default function CartDrawerFooter({
         <Link
           href="/cart"
           onClick={onClose}
-          className="flex items-center justify-center px-4 py-3 bg-black/[0.04] dark:bg-white/[0.06] border border-black/[0.04] dark:border-white/[0.04] rounded-xl font-semibold text-xs text-foreground hover:bg-black/[0.08] dark:hover:bg-white/[0.1] transition-all"
+          className="flex items-center justify-center px-4 py-3 bg-muted border border-border rounded-xl font-semibold text-xs text-foreground hover:bg-muted transition-all"
         >
           {t("view_cart")}
         </Link>
         <Link
           href="/checkout"
           onClick={onClose}
-          className="flex items-center justify-center gap-2 px-4 py-3 bg-foreground text-background rounded-xl font-semibold text-xs transition-all group shadow-[0_2px_8px_rgba(0,0,0,0.12)]"
+          className="flex items-center justify-center gap-2 px-4 py-3 bg-primary text-primary-foreground rounded-xl font-semibold text-xs transition-all group shadow-md"
         >
           {t("checkout_button")}
           <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />

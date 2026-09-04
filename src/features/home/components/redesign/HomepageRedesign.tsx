@@ -71,7 +71,7 @@ export default function HomepageRedesign({
 
       {/* 8. Best Sellers */}
       <section className="mx-auto max-w-7xl px-4">
-        <div className="rounded-[2rem] border border-black/[0.04] bg-zinc-50/80 p-2 dark:bg-white/[0.02] dark:border-white/[0.04]">
+        <div className="rounded-2xl border border-border bg-subtle/80 p-2 dark:bg-subtle/80">
           <SectionShell
             eyebrow={t("best_sellers") ?? t("featured_products_tab_bestsellers")}
             eyebrowTone="warning"

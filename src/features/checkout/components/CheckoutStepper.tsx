@@ -58,7 +58,7 @@ export default function CheckoutStepper({
                     ? "bg-foreground text-background"
                     : isCurrent
                     ? "bg-foreground text-background shadow-[0_2px_12px_rgba(0,0,0,0.15)]"
-                    : "bg-black/[0.04] dark:bg-white/[0.06] text-muted-foreground/50"
+                    : "bg-muted text-muted-foreground/50"
                 }`}
               >
                 {isCompleted ? (
@@ -122,7 +122,7 @@ export default function CheckoutStepper({
 
             {/* Connector */}
             {index < steps.length - 1 && (
-              <div className="mx-1.5 sm:mx-3 h-0.5 flex-1 overflow-hidden rounded-full bg-black/[0.04] dark:bg-white/[0.06]">
+              <div className="mx-1.5 sm:mx-3 h-0.5 flex-1 overflow-hidden rounded-full bg-muted">
                 <motion.div
                   initial={{ width: 0 }}
                   animate={{

@@ -70,7 +70,7 @@ export default function PremiumHero({
       <div className="grid grid-cols-1 gap-5 lg:grid-cols-12 lg:gap-6">
         {/* Main slider */}
         <div className="relative lg:col-span-8 lg:h-[580px]">
-          <div className="relative h-[440px] overflow-hidden rounded-3xl shadow-[0_20px_60px_-15px_rgba(0,0,0,0.15)] ring-1 ring-black/[0.04] lg:h-full dark:ring-white/[0.04]">
+          <div className="relative h-[440px] overflow-hidden rounded-2xl shadow-2xl ring-1 ring-border lg:h-full">
             <AnimatePresence
               mode="wait"
               custom={direction}
@@ -141,7 +141,7 @@ export default function PremiumHero({
                 <div className="flex flex-wrap items-center gap-3 pt-2">
                   <Link
                     href="/products"
-                    className="group inline-flex items-center gap-2.5 rounded-full bg-white px-8 py-4 text-sm font-bold text-foreground shadow-[0_8px_30px_rgba(0,0,0,0.12)] transition-all duration-300 hover:shadow-[0_12px_40px_rgba(0,0,0,0.18)] active:scale-[0.98]"
+                    className="group inline-flex items-center gap-2.5 rounded-full bg-white px-8 py-4 text-sm font-bold text-foreground shadow-xl transition-all duration-300 hover:shadow-2xl active:scale-[0.98]"
                   >
                     {t("hero_start_shopping")}
                     <ChevronRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
@@ -237,7 +237,7 @@ export default function PremiumHero({
             <Link
               key={card.key}
               href={card.href}
-              className="group relative h-[270px] overflow-hidden rounded-3xl ring-1 ring-black/[0.04] shadow-[0_4px_20px_rgba(0,0,0,0.08)] transition-all duration-500 hover:shadow-[0_12px_40px_rgba(0,0,0,0.12)] dark:ring-white/[0.04]"
+              className="group relative h-[270px] overflow-hidden rounded-2xl ring-1 ring-border shadow-lg transition-all duration-500 hover:shadow-xl"
             >
               <Image
                 src={getProductFallbackImage(card.key)}
@@ -272,10 +272,10 @@ export default function PremiumHero({
       </div>
 
       {/* Search + trust band */}
-      <div className="mt-5 grid grid-cols-1 gap-4 rounded-3xl border border-black/[0.04] bg-white p-5 shadow-[0_2px_8px_rgba(0,0,0,0.04)] lg:mt-7 lg:grid-cols-[1.6fr_1fr] lg:gap-5 dark:border-white/[0.04] dark:bg-white/[0.02]">
+      <div className="mt-5 grid grid-cols-1 gap-4 rounded-2xl border border-border bg-card p-5 shadow-sm lg:mt-7 lg:grid-cols-[1.6fr_1fr] lg:gap-5">
         <form
           onSubmit={onSearch}
-          className="group relative flex items-center rounded-2xl bg-zinc-50 px-5 ring-1 ring-transparent transition-all duration-300 focus-within:bg-white focus-within:ring-primary/[0.2] focus-within:shadow-[0_0_0_3px_rgba(0,0,0,0.03)] dark:bg-white/[0.03]"
+          className="group relative flex items-center rounded-xl bg-muted px-5 ring-1 ring-transparent transition-all duration-300 focus-within:bg-card focus-within:ring-primary/[0.2] focus-within:shadow-focus"
         >
           <Search className="h-5 w-5 shrink-0 text-muted-foreground/60 transition-colors duration-300 group-focus-within:text-primary" />
           <input
@@ -286,7 +286,7 @@ export default function PremiumHero({
           />
           <button
             type="submit"
-            className="shrink-0 rounded-xl bg-foreground px-6 py-3 text-sm font-bold text-background transition-all duration-300 hover:bg-primary active:scale-[0.98]"
+            className="shrink-0 rounded-lg bg-primary px-6 py-3 text-sm font-bold text-primary-foreground transition-all duration-300 hover:bg-primary-hover active:scale-[0.98]"
           >
             {t("search_button")}
           </button>
@@ -295,7 +295,7 @@ export default function PremiumHero({
           {pills.map((pill) => (
             <div
               key={pill.label}
-              className="flex items-center justify-center gap-2.5 rounded-2xl bg-zinc-50 px-3 py-3.5 text-center text-xs font-semibold text-foreground transition-all duration-300 hover:bg-primary/[0.06] hover:text-primary dark:bg-white/[0.03]"
+              className="flex items-center justify-center gap-2.5 rounded-xl bg-muted px-3 py-3.5 text-center text-xs font-semibold text-foreground transition-all duration-300 hover:bg-primary/[0.06] hover:text-primary"
             >
               <pill.icon className="h-4 w-4 shrink-0 text-primary/70" />
               <span className="hidden sm:inline">
@@ -317,7 +317,7 @@ export default function PremiumHero({
             <Link
               key={cat._id}
               href={`/products?category=${cat._id}`}
-              className="rounded-full border border-black/[0.06] bg-white px-4 py-2 text-xs font-semibold text-foreground transition-all duration-300 hover:border-primary/[0.2] hover:bg-primary/[0.04] hover:text-primary dark:border-white/[0.06] dark:bg-white/[0.02]"
+              className="rounded-full border border-border bg-card px-4 py-2 text-xs font-semibold text-foreground transition-all duration-300 hover:border-primary/[0.2] hover:bg-primary/[0.04] hover:text-primary"
             >
               {cat.name}
             </Link>

@@ -32,7 +32,7 @@ export default function MobileSearchForm({
   return (
     <form
       onSubmit={onSubmit}
-      className="flex items-center gap-2 p-3 rounded-xl bg-black/[0.03] dark:bg-white/[0.04] border border-black/[0.06] dark:border-white/[0.06]"
+      className="flex items-center gap-2 p-3 rounded-xl bg-muted border border-border"
     >
       <Search className="w-4 h-4 text-muted-foreground/50 ml-1" />
       <input

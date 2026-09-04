@@ -28,30 +28,30 @@ export default function DesktopNav({
 }: DesktopNavProps) {
   const { t } = useLanguage();
 
-  const navLinks = [
+    const navLinks = [
     {
       label: t("nav_offers"),
       href: "/products?filter=offers",
       icon: Percent,
-      color: "text-amber-500",
+      color: "text-warning",
     },
     {
       label: t("nav_deals"),
       href: "/products?filter=deals",
       icon: Flame,
-      color: "text-rose-500",
+      color: "text-danger",
     },
     {
       label: t("nav_new"),
       href: "/products?sort=newest",
       icon: Star,
-      color: "text-sky-500",
+      color: "text-info",
     },
     {
       label: t("nav_popular"),
       href: "/products?sort=popular",
       icon: Clock,
-      color: "text-emerald-500",
+      color: "text-success",
     },
     {
       label: t("track_order") ?? "অর্ডার ট্র্যাক",
@@ -62,7 +62,7 @@ export default function DesktopNav({
   ];
 
   return (
-    <div className="hidden lg:block bg-white/60 dark:bg-[#09090b]/60 backdrop-blur-md sticky top-[33px] z-40">
+    <div className="hidden lg:block bg-card/60 backdrop-blur-md sticky top-[33px] z-40">
       <div className="max-w-7xl mx-auto px-4 lg:px-6 flex items-center justify-between gap-6 h-11">
         <div className="flex items-center gap-5 h-full">
           <div
@@ -116,14 +116,14 @@ export default function DesktopNav({
             </AnimatePresence>
           </div>
 
-          <div className="w-px h-4 bg-black/[0.08] dark:bg-white/[0.08]" />
+          <div className="w-px h-4 bg-border" />
 
           <nav className="flex items-center gap-0.5">
             {navLinks.map((item, i) => (
               <Link
                 key={i}
                 href={item.href}
-                className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg hover:bg-black/[0.04] dark:hover:bg-white/[0.06] transition-colors duration-200"
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg hover:bg-muted transition-colors duration-200"
               >
                 <item.icon
                   size={13}
@@ -140,7 +140,7 @@ export default function DesktopNav({
         <div className="flex items-center gap-4">
           <Link
             href="/products?sort=price_asc"
-            className="flex items-center gap-2 px-3 py-1.5 bg-black/[0.04] dark:bg-white/[0.06] text-muted-foreground rounded-lg border border-black/[0.06] dark:border-white/[0.06] hover:border-black/[0.1] dark:hover:border-white/[0.1] transition-colors duration-200 text-xs font-medium"
+            className="flex items-center gap-2 px-3 py-1.5 bg-muted text-muted-foreground rounded-lg border border-border hover:border-border-strong transition-colors duration-200 text-xs font-medium"
           >
             <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
             {t("free_delivery_msg")}

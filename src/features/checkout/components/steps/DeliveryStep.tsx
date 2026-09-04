@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { motion } from "framer-motion";
 import {
@@ -74,7 +74,7 @@ export default function DeliveryStep({
           </p>
         </motion.div>
       ) : (
-        <div className="rounded-2xl bg-black/[0.02] dark:bg-white/[0.03] border border-black/[0.04] dark:border-white/[0.04] p-4">
+        <div className="rounded-2xl bg-subtle border border-border p-4">
           <div className="flex items-center justify-between mb-2">
             <span className="text-xs font-medium text-muted-foreground/60">
               {t("free_delivery_remaining")}{" "}
@@ -84,7 +84,7 @@ export default function DeliveryStep({
               </span>
             </span>
           </div>
-          <div className="h-1.5 overflow-hidden rounded-full bg-black/[0.06] dark:bg-white/[0.06]">
+          <div className="h-1.5 overflow-hidden rounded-full bg-muted">
             <motion.div
               initial={{ width: 0 }}
               animate={{
@@ -98,10 +98,10 @@ export default function DeliveryStep({
       )}
 
       {/* Shipping Methods */}
-      <div className="rounded-2xl border border-black/[0.04] dark:border-white/[0.04] bg-white dark:bg-[#09090b] overflow-hidden shadow-[0_1px_3px_rgba(0,0,0,0.04)]">
-        <div className="p-5 border-b border-black/[0.04] dark:border-white/[0.04]">
+      <div className="rounded-2xl border border-border bg-card overflow-hidden shadow-xs">
+        <div className="p-5 border-b border-border">
           <div className="flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-black/[0.04] dark:bg-white/[0.06]">
+            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-muted">
               <Truck className="h-4.5 w-4.5 text-muted-foreground/60" />
             </div>
             <div>
@@ -130,8 +130,8 @@ export default function DeliveryStep({
                 }
                 className={`relative cursor-pointer rounded-xl border p-4 transition-all ${
                   isSelected
-                    ? "border-foreground bg-black/[0.02] dark:bg-white/[0.04] shadow-[0_2px_8px_rgba(0,0,0,0.04)]"
-                    : "border-black/[0.04] dark:border-white/[0.04] hover:border-black/[0.08] dark:hover:border-white/[0.1]"
+                    ? "border-foreground bg-subtle shadow-xs"
+                    : "border-border hover:border-border-strong"
                 }`}
               >
                 <div className="flex items-center gap-4">
@@ -139,7 +139,7 @@ export default function DeliveryStep({
                     className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-xl transition-all ${
                       isSelected
                         ? "bg-foreground text-background"
-                        : "bg-black/[0.04] dark:bg-white/[0.06] text-muted-foreground/60"
+                        : "bg-muted text-muted-foreground/60"
                     }`}
                   >
                     <Icon className="h-5 w-5" />
@@ -181,10 +181,10 @@ export default function DeliveryStep({
       </div>
 
       {/* Delivery Time Slots */}
-      <div className="rounded-2xl border border-black/[0.04] dark:border-white/[0.04] bg-white dark:bg-[#09090b] overflow-hidden shadow-[0_1px_3px_rgba(0,0,0,0.04)]">
-        <div className="p-5 border-b border-black/[0.04] dark:border-white/[0.04]">
+      <div className="rounded-2xl border border-border bg-card overflow-hidden shadow-xs">
+        <div className="p-5 border-b border-border">
           <div className="flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-black/[0.04] dark:bg-white/[0.06]">
+            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-muted">
               <Clock className="h-4.5 w-4.5 text-muted-foreground/60" />
             </div>
             <div>
@@ -212,10 +212,10 @@ export default function DeliveryStep({
                 }
                 className={`relative cursor-pointer rounded-xl border p-4 text-center transition-all ${
                   isSelected
-                    ? "border-foreground bg-black/[0.02] dark:bg-white/[0.04] shadow-[0_2px_8px_rgba(0,0,0,0.04)]"
+                    ? "border-foreground bg-subtle shadow-xs"
                     : slot.available
-                    ? "border-black/[0.04] dark:border-white/[0.04] hover:border-black/[0.08] dark:hover:border-white/[0.1]"
-                    : "border-black/[0.04] dark:border-white/[0.04] opacity-40 cursor-not-allowed"
+                    ? "border-border hover:border-border-strong"
+                    : "border-border opacity-40 cursor-not-allowed"
                 }`}
               >
                 <Icon

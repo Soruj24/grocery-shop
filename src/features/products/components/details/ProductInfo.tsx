@@ -70,7 +70,7 @@ export default function ProductInfo({
         <div className="flex items-center justify-between flex-wrap gap-3">
           <div className="flex items-center gap-3">
             {categoryName && (
-              <span className="inline-flex items-center rounded-lg bg-black/[0.04] dark:bg-white/[0.06] px-3 py-1.5 text-[11px] font-semibold text-muted-foreground uppercase tracking-wider">
+              <span className="inline-flex items-center rounded-lg bg-muted px-3 py-1.5 text-[11px] font-semibold text-muted-foreground uppercase tracking-wider">
                 {categoryName}
               </span>
             )}
@@ -100,7 +100,7 @@ export default function ProductInfo({
           <div
             className={`flex items-center gap-1.5 text-sm font-semibold ${
               product.stock === 0
-                ? "text-rose-500"
+                ? "text-danger"
                 : product.stock <= 5
                 ? "text-amber-500"
                 : "text-emerald-500"
@@ -138,7 +138,7 @@ export default function ProductInfo({
         )}
 
         {/* Price section */}
-        <div className="flex items-center gap-6 bg-black/[0.02] dark:bg-white/[0.02] p-6 rounded-2xl border border-black/[0.04] dark:border-white/[0.04]">
+        <div className="flex items-center gap-6 bg-subtle p-6 rounded-2xl border border-border">
           <div className="space-y-1">
             <p className="text-[11px] font-semibold text-muted-foreground/60 uppercase tracking-wider">
               {t("current_price")}
@@ -195,7 +195,7 @@ export default function ProductInfo({
       <CouponOffer />
 
       {/* Add to Cart + Buy Now */}
-      <div className="flex flex-col gap-4 pt-5 border-t border-black/[0.04] dark:border-white/[0.04]">
+      <div className="flex flex-col gap-4 pt-5 border-t border-border">
         <div className="flex flex-col sm:flex-row gap-3">
           <AddToCartButton product={product} />
           <motion.button

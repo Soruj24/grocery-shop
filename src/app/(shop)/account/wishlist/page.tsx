@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useWishlist } from "@/contexts/WishlistContext";
 import { useCart } from "@/contexts/CartContext";
@@ -51,7 +51,7 @@ export default function WishlistPage() {
         <motion.div
           initial={{ opacity: 0, scale: 0.98 }}
           animate={{ opacity: 1, scale: 1 }}
-          className="rounded-2xl border border-black/[0.04] dark:border-white/[0.04] bg-white dark:bg-[#09090b] p-12 text-center shadow-[0_1px_3px_rgba(0,0,0,0.04)]"
+          className="rounded-2xl border border-border bg-card p-12 text-center shadow-xs"
         >
           <Heart className="mx-auto h-10 w-10 text-muted-foreground/20 mb-3" />
           <p className="text-sm font-semibold text-foreground">
@@ -78,9 +78,9 @@ export default function WishlistPage() {
                 delay: i * 0.04,
                 ease: [0.21, 0.47, 0.32, 0.98],
               }}
-              className="rounded-2xl border border-black/[0.04] dark:border-white/[0.04] bg-white dark:bg-[#09090b] p-4 flex gap-4 shadow-[0_1px_3px_rgba(0,0,0,0.04)] hover:shadow-[0_4px_16px_rgba(0,0,0,0.06)] transition-shadow"
+              className="rounded-2xl border border-border bg-card p-4 flex gap-4 shadow-xs hover:shadow-sm transition-shadow"
             >
-              <div className="h-20 w-20 shrink-0 rounded-xl bg-black/[0.04] dark:bg-white/[0.06] overflow-hidden">
+              <div className="h-20 w-20 shrink-0 rounded-xl bg-muted overflow-hidden">
                 {item.image ? (
                   <img
                     src={item.image}
@@ -116,7 +116,7 @@ export default function WishlistPage() {
                     onClick={() =>
                       removeFromWishlist(item._id)
                     }
-                    className="flex items-center gap-1.5 rounded-lg bg-black/[0.04] dark:bg-white/[0.06] px-3 py-1.5 text-[11px] font-medium text-muted-foreground/60 hover:text-rose-500 hover:bg-rose-500/[0.06] transition-all"
+                    className="flex items-center gap-1.5 rounded-lg bg-muted px-3 py-1.5 text-[11px] font-medium text-muted-foreground/60 hover:text-danger hover:bg-danger-subtle transition-all"
                   >
                     <Trash2 className="h-3 w-3" />
                     Remove

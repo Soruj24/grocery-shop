@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -69,16 +69,16 @@ export default function ProductDetailsTabs({
   const productName = product.name;
 
   return (
-    <div className="bg-white dark:bg-[#09090b] rounded-2xl border border-black/[0.04] dark:border-white/[0.04] overflow-hidden shadow-[0_1px_3px_rgba(0,0,0,0.04)]">
-      <div className="flex overflow-x-auto border-b border-black/[0.04] dark:border-white/[0.04] scrollbar-hide">
+    <div className="bg-card rounded-2xl border border-border overflow-hidden shadow-xs">
+      <div className="flex overflow-x-auto border-b border-border scrollbar-hide">
         {tabs.map((tab) => (
           <button
             key={tab.key}
             onClick={() => setActiveTab(tab.key)}
             className={`flex items-center gap-2 px-5 py-4 text-xs font-semibold uppercase tracking-wider whitespace-nowrap transition-all duration-200 border-b-2 ${
               activeTab === tab.key
-                ? "border-foreground text-foreground bg-black/[0.02] dark:bg-white/[0.02]"
-                : "border-transparent text-muted-foreground/60 hover:text-foreground hover:bg-black/[0.02] dark:hover:bg-white/[0.02]"
+                ? "border-foreground text-foreground bg-subtle"
+                : "border-transparent text-muted-foreground/60 hover:text-foreground hover:bg-muted/50"
             }`}
           >
             <tab.icon className="w-4 h-4" />
@@ -108,7 +108,7 @@ export default function ProductDetailsTabs({
                 &rdquo;
               </p>
               <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-5">
-                <div className="bg-black/[0.02] dark:bg-white/[0.02] p-6 rounded-xl border border-black/[0.04] dark:border-white/[0.04]">
+                <div className="bg-subtle p-6 rounded-xl border border-border">
                   <h4 className="font-bold text-foreground mb-4">
                     {t("features_title")}
                   </h4>
@@ -129,7 +129,7 @@ export default function ProductDetailsTabs({
                     ))}
                   </ul>
                 </div>
-                <div className="bg-black/[0.02] dark:bg-white/[0.02] p-6 rounded-xl border border-black/[0.04] dark:border-white/[0.04]">
+                <div className="bg-subtle p-6 rounded-xl border border-border">
                   <h4 className="font-bold text-foreground mb-4">
                     {t("delivery_info_title")}
                   </h4>

@@ -47,7 +47,7 @@ export default function QuestionsQA({
             delay: idx * 0.04,
             ease: [0.21, 0.47, 0.32, 0.98],
           }}
-          className="bg-black/[0.02] dark:bg-white/[0.02] rounded-xl border border-black/[0.04] dark:border-white/[0.04] overflow-hidden"
+          className="bg-subtle rounded-xl border border-border overflow-hidden"
         >
           <button
             onClick={() =>
@@ -88,7 +88,7 @@ export default function QuestionsQA({
                 exit={{ height: 0, opacity: 0 }}
                 className="px-5 pb-4"
               >
-                <div className="flex items-start gap-3 pt-3 border-t border-black/[0.04] dark:border-white/[0.04]">
+                <div className="flex items-start gap-3 pt-3 border-t border-border">
                   <div className="w-8 h-8 bg-emerald-500/[0.06] rounded-lg flex items-center justify-center shrink-0">
                     <Check className="w-4 h-4 text-emerald-500" />
                   </div>

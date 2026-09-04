@@ -65,7 +65,7 @@ export default function MobileNavLinks({
             <Link
               href={item.href}
               onClick={onClose}
-              className="flex items-center justify-between p-4 rounded-xl text-foreground hover:bg-black/[0.04] dark:hover:bg-white/[0.06] transition-all duration-200 group border border-transparent hover:border-black/[0.04] dark:hover:border-white/[0.04]"
+              className="flex items-center justify-between p-4 rounded-xl text-foreground hover:bg-muted transition-all duration-200 group border border-transparent hover:border-border"
               aria-label={t(item.labelKey)}
             >
               <div className="flex items-center gap-3.5">

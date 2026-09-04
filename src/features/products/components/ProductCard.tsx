@@ -74,7 +74,7 @@ export default function ProductCard({
       whileHover={
         reduceMotion ? undefined : { y: -6 }
       }
-      className="group bg-white dark:bg-[#09090b] rounded-2xl shadow-[0_1px_3px_rgba(0,0,0,0.04)] hover:shadow-[0_12px_40px_rgba(0,0,0,0.08)] transition-all duration-500 flex flex-col h-full border border-black/[0.04] dark:border-white/[0.04] relative overflow-hidden"
+      className="group bg-card rounded-2xl shadow-sm hover:shadow-lg transition-all duration-500 flex flex-col h-full border border-border relative overflow-hidden"
     >
       <ProductImageSection
         product={product}
@@ -102,7 +102,7 @@ export default function ProductCard({
 
       <ProductInfo product={product} t={t} />
 
-      <div className="px-4 sm:px-5 pb-4 sm:pb-5 -mt-2 relative z-10 bg-white dark:bg-[#09090b]">
+      <div className="px-4 sm:px-5 pb-4 sm:pb-5 -mt-2 relative z-10 bg-card">
         {!cartItem ? (
           <motion.button
             whileTap={{ scale: 0.97 }}
@@ -114,14 +114,14 @@ export default function ProductCard({
                 title: t("added_to_cart"),
               });
             }}
-            className="w-full flex items-center justify-center gap-2 rounded-xl bg-foreground text-background py-3 sm:py-2.5 text-sm font-semibold transition-all duration-300 hover:bg-primary active:scale-[0.98] disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:bg-foreground min-h-[44px]"
+            className="w-full flex items-center justify-center gap-2 rounded-xl bg-primary text-primary-foreground py-3 sm:py-2.5 text-sm font-semibold transition-all duration-300 hover:bg-primary-hover active:scale-[0.98] disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:bg-primary min-h-[44px] shadow-primary"
             aria-label={t("add_to_cart")}
           >
             <Plus size={16} strokeWidth={2.5} />
             {t("add_to_cart")}
           </motion.button>
         ) : (
-          <div className="flex items-center bg-black/[0.04] dark:bg-white/[0.06] rounded-xl p-1 gap-0.5">
+          <div className="flex items-center bg-muted rounded-xl p-1 gap-0.5">
             <motion.button
               whileTap={{ scale: 0.9 }}
               onClick={() => {
@@ -133,7 +133,7 @@ export default function ProductCard({
                 }
               }}
               disabled={cartItem.quantity <= 1}
-              className="w-10 h-10 flex items-center justify-center bg-white dark:bg-[#09090b] hover:bg-rose-50 dark:hover:bg-rose-500/[0.08] hover:text-rose-500 rounded-lg transition-all duration-200 text-foreground shadow-[0_1px_2px_rgba(0,0,0,0.04)] disabled:opacity-30 disabled:cursor-not-allowed active:scale-95"
+              className="w-10 h-10 flex items-center justify-center bg-card hover:bg-danger-subtle hover:text-danger rounded-lg transition-all duration-200 text-foreground shadow-xs disabled:opacity-30 disabled:cursor-not-allowed active:scale-95"
               aria-label={t("decrease_quantity")}
             >
               <Minus size={14} strokeWidth={2.5} />
@@ -166,7 +166,7 @@ export default function ProductCard({
               disabled={
                 cartItem.quantity >= product.stock
               }
-              className="w-10 h-10 flex items-center justify-center bg-foreground hover:bg-primary text-background rounded-lg transition-all duration-200 disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:bg-foreground shadow-[0_1px_2px_rgba(0,0,0,0.04)] active:scale-95"
+              className="w-10 h-10 flex items-center justify-center bg-primary hover:bg-primary-hover text-primary-background rounded-lg transition-all duration-200 disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:bg-primary shadow-xs active:scale-95"
               aria-label={t("increase_quantity")}
             >
               <Plus size={14} strokeWidth={2.5} />

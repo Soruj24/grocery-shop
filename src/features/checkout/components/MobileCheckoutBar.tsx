@@ -37,7 +37,7 @@ export default function MobileCheckoutBar({
         damping: 28,
         stiffness: 300,
       }}
-      className="fixed bottom-0 left-0 right-0 z-50 border-t border-black/[0.06] dark:border-white/[0.06] bg-white/80 dark:bg-[#09090b]/80 backdrop-blur-2xl lg:hidden"
+      className="fixed bottom-0 left-0 right-0 z-50 border-t border-border bg-card/80 backdrop-blur-2xl lg:hidden"
       style={{
         paddingBottom: "env(safe-area-inset-bottom)",
       }}
@@ -65,7 +65,7 @@ export default function MobileCheckoutBar({
               : onNext
           }
           disabled={isSubmitting}
-          className="flex h-12 items-center gap-2 rounded-xl bg-foreground px-6 text-sm font-semibold text-background hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed transition-all active:scale-[0.98] shadow-[0_2px_8px_rgba(0,0,0,0.12)] min-h-[48px]"
+          className="flex h-12 items-center gap-2 rounded-xl bg-foreground px-6 text-sm font-semibold text-background hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed transition-all active:scale-[0.98] shadow-xl min-h-[48px]"
         >
           {isSubmitting ? (
             <Loader2 className="h-4 w-4 animate-spin" />

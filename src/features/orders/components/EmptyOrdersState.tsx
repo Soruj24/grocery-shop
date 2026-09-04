@@ -9,7 +9,7 @@ export default function EmptyOrdersState() {
 
   return (
     <div className="min-h-[60vh] flex flex-col items-center justify-center text-center space-y-5 px-4">
-      <div className="w-16 h-16 bg-black/[0.04] dark:bg-white/[0.06] rounded-xl flex items-center justify-center text-muted-foreground/30">
+      <div className="w-16 h-16 bg-muted rounded-xl flex items-center justify-center text-muted-foreground/30">
         <Package className="w-7 h-7" />
       </div>
       <div className="space-y-1.5">

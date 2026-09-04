@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import Link from "next/link";
 import Image from "next/image";
@@ -40,7 +40,7 @@ export default function ProductImageSection({
     : 0;
 
   return (
-    <div className="relative aspect-[4/5] overflow-hidden bg-black/[0.02] dark:bg-white/[0.02] rounded-t-2xl">
+    <div className="relative aspect-[4/5] overflow-hidden bg-subtle rounded-t-2xl">
       {/* Swipe overlay */}
       <motion.div
         style={{
@@ -68,7 +68,7 @@ export default function ProductImageSection({
       </Link>
 
       {/* Hover dim */}
-      <div className="absolute inset-0 bg-black/0 group-hover:bg-black/[0.03] transition-colors duration-500 pointer-events-none" />
+      <div className="absolute inset-0 bg-black/0 group-hover:bg-muted/30 transition-colors duration-500 pointer-events-none" />
 
       {/* Discount badge - top left */}
       {discount > 0 && (
@@ -95,10 +95,10 @@ export default function ProductImageSection({
             e.preventDefault();
             onToggleWishlist();
           }}
-          className={`w-9 h-9 rounded-xl flex items-center justify-center backdrop-blur-md shadow-[0_2px_8px_rgba(0,0,0,0.1)] transition-all duration-300 hover:scale-110 active:scale-95 ${
+          className={`w-9 h-9 rounded-xl flex items-center justify-center backdrop-blur-md shadow-md transition-all duration-300 hover:scale-110 active:scale-95 ${
             isWishlistActive
               ? "bg-rose-500 text-white shadow-rose-500/30"
-              : "bg-white/90 dark:bg-[#09090b]/90 text-muted-foreground hover:bg-rose-500 hover:text-white"
+              : "bg-card/90 text-muted-foreground hover:bg-rose-500 hover:text-white"
           }`}
         >
           <Heart
@@ -113,14 +113,14 @@ export default function ProductImageSection({
             e.preventDefault();
             onShare(e);
           }}
-          className="w-9 h-9 rounded-xl bg-white/90 dark:bg-[#09090b]/90 text-muted-foreground flex items-center justify-center backdrop-blur-md shadow-[0_2px_8px_rgba(0,0,0,0.1)] transition-all duration-300 hover:bg-sky-500 hover:text-white hover:scale-110 active:scale-95 delay-75"
+          className="w-9 h-9 rounded-xl bg-card/90 text-muted-foreground flex items-center justify-center backdrop-blur-md shadow-md transition-all duration-300 hover:bg-info hover:text-white hover:scale-110 active:scale-95 delay-75"
         >
           <Share2 className="w-4 h-4" />
         </button>
 
         <Link
           href={`/products/${product._id}`}
-          className="w-9 h-9 rounded-xl bg-white/90 dark:bg-[#09090b]/90 text-muted-foreground flex items-center justify-center backdrop-blur-md shadow-[0_2px_8px_rgba(0,0,0,0.1)] transition-all duration-300 hover:bg-foreground hover:text-background hover:scale-110 active:scale-95 delay-100"
+          className="w-9 h-9 rounded-xl bg-card/90 text-muted-foreground flex items-center justify-center backdrop-blur-md shadow-md transition-all duration-300 hover:bg-foreground hover:text-background hover:scale-110 active:scale-95 delay-100"
         >
           <Eye className="w-4 h-4" />
         </Link>
@@ -129,7 +129,7 @@ export default function ProductImageSection({
       {/* Low stock warning */}
       {product.stock <= 5 && product.stock > 0 && (
         <div className="absolute bottom-3 left-3 z-10">
-          <span className="inline-flex items-center rounded-lg bg-amber-500/[0.9] px-2.5 py-1 text-[10px] font-bold text-white shadow-[0_2px_8px_rgba(245,158,11,0.3)]">
+          <span className="inline-flex items-center rounded-lg bg-warning px-2.5 py-1 text-[10px] font-bold text-white shadow-[0_2px_8px_rgba(245,158,11,0.3)]">
             {t("low_stock")}
           </span>
         </div>
@@ -138,7 +138,7 @@ export default function ProductImageSection({
       {/* Out of stock overlay */}
       {product.stock === 0 && (
         <div className="absolute inset-0 bg-black/50 backdrop-blur-[2px] flex items-center justify-center z-10 rounded-t-2xl">
-          <span className="bg-white dark:bg-[#09090b] text-foreground text-xs font-bold px-5 py-2.5 rounded-xl shadow-[0_4px_20px_rgba(0,0,0,0.15)] transform -rotate-3">
+          <span className="bg-card text-foreground text-xs font-bold px-5 py-2.5 rounded-xl shadow-lg transform -rotate-3">
             {t("out_of_stock_label")}
           </span>
         </div>

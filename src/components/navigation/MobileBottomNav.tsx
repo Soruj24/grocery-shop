@@ -81,7 +81,7 @@ export default function MobileBottomNav() {
               <Link href="/cart">
                 <motion.div
                   whileTap={{ scale: 0.95 }}
-                  className="bg-foreground text-background pl-3.5 pr-4 py-2.5 rounded-2xl shadow-[0_4px_20px_rgba(0,0,0,0.15)] flex items-center gap-2.5 backdrop-blur-sm"
+                  className="bg-foreground text-background pl-3.5 pr-4 py-2.5 rounded-2xl shadow-xl flex items-center gap-2.5 backdrop-blur-sm"
                 >
                   <div className="relative">
                     <ShoppingBag className="w-4.5 h-4.5" />
@@ -122,7 +122,7 @@ export default function MobileBottomNav() {
         }}
       >
         <nav
-          className="bg-white/70 dark:bg-[#09090b]/70 backdrop-blur-2xl border border-black/[0.06] dark:border-white/[0.06] rounded-2xl px-2 py-2 shadow-[0_4px_24px_rgba(0,0,0,0.08)]"
+          className="bg-card/70 backdrop-blur-2xl border border-border rounded-2xl px-2 py-2 shadow-lg"
           style={{
             paddingBottom:
               "calc(0.5rem + env(safe-area-inset-bottom))",
@@ -181,7 +181,7 @@ export default function MobileBottomNav() {
                         key={item.badge}
                         initial={{ scale: 0.5 }}
                         animate={{ scale: 1 }}
-                        className="absolute top-0.5 right-1 bg-foreground text-background text-[7px] font-bold min-w-[14px] h-[14px] px-0.5 rounded-full flex items-center justify-center border-[1.5px] border-white dark:border-[#09090b]"
+                        className="absolute top-0.5 right-1 bg-foreground text-background text-[7px] font-bold min-w-[14px] h-[14px] px-0.5 rounded-full flex items-center justify-center border-[1.5px] border-background"
                       >
                         {item.badge > 9
                           ? "9+"

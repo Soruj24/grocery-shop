@@ -99,7 +99,7 @@ export function SectionShell({
               >
                 <Link
                   href={viewAllHref}
-                  className="group inline-flex items-center gap-2.5 rounded-full border border-black/[0.08] bg-white px-6 py-3 text-sm font-semibold text-foreground shadow-[0_1px_2px_rgba(0,0,0,0.05)] transition-all duration-300 hover:border-primary/[0.2] hover:bg-primary/[0.04] hover:text-primary hover:shadow-[0_4px_12px_rgba(0,0,0,0.06)] active:scale-[0.98] dark:border-white/[0.08] dark:bg-white/[0.03]"
+                  className="group inline-flex items-center gap-2.5 rounded-full border border-border bg-card px-6 py-3 text-sm font-semibold text-foreground shadow-xs transition-all duration-300 hover:border-primary/[0.2] hover:bg-primary/[0.04] hover:text-primary hover:shadow-md active:scale-[0.98]"
                 >
                   {viewAllLabel ?? t("view_all")}
                   <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />

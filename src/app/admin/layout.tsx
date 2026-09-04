@@ -32,6 +32,9 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
   return (
     <ToastProvider>
+      <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:z-[200] focus:top-2 focus:left-2 focus:bg-primary focus:text-primary-foreground focus:px-4 focus:py-2 focus:rounded-lg focus:text-sm focus:font-medium focus:shadow-lg">
+        Skip to content
+      </a>
       <div className="flex min-h-screen bg-background">
         <AdminSidebar session={session} />
         <main className="flex-1 flex flex-col min-w-0">

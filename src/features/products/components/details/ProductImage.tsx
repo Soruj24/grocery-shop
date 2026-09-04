@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import Image from "next/image";
 import { useState, useRef } from "react";
@@ -116,12 +116,12 @@ export default function ProductImage({
   return (
     <div className="w-full lg:w-1/2 space-y-5">
       {/* View Mode Tabs */}
-      <div className="flex gap-1.5 p-1 bg-black/[0.03] dark:bg-white/[0.04] rounded-xl w-fit">
+      <div className="flex gap-1.5 p-1 bg-muted rounded-xl w-fit">
         <button
           onClick={() => setViewMode("image")}
           className={`px-4 py-2 rounded-lg text-xs font-semibold transition-all duration-200 ${
             viewMode === "image"
-              ? "bg-white dark:bg-[#09090b] text-foreground shadow-[0_1px_3px_rgba(0,0,0,0.06)]"
+              ? "bg-card text-foreground shadow-sm"
               : "text-muted-foreground hover:text-foreground"
           }`}
         >
@@ -132,7 +132,7 @@ export default function ProductImage({
             onClick={() => setViewMode("video")}
             className={`px-4 py-2 rounded-lg text-xs font-semibold transition-all duration-200 flex items-center gap-1.5 ${
               viewMode === "video"
-                ? "bg-white dark:bg-[#09090b] text-foreground shadow-[0_1px_3px_rgba(0,0,0,0.06)]"
+                ? "bg-card text-foreground shadow-sm"
                 : "text-muted-foreground hover:text-foreground"
             }`}
           >
@@ -144,7 +144,7 @@ export default function ProductImage({
             onClick={() => setViewMode("360")}
             className={`px-4 py-2 rounded-lg text-xs font-semibold transition-all duration-200 flex items-center gap-1.5 ${
               viewMode === "360"
-                ? "bg-white dark:bg-[#09090b] text-foreground shadow-[0_1px_3px_rgba(0,0,0,0.06)]"
+                ? "bg-card text-foreground shadow-sm"
                 : "text-muted-foreground hover:text-foreground"
             }`}
           >
@@ -155,7 +155,7 @@ export default function ProductImage({
 
       {/* Main Image */}
       <div
-        className="relative bg-black/[0.02] dark:bg-white/[0.02] rounded-2xl overflow-hidden border border-black/[0.04] dark:border-white/[0.04] aspect-square group cursor-zoom-in"
+        className="relative bg-subtle rounded-2xl overflow-hidden border border-border aspect-square group cursor-zoom-in"
         onMouseEnter={() =>
           viewMode === "image" && setIsZoomed(true)
         }
@@ -221,7 +221,7 @@ export default function ProductImage({
                 draggable={false}
                 sizes="(max-width: 768px) 100vw, 50vw"
               />
-              <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-white/80 dark:bg-[#09090b]/80 backdrop-blur-md px-4 py-2 rounded-xl text-xs font-semibold text-muted-foreground flex items-center gap-2 border border-black/[0.04] dark:border-white/[0.04]">
+              <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-card/80 backdrop-blur-md px-4 py-2 rounded-xl text-xs font-semibold text-muted-foreground flex items-center gap-2 border border-border">
                 <RotateCw className="w-3.5 h-3.5" />
                 Drag to rotate 360°
               </div>
@@ -263,7 +263,7 @@ export default function ProductImage({
 
         {/* Zoom indicator */}
         {viewMode === "image" && (
-          <div className="absolute top-4 right-4 p-2.5 bg-white/80 dark:bg-[#09090b]/80 backdrop-blur-md rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 border border-black/[0.04] dark:border-white/[0.04]">
+          <div className="absolute top-4 right-4 p-2.5 bg-card/80 backdrop-blur-md rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 border border-border">
             <Maximize2 className="w-4 h-4 text-muted-foreground" />
           </div>
         )}
@@ -281,7 +281,7 @@ export default function ProductImage({
                       : prev - 1
                   );
                 }}
-                className="p-2.5 bg-white/80 dark:bg-[#09090b]/80 backdrop-blur-md rounded-xl shadow-[0_2px_8px_rgba(0,0,0,0.08)] pointer-events-auto opacity-0 group-hover:opacity-100 transition-all duration-300 -translate-x-3 group-hover:translate-x-0 border border-black/[0.04] dark:border-white/[0.04]"
+                className="p-2.5 bg-card/80 backdrop-blur-md rounded-xl shadow-md pointer-events-auto opacity-0 group-hover:opacity-100 transition-all duration-300 -translate-x-3 group-hover:translate-x-0 border border-border"
               >
                 <ChevronLeft className="w-5 h-5 text-foreground" />
               </button>
@@ -294,7 +294,7 @@ export default function ProductImage({
                       : prev + 1
                   );
                 }}
-                className="p-2.5 bg-white/80 dark:bg-[#09090b]/80 backdrop-blur-md rounded-xl shadow-[0_2px_8px_rgba(0,0,0,0.08)] pointer-events-auto opacity-0 group-hover:opacity-100 transition-all duration-300 translate-x-3 group-hover:translate-x-0 border border-black/[0.04] dark:border-white/[0.04]"
+                className="p-2.5 bg-card/80 backdrop-blur-md rounded-xl shadow-md pointer-events-auto opacity-0 group-hover:opacity-100 transition-all duration-300 translate-x-3 group-hover:translate-x-0 border border-border"
               >
                 <ChevronRight className="w-5 h-5 text-foreground" />
               </button>
@@ -311,8 +311,8 @@ export default function ProductImage({
               onClick={() => setActiveIndex(idx)}
               className={`relative w-20 aspect-square rounded-xl overflow-hidden border-2 transition-all duration-300 shrink-0 ${
                 activeIndex === idx
-                  ? "border-foreground shadow-[0_2px_12px_rgba(0,0,0,0.12)]"
-                  : "border-transparent opacity-50 hover:opacity-100 hover:border-black/[0.1] dark:hover:border-white/[0.1]"
+                  ? "border-foreground shadow-lg"
+                  : "border-transparent opacity-50 hover:opacity-100 hover:border-border-strong"
               }`}
             >
               <Image

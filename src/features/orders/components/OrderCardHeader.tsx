@@ -18,9 +18,9 @@ export default function OrderCardHeader({
   t,
 }: OrderCardHeaderProps) {
   return (
-    <div className="p-5 sm:p-6 border-b border-black/[0.04] dark:border-white/[0.04] flex flex-wrap items-center justify-between gap-3 bg-black/[0.02] dark:bg-white/[0.02]">
+    <div className="p-5 sm:p-6 border-b border-border flex flex-wrap items-center justify-between gap-3 bg-subtle">
       <div className="flex items-center gap-3">
-        <div className="p-2 rounded-lg bg-black/[0.04] dark:bg-white/[0.06]">
+        <div className="p-2 rounded-lg bg-muted">
           <Package className="w-4 h-4 text-muted-foreground/60" />
         </div>
         <div>

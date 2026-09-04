@@ -31,7 +31,7 @@ export default function SubCategoryNav({
             className={`px-4 py-2 rounded-lg font-medium text-xs transition-all whitespace-nowrap border ${
               sub._id.toString() === currentId
                 ? "bg-foreground text-background border-foreground"
-                : "bg-transparent text-muted-foreground/60 border-black/[0.06] dark:border-white/[0.06] hover:bg-black/[0.04] dark:hover:bg-white/[0.06] hover:text-foreground"
+                : "bg-transparent text-muted-foreground/60 border-border hover:bg-muted hover:text-foreground"
             }`}
           >
             {sub.name}

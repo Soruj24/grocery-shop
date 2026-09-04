@@ -50,7 +50,7 @@ export default function ShippingInfo() {
             delay: idx * 0.04,
             ease: [0.21, 0.47, 0.32, 0.98],
           }}
-          className="flex items-center gap-3 bg-black/[0.02] dark:bg-white/[0.02] p-3 rounded-xl border border-black/[0.04] dark:border-white/[0.04]"
+          className="flex items-center gap-3 bg-subtle p-3 rounded-xl border border-border"
         >
           <div
             className={`p-2 rounded-lg ${item.color} bg-opacity-[0.06]`}

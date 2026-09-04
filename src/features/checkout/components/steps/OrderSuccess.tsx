@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
@@ -78,7 +78,7 @@ export default function OrderSuccess({
         duration: 0.5,
         ease: [0.21, 0.47, 0.32, 0.98],
       }}
-      className="rounded-2xl border border-black/[0.04] dark:border-white/[0.04] bg-white dark:bg-[#09090b] p-8 sm:p-10 text-center shadow-[0_2px_16px_rgba(0,0,0,0.06)]"
+      className="rounded-2xl border border-border bg-card p-8 sm:p-10 text-center shadow-sm"
     >
       {/* Checkmark */}
       <motion.div
@@ -130,7 +130,7 @@ export default function OrderSuccess({
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.7 }}
-        className="rounded-2xl bg-black/[0.03] dark:bg-white/[0.04] p-6 mb-8 border border-black/[0.04] dark:border-white/[0.04]"
+        className="rounded-2xl bg-muted p-6 mb-8 border border-border"
       >
         <div className="flex items-center justify-center gap-2 mb-2">
           <Sparkles className="w-4 h-4 text-muted-foreground/40" />
@@ -144,7 +144,7 @@ export default function OrderSuccess({
           </p>
           <button
             onClick={handleCopyOrderId}
-            className="rounded-lg p-2 text-muted-foreground/40 hover:text-foreground hover:bg-black/[0.06] dark:hover:bg-white/[0.1] transition-all"
+            className="rounded-lg p-2 text-muted-foreground/40 hover:text-foreground hover:bg-muted transition-all"
           >
             {copied ? (
               <Check className="h-4 w-4 text-emerald-500" />
@@ -178,7 +178,7 @@ export default function OrderSuccess({
         </a>
         <a
           href="/"
-          className="flex w-full items-center justify-center gap-2 rounded-xl border border-black/[0.06] dark:border-white/[0.06] py-3.5 text-sm font-medium text-foreground hover:bg-black/[0.02] dark:hover:bg-white/[0.04] transition-all"
+          className="flex w-full items-center justify-center gap-2 rounded-xl border border-border py-3.5 text-sm font-medium text-foreground hover:bg-muted transition-all"
         >
           {t("continue_shopping")}
         </a>

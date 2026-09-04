@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useCallback, useEffect } from "react";
 import Link from "next/link";
@@ -180,7 +180,7 @@ export default function CategorySidebar({
           onChange={(e) =>
             updateFilter("search", e.target.value)
           }
-          className="w-full bg-black/[0.03] dark:bg-white/[0.04] border border-black/[0.06] dark:border-white/[0.06] rounded-lg py-2.5 pl-9 pr-8 text-xs font-medium text-foreground placeholder:text-muted-foreground/40 focus:ring-1 focus:ring-foreground/20 focus:border-foreground/20 outline-none transition-all"
+          className="w-full bg-muted border border-border rounded-lg py-2.5 pl-9 pr-8 text-xs font-medium text-foreground placeholder:text-muted-foreground/40 focus:ring-1 focus:ring-foreground/20 focus:border-foreground/20 outline-none transition-all"
         />
         {search && (
           <button
@@ -218,7 +218,7 @@ export default function CategorySidebar({
               className={`w-full text-left px-3 py-2 rounded-lg text-xs font-medium transition-all ${
                 sort === opt.id
                   ? "bg-foreground text-background"
-                  : "text-muted-foreground/60 hover:bg-black/[0.04] dark:hover:bg-white/[0.06] hover:text-foreground"
+                  : "text-muted-foreground/60 hover:bg-muted hover:text-foreground"
               }`}
             >
               {opt.label}
@@ -250,7 +250,7 @@ export default function CategorySidebar({
                   localPriceMin
                 )
               }
-              className="w-full bg-black/[0.03] dark:bg-white/[0.04] border border-black/[0.06] dark:border-white/[0.06] rounded-lg py-2 pl-7 pr-2 text-xs font-medium text-foreground placeholder:text-muted-foreground/40 focus:ring-1 focus:ring-foreground/20 outline-none transition-all"
+              className="w-full bg-muted border border-border rounded-lg py-2 pl-7 pr-2 text-xs font-medium text-foreground placeholder:text-muted-foreground/40 focus:ring-1 focus:ring-foreground/20 outline-none transition-all"
             />
           </div>
           <span className="text-muted-foreground/30 text-xs">
@@ -273,13 +273,13 @@ export default function CategorySidebar({
                   localPriceMax
                 )
               }
-              className="w-full bg-black/[0.03] dark:bg-white/[0.04] border border-black/[0.06] dark:border-white/[0.06] rounded-lg py-2 pl-7 pr-2 text-xs font-medium text-foreground placeholder:text-muted-foreground/40 focus:ring-1 focus:ring-foreground/20 outline-none transition-all"
+              className="w-full bg-muted border border-border rounded-lg py-2 pl-7 pr-2 text-xs font-medium text-foreground placeholder:text-muted-foreground/40 focus:ring-1 focus:ring-foreground/20 outline-none transition-all"
             />
           </div>
         </div>
         {/* Price range visual bar */}
         <div className="space-y-1.5">
-          <div className="h-1 bg-black/[0.04] dark:bg-white/[0.06] rounded-full overflow-hidden">
+          <div className="h-1 bg-muted rounded-full overflow-hidden">
             <div
               className="h-full bg-foreground/30 rounded-full transition-all"
               style={{
@@ -322,7 +322,7 @@ export default function CategorySidebar({
               className={`w-full flex items-center gap-2 px-3 py-2 rounded-lg text-xs font-medium transition-all ${
                 rating === String(r)
                   ? "bg-foreground text-background"
-                  : "text-muted-foreground/60 hover:bg-black/[0.04] dark:hover:bg-white/[0.06] hover:text-foreground"
+                  : "text-muted-foreground/60 hover:bg-muted hover:text-foreground"
               }`}
             >
               <div className="flex items-center gap-0.5">
@@ -364,7 +364,7 @@ export default function CategorySidebar({
                 className={`w-full text-left px-3 py-2 rounded-lg text-xs font-medium transition-all flex items-center justify-between ${
                   brand === b
                     ? "bg-foreground text-background"
-                    : "text-muted-foreground/60 hover:bg-black/[0.04] dark:hover:bg-white/[0.06] hover:text-foreground"
+                    : "text-muted-foreground/60 hover:bg-muted hover:text-foreground"
                 }`}
               >
                 <span className="truncate">{b}</span>
@@ -396,7 +396,7 @@ export default function CategorySidebar({
                 className={`px-3 py-1.5 rounded-lg text-[11px] font-medium transition-all border ${
                   color === c
                     ? "bg-foreground text-background border-foreground"
-                    : "text-muted-foreground/60 border-black/[0.06] dark:border-white/[0.06] hover:border-black/[0.12] dark:hover:border-white/[0.12]"
+                    : "text-muted-foreground/60 border-border hover:border-border-strong"
                 }`}
               >
                 {c}
@@ -421,14 +421,14 @@ export default function CategorySidebar({
           className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-xs font-medium transition-all border ${
             inStock === "true"
               ? "bg-foreground text-background border-foreground"
-              : "text-muted-foreground/60 border-black/[0.06] dark:border-white/[0.06] hover:bg-black/[0.04] dark:hover:bg-white/[0.06]"
+              : "text-muted-foreground/60 border-border hover:bg-muted"
           }`}
         >
           <div
             className={`w-4 h-4 rounded border flex items-center justify-center transition-all ${
               inStock === "true"
                 ? "bg-background border-background"
-                : "border-black/[0.12] dark:border-white/[0.15]"
+                : "border-border"
             }`}
           >
             {inStock === "true" && (
@@ -452,7 +452,7 @@ export default function CategorySidebar({
       </div>
 
       {/* Category Tree */}
-      <div className="space-y-2.5 pt-2 border-t border-black/[0.04] dark:border-white/[0.04]">
+      <div className="space-y-2.5 pt-2 border-t border-border">
         <label className="text-[10px] font-semibold text-muted-foreground/50 uppercase tracking-wider">
           Categories
         </label>
@@ -479,7 +479,7 @@ export default function CategorySidebar({
                     className={`flex-1 flex items-center justify-between px-3 py-2 rounded-lg transition-all text-xs font-medium ${
                       isActive
                         ? "bg-foreground text-background"
-                        : "text-muted-foreground/60 hover:bg-black/[0.04] dark:hover:bg-white/[0.06] hover:text-foreground"
+                        : "text-muted-foreground/60 hover:bg-muted hover:text-foreground"
                     }`}
                   >
                     <span className="truncate">
@@ -524,7 +524,7 @@ export default function CategorySidebar({
                           height: 0,
                           opacity: 0,
                         }}
-                        className="ml-3 pl-3 border-l border-black/[0.06] dark:border-white/[0.06] space-y-0.5 overflow-hidden"
+                        className="ml-3 pl-3 border-l border-border space-y-0.5 overflow-hidden"
                       >
                         {subs.map((sub) => (
                           <Link
@@ -533,8 +533,8 @@ export default function CategorySidebar({
                             className={`block px-3 py-1.5 text-[11px] font-medium rounded-md transition-all ${
                               sub._id.toString() ===
                               currentId
-                                ? "text-foreground bg-black/[0.04] dark:bg-white/[0.06]"
-                                : "text-muted-foreground/50 hover:text-foreground hover:bg-black/[0.02] dark:hover:bg-white/[0.03]"
+                                ? "text-foreground bg-muted"
+                                : "text-muted-foreground/50 hover:text-foreground hover:bg-muted/50"
                             }`}
                           >
                             {sub.name}
@@ -581,7 +581,7 @@ export default function CategorySidebar({
                 damping: 25,
                 stiffness: 200,
               }}
-              className="fixed left-0 top-0 h-full w-[320px] max-w-[85vw] bg-white dark:bg-[#09090b] z-[201] overflow-y-auto p-5 lg:hidden"
+              className="fixed left-0 top-0 h-full w-[320px] max-w-[85vw] bg-card z-[201] overflow-y-auto p-5 lg:hidden"
             >
               <div className="flex items-center justify-between mb-6">
                 <h3 className="text-base font-bold text-foreground">
@@ -591,7 +591,7 @@ export default function CategorySidebar({
                   onClick={() =>
                     setMobileOpen(false)
                   }
-                  className="p-1.5 rounded-lg bg-black/[0.04] dark:bg-white/[0.06] text-muted-foreground/50 hover:text-foreground"
+                  className="p-1.5 rounded-lg bg-muted text-muted-foreground/50 hover:text-foreground"
                 >
                   <X className="w-4 h-4" />
                 </button>
@@ -604,7 +604,7 @@ export default function CategorySidebar({
 
       {/* Desktop sidebar */}
       <aside className="hidden lg:block w-64 shrink-0">
-        <div className="sticky top-24 bg-white dark:bg-[#09090b] rounded-xl border border-black/[0.04] dark:border-white/[0.04] p-5 shadow-[0_1px_3px_rgba(0,0,0,0.04)] max-h-[calc(100vh-120px)] overflow-y-auto scrollbar-hide">
+        <div className="sticky top-24 bg-card rounded-xl border border-border p-5 shadow-xs max-h-[calc(100vh-120px)] overflow-y-auto scrollbar-hide">
           {sidebarContent}
         </div>
       </aside>

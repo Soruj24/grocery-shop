@@ -82,7 +82,7 @@ export default function TestimonialsRail() {
                 : ""
             }
           >
-            <div className="group flex h-full flex-col justify-between rounded-2xl border border-black/[0.04] bg-white p-7 shadow-[0_1px_3px_rgba(0,0,0,0.04)] transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_12px_40px_rgba(0,0,0,0.08)] dark:border-white/[0.04] dark:bg-white/[0.02]">
+            <div className="group flex h-full flex-col justify-between rounded-2xl border border-border bg-white p-7 shadow-xs transition-all duration-500 hover:-translate-y-1 hover:shadow-xl dark:bg-white/[0.02]">
               <div className="space-y-5">
                 <div className="flex items-center justify-between">
                   <div className="flex gap-1">
@@ -111,7 +111,7 @@ export default function TestimonialsRail() {
                   &ldquo;{item.content}&rdquo;
                 </p>
               </div>
-              <div className="flex items-center gap-3 border-t border-black/[0.04] pt-5 dark:border-white/[0.06]">
+              <div className="flex items-center gap-3 border-t border-border pt-5">
                 <div
                   className={`flex h-11 w-11 items-center justify-center rounded-2xl text-white shadow-sm ${item.color}`}
                 >

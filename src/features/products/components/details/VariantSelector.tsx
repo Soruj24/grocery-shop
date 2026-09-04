@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { Check } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
@@ -48,7 +48,7 @@ export default function VariantSelector({
                   className={`px-4 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 border ${
                     isSelected
                       ? "border-foreground bg-foreground text-background shadow-[0_2px_8px_rgba(0,0,0,0.1)]"
-                      : "border-black/[0.08] dark:border-white/[0.08] bg-white dark:bg-[#09090b] text-foreground hover:border-black/[0.15] dark:hover:border-white/[0.15]"
+                      : "border-border bg-card text-foreground hover:border-border-strong"
                   } ${
                     option.stock === 0
                       ? "opacity-30 cursor-not-allowed line-through"

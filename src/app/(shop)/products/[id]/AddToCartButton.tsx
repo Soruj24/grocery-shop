@@ -94,7 +94,7 @@ export default function AddToCartButton({
   return (
     <div className="flex flex-col sm:flex-row items-center gap-4">
       <div
-        className={`flex items-center bg-black/[0.04] dark:bg-white/[0.06] p-1 rounded-lg ${
+        className={`flex items-center bg-muted p-1 rounded-lg ${
           isOutOfStock || isMaxReached
             ? "opacity-40 pointer-events-none"
             : ""
@@ -104,7 +104,7 @@ export default function AddToCartButton({
           whileTap={{ scale: 0.9 }}
           onClick={decrement}
           disabled={quantity <= 1}
-          className="w-10 h-10 flex items-center justify-center rounded-md text-foreground hover:bg-black/[0.06] dark:hover:bg-white/[0.1] transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+          className="w-10 h-10 flex items-center justify-center rounded-md text-foreground hover:bg-muted transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
         >
           <Minus className="w-4 h-4" />
         </motion.button>
@@ -115,7 +115,7 @@ export default function AddToCartButton({
           whileTap={{ scale: 0.9 }}
           onClick={increment}
           disabled={quantity >= maxAddable}
-          className="w-10 h-10 flex items-center justify-center rounded-md text-foreground hover:bg-black/[0.06] dark:hover:bg-white/[0.1] transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+          className="w-10 h-10 flex items-center justify-center rounded-md text-foreground hover:bg-muted transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
         >
           <Plus className="w-4 h-4" />
         </motion.button>
@@ -127,7 +127,7 @@ export default function AddToCartButton({
         disabled={isOutOfStock || isMaxReached}
         className={`flex-1 w-full sm:w-auto px-8 py-3.5 rounded-lg text-sm font-semibold uppercase tracking-wider flex items-center justify-center gap-2.5 transition-all ${
           isOutOfStock
-            ? "bg-black/[0.04] dark:bg-white/[0.06] text-muted-foreground/50 cursor-not-allowed"
+            ? "bg-muted text-muted-foreground/50 cursor-not-allowed"
             : isMaxReached
             ? "bg-amber-500 text-white hover:bg-amber-600"
             : "bg-foreground text-background hover:opacity-90 active:scale-[0.98]"

@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { Plus, ShoppingCart } from "lucide-react";
 import Image from "next/image";
@@ -42,7 +42,7 @@ export default function FrequentlyBoughtTogether({
   };
 
   return (
-    <div className="bg-white dark:bg-[#09090b] rounded-xl border border-black/[0.04] dark:border-white/[0.04] p-8 md:p-10 shadow-[0_1px_3px_rgba(0,0,0,0.04)]">
+    <div className="bg-card rounded-xl border border-border p-8 md:p-10 shadow-xs">
       <h2 className="text-xl font-bold text-foreground mb-8">
         {t("bundle_offer_title")}
       </h2>
@@ -54,7 +54,7 @@ export default function FrequentlyBoughtTogether({
               key={product._id}
               className="flex items-center gap-4"
             >
-              <div className="relative w-28 aspect-square bg-black/[0.02] dark:bg-white/[0.02] rounded-xl border border-black/[0.04] dark:border-white/[0.04] p-3">
+              <div className="relative w-28 aspect-square bg-subtle rounded-xl border border-border p-3">
                 <Image
                   src={
                     product.image ||
@@ -69,7 +69,7 @@ export default function FrequentlyBoughtTogether({
                 />
               </div>
               {idx < bundleProducts.length - 1 && (
-                <div className="w-8 h-8 bg-black/[0.04] dark:bg-white/[0.06] rounded-full flex items-center justify-center">
+                <div className="w-8 h-8 bg-muted rounded-full flex items-center justify-center">
                   <Plus className="w-4 h-4 text-muted-foreground/50" />
                 </div>
               )}

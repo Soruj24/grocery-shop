@@ -66,7 +66,7 @@ export default function ProfileMenu() {
       onMouseLeave={handleMouseLeave}
     >
       <button
-        className="flex items-center gap-2 h-9 pl-1 pr-3 bg-black/[0.04] hover:bg-black/[0.08] dark:bg-white/[0.04] dark:hover:bg-white/[0.08] rounded-lg transition-all duration-200"
+        className="flex items-center gap-2 h-9 pl-1 pr-3 bg-muted hover:bg-muted rounded-lg transition-all duration-200"
         aria-expanded={isProfileOpen}
         aria-haspopup="true"
         onKeyDown={(e) => {
@@ -109,10 +109,10 @@ export default function ProfileMenu() {
               duration: 0.15,
               ease: [0.21, 0.47, 0.32, 0.98],
             }}
-            className="absolute right-0 mt-2 w-64 bg-white dark:bg-[#09090b] rounded-xl shadow-[0_8px_30px_rgba(0,0,0,0.08)] border border-black/[0.06] dark:border-white/[0.06] py-1.5 z-[100]"
+            className="absolute right-0 mt-2 w-64 bg-card rounded-xl shadow-lg border border-border py-1.5 z-[100]"
             role="menu"
           >
-            <div className="px-4 py-3 border-b border-black/[0.06] dark:border-white/[0.06] mb-1">
+            <div className="px-4 py-3 border-b border-border mb-1">
               <p className="text-[11px] text-muted-foreground/60 mb-0.5">
                 {t("logged_in_as")}
               </p>
@@ -124,7 +124,7 @@ export default function ProfileMenu() {
             <div className="px-1.5 space-y-0.5">
               <Link
                 href="/admin/dashboard"
-                className="flex items-center gap-3 px-3 py-2 text-sm text-muted-foreground hover:bg-black/[0.04] dark:hover:bg-white/[0.06] rounded-lg transition-colors duration-200 font-medium"
+                className="flex items-center gap-3 px-3 py-2 text-sm text-muted-foreground hover:bg-muted rounded-lg transition-colors duration-200 font-medium"
                 onClick={() =>
                   setIsProfileOpen(false)
                 }
@@ -136,7 +136,7 @@ export default function ProfileMenu() {
 
               <Link
                 href="/orders"
-                className="flex items-center gap-3 px-3 py-2 text-sm text-muted-foreground hover:bg-black/[0.04] dark:hover:bg-white/[0.06] rounded-lg transition-colors duration-200 font-medium"
+                className="flex items-center gap-3 px-3 py-2 text-sm text-muted-foreground hover:bg-muted rounded-lg transition-colors duration-200 font-medium"
                 onClick={() =>
                   setIsProfileOpen(false)
                 }
@@ -148,7 +148,7 @@ export default function ProfileMenu() {
 
               <Link
                 href="/settings"
-                className="flex items-center gap-3 px-3 py-2 text-sm text-muted-foreground hover:bg-black/[0.04] dark:hover:bg-white/[0.06] rounded-lg transition-colors duration-200 font-medium"
+                className="flex items-center gap-3 px-3 py-2 text-sm text-muted-foreground hover:bg-muted rounded-lg transition-colors duration-200 font-medium"
                 onClick={() =>
                   setIsProfileOpen(false)
                 }
@@ -159,10 +159,10 @@ export default function ProfileMenu() {
               </Link>
             </div>
 
-            <div className="mt-1 pt-1 border-t border-black/[0.06] dark:border-white/[0.06] px-1.5">
+            <div className="mt-1 pt-1 border-t border-border px-1.5">
               <button
                 onClick={() => signOut()}
-                className="flex items-center gap-3 w-full px-3 py-2 text-sm text-rose-500 hover:bg-rose-500/[0.06] dark:hover:bg-rose-500/[0.08] rounded-lg transition-colors duration-200 font-medium"
+                className="flex items-center gap-3 w-full px-3 py-2 text-sm text-danger hover:bg-danger-subtle rounded-lg transition-colors duration-200 font-medium"
                 role="menuitem"
               >
                 <LogOut className="w-4 h-4" />

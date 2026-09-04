@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { motion } from "framer-motion";
 import { useLanguage } from "@/contexts/LanguageContext";
@@ -33,7 +33,7 @@ export default function ReviewList({
           </p>
         </div>
 
-        <div className="flex items-center gap-6 bg-white dark:bg-[#09090b] p-5 rounded-xl border border-black/[0.04] dark:border-white/[0.04] shadow-[0_1px_3px_rgba(0,0,0,0.04)]">
+        <div className="flex items-center gap-6 bg-card p-5 rounded-xl border border-border shadow-xs">
           <div className="text-center">
             <p className="text-4xl font-bold text-foreground tracking-[-0.03em]">
               {avg.toLocaleString("bn-BD", {
@@ -47,7 +47,7 @@ export default function ReviewList({
               className="mt-1"
             />
           </div>
-          <div className="h-10 w-px bg-black/[0.06] dark:bg-white/[0.06]" />
+          <div className="h-10 w-px bg-muted" />
           <Button
             variant="primary"
             size="md"
@@ -70,11 +70,11 @@ export default function ReviewList({
               delay: idx * 0.04,
               ease: [0.21, 0.47, 0.32, 0.98],
             }}
-            className="bg-white dark:bg-[#09090b] p-6 rounded-xl border border-black/[0.04] dark:border-white/[0.04] shadow-[0_1px_3px_rgba(0,0,0,0.04)] hover:shadow-[0_4px_12px_rgba(0,0,0,0.06)] transition-all duration-500"
+            className="bg-card p-6 rounded-xl border border-border shadow-xs hover:shadow-sm transition-all duration-500"
           >
             <div className="flex justify-between items-start mb-3">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 bg-black/[0.04] dark:bg-white/[0.06] rounded-lg flex items-center justify-center text-sm font-bold text-muted-foreground">
+                <div className="w-10 h-10 bg-muted rounded-lg flex items-center justify-center text-sm font-bold text-muted-foreground">
                   {review.name?.charAt(0) || "?"}
                 </div>
                 <div>

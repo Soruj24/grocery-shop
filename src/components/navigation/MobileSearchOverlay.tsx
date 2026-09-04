@@ -96,7 +96,7 @@ export default function MobileSearchOverlay({
           >
             {/* Search Bar */}
             <div
-              className="sticky top-0 z-10 bg-background/80 backdrop-blur-xl border-b border-black/[0.04] dark:border-white/[0.04]"
+              className="sticky top-0 z-10 bg-background/80 backdrop-blur-xl border-b border-border"
               style={{
                 paddingTop: "env(safe-area-inset-top)",
               }}
@@ -120,7 +120,7 @@ export default function MobileSearchOverlay({
                       t("search_placeholder") ||
                       "Search products..."
                     }
-                    className="w-full h-11 rounded-xl bg-black/[0.04] dark:bg-white/[0.06] pl-10 pr-10 text-sm font-medium text-foreground placeholder:text-muted-foreground/40 outline-none border border-transparent focus:border-foreground/10 transition-all"
+                    className="w-full h-11 rounded-xl bg-muted pl-10 pr-10 text-sm font-medium text-foreground placeholder:text-muted-foreground/40 outline-none border border-transparent focus:border-foreground/10 transition-all"
                     autoComplete="off"
                     autoCorrect="off"
                     autoCapitalize="off"
@@ -180,9 +180,9 @@ export default function MobileSearchOverlay({
                                 product._id
                               )
                             }
-                            className="w-full flex items-center gap-3.5 p-3 rounded-xl hover:bg-black/[0.04] dark:hover:bg-white/[0.06] active:bg-black/[0.06] dark:active:bg-white/[0.08] transition-all text-left"
+                            className="w-full flex items-center gap-3.5 p-3 rounded-xl hover:bg-muted active:bg-muted transition-all text-left"
                           >
-                            <div className="relative h-12 w-12 shrink-0 rounded-lg overflow-hidden bg-black/[0.04] dark:bg-white/[0.06]">
+                            <div className="relative h-12 w-12 shrink-0 rounded-lg overflow-hidden bg-muted">
                               {product.image ? (
                                 <img
                                   src={product.image}
@@ -221,7 +221,7 @@ export default function MobileSearchOverlay({
                         );
                         onClose();
                       }}
-                      className="w-full mt-3 py-3.5 text-center text-sm font-semibold text-muted-foreground/60 hover:text-foreground rounded-xl hover:bg-black/[0.04] dark:hover:bg-white/[0.06] transition-all min-h-[44px]"
+                      className="w-full mt-3 py-3.5 text-center text-sm font-semibold text-muted-foreground/60 hover:text-foreground rounded-xl hover:bg-muted transition-all min-h-[44px]"
                     >
                       {t("see_all")} →
                     </button>
@@ -270,7 +270,7 @@ export default function MobileSearchOverlay({
                               onClick={() =>
                                 handleHistoryTap(term)
                               }
-                              className="w-full flex items-center gap-3 p-3 rounded-xl hover:bg-black/[0.04] dark:hover:bg-white/[0.06] active:bg-black/[0.06] dark:active:bg-white/[0.08] transition-all text-left"
+                              className="w-full flex items-center gap-3 p-3 rounded-xl hover:bg-muted active:bg-muted transition-all text-left"
                             >
                               <Clock className="h-4 w-4 text-muted-foreground/30 shrink-0" />
                               <span className="text-sm text-foreground/80 flex-1">
@@ -296,7 +296,7 @@ export default function MobileSearchOverlay({
                             onClick={() =>
                               handlePopularTap(term)
                             }
-                            className="flex items-center gap-1.5 rounded-xl bg-black/[0.04] dark:bg-white/[0.06] px-3.5 py-2.5 text-sm font-medium text-foreground/70 hover:bg-black/[0.06] dark:hover:bg-white/[0.08] active:bg-black/[0.08] dark:active:bg-white/[0.1] transition-all"
+                            className="flex items-center gap-1.5 rounded-xl bg-muted px-3.5 py-2.5 text-sm font-medium text-foreground/70 hover:bg-muted active:bg-muted transition-all"
                           >
                             <TrendingUp className="h-3 w-3 text-muted-foreground/30" />
                             {term}

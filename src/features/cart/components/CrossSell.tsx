@@ -55,12 +55,12 @@ export default function CrossSell() {
       initial={{ opacity: 0, y: 12 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.25 }}
-      className="bg-white dark:bg-[#09090b] rounded-xl border border-black/[0.04] dark:border-white/[0.04] overflow-hidden shadow-[0_1px_3px_rgba(0,0,0,0.04)]"
+      className="bg-card rounded-xl border border-border overflow-hidden shadow-xs"
     >
-      <div className="p-5 border-b border-black/[0.04] dark:border-white/[0.04]">
+      <div className="p-5 border-b border-border">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 bg-black/[0.04] dark:bg-white/[0.06] rounded-lg flex items-center justify-center">
+            <div className="w-8 h-8 bg-muted rounded-lg flex items-center justify-center">
               <Sparkles className="w-4 h-4 text-muted-foreground/60" />
             </div>
             <h3 className="text-sm font-bold text-foreground">
@@ -83,9 +83,9 @@ export default function CrossSell() {
             <motion.div
               key={product._id}
               whileHover={{ y: -2 }}
-              className="group relative bg-black/[0.02] dark:bg-white/[0.03] rounded-xl border border-black/[0.04] dark:border-white/[0.04] overflow-hidden hover:shadow-[0_4px_16px_rgba(0,0,0,0.06)] transition-all duration-300"
+              className="group relative bg-subtle rounded-xl border border-border overflow-hidden hover:shadow-sm transition-all duration-300"
             >
-              <div className="relative aspect-square bg-black/[0.03] dark:bg-white/[0.03]">
+              <div className="relative aspect-square bg-muted">
                 <Image
                   src={
                     product.images?.[0] ||

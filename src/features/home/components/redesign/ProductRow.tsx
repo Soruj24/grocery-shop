@@ -63,7 +63,7 @@ export default function ProductRow({
         {Array.from({ length: count }).map((_, i) => (
           <div
             key={i}
-            className="aspect-[3/4] rounded-2xl border border-black/[0.04] bg-zinc-50 dark:bg-white/[0.02] dark:border-white/[0.04]"
+            className="aspect-[3/4] rounded-2xl border border-border bg-muted"
           >
             <Skeleton className="h-full w-full rounded-2xl" />
           </div>

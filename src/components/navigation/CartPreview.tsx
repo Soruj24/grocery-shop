@@ -64,7 +64,7 @@ export default function CartPreview({
 
   return (
     <div className="w-[360px]">
-      <div className="flex items-center justify-between border-b border-black/[0.06] dark:border-white/[0.06] px-5 py-4">
+      <div className="flex items-center justify-between border-b border-border px-5 py-4">
         <div className="flex items-center gap-2.5">
           <ShoppingBag className="w-4.5 h-4.5 text-foreground" />
           <h3 className="text-sm font-bold text-foreground">
@@ -76,7 +76,7 @@ export default function CartPreview({
         </div>
         <button
           onClick={clearCart}
-          className="flex items-center gap-1.5 text-xs font-medium text-muted-foreground transition-colors duration-200 hover:text-rose-500"
+          className="flex items-center gap-1.5 text-xs font-medium text-muted-foreground transition-colors duration-200 hover:text-danger"
         >
           <Trash2 className="w-3.5 h-3.5" />
           {t("clear_all")}
@@ -129,7 +129,7 @@ export default function CartPreview({
         </AnimatePresence>
       </div>
 
-      <div className="border-t border-black/[0.06] dark:border-white/[0.06] p-4">
+      <div className="border-t border-border p-4">
         <div className="mb-3 flex items-center justify-between">
           <span className="text-sm font-medium text-muted-foreground">
             {t("cart_subtotal")}
@@ -143,7 +143,7 @@ export default function CartPreview({
           <Link
             href="/cart"
             onClick={onClose}
-            className="flex items-center justify-center rounded-xl border border-black/[0.08] dark:border-white/[0.08] px-4 py-2.5 text-sm font-semibold text-foreground transition-all duration-300 hover:bg-black/[0.04] dark:hover:bg-white/[0.06] active:scale-[0.98]"
+            className="flex items-center justify-center rounded-xl border border-border px-4 py-2.5 text-sm font-semibold text-foreground transition-all duration-300 hover:bg-muted active:scale-[0.98]"
           >
             {t("view_cart")}
           </Link>

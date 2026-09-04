@@ -98,7 +98,7 @@ export default function TrustSection() {
             <div className="absolute -right-10 -top-10 h-56 w-56 rounded-full bg-primary/25 blur-[80px]" />
             <div className="absolute -bottom-10 -left-10 h-56 w-56 rounded-full bg-accent/25 blur-[80px]" />
             <div className="relative z-10">
-              <h3 className="text-2xl font-extrabold leading-tight tracking-[-0.02em]">
+              <h3 className="text-2xl font-bold leading-tight tracking-[-0.02em]">
                 {t("trust_desc") ??
                   "কেন হাজারো গ্রাহক আমাদের বেছে নেন"}
               </h3>
@@ -109,7 +109,7 @@ export default function TrustSection() {
             <div className="relative z-10 mt-10 grid grid-cols-2 gap-6">
               {stats.map((s, i) => (
                 <div key={i}>
-                  <p className="text-3xl font-extrabold text-primary">
+                  <p className="text-3xl font-bold text-primary">
                     {s.value}
                   </p>
                   <p className="mt-1 text-[11px] font-semibold uppercase tracking-wider text-background/55">
@@ -130,7 +130,7 @@ export default function TrustSection() {
               i >= 4 ? "lg:col-span-2" : ""
             }
           >
-            <div className="group flex h-full items-center gap-5 rounded-2xl border border-black/[0.04] bg-white p-6 shadow-[0_1px_3px_rgba(0,0,0,0.04)] transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_12px_40px_rgba(0,0,0,0.08)] dark:border-white/[0.04] dark:bg-white/[0.02]">
+            <div className="group flex h-full items-center gap-5 rounded-2xl border border-border bg-white p-6 shadow-xs transition-all duration-500 hover:-translate-y-1 hover:shadow-xl dark:bg-white/[0.02]">
               <div
                 className={`flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br ${g.tone} text-white shadow-sm transition-transform duration-500 group-hover:scale-110`}
               >

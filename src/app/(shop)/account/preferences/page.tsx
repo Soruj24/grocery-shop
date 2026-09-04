@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState } from "react";
 import { motion } from "framer-motion";
@@ -39,10 +39,10 @@ export default function PreferencesPage() {
         initial={{ opacity: 0, y: 8 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.05 }}
-        className="rounded-2xl border border-black/[0.04] dark:border-white/[0.04] bg-white dark:bg-[#09090b] p-6 shadow-[0_1px_3px_rgba(0,0,0,0.04)]"
+        className="rounded-2xl border border-border bg-card p-6 shadow-xs"
       >
         <div className="flex items-center gap-3.5 mb-5">
-          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-black/[0.04] dark:bg-white/[0.06]">
+          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-muted">
             <Globe className="h-5 w-5 text-muted-foreground/60" />
           </div>
           <div>
@@ -63,7 +63,7 @@ export default function PreferencesPage() {
                 className={`rounded-xl border px-4 py-2.5 text-sm font-semibold transition-all ${
                   language === lang.id
                     ? "border-foreground/20 bg-foreground text-background"
-                    : "border-black/[0.06] dark:border-white/[0.06] text-muted-foreground/60 hover:border-foreground/10"
+                    : "border-border text-muted-foreground/60 hover:border-foreground/10"
                 }`}
               >
                 {lang.label}
@@ -78,10 +78,10 @@ export default function PreferencesPage() {
         initial={{ opacity: 0, y: 8 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.1 }}
-        className="rounded-2xl border border-black/[0.04] dark:border-white/[0.04] bg-white dark:bg-[#09090b] p-6 shadow-[0_1px_3px_rgba(0,0,0,0.04)]"
+        className="rounded-2xl border border-border bg-card p-6 shadow-xs"
       >
         <div className="flex items-center gap-3.5 mb-5">
-          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-black/[0.04] dark:bg-white/[0.06]">
+          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-muted">
             <Monitor className="h-5 w-5 text-muted-foreground/60" />
           </div>
           <div>
@@ -109,7 +109,7 @@ export default function PreferencesPage() {
               className={`flex items-center gap-2 rounded-xl border px-4 py-2.5 text-sm font-semibold transition-all ${
                 theme === t.id
                   ? "border-foreground/20 bg-foreground text-background"
-                  : "border-black/[0.06] dark:border-white/[0.06] text-muted-foreground/60 hover:border-foreground/10"
+                  : "border-border text-muted-foreground/60 hover:border-foreground/10"
               }`}
             >
               <t.icon className="h-4 w-4" /> {t.label}
@@ -123,10 +123,10 @@ export default function PreferencesPage() {
         initial={{ opacity: 0, y: 8 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.15 }}
-        className="rounded-2xl border border-black/[0.04] dark:border-white/[0.04] bg-white dark:bg-[#09090b] p-6 shadow-[0_1px_3px_rgba(0,0,0,0.04)]"
+        className="rounded-2xl border border-border bg-card p-6 shadow-xs"
       >
         <div className="flex items-center gap-3.5 mb-5">
-          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-black/[0.04] dark:bg-white/[0.06]">
+          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-muted">
             <Bell className="h-5 w-5 text-muted-foreground/60" />
           </div>
           <div>
@@ -155,7 +155,7 @@ export default function PreferencesPage() {
           ].map((pref) => (
             <div
               key={pref.label}
-              className="flex items-center justify-between rounded-xl bg-black/[0.02] dark:bg-white/[0.02] p-4"
+              className="flex items-center justify-between rounded-xl bg-subtle p-4"
             >
               <div>
                 <p className="text-sm font-medium text-foreground">
@@ -170,7 +170,7 @@ export default function PreferencesPage() {
                 className={`relative h-6 w-11 rounded-full transition-colors ${
                   pref.value
                     ? "bg-foreground"
-                    : "bg-black/[0.1] dark:bg-white/[0.1]"
+                    : "bg-border"
                 }`}
               >
                 <span
@@ -194,19 +194,19 @@ export default function PreferencesPage() {
         className="rounded-2xl border border-rose-500/10 bg-rose-500/[0.02] p-6"
       >
         <div className="flex items-center gap-3.5 mb-3">
-          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-rose-500/[0.06]">
-            <Trash2 className="h-5 w-5 text-rose-500" />
+          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-danger-subtle">
+            <Trash2 className="h-5 w-5 text-danger" />
           </div>
           <div>
-            <h2 className="text-sm font-bold text-rose-600 dark:text-rose-400">
+            <h2 className="text-sm font-bold text-danger">
               Delete Account
             </h2>
-            <p className="text-[11px] text-rose-500/50">
+            <p className="text-[11px] text-danger/50">
               Permanently delete your account and data
             </p>
           </div>
         </div>
-        <button className="rounded-xl border border-rose-500/20 px-4 py-2 text-sm font-semibold text-rose-600 dark:text-rose-400 hover:bg-rose-500/[0.06] transition-all">
+        <button className="rounded-xl border border-rose-500/20 px-4 py-2 text-sm font-semibold text-danger hover:bg-danger-subtle transition-all">
           Delete Account
         </button>
       </motion.div>

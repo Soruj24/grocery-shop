@@ -24,7 +24,7 @@ export default function DeliveryProgress({
   return (
     <div className="space-y-2.5">
       <div className="flex items-center gap-2">
-        <div className="w-7 h-7 bg-black/[0.04] dark:bg-white/[0.06] rounded-md flex items-center justify-center">
+        <div className="w-7 h-7 bg-muted rounded-md flex items-center justify-center">
           <Truck className="w-3.5 h-3.5 text-muted-foreground/60" />
         </div>
         <span className="text-xs font-medium text-muted-foreground/60">
@@ -41,7 +41,7 @@ export default function DeliveryProgress({
       </div>
 
       {/* Progress Bar */}
-      <div className="relative h-1.5 bg-black/[0.06] dark:bg-white/[0.06] rounded-full overflow-hidden">
+      <div className="relative h-1.5 bg-muted rounded-full overflow-hidden">
         <motion.div
           initial={{ width: 0 }}
           animate={{ width: `${progress}%` }}

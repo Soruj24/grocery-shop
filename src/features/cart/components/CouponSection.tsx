@@ -92,7 +92,7 @@ export default function CouponSection({
         <>
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="w-full flex items-center justify-center gap-2 p-3 rounded-lg border border-dashed border-black/[0.08] dark:border-white/[0.08] hover:border-black/[0.12] dark:hover:border-white/[0.12] transition-colors text-xs font-medium text-muted-foreground/60"
+            className="w-full flex items-center justify-center gap-2 p-3 rounded-lg border border-dashed border-border hover:border-border-strong transition-colors text-xs font-medium text-muted-foreground/60"
           >
             <Tag className="w-3.5 h-3.5" />
             {t("have_coupon_code")}
@@ -125,7 +125,7 @@ export default function CouponSection({
                       placeholder={t(
                         "coupon_code_placeholder_input"
                       )}
-                      className="flex-1 h-10 px-3 bg-black/[0.04] dark:bg-white/[0.06] border border-black/[0.06] dark:border-white/[0.06] rounded-lg text-xs font-medium text-foreground placeholder:text-muted-foreground/40 focus:outline-none focus:border-foreground/20 transition-colors"
+                      className="flex-1 h-10 px-3 bg-muted border border-border rounded-lg text-xs font-medium text-foreground placeholder:text-muted-foreground/40 focus:outline-none focus:border-foreground/20 transition-colors"
                     />
                     <button
                       onClick={handleApply}
@@ -140,7 +140,7 @@ export default function CouponSection({
                     </button>
                   </div>
                   {error && (
-                    <p className="text-[10px] font-medium text-rose-500">
+                    <p className="text-[10px] font-medium text-danger">
                       {error}
                     </p>
                   )}

@@ -22,14 +22,14 @@ export default function BrandsStrip() {
   const loop = [...brands, ...brands];
 
   return (
-    <section className="border-y border-black/[0.04] bg-zinc-50/60 py-12 dark:bg-white/[0.01] dark:border-white/[0.04]">
+    <section className="border-y border-border bg-muted/60 py-12">
       <div className="mx-auto max-w-7xl px-4">
         <div className="mb-8 flex items-center justify-center gap-4 text-center">
-          <span className="h-px w-12 bg-black/[0.08] dark:bg-white/[0.08]" />
-          <span className="text-[11px] font-extrabold uppercase tracking-[0.25em] text-muted-foreground/70">
+          <span className="h-px w-12 bg-border" />
+          <span className="text-[11px] font-bold uppercase tracking-[0.25em] text-muted-foreground/70">
             {t("sponsored_brands")}
           </span>
-          <span className="h-px w-12 bg-black/[0.08] dark:bg-white/[0.08]" />
+          <span className="h-px w-12 bg-border" />
         </div>
         <div className="relative overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)]">
           <motion.div
@@ -40,7 +40,7 @@ export default function BrandsStrip() {
             {loop.map((brand, i) => (
               <div
                 key={i}
-                className="flex h-[4.5rem] min-w-[190px] items-center justify-center rounded-2xl border border-black/[0.04] bg-white px-8 shadow-[0_1px_3px_rgba(0,0,0,0.04)] transition-all duration-300 hover:border-primary/[0.12] hover:shadow-[0_4px_16px_rgba(0,0,0,0.06)] dark:border-white/[0.06] dark:bg-white/[0.02]"
+                className="flex h-[4.5rem] min-w-[190px] items-center justify-center rounded-2xl border border-border bg-white px-8 shadow-xs transition-all duration-300 hover:border-primary/[0.12] hover:shadow-sm dark:bg-white/[0.02]"
               >
                 <span className="text-base font-bold tracking-tight text-foreground/70 transition-colors duration-300 group-hover:text-foreground">
                   {brand}

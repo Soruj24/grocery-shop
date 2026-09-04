@@ -70,7 +70,7 @@ export default function RatingsBreakdown({
               <span className="text-xs font-medium text-muted-foreground/60 w-8">
                 {b.star} ★
               </span>
-              <div className="flex-1 h-2 bg-black/[0.04] dark:bg-white/[0.06] rounded-full overflow-hidden">
+              <div className="flex-1 h-2 bg-muted rounded-full overflow-hidden">
                 <motion.div
                   initial={{ width: 0 }}
                   animate={{

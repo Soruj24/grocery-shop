@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { motion, AnimatePresence } from "framer-motion";
 import {
@@ -52,7 +52,7 @@ export default function CartDrawer({
               damping: 28,
               stiffness: 300,
             }}
-            className="fixed right-0 top-0 h-full w-full max-w-[420px] bg-white dark:bg-[#09090b] shadow-[0_0_40px_rgba(0,0,0,0.15)] z-[201] flex flex-col"
+            className="fixed right-0 top-0 h-full w-full max-w-[420px] bg-card shadow-xl z-[201] flex flex-col"
             style={{
               paddingTop:
                 "env(safe-area-inset-top)",
@@ -81,9 +81,9 @@ export default function CartDrawer({
                           0.21, 0.47, 0.32, 0.98,
                         ],
                       }}
-                      className="flex gap-3.5 p-3.5 bg-black/[0.02] dark:bg-white/[0.02] rounded-xl border border-black/[0.04] dark:border-white/[0.04] group"
+                      className="flex gap-3.5 p-3.5 bg-subtle rounded-xl border border-border group"
                     >
-                      <div className="relative w-16 h-16 sm:w-20 sm:h-20 rounded-lg overflow-hidden bg-black/[0.02] dark:bg-white/[0.02] shrink-0">
+                      <div className="relative w-16 h-16 sm:w-20 sm:h-20 rounded-lg overflow-hidden bg-subtle shrink-0">
                         <Image
                           src={
                             item.image ||
@@ -110,7 +110,7 @@ export default function CartDrawer({
                                 item._id
                               )
                             }
-                            className="p-1.5 -mr-1 -mt-0.5 rounded-lg text-muted-foreground/40 hover:text-rose-500 hover:bg-rose-500/[0.06] transition-all shrink-0 min-w-[32px] min-h-[32px] flex items-center justify-center"
+                            className="p-1.5 -mr-1 -mt-0.5 rounded-lg text-muted-foreground/40 hover:text-danger hover:bg-danger-subtle transition-all shrink-0 min-w-[32px] min-h-[32px] flex items-center justify-center"
                             aria-label={t("remove")}
                           >
                             <Trash2 size={14} />
@@ -125,7 +125,7 @@ export default function CartDrawer({
                             )}
                           </div>
 
-                          <div className="flex items-center gap-0.5 bg-black/[0.04] dark:bg-white/[0.06] rounded-lg p-0.5">
+                          <div className="flex items-center gap-0.5 bg-muted rounded-lg p-0.5">
                             <motion.button
                               whileTap={{ scale: 0.9 }}
                               onClick={() =>
@@ -137,7 +137,7 @@ export default function CartDrawer({
                                   )
                                 )
                               }
-                              className="w-8 h-8 rounded-md hover:bg-black/[0.06] dark:hover:bg-white/[0.1] flex items-center justify-center text-muted-foreground/60 transition-colors min-w-[32px] min-h-[32px]"
+                              className="w-8 h-8 rounded-md hover:bg-muted flex items-center justify-center text-muted-foreground/60 transition-colors min-w-[32px] min-h-[32px]"
                               aria-label={t(
                                 "decrease_quantity"
                               )}
@@ -162,7 +162,7 @@ export default function CartDrawer({
                                   item.quantity + 1
                                 )
                               }
-                              className="w-8 h-8 rounded-md hover:bg-black/[0.06] dark:hover:bg-white/[0.1] flex items-center justify-center text-muted-foreground/60 transition-colors min-w-[32px] min-h-[32px]"
+                              className="w-8 h-8 rounded-md hover:bg-muted flex items-center justify-center text-muted-foreground/60 transition-colors min-w-[32px] min-h-[32px]"
                               aria-label={t(
                                 "increase_quantity"
                               )}

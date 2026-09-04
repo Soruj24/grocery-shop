@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import {
   ShoppingBag,
@@ -60,7 +60,7 @@ export default function StickyCheckoutBar({
           stiffness: 300,
           damping: 30,
         }}
-        className="bg-white/90 dark:bg-[#09090b]/90 backdrop-blur-xl border border-black/[0.06] dark:border-white/[0.06] rounded-xl p-3 pl-5 flex items-center gap-4 shadow-[0_8px_30px_rgba(0,0,0,0.12)] pointer-events-auto"
+        className="bg-card/90 backdrop-blur-xl border border-border rounded-xl p-3 pl-5 flex items-center gap-4 shadow-xl pointer-events-auto"
       >
         <div className="flex-1 flex flex-col">
           <span className="text-[9px] font-semibold uppercase tracking-wider text-muted-foreground/50">
@@ -91,7 +91,7 @@ export default function StickyCheckoutBar({
             disabled={
               product.stock === 0 || isMaxReached
             }
-            className="w-12 h-12 flex items-center justify-center bg-black/[0.04] dark:bg-white/[0.06] text-foreground rounded-xl disabled:opacity-40 disabled:cursor-not-allowed hover:bg-black/[0.08] dark:hover:bg-white/[0.1] transition-colors relative"
+            className="w-12 h-12 flex items-center justify-center bg-muted text-foreground rounded-xl disabled:opacity-40 disabled:cursor-not-allowed hover:bg-muted transition-colors relative"
             aria-label={t("add_to_cart")}
           >
             <ShoppingBag className="w-5 h-5" />

@@ -30,7 +30,7 @@ export default function ProductHighlights() {
   ];
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 py-7 border-y border-black/[0.04] dark:border-white/[0.04]">
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 py-7 border-y border-border">
       {highlights.map((item, idx) => (
         <motion.div
           key={idx}
@@ -43,7 +43,7 @@ export default function ProductHighlights() {
           }}
           className="flex items-center gap-3 group cursor-default"
         >
-          <div className="p-2.5 rounded-xl bg-black/[0.03] dark:bg-white/[0.04] text-muted-foreground group-hover:bg-primary/[0.06] group-hover:text-primary transition-all duration-300">
+          <div className="p-2.5 rounded-xl bg-muted text-muted-foreground group-hover:bg-primary/[0.06] group-hover:text-primary transition-all duration-300">
             <item.icon className="w-4.5 h-4.5" />
           </div>
           <div className="flex flex-col">

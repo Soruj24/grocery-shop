@@ -55,7 +55,7 @@ export default function RecommendedRail() {
       eyebrowTone="accent"
       title={
         <span className="flex items-center gap-3">
-          <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-accent to-primary text-white shadow-[0_4px_16px_rgba(0,0,0,0.08)]">
+          <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-accent to-primary text-white shadow-md">
             <Sparkles className="h-6 w-6" />
           </span>
           {t("recommended_for_you")}

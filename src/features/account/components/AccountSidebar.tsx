@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -62,7 +62,7 @@ export default function AccountSidebar() {
   const SidebarContent = () => (
     <div className="flex flex-col h-full">
       {/* User Profile */}
-      <div className="p-4 border-b border-black/[0.04] dark:border-white/[0.04]">
+      <div className="p-4 border-b border-border">
         <div className="flex items-center gap-3">
           <div className="relative">
             <div className="h-10 w-10 rounded-xl bg-foreground flex items-center justify-center text-background font-semibold text-sm">
@@ -101,13 +101,13 @@ export default function AccountSidebar() {
                     className={`relative flex items-center gap-2.5 px-3 py-2 rounded-xl text-[13px] font-medium transition-all ${
                       active
                         ? "text-foreground"
-                        : "text-muted-foreground/50 hover:text-foreground hover:bg-black/[0.03] dark:hover:bg-white/[0.04]"
+                        : "text-muted-foreground/50 hover:text-foreground hover:bg-muted"
                     }`}
                   >
                     {active && (
                       <motion.div
                         layoutId="sidebar-active"
-                        className="absolute inset-0 rounded-xl bg-black/[0.04] dark:bg-white/[0.06]"
+                        className="absolute inset-0 rounded-xl bg-muted"
                         transition={{
                           type: "spring",
                           stiffness: 350,
@@ -137,10 +137,10 @@ export default function AccountSidebar() {
       </nav>
 
       {/* Footer */}
-      <div className="p-3 border-t border-black/[0.04] dark:border-white/[0.04] space-y-0.5">
+      <div className="p-3 border-t border-border space-y-0.5">
         <Link
           href="/products"
-          className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-[13px] font-medium text-muted-foreground/50 hover:text-foreground hover:bg-black/[0.03] dark:hover:bg-white/[0.04] transition-all"
+          className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-[13px] font-medium text-muted-foreground/50 hover:text-foreground hover:bg-muted transition-all"
         >
           <ShoppingBag className="h-4 w-4" />
           Back to Shop
@@ -148,7 +148,7 @@ export default function AccountSidebar() {
         </Link>
         <button
           onClick={() => signOut()}
-          className="flex w-full items-center gap-2.5 px-3 py-2 rounded-xl text-[13px] font-medium text-muted-foreground/50 hover:text-rose-500 hover:bg-rose-500/[0.04] transition-all"
+          className="flex w-full items-center gap-2.5 px-3 py-2 rounded-xl text-[13px] font-medium text-muted-foreground/50 hover:text-danger hover:bg-danger-subtle transition-all"
         >
           <LogOut className="h-4 w-4" />
           Sign Out
@@ -162,7 +162,7 @@ export default function AccountSidebar() {
       {/* Mobile Toggle */}
       <button
         onClick={() => setMobileOpen(true)}
-        className="lg:hidden fixed bottom-20 right-4 z-50 flex h-12 w-12 items-center justify-center rounded-xl bg-foreground text-background shadow-[0_4px_20px_rgba(0,0,0,0.2)]"
+        className="lg:hidden fixed bottom-20 right-4 z-50 flex h-12 w-12 items-center justify-center rounded-xl bg-foreground text-background shadow-xl"
       >
         <Menu className="h-5 w-5" />
       </button>
@@ -185,15 +185,15 @@ export default function AccountSidebar() {
               stiffness: 300,
               damping: 30,
             }}
-            className="absolute left-0 top-0 bottom-0 w-72 bg-white dark:bg-[#09090b] border-r border-black/[0.04] dark:border-white/[0.04] shadow-[0_0_40px_rgba(0,0,0,0.15)]"
+            className="absolute left-0 top-0 bottom-0 w-72 bg-card border-r border-border shadow-xl"
           >
-            <div className="flex items-center justify-between p-4 border-b border-black/[0.04] dark:border-white/[0.04]">
+            <div className="flex items-center justify-between p-4 border-b border-border">
               <p className="text-sm font-semibold text-foreground">
                 My Account
               </p>
               <button
                 onClick={() => setMobileOpen(false)}
-                className="p-1.5 rounded-lg hover:bg-black/[0.04] dark:hover:bg-white/[0.06] transition-colors"
+                className="p-1.5 rounded-lg hover:bg-muted transition-colors"
               >
                 <X className="h-4 w-4 text-muted-foreground/50" />
               </button>
@@ -206,7 +206,7 @@ export default function AccountSidebar() {
       {/* Desktop Sidebar */}
       <aside className="hidden lg:block w-64 shrink-0">
         <div className="sticky top-24">
-          <div className="rounded-2xl border border-black/[0.04] dark:border-white/[0.04] bg-white dark:bg-[#09090b] overflow-hidden shadow-[0_1px_3px_rgba(0,0,0,0.04)]">
+          <div className="rounded-2xl border border-border bg-card overflow-hidden shadow-xs">
             <SidebarContent />
           </div>
         </div>

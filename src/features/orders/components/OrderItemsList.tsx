@@ -26,7 +26,7 @@ export default function OrderItemsList({
           key={idx}
           className="flex items-center gap-3"
         >
-          <div className="w-14 h-14 bg-black/[0.04] dark:bg-white/[0.06] rounded-lg border border-black/[0.04] dark:border-white/[0.04] overflow-hidden shrink-0 relative">
+          <div className="w-14 h-14 bg-muted rounded-lg border border-border overflow-hidden shrink-0 relative">
             <Image
               src={
                 item.product?.image ||

@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { motion } from "framer-motion";
 import {
@@ -123,7 +123,7 @@ export default function ReviewStep({
               key={i}
               className="flex items-center gap-3"
             >
-              <div className="relative flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-black/[0.04] dark:bg-white/[0.06] overflow-hidden">
+              <div className="relative flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-muted overflow-hidden">
                 {item.image ? (
                   <img
                     src={item.image}
@@ -179,7 +179,7 @@ export default function ReviewStep({
             delay: i * 0.08,
             ease: [0.21, 0.47, 0.32, 0.98],
           }}
-          className="rounded-2xl border border-black/[0.04] dark:border-white/[0.04] bg-white dark:bg-[#09090b] overflow-hidden shadow-[0_1px_3px_rgba(0,0,0,0.04)]"
+          className="rounded-2xl border border-border bg-card overflow-hidden shadow-xs"
         >
           <div className="p-5">
             <div className="flex items-center justify-between mb-3">
@@ -224,7 +224,7 @@ export default function ReviewStep({
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.32 }}
-        className="rounded-2xl border border-black/[0.04] dark:border-white/[0.04] bg-white dark:bg-[#09090b] overflow-hidden shadow-[0_1px_3px_rgba(0,0,0,0.04)]"
+        className="rounded-2xl border border-border bg-card overflow-hidden shadow-xs"
       >
         <div className="p-5">
           <h4 className="text-[10px] font-semibold text-muted-foreground/50 mb-3 uppercase tracking-wider">
@@ -261,7 +261,7 @@ export default function ReviewStep({
                 </span>
               </div>
             )}
-            <div className="border-t border-black/[0.06] dark:border-white/[0.06] pt-2.5 flex justify-between">
+            <div className="border-t border-border pt-2.5 flex justify-between">
               <span className="text-sm font-bold text-foreground">
                 {t("grand_total")}
               </span>
@@ -282,7 +282,7 @@ export default function ReviewStep({
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.4 }}
-        className="rounded-2xl bg-black/[0.02] dark:bg-white/[0.03] border border-black/[0.04] dark:border-white/[0.04] p-6 text-center"
+        className="rounded-2xl bg-subtle border border-border p-6 text-center"
       >
         <motion.div
           initial={{ scale: 0 }}

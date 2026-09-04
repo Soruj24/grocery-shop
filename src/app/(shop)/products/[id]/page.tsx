@@ -110,7 +110,7 @@ export default async function ProductDetailsPage({
   };
 
   return (
-    <div className="min-h-screen bg-white dark:bg-[#09090b] relative overflow-hidden">
+    <div className="min-h-screen bg-card relative overflow-hidden">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{

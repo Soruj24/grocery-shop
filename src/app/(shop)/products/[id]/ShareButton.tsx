@@ -42,7 +42,7 @@ export default function ShareButton({
       onClick={handleShare}
       className="flex items-center gap-2 text-sm font-medium text-muted-foreground/60 hover:text-foreground transition-colors"
     >
-      <div className="p-2 rounded-lg bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] dark:hover:bg-white/[0.1] transition-colors">
+      <div className="p-2 rounded-lg bg-muted hover:bg-muted transition-colors">
         <Share2 className="w-4 h-4" />
       </div>
       <span>{t("share")}</span>

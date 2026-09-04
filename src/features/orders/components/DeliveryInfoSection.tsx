@@ -1,4 +1,4 @@
-import {
+﻿import {
   MapPin,
   Phone,
   Package,
@@ -26,7 +26,7 @@ export default function DeliveryInfoSection({
 }: DeliveryInfoSectionProps) {
   return (
     <div className="grid md:grid-cols-2 gap-5">
-      <div className="bg-white dark:bg-[#09090b] p-6 rounded-xl border border-black/[0.04] dark:border-white/[0.04] shadow-[0_1px_3px_rgba(0,0,0,0.04)] space-y-4">
+      <div className="bg-card p-6 rounded-xl border border-border shadow-xs space-y-4">
         <h3 className="text-base font-bold flex items-center gap-2.5">
           <MapPin className="w-4 h-4 text-muted-foreground/50" />
           {t("delivery_address")}
@@ -42,13 +42,13 @@ export default function DeliveryInfoSection({
         </div>
       </div>
       {deliveryBoy && (
-        <div className="bg-white dark:bg-[#09090b] p-6 rounded-xl border border-black/[0.04] dark:border-white/[0.04] shadow-[0_1px_3px_rgba(0,0,0,0.04)] space-y-4">
+        <div className="bg-card p-6 rounded-xl border border-border shadow-xs space-y-4">
           <h3 className="text-base font-bold flex items-center gap-2.5">
             <Truck className="w-4 h-4 text-muted-foreground/50" />
             {t("delivery_boy")}
           </h3>
           <div className="flex items-center gap-3">
-            <div className="w-12 h-12 rounded-lg bg-black/[0.04] dark:bg-white/[0.06] flex items-center justify-center text-muted-foreground/50">
+            <div className="w-12 h-12 rounded-lg bg-muted flex items-center justify-center text-muted-foreground/50">
               <Package className="w-5 h-5" />
             </div>
             <div>

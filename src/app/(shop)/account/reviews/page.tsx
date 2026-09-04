@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState } from "react";
 import { motion } from "framer-motion";
@@ -54,7 +54,7 @@ export default function ReviewsPage() {
         <motion.div
           initial={{ opacity: 0, scale: 0.98 }}
           animate={{ opacity: 1, scale: 1 }}
-          className="rounded-2xl border border-black/[0.04] dark:border-white/[0.04] bg-white dark:bg-[#09090b] p-12 text-center shadow-[0_1px_3px_rgba(0,0,0,0.04)]"
+          className="rounded-2xl border border-border bg-card p-12 text-center shadow-xs"
         >
           <Star className="mx-auto h-10 w-10 text-muted-foreground/20 mb-3" />
           <p className="text-sm font-semibold text-foreground">
@@ -76,7 +76,7 @@ export default function ReviewsPage() {
                 delay: i * 0.04,
                 ease: [0.21, 0.47, 0.32, 0.98],
               }}
-              className="rounded-2xl border border-black/[0.04] dark:border-white/[0.04] bg-white dark:bg-[#09090b] p-5 shadow-[0_1px_3px_rgba(0,0,0,0.04)] hover:shadow-[0_4px_16px_rgba(0,0,0,0.06)] transition-shadow"
+              className="rounded-2xl border border-border bg-card p-5 shadow-xs hover:shadow-sm transition-shadow"
             >
               <div className="flex items-start justify-between mb-3">
                 <div>
@@ -109,7 +109,7 @@ export default function ReviewsPage() {
               <p className="text-sm text-muted-foreground/60">
                 {review.comment}
               </p>
-              <div className="flex items-center gap-4 mt-3 pt-3 border-t border-black/[0.04] dark:border-white/[0.04]">
+              <div className="flex items-center gap-4 mt-3 pt-3 border-t border-border">
                 <button className="flex items-center gap-1.5 text-[11px] text-muted-foreground/40 hover:text-foreground transition-colors">
                   <ThumbsUp className="h-3.5 w-3.5" /> Helpful ({
                     review.helpful

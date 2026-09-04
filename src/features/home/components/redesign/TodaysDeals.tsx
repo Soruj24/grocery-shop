@@ -50,7 +50,7 @@ export default function TodaysDeals() {
               return (
                 <div
                   key={i}
-                  className="aspect-[3/4] w-56 shrink-0 rounded-2xl border border-black/[0.04] bg-zinc-50 dark:bg-white/[0.02] dark:border-white/[0.04]"
+                  className="aspect-[3/4] w-56 shrink-0 rounded-2xl border border-border bg-muted"
                 />
               );
             }
@@ -77,9 +77,9 @@ export default function TodaysDeals() {
               >
                 <Link
                   href={`/products/${product._id}`}
-                  className="relative block overflow-hidden rounded-2xl border border-black/[0.04] bg-white shadow-[0_1px_3px_rgba(0,0,0,0.04)] transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_12px_40px_rgba(0,0,0,0.08)] dark:border-white/[0.04] dark:bg-white/[0.02]"
+                  className="relative block overflow-hidden rounded-2xl border border-border bg-white shadow-xs transition-all duration-500 hover:-translate-y-1 hover:shadow-xl bg-card"
                 >
-                  <div className="relative aspect-square overflow-hidden bg-zinc-50 dark:bg-white/[0.02]">
+                  <div className="relative aspect-square overflow-hidden bg-muted">
                     <Image
                       src={
                         product.image ||
@@ -93,7 +93,7 @@ export default function TodaysDeals() {
                       className="object-cover transition-transform duration-700 ease-out group-hover:scale-110"
                     />
                     {off > 0 && (
-                      <span className="absolute left-3 top-3 inline-flex items-center gap-1 rounded-full bg-danger px-3 py-1.5 text-[11px] font-extrabold text-white shadow-[0_2px_8px_rgba(239,68,68,0.3)]">
+                      <span className="absolute left-3 top-3 inline-flex items-center gap-1 rounded-full bg-danger px-3 py-1.5 text-[11px] font-bold text-white shadow-[0_2px_8px_rgba(239,68,68,0.3)]">
                         <Tag className="h-3 w-3" />-
                         {off}%
                       </span>
@@ -104,7 +104,7 @@ export default function TodaysDeals() {
                       {product.name}
                     </p>
                     <div className="flex items-center gap-2">
-                      <span className="text-base font-extrabold text-primary">
+                      <span className="text-base font-bold text-primary">
                         {currencySymbol}
                         {finalPrice.toLocaleString(
                           "bn-BD"
@@ -127,7 +127,7 @@ export default function TodaysDeals() {
         )}
       </div>
 
-      <div className="mt-8 flex items-center justify-between rounded-2xl border border-black/[0.04] bg-zinc-50/80 px-6 py-5 dark:bg-white/[0.02] dark:border-white/[0.04]">
+      <div className="mt-8 flex items-center justify-between rounded-2xl border border-border bg-muted/80 px-6 py-5">
         <span className="text-sm font-semibold text-muted-foreground">
           {t("deals_end_in") ?? "ডিল শেষ হচ্ছে"}
         </span>

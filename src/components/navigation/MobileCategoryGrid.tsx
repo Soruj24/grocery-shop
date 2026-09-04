@@ -77,10 +77,10 @@ export default function MobileCategoryGrid({
               <Link
                 href={`/products?category=${cat._id}`}
                 onClick={onClose}
-                className="flex flex-col items-center gap-2.5 p-3.5 rounded-xl bg-black/[0.03] dark:bg-white/[0.04] border border-black/[0.04] dark:border-white/[0.04] hover:border-black/[0.1] dark:hover:border-white/[0.1] transition-all duration-200 group relative overflow-hidden"
+                className="flex flex-col items-center gap-2.5 p-3.5 rounded-xl bg-muted border border-border hover:border-border-strong transition-all duration-200 group relative overflow-hidden"
                 aria-label={cat.name}
               >
-                <div className="w-12 h-12 rounded-xl bg-white dark:bg-[#09090b] flex items-center justify-center shadow-[0_1px_3px_rgba(0,0,0,0.04)] group-hover:scale-110 transition-transform duration-300 relative z-10">
+                <div className="w-12 h-12 rounded-xl bg-card flex items-center justify-center shadow-xs group-hover:scale-110 transition-transform duration-300 relative z-10">
                   <div className="relative w-7 h-7">
                     <Image
                       src={

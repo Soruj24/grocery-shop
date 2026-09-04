@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -152,7 +152,7 @@ export default function AddressesPage() {
             exit={{ opacity: 0, height: 0 }}
             className="overflow-hidden"
           >
-            <div className="rounded-2xl border border-black/[0.04] dark:border-white/[0.04] bg-white dark:bg-[#09090b] p-5 space-y-4 shadow-[0_1px_3px_rgba(0,0,0,0.04)]">
+            <div className="rounded-2xl border border-border bg-card p-5 space-y-4 shadow-xs">
               <div className="flex items-center justify-between">
                 <h3 className="text-sm font-bold text-foreground">
                   {editingId
@@ -179,7 +179,7 @@ export default function AddressesPage() {
                     className={`rounded-xl border px-3.5 py-2 text-[11px] font-semibold transition-all ${
                       form.label === l
                         ? "border-foreground/20 bg-foreground text-background"
-                        : "border-black/[0.06] dark:border-white/[0.06] text-muted-foreground/60 hover:border-foreground/10"
+                        : "border-border text-muted-foreground/60 hover:border-foreground/10"
                     }`}
                   >
                     {l.charAt(0).toUpperCase() + l.slice(1)}
@@ -193,7 +193,7 @@ export default function AddressesPage() {
                   onChange={(e) =>
                     setForm({ ...form, name: e.target.value })
                   }
-                  className="rounded-xl border border-black/[0.06] dark:border-white/[0.06] bg-black/[0.02] dark:bg-white/[0.03] px-3.5 py-2.5 text-sm text-foreground placeholder:text-muted-foreground/30 focus:border-foreground/20 focus:ring-2 focus:ring-foreground/10 outline-none transition-all"
+                  className="rounded-xl border border-border bg-subtle px-3.5 py-2.5 text-sm text-foreground placeholder:text-muted-foreground/30 focus:border-foreground/20 focus:ring-2 focus:ring-foreground/10 outline-none transition-all"
                 />
                 <input
                   placeholder="Phone *"
@@ -204,7 +204,7 @@ export default function AddressesPage() {
                       phone: e.target.value,
                     })
                   }
-                  className="rounded-xl border border-black/[0.06] dark:border-white/[0.06] bg-black/[0.02] dark:bg-white/[0.03] px-3.5 py-2.5 text-sm text-foreground placeholder:text-muted-foreground/30 focus:border-foreground/20 focus:ring-2 focus:ring-foreground/10 outline-none transition-all"
+                  className="rounded-xl border border-border bg-subtle px-3.5 py-2.5 text-sm text-foreground placeholder:text-muted-foreground/30 focus:border-foreground/20 focus:ring-2 focus:ring-foreground/10 outline-none transition-all"
                 />
               </div>
               <textarea
@@ -217,7 +217,7 @@ export default function AddressesPage() {
                   })
                 }
                 rows={2}
-                className="w-full rounded-xl border border-black/[0.06] dark:border-white/[0.06] bg-black/[0.02] dark:bg-white/[0.03] px-3.5 py-2.5 text-sm text-foreground placeholder:text-muted-foreground/30 focus:border-foreground/20 focus:ring-2 focus:ring-foreground/10 outline-none resize-none transition-all"
+                className="w-full rounded-xl border border-border bg-subtle px-3.5 py-2.5 text-sm text-foreground placeholder:text-muted-foreground/30 focus:border-foreground/20 focus:ring-2 focus:ring-foreground/10 outline-none resize-none transition-all"
               />
               <input
                 placeholder="City"
@@ -225,7 +225,7 @@ export default function AddressesPage() {
                 onChange={(e) =>
                   setForm({ ...form, city: e.target.value })
                 }
-                className="w-full rounded-xl border border-black/[0.06] dark:border-white/[0.06] bg-black/[0.02] dark:bg-white/[0.03] px-3.5 py-2.5 text-sm text-foreground placeholder:text-muted-foreground/30 focus:border-foreground/20 focus:ring-2 focus:ring-foreground/10 outline-none transition-all"
+                className="w-full rounded-xl border border-border bg-subtle px-3.5 py-2.5 text-sm text-foreground placeholder:text-muted-foreground/30 focus:border-foreground/20 focus:ring-2 focus:ring-foreground/10 outline-none transition-all"
               />
               <button
                 onClick={handleSave}
@@ -257,8 +257,8 @@ export default function AddressesPage() {
               }}
               className={`rounded-2xl border p-4 transition-all ${
                 addr.isDefault
-                  ? "border-foreground/15 bg-foreground/[0.02] dark:bg-foreground/[0.02] shadow-[0_4px_16px_rgba(0,0,0,0.06)]"
-                  : "border-black/[0.04] dark:border-white/[0.04] bg-white dark:bg-[#09090b] shadow-[0_1px_3px_rgba(0,0,0,0.04)]"
+                  ? "border-foreground/15 bg-foreground/[0.02] dark:bg-foreground/[0.02] shadow-sm"
+                  : "border-border bg-card shadow-xs"
               }`}
             >
               <div className="flex items-start justify-between mb-3">
@@ -267,7 +267,7 @@ export default function AddressesPage() {
                     className={`flex h-9 w-9 items-center justify-center rounded-xl ${
                       addr.isDefault
                         ? "bg-foreground text-background"
-                        : "bg-black/[0.04] dark:bg-white/[0.06] text-muted-foreground/60"
+                        : "bg-muted text-muted-foreground/60"
                     }`}
                   >
                     <Icon className="h-4 w-4" />
@@ -291,7 +291,7 @@ export default function AddressesPage() {
               <p className="text-[11px] text-muted-foreground/40 mt-0.5">
                 {addr.address}, {addr.city}
               </p>
-              <div className="flex items-center gap-3 mt-3 pt-3 border-t border-black/[0.04] dark:border-white/[0.04]">
+              <div className="flex items-center gap-3 mt-3 pt-3 border-t border-border">
                 {!addr.isDefault && (
                   <button
                     onClick={() =>
@@ -310,7 +310,7 @@ export default function AddressesPage() {
                 </button>
                 <button
                   onClick={() => handleDelete(addr.id)}
-                  className="text-[11px] font-medium text-muted-foreground/40 hover:text-rose-500 flex items-center gap-1 ml-auto transition-colors"
+                  className="text-[11px] font-medium text-muted-foreground/40 hover:text-danger flex items-center gap-1 ml-auto transition-colors"
                 >
                   <Trash2 className="h-3 w-3" /> Delete
                 </button>

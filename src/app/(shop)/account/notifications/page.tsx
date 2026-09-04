@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useNotifications } from "@/contexts/NotificationContext";
 import { motion } from "framer-motion";
@@ -18,7 +18,7 @@ const iconMap = {
 
 const colorMap = {
   success: "text-emerald-500 bg-emerald-500/[0.06]",
-  error: "text-rose-500 bg-rose-500/[0.06]",
+  error: "text-danger bg-danger-subtle",
   info: "text-blue-500 bg-blue-500/[0.06]",
 };
 
@@ -53,7 +53,7 @@ export default function NotificationsPage() {
                 (n) => !n.read && markAsRead(n.id)
               )
             }
-            className="flex items-center gap-1.5 rounded-xl bg-black/[0.04] dark:bg-white/[0.06] px-3.5 py-2 text-[11px] font-semibold text-muted-foreground/60 hover:bg-black/[0.06] dark:hover:bg-white/[0.08] transition-all"
+            className="flex items-center gap-1.5 rounded-xl bg-muted px-3.5 py-2 text-[11px] font-semibold text-muted-foreground/60 hover:bg-muted transition-all"
           >
             <CheckCheck className="h-3.5 w-3.5" /> Mark
             all read
@@ -65,7 +65,7 @@ export default function NotificationsPage() {
         <motion.div
           initial={{ opacity: 0, scale: 0.98 }}
           animate={{ opacity: 1, scale: 1 }}
-          className="rounded-2xl border border-black/[0.04] dark:border-white/[0.04] bg-white dark:bg-[#09090b] p-12 text-center shadow-[0_1px_3px_rgba(0,0,0,0.04)]"
+          className="rounded-2xl border border-border bg-card p-12 text-center shadow-xs"
         >
           <Bell className="mx-auto h-10 w-10 text-muted-foreground/20 mb-3" />
           <p className="text-sm font-semibold text-foreground">
@@ -91,8 +91,8 @@ export default function NotificationsPage() {
                 onClick={() => markAsRead(n.id)}
                 className={`rounded-2xl border p-4 cursor-pointer transition-all ${
                   n.read
-                    ? "border-black/[0.04] dark:border-white/[0.04] bg-white dark:bg-[#09090b] shadow-[0_1px_3px_rgba(0,0,0,0.04)]"
-                    : "border-foreground/10 bg-foreground/[0.02] dark:bg-foreground/[0.02] shadow-[0_4px_16px_rgba(0,0,0,0.06)]"
+                    ? "border-border bg-card shadow-xs"
+                    : "border-foreground/10 bg-foreground/[0.02] dark:bg-foreground/[0.02] shadow-sm"
                 }`}
               >
                 <div className="flex items-start gap-3.5">

@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import {
   ShoppingBag,
@@ -27,29 +27,29 @@ export default function EmptyCartState() {
       >
         {/* Icon */}
         <div className="relative mx-auto w-24 h-24">
-          <div className="absolute inset-0 bg-black/[0.03] dark:bg-white/[0.04] rounded-3xl rotate-6" />
-          <div className="absolute inset-0 bg-black/[0.03] dark:bg-white/[0.04] rounded-3xl -rotate-3" />
-          <div className="relative w-24 h-24 bg-white dark:bg-[#09090b] border border-black/[0.06] dark:border-white/[0.06] rounded-3xl flex items-center justify-center shadow-[0_2px_12px_rgba(0,0,0,0.06)]">
+          <div className="absolute inset-0 bg-muted rounded-2xl rotate-6" />
+          <div className="absolute inset-0 bg-muted rounded-2xl -rotate-3" />
+          <div className="relative w-24 h-24 bg-card border border-border rounded-2xl flex items-center justify-center shadow-sm">
             <ShoppingBag className="w-10 h-10 text-muted-foreground/30" />
           </div>
           <motion.div
             animate={{ y: [0, -6, 0], rotate: [0, 5, 0] }}
             transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-            className="absolute -top-2 -right-2 w-8 h-8 bg-black/[0.04] dark:bg-white/[0.06] rounded-lg flex items-center justify-center border border-black/[0.04] dark:border-white/[0.04]"
+            className="absolute -top-2 -right-2 w-8 h-8 bg-muted rounded-lg flex items-center justify-center border border-border"
           >
             <ShoppingCart className="w-3.5 h-3.5 text-muted-foreground/40" />
           </motion.div>
           <motion.div
             animate={{ y: [0, -4, 0], rotate: [0, -3, 0] }}
             transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
-            className="absolute -bottom-2 -left-2 w-8 h-8 bg-black/[0.04] dark:bg-white/[0.06] rounded-lg flex items-center justify-center border border-black/[0.04] dark:border-white/[0.04]"
+            className="absolute -bottom-2 -left-2 w-8 h-8 bg-muted rounded-lg flex items-center justify-center border border-border"
           >
             <Package className="w-3.5 h-3.5 text-muted-foreground/40" />
           </motion.div>
           <motion.div
             animate={{ y: [0, -5, 0], x: [0, 3, 0] }}
             transition={{ duration: 2.8, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-            className="absolute top-1/2 -right-4 w-6 h-6 bg-black/[0.04] dark:bg-white/[0.06] rounded-md flex items-center justify-center border border-black/[0.04] dark:border-white/[0.04]"
+            className="absolute top-1/2 -right-4 w-6 h-6 bg-muted rounded-md flex items-center justify-center border border-border"
           >
             <Sparkles className="w-3 h-3 text-muted-foreground/40" />
           </motion.div>
@@ -67,7 +67,7 @@ export default function EmptyCartState() {
         <div className="flex flex-col items-center gap-3">
           <Link
             href="/products"
-            className="group bg-foreground text-background px-6 py-3 rounded-xl font-semibold text-sm flex items-center gap-2 active:scale-[0.98] transition-all shadow-[0_2px_8px_rgba(0,0,0,0.12)] hover:shadow-[0_4px_16px_rgba(0,0,0,0.18)]"
+            className="group bg-primary text-primary-foreground px-6 py-3 rounded-xl font-semibold text-sm flex items-center gap-2 active:scale-[0.98] transition-all shadow-md hover:shadow-md"
           >
             {t("browse_products")}
             <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />

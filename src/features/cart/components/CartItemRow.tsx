@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import {
   Trash2,
@@ -38,10 +38,10 @@ export default function CartItemRow({
       layout
       initial={{ opacity: 0, y: 8 }}
       animate={{ opacity: 1, y: 0 }}
-      className="bg-white dark:bg-[#09090b] p-4 sm:p-5 rounded-xl border border-black/[0.04] dark:border-white/[0.04] grid grid-cols-1 lg:grid-cols-12 items-center gap-4 sm:gap-5 shadow-[0_1px_3px_rgba(0,0,0,0.04)]"
+      className="bg-card p-4 sm:p-5 rounded-xl border border-border grid grid-cols-1 lg:grid-cols-12 items-center gap-4 sm:gap-5 shadow-xs"
     >
       <div className="flex items-center gap-4 lg:col-span-6">
-        <div className="w-20 h-20 sm:w-24 sm:h-24 bg-black/[0.02] dark:bg-white/[0.02] rounded-lg flex-shrink-0 overflow-hidden border border-black/[0.04] dark:border-white/[0.04]">
+        <div className="w-20 h-20 sm:w-24 sm:h-24 bg-subtle rounded-lg flex-shrink-0 overflow-hidden border border-border">
           <Image
             src={
               item.image ||
@@ -76,7 +76,7 @@ export default function CartItemRow({
         </span>
       </div>
 
-      <div className="flex items-center justify-center lg:justify-start gap-1.5 bg-black/[0.04] dark:bg-white/[0.06] px-2.5 py-1.5 rounded-lg lg:col-span-2 whitespace-nowrap z-20">
+      <div className="flex items-center justify-center lg:justify-start gap-1.5 bg-muted px-2.5 py-1.5 rounded-lg lg:col-span-2 whitespace-nowrap z-20">
         <button
           onClick={() =>
             updateQuantity(
@@ -85,7 +85,7 @@ export default function CartItemRow({
             )
           }
           disabled={item.quantity <= 1}
-          className="w-8 h-8 flex items-center justify-center rounded-md text-foreground hover:bg-black/[0.06] dark:hover:bg-white/[0.1] disabled:opacity-40 disabled:cursor-not-allowed transition-colors shrink-0"
+          className="w-8 h-8 flex items-center justify-center rounded-md text-foreground hover:bg-muted disabled:opacity-40 disabled:cursor-not-allowed transition-colors shrink-0"
           aria-label="Decrease quantity"
         >
           <Minus className="w-3.5 h-3.5" />
@@ -100,7 +100,7 @@ export default function CartItemRow({
               item.quantity + 1
             )
           }
-          className="w-8 h-8 flex items-center justify-center rounded-md text-foreground hover:bg-black/[0.06] dark:hover:bg-white/[0.1] transition-colors shrink-0"
+          className="w-8 h-8 flex items-center justify-center rounded-md text-foreground hover:bg-muted transition-colors shrink-0"
           aria-label="Increase quantity"
         >
           <Plus className="w-3.5 h-3.5" />
@@ -118,7 +118,7 @@ export default function CartItemRow({
           onClick={() =>
             removeFromCart(item._id)
           }
-          className="p-2 text-muted-foreground/40 hover:text-rose-500 hover:bg-rose-500/[0.06] rounded-lg transition-all"
+          className="p-2 text-muted-foreground/40 hover:text-danger hover:bg-danger-subtle rounded-lg transition-all"
           aria-label="Remove item"
         >
           <Trash2 className="w-4 h-4" />

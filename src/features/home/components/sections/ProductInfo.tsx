@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import Link from "next/link";
 import { Star } from "lucide-react";
@@ -24,10 +24,10 @@ export default function ProductInfo({
     : 0;
 
   return (
-    <div className="p-5 flex flex-col flex-1 relative bg-white dark:bg-[#09090b] z-10">
+    <div className="p-5 flex flex-col flex-1 relative bg-card z-10">
       {/* Unit badge */}
       <div className="mb-3">
-        <span className="inline-flex items-center rounded-md bg-black/[0.04] dark:bg-white/[0.06] px-2 py-0.5 text-[10px] font-semibold text-muted-foreground">
+        <span className="inline-flex items-center rounded-md bg-muted px-2 py-0.5 text-[10px] font-semibold text-muted-foreground">
           {getUnitLabel(product.unit, t)}
         </span>
       </div>
@@ -91,7 +91,7 @@ export default function ProductInfo({
         </div>
 
         {discount > 0 && (
-          <span className="text-[11px] font-bold text-rose-500 bg-rose-500/[0.06] dark:bg-rose-500/[0.08] px-2 py-0.5 rounded-md">
+          <span className="text-[11px] font-bold text-danger bg-danger-subtle dark:bg-danger-subtle px-2 py-0.5 rounded-md">
             -{discount}%
           </span>
         )}

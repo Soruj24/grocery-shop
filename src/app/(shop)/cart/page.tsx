@@ -137,7 +137,7 @@ export default function CartPage() {
         <div className="flex items-center gap-3 ml-[52px] md:ml-0">
           <button
             onClick={handleClearCart}
-            className="px-4 py-2 rounded-lg text-rose-500 bg-rose-500/[0.06] font-medium text-xs hover:bg-rose-500/[0.1] transition-all"
+            className="px-4 py-2 rounded-lg text-danger bg-danger-subtle font-medium text-xs hover:bg-danger-subtle/80 transition-all"
           >
             সব মুছুন
           </button>
@@ -156,7 +156,7 @@ export default function CartPage() {
         initial={{ opacity: 0, y: 8 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.1 }}
-        className="bg-black/[0.02] dark:bg-white/[0.03] border border-black/[0.04] dark:border-white/[0.04] rounded-xl p-4 flex flex-col sm:flex-row items-start sm:items-center gap-3"
+        className="bg-subtle border border-border rounded-xl p-4 flex flex-col sm:flex-row items-start sm:items-center gap-3"
       >
         <div className="flex items-center gap-2.5">
           <div className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse" />
@@ -252,7 +252,7 @@ export default function CartPage() {
           bottom: "env(safe-area-inset-bottom)",
         }}
       >
-        <div className="mx-4 mb-4 bg-white dark:bg-[#09090b] border border-black/[0.06] dark:border-white/[0.06] rounded-xl shadow-[0_8px_40px_rgba(0,0,0,0.16)] px-4 py-3 flex items-center justify-between backdrop-blur-xl bg-white/95 dark:bg-[#09090b]/95">
+        <div className="mx-4 mb-4 bg-card border border-border rounded-xl shadow-xl px-4 py-3 flex items-center justify-between backdrop-blur-xl bg-card/95">
           <div className="flex flex-col">
             <span className="text-[9px] font-semibold uppercase tracking-wider text-muted-foreground/50">
               {t("grand_total")}
@@ -264,7 +264,7 @@ export default function CartPage() {
           </div>
           <Link
             href="/checkout"
-            className="bg-foreground text-background px-6 py-3 rounded-lg font-semibold text-sm active:scale-[0.98] transition-all flex items-center gap-2"
+            className="bg-primary text-primary-foreground px-6 py-3 rounded-lg font-semibold text-sm active:scale-[0.98] transition-all flex items-center gap-2 shadow-primary"
           >
             {t("checkout_button")}
             <ArrowRight className="w-4 h-4" />

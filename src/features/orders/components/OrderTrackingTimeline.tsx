@@ -1,4 +1,4 @@
-import { CheckCircle2 } from "lucide-react";
+﻿import { CheckCircle2 } from "lucide-react";
 import { TranslationKey } from "@/constants/translations";
 
 interface Step {
@@ -22,7 +22,7 @@ export default function OrderTrackingTimeline({
   t,
 }: OrderTrackingTimelineProps) {
   return (
-    <div className="bg-white dark:bg-[#09090b] p-6 md:p-8 rounded-xl border border-black/[0.04] dark:border-white/[0.04] shadow-[0_1px_3px_rgba(0,0,0,0.04)]">
+    <div className="bg-card p-6 md:p-8 rounded-xl border border-border shadow-xs">
       <div className="space-y-8">
         {steps.map((step, index) => {
           const isCompleted =
@@ -41,7 +41,7 @@ export default function OrderTrackingTimeline({
                   className={`absolute left-5 top-10 w-0.5 h-12 transition-colors duration-500 ${
                     index < currentStepIndex
                       ? "bg-foreground"
-                      : "bg-black/[0.06] dark:bg-white/[0.06]"
+                      : "bg-muted"
                   }`}
                 />
               )}
@@ -49,7 +49,7 @@ export default function OrderTrackingTimeline({
                 className={`relative z-10 w-10 h-10 rounded-lg flex items-center justify-center shrink-0 transition-all duration-500 ${
                   isCompleted
                     ? "bg-foreground text-background"
-                    : "bg-black/[0.04] dark:bg-white/[0.06] text-muted-foreground/50"
+                    : "bg-muted text-muted-foreground/50"
                 } ${isCurrent ? "scale-110 ring-4 ring-foreground/[0.08]" : ""}`}
               >
                 <Icon className="w-5 h-5" />
@@ -74,7 +74,7 @@ export default function OrderTrackingTimeline({
                   {step.desc}
                 </p>
                 {isCurrent && updatedAt && (
-                  <p className="text-[10px] font-semibold text-foreground mt-1.5 bg-black/[0.04] dark:bg-white/[0.06] px-2.5 py-1 rounded inline-block">
+                  <p className="text-[10px] font-semibold text-foreground mt-1.5 bg-muted px-2.5 py-1 rounded inline-block">
                     {t("last_updated")}:{" "}
                     {new Date(
                       updatedAt

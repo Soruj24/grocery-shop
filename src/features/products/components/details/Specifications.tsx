@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { motion } from "framer-motion";
 import { ClipboardList } from "lucide-react";
@@ -33,7 +33,7 @@ export default function Specifications({
       <h3 className="text-xl font-bold text-foreground">
         Product Specifications
       </h3>
-      <div className="divide-y divide-black/[0.04] dark:divide-white/[0.04] rounded-xl border border-black/[0.04] dark:border-white/[0.04] overflow-hidden">
+      <div className="divide-y divide-border rounded-xl border border-border overflow-hidden">
         {specifications.map((spec, idx) => (
           <motion.div
             key={idx}
@@ -43,7 +43,7 @@ export default function Specifications({
               delay: idx * 0.03,
               ease: [0.21, 0.47, 0.32, 0.98],
             }}
-            className="flex items-center justify-between px-5 py-3.5 bg-white dark:bg-[#09090b] hover:bg-black/[0.02] dark:hover:bg-white/[0.02] transition-colors duration-200"
+            className="flex items-center justify-between px-5 py-3.5 bg-card hover:bg-muted/50 transition-colors duration-200"
           >
             <span className="text-sm font-medium text-muted-foreground">
               {spec.label}

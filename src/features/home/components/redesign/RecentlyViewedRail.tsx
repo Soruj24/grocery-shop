@@ -66,9 +66,9 @@ export default function RecentlyViewedRail() {
             >
               <Link
                 href={`/products/${p._id}`}
-                className="block overflow-hidden rounded-2xl border border-black/[0.04] bg-white shadow-[0_1px_3px_rgba(0,0,0,0.04)] transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_12px_40px_rgba(0,0,0,0.08)] dark:border-white/[0.04] dark:bg-white/[0.02]"
+                className="block overflow-hidden rounded-2xl border border-border bg-white shadow-xs transition-all duration-500 hover:-translate-y-1 hover:shadow-xl dark:bg-white/[0.02]"
               >
-                <div className="relative aspect-square overflow-hidden bg-zinc-50 dark:bg-white/[0.02]">
+                <div className="relative aspect-square overflow-hidden bg-muted">
                   <Image
                     src={
                       p.image ||
@@ -86,7 +86,7 @@ export default function RecentlyViewedRail() {
                   <p className="line-clamp-1 text-sm font-semibold text-foreground">
                     {p.name}
                   </p>
-                  <span className="text-sm font-extrabold text-primary">
+                  <span className="text-sm font-bold text-primary">
                     {currencySymbol}
                     {price.toLocaleString("bn-BD")}
                   </span>
