@@ -67,9 +67,9 @@ export default function DeliveryStep({
         <motion.div
           initial={{ opacity: 0, scale: 0.98 }}
           animate={{ opacity: 1, scale: 1 }}
-          className="rounded-2xl bg-emerald-500/[0.06] dark:bg-emerald-500/[0.08] border border-emerald-500/[0.12] p-4 text-center"
+          className="rounded-2xl bg-success-subtle border border-success/20 p-4 text-center"
         >
-          <p className="text-xs font-semibold text-emerald-600 dark:text-emerald-400">
+          <p className="text-xs font-semibold text-success-subtle-foreground">
             {t("free_shipping_unlocked")}
           </p>
         </motion.div>

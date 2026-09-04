@@ -21,7 +21,7 @@ export default function ProductSearchBar({ search, setSearch, applyFilters }: Pr
         <Search className="absolute left-4 text-muted-foreground group-focus-within:text-primary transition-colors w-5 h-5" />
         <div className="absolute right-2 flex items-center gap-1">
           {search && <button onClick={() => setSearch("")} className="p-2 text-muted-foreground hover:text-foreground transition-colors"><X className="w-4 h-4" /></button>}
-          <button onClick={applyFilters} className="bg-primary text-white px-6 py-2 rounded-xl font-bold hover:bg-primary-hover transition-all shadow-lg shadow-primary active:scale-95">
+          <button onClick={applyFilters} className="bg-primary text-primary-foreground px-6 py-2 rounded-xl font-bold hover:bg-primary-hover transition-all shadow-sm active:scale-95">
             {t("search_button")}
           </button>
         </div>

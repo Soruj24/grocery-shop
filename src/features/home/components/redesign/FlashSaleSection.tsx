@@ -17,7 +17,7 @@ export default function FlashSaleSection() {
       eyebrowTone="danger"
       title={
         <span className="flex items-center gap-3">
-          <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-rose-500 to-orange-500 text-white shadow-[0_4px_16px_rgba(244,63,94,0.3)]">
+          <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-danger text-danger-foreground shadow-sm">
             <Zap className="h-6 w-6" />
           </span>
           {t("flash_sale")}
@@ -46,7 +46,7 @@ export default function FlashSaleSection() {
                 duration: 1,
                 ease: [0.21, 0.47, 0.32, 0.98],
               }}
-              className="h-full rounded-full bg-gradient-to-r from-rose-500 to-orange-500"
+              className="h-full rounded-full bg-danger"
             />
           </div>
           <span className="whitespace-nowrap text-xs font-semibold text-muted-foreground">

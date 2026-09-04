@@ -50,7 +50,7 @@ export default function OrderTrackingTimeline({ status }: OrderTrackingTimelineP
                   isCompleted 
                     ? "bg-primary text-primary-foreground" 
                     : isActive 
-                      ? "bg-primary text-primary-foreground shadow-primary scale-110" 
+                      ? "bg-primary text-primary-foreground shadow-sm scale-105" 
                       : "bg-muted text-muted-foreground"
                 }`}
               >

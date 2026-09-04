@@ -23,8 +23,8 @@ export default function TabSidebar({
             onClick={() => onTabChange(tab.id)}
             className={`w-full flex items-center gap-3 px-6 py-4 rounded-2xl transition-all duration-300 font-bold text-sm ${
               activeTab === tab.id
-                ? "bg-emerald-500 text-white shadow-lg shadow-emerald-500/20"
-                : "bg-white dark:bg-gray-800 text-gray-500 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700"
+                ? "bg-primary text-primary-foreground shadow-sm"
+                : "bg-card text-muted-foreground hover:bg-muted hover:text-foreground"
             }`}
           >
             <Icon size={18} />

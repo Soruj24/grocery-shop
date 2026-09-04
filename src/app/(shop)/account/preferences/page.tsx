@@ -191,7 +191,7 @@ export default function PreferencesPage() {
         initial={{ opacity: 0, y: 8 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.2 }}
-        className="rounded-2xl border border-rose-500/10 bg-rose-500/[0.02] p-6"
+        className="rounded-2xl border border-danger/20 bg-danger-subtle p-6"
       >
         <div className="flex items-center gap-3.5 mb-3">
           <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-danger-subtle">

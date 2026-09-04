@@ -21,7 +21,7 @@ export default function WishlistIcon() {
         <motion.span
           initial={{ scale: 0 }}
           animate={{ scale: 1 }}
-          className="absolute -top-0.5 -right-0.5 bg-rose-500 text-white text-[9px] font-bold min-w-[17px] h-[17px] px-1 rounded-full flex items-center justify-center border-[1.5px] border-white dark:border-[#09090b]"
+          className="absolute -top-0.5 -right-0.5 bg-danger text-danger-foreground text-[9px] font-bold min-w-[17px] h-[17px] px-1 rounded-full flex items-center justify-center border-[1.5px] border-background"
         >
           {totalWishlistItems}
         </motion.span>

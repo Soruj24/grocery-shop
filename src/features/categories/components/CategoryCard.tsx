@@ -19,12 +19,9 @@ export default function CategoryCard({ cat, index }: CategoryCardProps) {
   return (
     <Link href={`/category/${cat._id}`} className="block h-full">
       <motion.div
-        whileHover={{ y: -8 }}
-        className="group h-full bg-card backdrop-blur-xl rounded-2xl border border-border p-6 hover:border-primary/30 hover:shadow-2xl hover:shadow-primary transition-all duration-300 relative flex flex-col overflow-hidden"
+        className="group h-full bg-card rounded-2xl border border-border p-6 hover:border-border-strong hover:shadow-md transition-all duration-300 relative flex flex-col overflow-hidden"
       >
-        {/* Decorative Gradients - Animated on Hover */}
-        <div className="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-[80px] -z-10 transition-all duration-700 group-hover:bg-primary/10 group-hover:scale-110" />
-        <div className="absolute bottom-0 left-0 w-48 h-48 bg-blue-500/5 rounded-full blur-[60px] -z-10 transition-all duration-700 group-hover:bg-blue-500/10 group-hover:scale-110" />
+        <div className="absolute top-0 right-0 w-64 h-64 bg-primary/[0.04] rounded-full blur-[80px] pointer-events-none" />
 
         {/* Header: Image & Count */}
         <div className="flex items-start justify-between mb-6 relative z-10">
@@ -71,7 +68,7 @@ export default function CategoryCard({ cat, index }: CategoryCardProps) {
         {/* Action Area */}
         <div className="absolute bottom-6 right-6 flex items-center gap-2 opacity-0 transform translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 z-20">
             <span className="text-xs font-black text-primary uppercase tracking-widest">{t('shop_now')}</span>
-            <div className="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-white shadow-lg shadow-primary">
+            <div className="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-primary-foreground shadow-sm">
                 <ArrowRight className="w-4 h-4" />
             </div>
         </div>

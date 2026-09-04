@@ -27,7 +27,6 @@ export default function TrendingTabs() {
         t("trending_now") ??
         t("featured_products_tab_trending"),
       icon: TrendingUp,
-      color: "from-sky-600 to-cyan-500",
       sort: "rating",
       href: "/products?sort=rating",
     },
@@ -37,7 +36,6 @@ export default function TrendingTabs() {
         t("best_sellers") ??
         t("featured_products_tab_bestsellers"),
       icon: Star,
-      color: "from-amber-400 to-orange-600",
       sort: "reviews",
       href: "/products?sort=reviews",
     },
@@ -45,7 +43,6 @@ export default function TrendingTabs() {
       id: "new",
       label: t("featured_products_tab_new"),
       icon: Sparkles,
-      color: "from-violet-500 to-fuchsia-600",
       sort: "newest",
       href: "/products?sort=newest",
     },
@@ -71,9 +68,7 @@ export default function TrendingTabs() {
       title={
         <>
           {t("featured_products_title_1")}{" "}
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-primary-hover">
-            {t("featured_products_title_2")}
-          </span>
+          {t("featured_products_title_2")}
         </>
       }
       subtitle={t("featured_products_desc")}
@@ -88,16 +83,17 @@ export default function TrendingTabs() {
             <button
               key={tab.id}
               onClick={() => setActive(tab.id)}
+              aria-pressed={isActive}
               className={`relative flex items-center gap-2.5 rounded-xl px-7 py-3.5 text-sm font-semibold transition-all duration-300 ${
                 isActive
-                  ? "text-white shadow-lg"
-                  : "text-muted-foreground hover:bg-white hover:text-foreground dark:hover:bg-white/[0.04]"
+                  ? "text-primary-foreground"
+                  : "text-muted-foreground hover:bg-card hover:text-foreground"
               }`}
             >
               {isActive && (
                 <motion.span
                   layoutId="trendingTab"
-                  className={`absolute inset-0 rounded-xl bg-gradient-to-r ${tab.color} shadow-lg`}
+                  className="absolute inset-0 rounded-xl bg-foreground shadow-sm"
                   transition={{
                     type: "spring",
                     bounce: 0.18,
@@ -105,11 +101,7 @@ export default function TrendingTabs() {
                   }}
                 />
               )}
-              <Icon
-                className={`relative z-10 h-4 w-4 ${
-                  isActive ? "animate-pulse" : ""
-                }`}
-              />
+              <Icon className="relative z-10 h-4 w-4" />
               <span className="relative z-10 font-bold uppercase tracking-wide">
                 {tab.label}
               </span>

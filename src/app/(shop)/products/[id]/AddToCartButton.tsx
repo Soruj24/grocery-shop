@@ -129,7 +129,7 @@ export default function AddToCartButton({
           isOutOfStock
             ? "bg-muted text-muted-foreground/50 cursor-not-allowed"
             : isMaxReached
-            ? "bg-amber-500 text-white hover:bg-amber-600"
+            ? "bg-warning text-warning-foreground hover:opacity-90"
             : "bg-foreground text-background hover:opacity-90 active:scale-[0.98]"
         }`}
       >

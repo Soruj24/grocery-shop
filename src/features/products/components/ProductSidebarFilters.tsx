@@ -44,7 +44,7 @@ export default function ProductSidebarFilters({
                 href="/products"
                 className={`flex items-center justify-between w-full px-4 py-2.5 rounded-xl text-sm font-bold transition-all ${
                   !categoryId
-                    ? "bg-primary text-white shadow-lg shadow-primary"
+                    ? "bg-primary text-primary-foreground shadow-sm"
                     : "text-muted-foreground hover:bg-primary-subtle"
                 }`}
               >

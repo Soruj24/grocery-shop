@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState } from "react";
 import { motion } from "framer-motion";
@@ -27,7 +27,7 @@ export default function SupportPage() {
           <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Support</h1>
           <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">Get help with your orders</p>
         </div>
-        <button onClick={() => setShowForm(true)} className="flex items-center gap-2 rounded-xl bg-emerald-500 px-4 py-2.5 text-sm font-semibold text-white hover:bg-emerald-600 transition-colors">
+        <button onClick={() => setShowForm(true)} className="flex items-center gap-2 rounded-xl bg-success px-4 py-2.5 text-sm font-semibold text-success-foreground hover:opacity-90 transition-colors">
           <MessageSquare className="h-4 w-4" /> New Ticket
         </button>
       </div>
@@ -75,7 +75,7 @@ export default function SupportPage() {
               </select>
               <input aria-label="Ticket subject" placeholder="Subject *" value={form.subject} onChange={(e) => setForm({ ...form, subject: e.target.value })} className="w-full rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 px-3 py-2.5 text-sm text-gray-900 dark:text-white placeholder:text-gray-400 focus:border-emerald-500 outline-none" />
               <textarea aria-label="Issue description" placeholder="Describe your issue *" value={form.message} onChange={(e) => setForm({ ...form, message: e.target.value })} rows={4} className="w-full rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 px-3 py-2.5 text-sm text-gray-900 dark:text-white placeholder:text-gray-400 focus:border-emerald-500 outline-none resize-none" />
-              <button onClick={handleSubmit} disabled={!form.subject || !form.message} className="flex items-center gap-2 rounded-xl bg-emerald-500 px-5 py-2.5 text-sm font-semibold text-white hover:bg-emerald-600 disabled:opacity-50 transition-colors">
+              <button onClick={handleSubmit} disabled={!form.subject || !form.message} className="flex items-center gap-2 rounded-xl bg-success px-5 py-2.5 text-sm font-semibold text-success-foreground hover:opacity-90 disabled:opacity-50 transition-colors">
                 <Send className="h-4 w-4" /> Submit Ticket
               </button>
             </>

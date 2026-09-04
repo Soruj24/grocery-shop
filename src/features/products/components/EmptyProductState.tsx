@@ -20,7 +20,7 @@ export default function EmptyProductState() {
       </p>
       <Link
         href="/products"
-        className="bg-primary hover:bg-primary-hover text-white px-8 py-3 rounded-full font-bold transition-all transform hover:scale-105 shadow-lg shadow-primary"
+        className="bg-primary hover:bg-primary-hover text-primary-foreground px-8 py-3 rounded-full font-bold transition-all shadow-sm active:scale-[0.98]"
       >
         {t('see_all_products')}
       </Link>

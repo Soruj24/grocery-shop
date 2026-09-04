@@ -54,7 +54,7 @@ export default function SearchHistorySection({
             </div>
             <button
               onClick={(e) => onItemRemove(e, item)}
-              className="p-2 text-muted-foreground hover:text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-500/10 rounded-full transition-all opacity-0 group-hover:opacity-100"
+                                className="p-2 text-muted-foreground hover:text-danger hover:bg-danger-subtle rounded-full transition-all opacity-0 group-hover:opacity-100"
             >
               <X size={14} />
             </button>

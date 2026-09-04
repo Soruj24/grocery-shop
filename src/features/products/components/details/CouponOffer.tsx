@@ -79,9 +79,10 @@ export default function CouponOffer({
               onClick={() =>
                 handleCopy(coupon.code)
               }
-              className={`p-2 rounded-lg transition-all duration-200 ${
+              aria-label={copiedCode === coupon.code ? `Copied ${coupon.code}` : `Copy coupon ${coupon.code}`}
+              className={`p-2 rounded-lg transition-all duration-200 active:scale-95 ${
                 copiedCode === coupon.code
-                  ? "bg-emerald-500 text-white"
+                  ? "bg-success text-success-foreground"
                   : "bg-muted text-muted-foreground hover:text-primary hover:bg-primary/[0.06]"
               }`}
             >

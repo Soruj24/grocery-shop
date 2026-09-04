@@ -207,7 +207,6 @@ export default function PremiumHero({
               key: "fruit",
               badge:
                 t("daily_deal_label") ?? "ডেইলি ডিল",
-              badgeColor: "bg-orange-500",
               titleLine1:
                 t("fresh_summer_fruits_title_line1") ??
                 "ফ্রেশ সামার",
@@ -222,7 +221,6 @@ export default function PremiumHero({
               key: "vegetable",
               badge:
                 t("new_arrival_badge") ?? "নিউ",
-              badgeColor: "bg-emerald-500",
               titleLine1:
                 t("organic_fresh_vegetables_title_line1") ??
                 "অর্গানিক",
@@ -249,7 +247,7 @@ export default function PremiumHero({
               <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent" />
               <div className="absolute left-5 top-5">
                 <span
-                  className={`inline-flex rounded-full px-3.5 py-1.5 text-[11px] font-extrabold uppercase tracking-wider text-white ${card.badgeColor}`}
+                  className="inline-flex rounded-full bg-white/90 px-3.5 py-1.5 text-[11px] font-extrabold uppercase tracking-wider text-foreground backdrop-blur-sm"
                 >
                   {card.badge}
                 </span>

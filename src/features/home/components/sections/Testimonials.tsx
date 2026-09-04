@@ -79,7 +79,7 @@ export default function Testimonials() {
               transition={{ delay: 0.1 }}
               className="text-4xl md:text-6xl font-black text-foreground tracking-tight"
             >
-              {t('testimonials_title_1')} <span className="text-transparent bg-clip-text bg-gradient-to-r from-danger to-warning">{t('testimonials_title_2')}</span>
+              {t('testimonials_title_1')} {t('testimonials_title_2')}
             </motion.h2>
         </div>
 

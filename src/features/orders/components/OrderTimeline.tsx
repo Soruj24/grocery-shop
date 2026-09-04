@@ -12,10 +12,10 @@ export default function OrderTimeline({ currentStatus }: OrderTimelineProps) {
   const { t } = useLanguage();
 
   const STAGES = [
-    { id: "pending", label: t('timeline_order_received'), icon: Clock, color: "bg-amber-500" },
-    { id: "processing", label: t('timeline_packing'), icon: Package, color: "bg-blue-500" },
-    { id: "shipping", label: t('timeline_shipping'), icon: Truck, color: "bg-indigo-500" },
-    { id: "delivered", label: t('timeline_delivered'), icon: Home, color: "bg-green-500" }
+    { id: "pending", label: t('timeline_order_received'), icon: Clock },
+    { id: "processing", label: t('timeline_packing'), icon: Package },
+    { id: "shipping", label: t('timeline_shipping'), icon: Truck },
+    { id: "delivered", label: t('timeline_delivered'), icon: Home }
   ];
 
   const currentIndex = STAGES.findIndex(s => s.id === currentStatus);
@@ -30,7 +30,7 @@ export default function OrderTimeline({ currentStatus }: OrderTimelineProps) {
         <motion.div 
           initial={{ width: 0 }}
           animate={{ width: `${(currentIndex / (STAGES.length - 1)) * 100}%` }}
-          className="absolute top-1/2 left-0 h-1 bg-primary -translate-y-1/2 rounded-full shadow-primary transition-all duration-1000"
+          className="absolute top-1/2 left-0 h-1 bg-primary -translate-y-1/2 rounded-full transition-all duration-1000"
         />
 
         {STAGES.map((stage, idx) => {
@@ -44,17 +44,16 @@ export default function OrderTimeline({ currentStatus }: OrderTimelineProps) {
               <motion.div
                 initial={false}
                 animate={{
-                  scale: isActive ? 1.2 : 1,
-                  backgroundColor: isCompleted || isActive ? "rgb(34, 197, 94)" : "rgb(243, 244, 246)"
+                  scale: isActive ? 1.1 : 1,
                 }}
-                className={`w-14 h-14 rounded-2xl flex items-center justify-center relative z-10 transition-all duration-500 shadow-xl ${
+                className={`w-14 h-14 rounded-2xl flex items-center justify-center relative z-10 transition-all duration-500 shadow-md ${
                   isActive ? "ring-4 ring-primary/20" : ""
-                } ${!isCompleted && !isActive ? "bg-muted" : ""}`}
+                } ${isCompleted || isActive ? "bg-success text-success-foreground" : "bg-muted text-muted-foreground"}`}
               >
                 {isCompleted ? (
-                  <Check className="text-primary-foreground w-6 h-6" />
+                  <Check className="w-6 h-6" />
                 ) : (
-                  <Icon className={`${isActive ? "text-primary-foreground" : "text-muted-foreground"} w-6 h-6 transition-colors`} />
+                  <Icon className="w-6 h-6 transition-colors" />
                 )}
 
                 {isActive && (

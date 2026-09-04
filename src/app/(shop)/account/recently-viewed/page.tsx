@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useRecentlyViewed } from "@/contexts/RecentlyViewedContext";
 import Link from "next/link";
@@ -27,7 +27,7 @@ export default function RecentlyViewedPage() {
           <Clock className="mx-auto h-12 w-12 text-gray-300 dark:text-gray-600 mb-3" />
           <p className="text-sm font-semibold text-gray-900 dark:text-white">No recently viewed items</p>
           <p className="text-xs text-gray-500 dark:text-gray-400 mt-1 mb-4">Products you view will appear here</p>
-          <Link href="/products" className="inline-flex items-center gap-2 rounded-xl bg-emerald-500 px-5 py-2.5 text-sm font-semibold text-white hover:bg-emerald-600 transition-colors">
+          <Link href="/products" className="inline-flex items-center gap-2 rounded-xl bg-success px-5 py-2.5 text-sm font-semibold text-success-foreground hover:opacity-90 transition-colors">
             Browse Products
           </Link>
         </div>

@@ -44,7 +44,7 @@ export default function AppDownload() {
                   className="text-4xl sm:text-5xl md:text-7xl font-black text-white tracking-tight leading-[1.1] text-balance"
                 >
                   {t('app_download_title_1')} <br />
-                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-primary-hover">{t('app_download_title_2')}</span>
+                  <span className="text-primary">{t('app_download_title_2')}</span>
                 </motion.h2>
 
                 <motion.p

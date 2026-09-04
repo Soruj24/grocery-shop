@@ -16,7 +16,6 @@ interface Guarantee {
   icon: LucideIcon;
   title: string;
   desc: string;
-  tone: string;
 }
 
 export default function TrustSection() {
@@ -27,25 +26,21 @@ export default function TrustSection() {
       icon: Truck,
       title: t("feature_title_1"),
       desc: t("feature_desc_1"),
-      tone: "from-blue-500 to-cyan-500",
     },
     {
       icon: ShieldCheck,
       title: t("feature_title_2"),
       desc: t("feature_desc_2"),
-      tone: "from-emerald-500 to-green-600",
     },
     {
       icon: Headphones,
       title: t("feature_title_3"),
       desc: t("feature_desc_3"),
-      tone: "from-purple-500 to-fuchsia-500",
     },
     {
       icon: RefreshCw,
       title: t("feature_title_6"),
       desc: t("feature_desc_6"),
-      tone: "from-orange-500 to-amber-500",
     },
     {
       icon: Tag,
@@ -54,7 +49,6 @@ export default function TrustSection() {
       desc:
         t("daily_deals_desc") ??
         "প্রতিদিন নতুন ছাড়",
-      tone: "from-rose-500 to-pink-500",
     },
     {
       icon: Timer,
@@ -62,7 +56,6 @@ export default function TrustSection() {
       desc:
         t("flash_sale_desc") ??
         "সীমিত সময়ের ছাড়",
-      tone: "from-amber-500 to-yellow-500",
     },
   ];
 
@@ -130,10 +123,8 @@ export default function TrustSection() {
               i >= 4 ? "lg:col-span-2" : ""
             }
           >
-            <div className="group flex h-full items-center gap-5 rounded-2xl border border-border bg-white p-6 shadow-xs transition-all duration-500 hover:-translate-y-1 hover:shadow-xl dark:bg-white/[0.02]">
-              <div
-                className={`flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br ${g.tone} text-white shadow-sm transition-transform duration-500 group-hover:scale-110`}
-              >
+            <div className="group flex h-full items-center gap-5 rounded-2xl border border-border bg-card p-6 shadow-xs transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md">
+              <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-muted text-foreground transition-transform duration-300 group-hover:scale-105">
                 <g.icon className="h-7 w-7" />
               </div>
               <div>

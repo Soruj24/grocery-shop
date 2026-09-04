@@ -202,16 +202,16 @@ export default function ReviewStep({
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          className="rounded-2xl border border-emerald-500/[0.12] bg-emerald-500/[0.04] dark:bg-emerald-500/[0.06] p-4 flex items-center gap-3"
+          className="rounded-2xl border border-success/20 bg-success-subtle p-4 flex items-center gap-3"
         >
-          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-emerald-500/10">
-            <Tag className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
+          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-success/10">
+            <Tag className="h-4 w-4 text-success" />
           </div>
           <div>
-            <p className="text-xs font-semibold text-emerald-700 dark:text-emerald-400">
+            <p className="text-xs font-semibold text-success-subtle-foreground">
               {coupon.code} applied
             </p>
-            <p className="text-[10px] text-emerald-600/70 dark:text-emerald-400/70">
+            <p className="text-[10px] text-success-subtle-foreground/70">
               {t("you_are_saving")} {t("currency_symbol")}
               {discount.toLocaleString("bn-BD")}
             </p>

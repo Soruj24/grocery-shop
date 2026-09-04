@@ -14,8 +14,8 @@ export default function NotificationBell() {
   const getTypeStyles = (type: string) => {
     switch (type) {
       case "success": return { icon: CheckCircle2, color: "text-success", bg: "bg-success-subtle" };
-      case "error": return { icon: AlertCircle, color: "text-red-500", bg: "bg-red-500/10" };
-      default: return { icon: Info, color: "text-blue-500", bg: "bg-blue-500/10" };
+      case "error": return { icon: AlertCircle, color: "text-danger", bg: "bg-danger-subtle" };
+      default: return { icon: Info, color: "text-info", bg: "bg-info-subtle" };
     }
   };
 
@@ -27,7 +27,7 @@ export default function NotificationBell() {
       >
         <Bell size={20} className="group-hover:scale-110 transition-transform" />
         {unreadCount > 0 && (
-          <span className="absolute top-1.5 right-1.5 w-4 h-4 bg-red-500 text-white text-[10px] font-black rounded-full flex items-center justify-center ring-2 ring-background">
+          <span className="absolute top-1.5 right-1.5 w-4 h-4 bg-danger text-danger-foreground text-[10px] font-black rounded-full flex items-center justify-center ring-2 ring-background">
             {unreadCount}
           </span>
         )}

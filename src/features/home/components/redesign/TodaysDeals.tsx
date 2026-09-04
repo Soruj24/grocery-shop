@@ -77,7 +77,7 @@ export default function TodaysDeals() {
               >
                 <Link
                   href={`/products/${product._id}`}
-                  className="relative block overflow-hidden rounded-2xl border border-border bg-white shadow-xs transition-all duration-500 hover:-translate-y-1 hover:shadow-xl bg-card"
+                  className="relative block overflow-hidden rounded-2xl border border-border bg-card shadow-xs transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md"
                 >
                   <div className="relative aspect-square overflow-hidden bg-muted">
                     <Image
@@ -93,7 +93,7 @@ export default function TodaysDeals() {
                       className="object-cover transition-transform duration-700 ease-out group-hover:scale-110"
                     />
                     {off > 0 && (
-                      <span className="absolute left-3 top-3 inline-flex items-center gap-1 rounded-full bg-danger px-3 py-1.5 text-[11px] font-bold text-white shadow-[0_2px_8px_rgba(239,68,68,0.3)]">
+                      <span className="absolute left-3 top-3 inline-flex items-center gap-1 rounded-full bg-danger px-3 py-1.5 text-[11px] font-bold text-danger-foreground">
                         <Tag className="h-3 w-3" />-
                         {off}%
                       </span>

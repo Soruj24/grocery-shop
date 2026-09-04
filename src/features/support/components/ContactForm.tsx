@@ -32,7 +32,7 @@ export default function ContactForm() {
               className="w-full px-6 py-4 rounded-2xl bg-muted border-none focus:ring-2 focus:ring-primary font-bold outline-none resize-none" />
           </div>
           <div className="md:col-span-2">
-            <button className="w-full md:w-auto bg-primary hover:bg-primary-hover text-white px-12 py-5 rounded-2xl font-black flex items-center justify-center gap-3 transition-all shadow-lg shadow-primary active:scale-95">
+            <button className="w-full md:w-auto bg-primary hover:bg-primary-hover text-primary-foreground px-12 py-5 rounded-2xl font-black flex items-center justify-center gap-3 transition-all shadow-sm active:scale-[0.98]">
               <Send className="w-5 h-5" /> মেসেজ পাঠান
             </button>
           </div>

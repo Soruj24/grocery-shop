@@ -81,18 +81,18 @@ export default function PaymentsPage() {
   > = {
     bkash: {
       icon: Smartphone,
-      color: "text-pink-500",
-      bg: "bg-pink-500/[0.06]",
+      color: "text-danger",
+      bg: "bg-danger-subtle",
     },
     nagad: {
       icon: Smartphone,
-      color: "text-orange-500",
-      bg: "bg-orange-500/[0.06]",
+      color: "text-warning",
+      bg: "bg-warning-subtle",
     },
     card: {
       icon: CreditCard,
-      color: "text-blue-500",
-      bg: "bg-blue-500/[0.06]",
+      color: "text-info",
+      bg: "bg-info-subtle",
     },
   };
 

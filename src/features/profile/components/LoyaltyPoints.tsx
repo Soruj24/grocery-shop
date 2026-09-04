@@ -17,7 +17,7 @@ export default function LoyaltyPoints() {
 
   return (
     <div className="space-y-12">
-      <div className="flex flex-col md:flex-row items-center justify-between gap-8 bg-primary p-8 md:p-12 rounded-2xl text-primary-foreground shadow-primary relative overflow-hidden">
+      <div className="flex flex-col md:flex-row items-center justify-between gap-8 bg-primary p-8 md:p-12 rounded-2xl text-primary-foreground shadow-lg relative overflow-hidden">
         {/* Background Sparkles */}
         <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 blur-[100px] rounded-full -mr-32 -mt-32" />
         

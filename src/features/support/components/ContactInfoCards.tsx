@@ -21,7 +21,7 @@ export default function ContactInfoCards() {
           </div>
         </div>
       </div>
-      <div className="bg-primary p-8 rounded-2xl text-white shadow-xl shadow-primary">
+      <div className="bg-primary p-8 rounded-2xl text-primary-foreground shadow-lg">
         <h3 className="text-xl font-black mb-4 flex items-center gap-3"><Clock className="w-6 h-6" /> কাজের সময়</h3>
         <p className="font-bold mb-4 opacity-90">আমরা সপ্তাহের ৭ দিনই আপনার সেবায় নিয়োজিত আছি।</p>
         <div className="space-y-2 text-sm font-black">

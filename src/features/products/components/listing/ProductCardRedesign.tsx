@@ -134,10 +134,12 @@ export default function ProductCardRedesign({
               });
             }}
             title={t("wishlist")}
+            aria-label={active ? t("removed_from_wishlist") : t("added_to_wishlist")}
+            aria-pressed={active}
             className={`flex h-10 w-10 items-center justify-center rounded-full shadow-lg backdrop-blur-md transition-all hover:scale-110 active:scale-95 ${
               active
-                ? "bg-rose-500 text-white"
-                : "bg-card text-muted-foreground hover:bg-rose-500 hover:text-white"
+                ? "bg-danger text-danger-foreground"
+                : "bg-card text-muted-foreground hover:bg-danger hover:text-danger-foreground"
             }`}
           >
             <Heart className={`h-5 w-5 ${active ? "fill-current" : ""}`} />

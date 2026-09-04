@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { motion } from "framer-motion";
 import { Star, Quote, User } from "lucide-react";
@@ -16,7 +16,6 @@ export default function TestimonialsRail() {
       role: t("testimonial_1_role"),
       rating: 5,
       size: "large",
-      color: "bg-gradient-to-br from-emerald-500 to-green-600",
     },
     {
       id: 2,
@@ -25,7 +24,6 @@ export default function TestimonialsRail() {
       role: t("testimonial_2_role"),
       rating: 5,
       size: "small",
-      color: "bg-gradient-to-br from-orange-500 to-amber-600",
     },
     {
       id: 3,
@@ -34,7 +32,6 @@ export default function TestimonialsRail() {
       role: t("testimonial_3_role"),
       rating: 4,
       size: "small",
-      color: "bg-gradient-to-br from-sky-500 to-blue-600",
     },
     {
       id: 4,
@@ -43,7 +40,6 @@ export default function TestimonialsRail() {
       role: t("testimonial_4_role"),
       rating: 5,
       size: "medium",
-      color: "bg-gradient-to-br from-purple-500 to-fuchsia-600",
     },
     {
       id: 5,
@@ -52,7 +48,6 @@ export default function TestimonialsRail() {
       role: t("testimonial_5_role"),
       rating: 5,
       size: "small",
-      color: "bg-gradient-to-br from-teal-500 to-cyan-600",
     },
   ];
 
@@ -63,9 +58,7 @@ export default function TestimonialsRail() {
       title={
         <>
           {t("testimonials_title_1")}{" "}
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-danger to-warning">
-            {t("testimonials_title_2")}
-          </span>
+          {t("testimonials_title_2")}
         </>
       }
     >
@@ -82,7 +75,7 @@ export default function TestimonialsRail() {
                 : ""
             }
           >
-            <div className="group flex h-full flex-col justify-between rounded-2xl border border-border bg-white p-7 shadow-xs transition-all duration-500 hover:-translate-y-1 hover:shadow-xl dark:bg-white/[0.02]">
+            <div className="group flex h-full flex-col justify-between rounded-2xl border border-border bg-card p-7 shadow-xs transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md">
               <div className="space-y-5">
                 <div className="flex items-center justify-between">
                   <div className="flex gap-1">
@@ -113,7 +106,7 @@ export default function TestimonialsRail() {
               </div>
               <div className="flex items-center gap-3 border-t border-border pt-5">
                 <div
-                  className={`flex h-11 w-11 items-center justify-center rounded-2xl text-white shadow-sm ${item.color}`}
+                  className={`flex h-11 w-11 items-center justify-center rounded-2xl bg-muted text-foreground`}
                 >
                   <User className="h-5 w-5" />
                 </div>

@@ -89,11 +89,11 @@ export default function QuestionsQA({
                 className="px-5 pb-4"
               >
                 <div className="flex items-start gap-3 pt-3 border-t border-border">
-                  <div className="w-8 h-8 bg-emerald-500/[0.06] rounded-lg flex items-center justify-center shrink-0">
-                    <Check className="w-4 h-4 text-emerald-500" />
+                  <div className="w-8 h-8 bg-success-subtle rounded-lg flex items-center justify-center shrink-0">
+                    <Check className="w-4 h-4 text-success" />
                   </div>
                   <div>
-                    <p className="text-[10px] font-semibold text-emerald-500 uppercase tracking-wider mb-1">
+                    <p className="text-[10px] font-semibold text-success uppercase tracking-wider mb-1">
                       Answer
                     </p>
                     <p className="text-sm font-medium text-foreground">

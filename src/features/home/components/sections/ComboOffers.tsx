@@ -36,7 +36,7 @@ export default function ComboOffers() {
               className="text-5xl md:text-7xl font-black text-foreground tracking-tight leading-[1.1]"
             >
               {t("combo_title_1")} <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-info via-accent to-accent">
+              <span className="text-primary">
                 {t("combo_title_2")}
               </span>
             </motion.h2>

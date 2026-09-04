@@ -57,9 +57,7 @@ export default function HomepageRedesign({
         title={
           <>
             {t("trending_now_title_1") ?? t("featured_products_title_1")}{" "}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-sky-600 to-cyan-500">
-              {t("trending_now_title_2") ?? t("featured_products_title_2")}
-            </span>
+            {t("trending_now_title_2") ?? t("featured_products_title_2")}
           </>
         }
         subtitle={t("trending_now_desc") ?? t("featured_products_desc")}
@@ -70,28 +68,24 @@ export default function HomepageRedesign({
       </SectionShell>
 
       {/* 8. Best Sellers */}
-      <section className="mx-auto max-w-7xl px-4">
-        <div className="rounded-2xl border border-border bg-subtle/80 p-2 dark:bg-subtle/80">
-          <SectionShell
-            eyebrow={t("best_sellers") ?? t("featured_products_tab_bestsellers")}
-            eyebrowTone="warning"
-            title={
-              <>
-                {t("best_sellers_title_1") ?? t("featured_products_title_1")}{" "}
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-500 to-orange-600">
-                  {t("best_sellers_title_2") ?? t("featured_products_title_2")}
-                </span>
-              </>
-            }
-            subtitle={t("best_sellers_desc") ?? t("featured_products_desc")}
-            viewAllHref="/products?sort=reviews"
-            viewAllLabel={t("see_all")}
-            className="!py-14 lg:!py-20"
-          >
-            <ProductRow sort="reviews" limit={8} columns={4} />
-          </SectionShell>
-        </div>
-      </section>
+      <div className="bg-subtle/70 dark:bg-subtle/40">
+        <SectionShell
+          eyebrow={t("best_sellers") ?? t("featured_products_tab_bestsellers")}
+          eyebrowTone="warning"
+          title={
+            <>
+              {t("best_sellers_title_1") ?? t("featured_products_title_1")}{" "}
+              {t("best_sellers_title_2") ?? t("featured_products_title_2")}
+            </>
+          }
+          subtitle={t("best_sellers_desc") ?? t("featured_products_desc")}
+          viewAllHref="/products?sort=reviews"
+          viewAllLabel={t("see_all")}
+          className="!py-14 lg:!py-20"
+        >
+          <ProductRow sort="reviews" limit={8} columns={4} />
+        </SectionShell>
+      </div>
 
       {/* 9. Popular Collections */}
       <PopularCollections categories={categories} />

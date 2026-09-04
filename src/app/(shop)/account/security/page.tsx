@@ -40,7 +40,7 @@ export default function SecurityPage() {
           </div>
           <input id="new-password" type="password" autoComplete="new-password" aria-label="New Password" placeholder="New Password" value={passwords.new} onChange={(e) => setPasswords({ ...passwords, new: e.target.value })} className="w-full rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 px-3 py-2.5 text-sm text-gray-900 dark:text-white placeholder:text-gray-400 focus:border-emerald-500 outline-none" />
           <input id="confirm-password" type="password" autoComplete="new-password" aria-label="Confirm New Password" placeholder="Confirm New Password" value={passwords.confirm} onChange={(e) => setPasswords({ ...passwords, confirm: e.target.value })} className="w-full rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 px-3 py-2.5 text-sm text-gray-900 dark:text-white placeholder:text-gray-400 focus:border-emerald-500 outline-none" />
-          <button onClick={handlePasswordChange} disabled={!passwords.current || !passwords.new || passwords.new !== passwords.confirm} className="rounded-xl bg-emerald-500 px-5 py-2.5 text-sm font-semibold text-white hover:bg-emerald-600 disabled:opacity-50 transition-colors">
+          <button onClick={handlePasswordChange} disabled={!passwords.current || !passwords.new || passwords.new !== passwords.confirm} className="rounded-xl bg-success px-5 py-2.5 text-sm font-semibold text-success-foreground hover:opacity-90 disabled:opacity-50 transition-all active:scale-[0.98]">
             Update Password
           </button>
         </div>

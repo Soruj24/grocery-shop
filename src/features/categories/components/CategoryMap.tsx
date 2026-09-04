@@ -31,7 +31,7 @@ export default function CategoryMap({ categories }: CategoryMapProps) {
           {categories.map((cat: ICategory) => (
             <div key={cat._id} className="space-y-6 group/item">
               <div className="flex items-center gap-4">
-                <div className="w-12 h-12 rounded-2xl bg-primary text-white flex items-center justify-center shadow-lg shadow-primary group-hover/item:scale-110 transition-transform">
+                <div className="w-12 h-12 rounded-2xl bg-primary text-primary-foreground flex items-center justify-center shadow-sm group-hover/item:scale-110 transition-transform">
                   <Layers className="w-6 h-6" />
                 </div>
                 <Link

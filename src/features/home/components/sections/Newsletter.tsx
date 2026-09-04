@@ -71,9 +71,7 @@ export default function Newsletter() {
                   className="text-4xl md:text-5xl lg:text-6xl font-bold text-white tracking-[-0.03em] leading-tight"
                 >
                   {t("newsletter_title_1")}{" "}
-                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-primary-hover">
-                    {t("newsletter_title_2")}
-                  </span>{" "}
+                  {t("newsletter_title_2")}{" "}
                   {t("newsletter_title_3")}
                 </motion.h2>
 

@@ -32,7 +32,7 @@ export default function ProfileHeader({ session }: ProfileHeaderProps) {
           <motion.div
             initial={{ scale: 0.9, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
-            className="w-32 h-32 md:w-40 md:h-40 bg-primary rounded-2xl flex items-center justify-center text-primary-foreground text-5xl font-black shadow-primary ring-4 ring-background"
+            className="w-32 h-32 md:w-40 md:h-40 bg-primary rounded-2xl flex items-center justify-center text-primary-foreground text-5xl font-black shadow-lg ring-4 ring-background"
           >
             {session?.user?.name?.charAt(0)}
           </motion.div>

@@ -87,7 +87,7 @@ export default function SectionEditor({ section, onClose, onSave }: SectionEdito
           <div className="flex gap-3">
             <button onClick={onClose} className="flex-1 px-6 py-3 rounded-xl font-bold text-gray-600 bg-gray-100 hover:bg-gray-200 transition-colors">Cancel</button>
             <button onClick={handleSubmit} disabled={isSaving}
-              className="flex-1 px-6 py-3 rounded-xl font-bold text-white bg-green-600 hover:bg-green-700 transition-colors flex items-center justify-center gap-2 shadow-lg shadow-green-200 dark:shadow-green-900/20 disabled:opacity-70">
+              className="flex-1 px-6 py-3 rounded-xl font-bold text-primary-foreground bg-primary hover:bg-primary-hover transition-all active:scale-[0.98] flex items-center justify-center gap-2 shadow-sm disabled:opacity-70">
               {isSaving ? "Saving..." : <><Save size={18} /> Save Changes</>}
             </button>
           </div>

@@ -54,7 +54,7 @@ export default function DeliveryFormModal({ isOpen, onClose, deliveryData, onDat
           </div>
         </div>
         <button type="submit"
-          className="w-full bg-emerald-600 hover:bg-emerald-700 text-white py-4 rounded-2xl font-black transition-all shadow-lg shadow-emerald-600/20 active:scale-[0.98]">
+          className="w-full bg-primary hover:bg-primary-hover text-primary-foreground py-4 rounded-2xl font-black transition-all shadow-sm active:scale-[0.98]">
           আপডেট করুন
         </button>
       </form>

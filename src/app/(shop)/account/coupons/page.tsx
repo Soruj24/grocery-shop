@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState } from "react";
 import { motion } from "framer-motion";
@@ -62,7 +62,7 @@ export default function CouponsPage() {
                 ) : (
                   <button
                     onClick={() => handleCopy(coupon.code, coupon.id)}
-                    className="flex items-center gap-1.5 rounded-lg bg-emerald-500 px-3 py-1.5 text-[11px] font-semibold text-white hover:bg-emerald-600 transition-colors"
+                    className="flex items-center gap-1.5 rounded-lg bg-success px-3 py-1.5 text-[11px] font-semibold text-success-foreground hover:opacity-90 transition-colors"
                   >
                     {copiedId === coupon.id ? <><CheckCircle2 className="h-3 w-3" /> Copied</> : <><Copy className="h-3 w-3" /> Copy</>}
                   </button>

@@ -41,9 +41,12 @@ export default function BusinessTab({ formData, onChange }: BusinessTabProps) {
         </div>
         <button
           type="button"
+          role="switch"
+          aria-checked={!!formData.shopStatus}
+          aria-label="Shop status"
           onClick={() => update("shopStatus", !formData.shopStatus)}
-          className={`relative inline-flex h-8 w-14 items-center rounded-full transition-all duration-500 focus:outline-none ring-4 ring-transparent group-hover:ring-emerald-500/5 ${
-            formData.shopStatus ? "bg-emerald-500" : "bg-gray-300 dark:bg-gray-700"
+          className={`relative inline-flex h-8 w-14 items-center rounded-full transition-colors duration-300 ${
+            formData.shopStatus ? "bg-primary" : "bg-muted border border-border"
           }`}
         >
           <span

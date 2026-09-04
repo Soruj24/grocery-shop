@@ -73,7 +73,7 @@ export default function ProductImageSection({
       {/* Discount badge - top left */}
       {discount > 0 && (
         <div className="absolute top-3 left-3 z-10">
-          <span className="inline-flex items-center rounded-lg bg-rose-500 px-2.5 py-1 text-[11px] font-bold text-white shadow-[0_2px_8px_rgba(244,63,94,0.3)]">
+          <span className="inline-flex items-center rounded-lg bg-danger px-2.5 py-1 text-[11px] font-bold text-danger-foreground">
             -{discount}%
           </span>
         </div>
@@ -82,7 +82,7 @@ export default function ProductImageSection({
       {/* New / Deal badges */}
       {product.isNewArrival && discount === 0 && (
         <div className="absolute top-3 left-3 z-10">
-          <span className="inline-flex items-center rounded-lg bg-emerald-500 px-2.5 py-1 text-[11px] font-bold text-white shadow-[0_2px_8px_rgba(34,197,94,0.3)]">
+          <span className="inline-flex items-center rounded-lg bg-success px-2.5 py-1 text-[11px] font-bold text-success-foreground">
             {t("new_arrival_badge") ?? "নিউ"}
           </span>
         </div>
@@ -95,10 +95,12 @@ export default function ProductImageSection({
             e.preventDefault();
             onToggleWishlist();
           }}
+          aria-label={isWishlistActive ? "Remove from wishlist" : "Add to wishlist"}
+          aria-pressed={isWishlistActive}
           className={`w-9 h-9 rounded-xl flex items-center justify-center backdrop-blur-md shadow-md transition-all duration-300 hover:scale-110 active:scale-95 ${
             isWishlistActive
-              ? "bg-rose-500 text-white shadow-rose-500/30"
-              : "bg-card/90 text-muted-foreground hover:bg-rose-500 hover:text-white"
+              ? "bg-danger text-danger-foreground"
+              : "bg-card/90 text-muted-foreground hover:bg-danger hover:text-danger-foreground"
           }`}
         >
           <Heart
@@ -113,7 +115,8 @@ export default function ProductImageSection({
             e.preventDefault();
             onShare(e);
           }}
-          className="w-9 h-9 rounded-xl bg-card/90 text-muted-foreground flex items-center justify-center backdrop-blur-md shadow-md transition-all duration-300 hover:bg-info hover:text-white hover:scale-110 active:scale-95 delay-75"
+          aria-label="Share product"
+          className="w-9 h-9 rounded-xl bg-card/90 text-muted-foreground flex items-center justify-center backdrop-blur-md shadow-md transition-all duration-300 hover:bg-info hover:text-info-foreground hover:scale-110 active:scale-95 delay-75"
         >
           <Share2 className="w-4 h-4" />
         </button>
@@ -129,7 +132,7 @@ export default function ProductImageSection({
       {/* Low stock warning */}
       {product.stock <= 5 && product.stock > 0 && (
         <div className="absolute bottom-3 left-3 z-10">
-          <span className="inline-flex items-center rounded-lg bg-warning px-2.5 py-1 text-[10px] font-bold text-white shadow-[0_2px_8px_rgba(245,158,11,0.3)]">
+          <span className="inline-flex items-center rounded-lg bg-warning px-2.5 py-1 text-[10px] font-bold text-warning-foreground">
             {t("low_stock")}
           </span>
         </div>

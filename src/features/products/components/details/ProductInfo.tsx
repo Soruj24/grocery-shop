@@ -163,7 +163,7 @@ export default function ProductInfo({
           </div>
 
           {discountPercent > 0 && (
-            <div className="ml-auto bg-rose-500 text-white px-4 py-2 rounded-xl font-bold text-lg shadow-[0_2px_12px_rgba(244,63,94,0.3)]">
+            <div className="ml-auto bg-danger text-danger-foreground px-4 py-2 rounded-xl font-bold text-lg">
               -{discountPercent}%
             </div>
           )}

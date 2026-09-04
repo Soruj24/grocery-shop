@@ -146,8 +146,10 @@ export default function QuickViewModal({
                     title: active ? t("removed_from_wishlist") : t("added_to_wishlist"),
                   });
                 }}
+                aria-label={active ? "Remove from wishlist" : "Add to wishlist"}
+                aria-pressed={active}
                 className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-xl border border-border transition-all active:scale-95 ${
-                  active ? "bg-rose-500 text-white" : "bg-card text-muted-foreground hover:bg-rose-500 hover:text-white"
+                  active ? "bg-danger text-danger-foreground" : "bg-card text-muted-foreground hover:bg-danger hover:text-danger-foreground"
                 }`}
               >
                 <Heart className={`h-5 w-5 ${active ? "fill-current" : ""}`} />

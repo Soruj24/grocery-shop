@@ -14,17 +14,17 @@ import { LoadingState } from "@/components/ui";
 
 const statusColors: Record<string, string> = {
   pending:
-    "bg-amber-500/[0.08] text-amber-600 dark:text-amber-400",
+    "bg-warning-subtle text-warning-subtle-foreground",
   confirmed:
-    "bg-blue-500/[0.08] text-blue-600 dark:text-blue-400",
+    "bg-info-subtle text-info-subtle-foreground",
   processing:
-    "bg-violet-500/[0.08] text-violet-600 dark:text-violet-400",
+    "bg-accent-subtle text-accent-subtle-foreground",
   shipped:
-    "bg-cyan-500/[0.08] text-cyan-600 dark:text-cyan-400",
+    "bg-accent-subtle text-accent-subtle-foreground",
   delivered:
-    "bg-emerald-500/[0.08] text-emerald-600 dark:text-emerald-400",
+    "bg-success-subtle text-success-subtle-foreground",
   cancelled:
-    "bg-danger-subtle text-danger",
+    "bg-danger-subtle text-danger-subtle-foreground",
 };
 
 const filters = [

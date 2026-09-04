@@ -14,8 +14,6 @@ interface Feature {
   icon: LucideIcon;
   title: string;
   desc: string;
-  color: string;
-  bg: string;
 }
 
 export default function FeaturesSection() {
@@ -26,29 +24,21 @@ export default function FeaturesSection() {
       icon: Truck,
       title: t("feature_title_1"),
       desc: t("feature_desc_1"),
-      color: "text-blue-500",
-      bg: "bg-blue-50 dark:bg-blue-500/[0.08]",
     },
     {
       icon: ShieldCheck,
       title: t("feature_title_2"),
       desc: t("feature_desc_2"),
-      color: "text-emerald-500",
-      bg: "bg-emerald-50 dark:bg-emerald-500/[0.08]",
     },
     {
       icon: Headphones,
       title: t("feature_title_3"),
       desc: t("feature_desc_3"),
-      color: "text-purple-500",
-      bg: "bg-purple-50 dark:bg-purple-500/[0.08]",
     },
     {
       icon: RefreshCw,
       title: t("feature_title_6"),
       desc: t("feature_desc_6"),
-      color: "text-orange-500",
-      bg: "bg-orange-50 dark:bg-orange-500/[0.08]",
     },
   ];
 
@@ -78,13 +68,13 @@ export default function FeaturesSection() {
                   duration: 0.5,
                   ease: [0.21, 0.47, 0.32, 0.98],
                 }}
-                className={`flex flex-col items-center text-center p-8 rounded-2xl bg-muted border border-border transition-all duration-500 hover:shadow-lg hover:-translate-y-1 group cursor-default`}
+                className={`flex flex-col items-center text-center p-8 rounded-2xl bg-card border border-border transition-all duration-300 hover:shadow-md hover:-translate-y-0.5 group cursor-default`}
               >
                 <div
-                  className={`w-18 h-18 rounded-2xl ${feature.bg} flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-500`}
+                  className={`w-18 h-18 rounded-2xl bg-muted text-foreground flex items-center justify-center mb-6 group-hover:scale-105 transition-transform duration-300`}
                 >
                   <Icon
-                    className={`w-9 h-9 ${feature.color}`}
+                    className={`w-9 h-9`}
                   />
                 </div>
 

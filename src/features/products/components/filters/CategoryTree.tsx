@@ -18,7 +18,7 @@ export default function CategoryTree({ categories, mainCategories, selectedCateg
   return (
     <div className="space-y-2">
       <button onClick={() => onSelect("")}
-        className={`w-full text-left px-5 py-3 rounded-2xl font-bold text-sm transition-all ${selectedCategory === "" ? "bg-primary text-white shadow-lg shadow-primary" : "text-muted-foreground hover:bg-primary-subtle"}`}>
+        className={`w-full text-left px-5 py-3 rounded-2xl font-bold text-sm transition-all ${selectedCategory === "" ? "bg-primary text-primary-foreground shadow-sm" : "text-muted-foreground hover:bg-primary-subtle"}`}>
         {t("all_categories")}
       </button>
       {mainCategories.map((cat) => (

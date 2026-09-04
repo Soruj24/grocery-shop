@@ -76,14 +76,14 @@ export default function AddressBook({ addresses, selectedId, onSelect, onAdd, on
                 }}
                 className={`relative cursor-pointer rounded-xl border-2 p-3 transition-all ${
                   isSelected
-                    ? "border-emerald-500 bg-emerald-50 dark:bg-emerald-950/20"
-                    : "border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600"
+                    ? "border-primary bg-primary-subtle"
+                    : "border-border hover:border-border-strong"
                 }`}
               >
                 <div className="flex items-start gap-3">
                   <div
                     className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-lg ${
-                      isSelected ? "bg-emerald-500 text-white" : "bg-gray-100 dark:bg-gray-800 text-gray-500"
+                      isSelected ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground"
                     }`}
                   >
                     <LabelIcon className="h-4 w-4" />
@@ -102,8 +102,8 @@ export default function AddressBook({ addresses, selectedId, onSelect, onAdd, on
                   </div>
                   <div className="flex items-center gap-1">
                     {isSelected && (
-                      <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} className="flex h-5 w-5 items-center justify-center rounded-full bg-emerald-500">
-                        <Check className="h-3 w-3 text-white" />
+                      <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} className="flex h-5 w-5 items-center justify-center rounded-full bg-primary">
+                        <Check className="h-3 w-3 text-primary-foreground" />
                       </motion.div>
                     )}
                     <button
@@ -143,8 +143,8 @@ export default function AddressBook({ addresses, selectedId, onSelect, onAdd, on
                     onClick={() => setForm({ ...form, label: l.id })}
                     className={`flex items-center gap-1.5 rounded-lg border px-3 py-1.5 text-xs font-medium transition-all ${
                       form.label === l.id
-                        ? "border-emerald-500 bg-emerald-50 text-emerald-700 dark:bg-emerald-950/30 dark:text-emerald-400"
-                        : "border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-400"
+                        ? "border-primary bg-primary-subtle text-primary"
+                        : "border-border text-muted-foreground hover:text-foreground"
                     }`}
                   >
                     <l.icon className="h-3 w-3" />
@@ -192,7 +192,7 @@ export default function AddressBook({ addresses, selectedId, onSelect, onAdd, on
               <button
                 onClick={handleSave}
                 disabled={!form.name || !form.phone || !form.address}
-                className="w-full rounded-lg bg-emerald-500 py-2.5 text-sm font-semibold text-white hover:bg-emerald-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                className="w-full rounded-lg bg-primary py-2.5 text-sm font-semibold text-primary-foreground hover:bg-primary-hover active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed transition-all"
               >
                 {t("save_address")}
               </button>

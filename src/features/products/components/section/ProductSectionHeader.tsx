@@ -23,7 +23,7 @@ export default function ProductSectionHeader() {
         </div>
         <h2 className="text-3xl md:text-5xl font-black text-foreground leading-tight tracking-tight relative inline-block">
           {t('product_section_title')}
-          <span className="text-transparent bg-clip-text bg-gradient-to-tr from-primary to-primary-subtle-foreground">.</span>
+          <span className="text-primary">.</span>
           <svg className="absolute -bottom-2 left-0 w-full h-3 text-primary/30" viewBox="0 0 100 10" preserveAspectRatio="none">
              <path d="M0 5 Q 50 10 100 5" stroke="currentColor" strokeWidth="4" fill="none" strokeLinecap="round" />
           </svg>

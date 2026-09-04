@@ -123,8 +123,10 @@ export default function ProductListRow({
               });
             }}
             title={t("wishlist")}
+            aria-label={active ? "Remove from wishlist" : "Add to wishlist"}
+            aria-pressed={active}
             className={`flex h-10 w-10 items-center justify-center rounded-full transition-all active:scale-95 ${
-              active ? "bg-rose-500 text-white" : "bg-muted text-muted-foreground hover:bg-rose-500 hover:text-white"
+              active ? "bg-danger text-danger-foreground" : "bg-muted text-muted-foreground hover:bg-danger hover:text-danger-foreground"
             }`}
           >
             <Heart className={`h-5 w-5 ${active ? "fill-current" : ""}`} />

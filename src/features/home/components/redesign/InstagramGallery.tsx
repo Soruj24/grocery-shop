@@ -30,9 +30,7 @@ export default function InstagramGallery() {
       title={
         <>
           {t("follow_us")}{" "}
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent">
-            @{t("instagram")}
-          </span>
+          @{t("instagram")}
         </>
       }
       subtitle={t("instagram_desc")}
@@ -56,7 +54,7 @@ export default function InstagramGallery() {
                 sizes="(max-width: 640px) 50vw, 25vw"
                 className="object-cover transition-transform duration-700 ease-out group-hover:scale-110"
               />
-              <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-primary/70 to-accent/70 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+              <div className="absolute inset-0 flex items-center justify-center bg-foreground/60 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
                 <Instagram className="h-9 w-9 text-white" />
               </div>
               <div className="absolute right-3 top-3 opacity-0 transition-opacity duration-300 group-hover:opacity-100">

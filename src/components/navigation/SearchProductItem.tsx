@@ -104,7 +104,7 @@ export default function SearchProductItem({
         <div
           className={`w-8 h-8 rounded-full flex items-center justify-center transition-all ${
             isSelected
-              ? "bg-primary text-primary-foreground shadow-lg shadow-primary"
+              ? "bg-primary text-primary-foreground shadow-sm"
               : "bg-muted text-muted-foreground group-hover:bg-primary group-hover:text-primary-foreground"
           }`}
         >

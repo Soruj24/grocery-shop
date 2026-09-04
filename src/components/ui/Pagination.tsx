@@ -101,7 +101,7 @@ export default function Pagination({ totalPages, currentPage, basePath, totalCou
                 href={createPageURL(page)}
                 className={`min-w-[44px] h-11 px-3 flex items-center justify-center rounded-xl font-black text-xs transition-all duration-300 ${
                   currentPage === page
-                    ? "bg-primary text-primary-foreground shadow-primary scale-105"
+                    ? "bg-primary text-primary-foreground shadow-sm scale-105"
                     : "bg-card text-muted-foreground border border-border hover:border-primary-subtle hover:text-primary hover:shadow-sm"
                 }`}
               >

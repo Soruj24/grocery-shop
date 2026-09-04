@@ -80,7 +80,7 @@ export default function RatingsBreakdown({
                     duration: 0.8,
                     ease: [0.21, 0.47, 0.32, 0.98],
                   }}
-                  className="h-full bg-amber-400 rounded-full"
+                  className="h-full bg-warning rounded-full"
                 />
               </div>
               <span className="text-xs font-medium text-muted-foreground/60 w-8 text-right">

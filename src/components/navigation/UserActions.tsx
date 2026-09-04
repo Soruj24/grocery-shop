@@ -52,9 +52,9 @@ function BadgeDot({
     <motion.span
       initial={{ scale: 0 }}
       animate={{ scale: 1 }}
-      className={`absolute -top-0.5 -right-0.5 min-w-[17px] h-[17px] px-1 text-[9px] font-bold flex items-center justify-center rounded-full border-[1.5px] border-white dark:border-[#09090b] ${
+      className={`absolute -top-0.5 -right-0.5 min-w-[17px] h-[17px] px-1 text-[9px] font-bold flex items-center justify-center rounded-full border-[1.5px] border-background ${
         tone === "rose"
-          ? "bg-rose-500 text-white"
+          ? "bg-danger text-danger-foreground"
           : "bg-foreground text-background"
       }`}
     >

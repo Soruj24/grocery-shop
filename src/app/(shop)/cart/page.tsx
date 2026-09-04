@@ -159,7 +159,7 @@ export default function CartPage() {
         className="bg-subtle border border-border rounded-xl p-4 flex flex-col sm:flex-row items-start sm:items-center gap-3"
       >
         <div className="flex items-center gap-2.5">
-          <div className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse" />
+          <div className="w-2 h-2 bg-success rounded-full animate-pulse" />
           <span className="text-xs font-semibold text-foreground">
             Estimated Delivery
           </span>

@@ -84,7 +84,7 @@ export default function CartPreview({
       </div>
 
       {remaining > 0 && (
-        <div className="flex items-center gap-2 bg-emerald-500/[0.06] dark:bg-emerald-500/[0.08] px-5 py-2.5 text-xs font-semibold text-emerald-600 dark:text-emerald-400">
+        <div className="flex items-center gap-2 bg-success-subtle px-5 py-2.5 text-xs font-semibold text-success-subtle-foreground">
           <Sparkles className="w-4 h-4" />
           {t("free_delivery_remaining")}{" "}
           {currencySymbol}

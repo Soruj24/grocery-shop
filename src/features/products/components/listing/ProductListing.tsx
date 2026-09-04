@@ -367,7 +367,7 @@ function PaginationBar({
             onClick={() => onJump(p)}
             className={`h-11 min-w-[44px] rounded-xl px-3 text-sm font-bold transition-all ${
               currentPage === p
-                ? "bg-primary text-primary-foreground shadow-primary"
+                ? "bg-primary text-primary-foreground shadow-sm"
                 : "border border-border bg-card text-muted-foreground hover:border-primary/40 hover:text-primary"
             }`}
           >

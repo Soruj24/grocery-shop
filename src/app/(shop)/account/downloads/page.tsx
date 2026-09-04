@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { motion } from "framer-motion";
 import { Download, FileText, Image, File } from "lucide-react";
@@ -44,7 +44,7 @@ export default function DownloadsPage() {
                     <p className="text-[10px] text-gray-400">{file.size} • {new Date(file.date).toLocaleDateString()}</p>
                   </div>
                 </div>
-                <button className="flex items-center gap-1.5 rounded-lg bg-emerald-500 px-3 py-1.5 text-[11px] font-semibold text-white hover:bg-emerald-600 transition-colors">
+                <button className="flex items-center gap-1.5 rounded-lg bg-success px-3 py-1.5 text-[11px] font-semibold text-success-foreground hover:opacity-90 transition-colors">
                   <Download className="h-3 w-3" /> Download
                 </button>
               </motion.div>

@@ -17,9 +17,9 @@ const iconMap = {
 };
 
 const colorMap = {
-  success: "text-emerald-500 bg-emerald-500/[0.06]",
+  success: "text-success bg-success-subtle",
   error: "text-danger bg-danger-subtle",
-  info: "text-blue-500 bg-blue-500/[0.06]",
+  info: "text-info bg-info-subtle",
 };
 
 export default function NotificationsPage() {

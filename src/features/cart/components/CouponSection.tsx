@@ -72,20 +72,21 @@ export default function CouponSection({
   return (
     <div className="space-y-2">
       {appliedCoupon ? (
-        <div className="flex items-center justify-between p-3 bg-emerald-500/[0.06] dark:bg-emerald-500/[0.08] rounded-lg border border-emerald-500/[0.12]">
+        <div className="flex items-center justify-between p-3 bg-success-subtle rounded-lg border border-success/20">
           <div className="flex items-center gap-2">
-            <div className="w-6 h-6 bg-emerald-500/10 rounded-md flex items-center justify-center">
-              <Percent className="w-3 h-3 text-emerald-600" />
+            <div className="w-6 h-6 bg-success/10 rounded-md flex items-center justify-center">
+              <Percent className="w-3 h-3 text-success" />
             </div>
-            <span className="text-xs font-bold text-emerald-700 dark:text-emerald-400">
+            <span className="text-xs font-bold text-success-subtle-foreground">
               {appliedCoupon}
             </span>
           </div>
           <button
             onClick={handleRemove}
-            className="p-1 rounded-md hover:bg-emerald-500/10 transition-colors"
+            aria-label="Remove coupon"
+            className="p-1 rounded-md text-success hover:bg-success/10 transition-colors"
           >
-            <X className="w-3.5 h-3.5 text-emerald-600" />
+            <X className="w-3.5 h-3.5" />
           </button>
         </div>
       ) : (

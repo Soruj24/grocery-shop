@@ -175,7 +175,7 @@ export default function ProductImage({
         {discountPercent > 0 &&
           viewMode === "image" && (
             <div className="absolute top-4 left-4 z-10">
-              <span className="inline-flex items-center rounded-lg bg-rose-500 px-3 py-1.5 text-[11px] font-bold text-white shadow-[0_2px_12px_rgba(244,63,94,0.35)]">
+              <span className="inline-flex items-center rounded-lg bg-danger px-3 py-1.5 text-[11px] font-bold text-danger-foreground">
                 -{discountPercent}%
               </span>
             </div>

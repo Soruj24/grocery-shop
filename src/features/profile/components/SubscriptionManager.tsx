@@ -14,7 +14,7 @@ export default function SubscriptionManager() {
   return (
     <div className="space-y-10">
       {/* Active Subscription Card */}
-      <div className="relative overflow-hidden bg-primary rounded-2xl p-10 text-primary-foreground shadow-primary">
+      <div className="relative overflow-hidden bg-primary rounded-2xl p-10 text-primary-foreground shadow-lg">
         <div className="relative z-10">
           <div className="flex items-center gap-3 mb-6">
             <div className="w-10 h-10 bg-white/20 backdrop-blur-md rounded-2xl flex items-center justify-center">
